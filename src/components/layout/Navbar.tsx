@@ -26,7 +26,7 @@ export default function Navbar({ user }: NavbarProps) {
   const dashboardLink = () => {
     if (!user) return '/connexion'
     if (user.role === 'admin' || user.role === 'coordinateur') return '/admin'
-    if (user.role === 'formateur') return '/espace-formateur'
+    if (user.role === 'formateur') return '/formateur'
     return '/tableau-de-bord'
   }
 

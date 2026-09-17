@@ -45,7 +45,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { label: 'À propos de nous', href: '/a-propos' },
-                { label: 'Devenir formateur', href: '/formateur' },
+                { label: 'Devenir formateur', href: '/devenir-formateur' },
                 { label: 'Certifications', href: '/certifications' },
                 { label: 'Blog', href: '/blog' },
                 { label: 'Contact', href: '/contact' },
