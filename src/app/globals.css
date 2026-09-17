@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #0B3D91;
+  --color-primary-light: #1a6cc4;
+  --color-secondary: #FFA500;
+  --color-ibig-blue: #0B3D91;
+  --color-ibig-gold: #FFA500;
+  --color-ibig-green: #2ECC71;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--color-gray-200, #e5e7eb);
+  }
+  body {
+    background-color: #ffffff;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .ibig-gradient {
+    background: linear-gradient(to right, #0B3D91, #1a6cc4);
+  }
+  .ibig-gradient-gold {
+    background: linear-gradient(to right, #0B3D91, #1a6cc4, #FFA500);
+  }
+  .text-ibig-blue {
+    color: #0B3D91;
+  }
+  .text-ibig-gold {
+    color: #FFA500;
+  }
+  .bg-ibig-blue {
+    background-color: #0B3D91;
+  }
+  .bg-ibig-gold {
+    background-color: #FFA500;
+  }
 }
