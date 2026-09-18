@@ -93,6 +93,16 @@ export default function Navbar({ user }: NavbarProps) {
                     <Link href={dashboardLink()} className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <LayoutDashboard className="w-4 h-4" /> Tableau de bord
                     </Link>
+                    {(user.role === 'formateur' || user.role === 'admin' || user.role === 'coordinateur') && (
+                      <Link href="/formateur" className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#0B3D91] font-semibold hover:bg-blue-50" onClick={() => setProfileOpen(false)}>
+                        <BookOpen className="w-4 h-4" /> Espace formateur
+                      </Link>
+                    )}
+                    {(user.role === 'admin' || user.role === 'coordinateur') && (
+                      <Link href="/admin" className="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 font-semibold hover:bg-red-50" onClick={() => setProfileOpen(false)}>
+                        <LayoutDashboard className="w-4 h-4" /> Administration
+                      </Link>
+                    )}
                     <Link href="/mes-formations" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <BookMarked className="w-4 h-4" /> Mes formations
                     </Link>
