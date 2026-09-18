@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Star, Users, BookOpen } from 'lucide-react'
 import PriceDisplay from './PriceDisplay'
+import WishlistButton from './WishlistButton'
 import type { Course } from '@/types'
 
 const levelLabel: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
@@ -30,6 +31,7 @@ export default function CourseCard({ course }: { course: Course }) {
         <span className={`absolute top-3 right-3 text-xs font-semibold px-2 py-1 rounded-full ${levelColor[course.level]}`}>
           {levelLabel[course.level]}
         </span>
+        <WishlistButton courseId={course.id} className="absolute bottom-3 right-3" />
       </div>
       <div className="p-5 flex flex-col flex-1">
         <p className="text-xs font-medium text-[#0B3D91] mb-1">{(course.category as any)?.name}</p>
