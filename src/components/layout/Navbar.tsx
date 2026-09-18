@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard } from 'lucide-react'
+import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Profile } from '@/types'
 import CurrencySelector from '@/components/ui/CurrencySelector'
 import GlobalSearch from '@/components/search/GlobalSearch'
+import NotificationBell from '@/components/notifications/NotificationBell'
 
 interface NavbarProps {
   user?: Profile | null
@@ -74,6 +75,7 @@ export default function Navbar({ user }: NavbarProps) {
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
             <CurrencySelector />
+            {user && <NotificationBell />}
             {user ? (
               <div className="relative">
                 <button
@@ -90,6 +92,12 @@ export default function Navbar({ user }: NavbarProps) {
                   <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
                     <Link href={dashboardLink()} className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <LayoutDashboard className="w-4 h-4" /> Tableau de bord
+                    </Link>
+                    <Link href="/mes-formations" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                      <BookMarked className="w-4 h-4" /> Mes formations
+                    </Link>
+                    <Link href="/classement" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                      <span className="text-base">🏆</span> Classement
                     </Link>
                     <Link href="/profil" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <User className="w-4 h-4" /> Mon profil
