@@ -395,7 +395,7 @@ async function main() {
     const slug = slugify(f.titre) + '-ibig'
     const level = levelFromPrice(f.prix)
     const price = f.prix || 0
-    const durationHours = f.duree || null
+    const durationHours = f.duree || 1
     const description = f.description || f.titre
 
     try {
@@ -408,7 +408,7 @@ async function main() {
         await client.query(
           `UPDATE courses SET
             title = $1, description = $2, short_description = $3,
-            price = $4, level = $5, duration_hours = $6,
+            price_xof = $4, level = $5, duration_hours = $6,
             category_id = $7, updated_at = NOW()
            WHERE slug = $8`,
           [f.titre, description, description.substring(0, 200), price, level, durationHours, categoryId, slug]
@@ -418,15 +418,15 @@ async function main() {
         if (!instructorId) { errors++; continue }
         await client.query(
           `INSERT INTO courses (
-            title, slug, description, short_description, price, currency,
+            title, slug, description, short_description, price_xof,
             level, language, duration_hours, category_id, instructor_id,
-            is_published, source_url
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+            is_published
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
           [
             f.titre, slug, description, description.substring(0, 200),
-            price, 'XOF', level, 'Français',
+            price, level, 'Français',
             durationHours, categoryId, instructorId,
-            true, 'https://ibig-eduform.com/catalogue-formations.php'
+            true
           ]
         )
         inserted++
