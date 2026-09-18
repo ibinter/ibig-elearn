@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { User, Mail, Phone, MapPin, Globe, Camera, Save, AlertCircle, CheckCircle } from 'lucide-react'
+import { User, Mail, Phone, MapPin, Globe, Camera, Save, AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
 
 const COUNTRIES = [
   'Côte d\'Ivoire', 'Sénégal', 'Mali', 'Burkina Faso', 'Niger', 'Guinée',
@@ -29,6 +29,28 @@ export default function ProfilPage() {
   const [email, setEmail] = useState('')
   const [passwordForm, setPasswordForm] = useState({ current: '', next: '', confirm: '' })
   const [changingPwd, setChangingPwd] = useState(false)
+  const [uploadingAvatar, setUploadingAvatar] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingAvatar(true)
+    setMessage(null)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/profil/avatar', { method: 'POST', body: fd })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setForm(f => ({ ...f, avatar_url: data.url }))
+      setMessage({ type: 'success', text: 'Photo de profil mise à jour !' })
+    } catch (err: any) {
+      setMessage({ type: 'error', text: err.message ?? 'Erreur lors de l\'upload.' })
+    } finally {
+      setUploadingAvatar(false)
+    }
+  }
 
   useEffect(() => {
     async function load() {
@@ -117,19 +139,34 @@ export default function ProfilPage() {
         <div className="flex items-center gap-5">
           <div className="relative">
             {form.avatar_url ? (
-              <img src={form.avatar_url} alt="Avatar" className="w-20 h-20 rounded-full object-cover" />
+              <img src={form.avatar_url} alt="Avatar" className="w-20 h-20 rounded-full object-cover ring-2 ring-[#0B3D91]/10" />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
-                <User className="w-8 h-8 text-blue-600" />
+              <div className="w-20 h-20 rounded-full ibig-gradient flex items-center justify-center">
+                <span className="text-white font-bold text-2xl">{(form.full_name || email || '?')[0].toUpperCase()}</span>
               </div>
             )}
-            <button className="absolute bottom-0 right-0 bg-white border border-gray-300 rounded-full p-1.5 shadow-sm hover:bg-gray-50">
-              <Camera className="w-3.5 h-3.5 text-gray-600" />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingAvatar}
+              className="absolute bottom-0 right-0 bg-white border border-gray-300 rounded-full p-1.5 shadow-sm hover:bg-gray-50 disabled:opacity-50"
+            >
+              {uploadingAvatar
+                ? <Loader2 className="w-3.5 h-3.5 text-gray-600 animate-spin" />
+                : <Camera className="w-3.5 h-3.5 text-gray-600" />}
             </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              className="hidden"
+              onChange={handleAvatarUpload}
+            />
           </div>
           <div>
             <p className="font-semibold text-gray-900">{form.full_name || 'Votre nom'}</p>
             <p className="text-sm text-gray-500">{email}</p>
+            <p className="text-xs text-gray-400 mt-0.5">JPG, PNG ou WebP · max 2 Mo</p>
           </div>
         </div>
       </div>
