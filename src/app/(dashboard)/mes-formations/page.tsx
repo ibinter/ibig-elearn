@@ -11,10 +11,32 @@ export default async function MesFormationsPage() {
     .from('enrollments')
     .select('*, course:courses(id, title, slug, thumbnail_url, duration_hours, instructor:profiles(full_name))')
     .eq('user_id', user!.id)
-    .order('enrolled_at', { ascending: false })
+    .order('last_accessed_at', { ascending: false, nullsFirst: false })
 
-  const active = enrollments?.filter(e => e.status === 'active') ?? []
-  const completed = enrollments?.filter(e => e.status === 'completed') ?? []
+  // Récupérer la dernière leçon en cours pour chaque formation
+  const courseIds = enrollments?.map(e => e.course?.id).filter(Boolean) ?? []
+  const { data: lastLessons } = courseIds.length
+    ? await supabase
+        .from('lesson_progress')
+        .select('course_id, lesson_id, updated_at')
+        .eq('user_id', user!.id)
+        .in('course_id', courseIds)
+        .eq('is_completed', false)
+        .order('updated_at', { ascending: false })
+    : { data: [] }
+
+  const lastLessonByCourse: Record<string, string> = {}
+  for (const lp of lastLessons ?? []) {
+    if (!lastLessonByCourse[lp.course_id]) lastLessonByCourse[lp.course_id] = lp.lesson_id
+  }
+
+  const enriched = enrollments?.map(e => ({
+    ...e,
+    last_lesson_id: lastLessonByCourse[e.course?.id] ?? null,
+  })) ?? []
+
+  const active = enriched.filter(e => e.status === 'active')
+  const completed = enriched.filter(e => e.status === 'completed')
 
   const CourseRow = ({ e }: { e: any }) => (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row">
@@ -48,7 +70,9 @@ export default async function MesFormationsPage() {
               <CheckCircle className="w-4 h-4" /> Terminé
             </span>
           ) : (
-            <Link href={`/apprendre/${e.course?.id}/intro`}
+            <Link href={e.last_lesson_id
+                ? `/cours/${e.course?.slug}/${e.last_lesson_id}`
+                : `/formation/${e.course?.slug}`}
               className="flex items-center gap-1.5 ibig-gradient text-white text-xs font-semibold px-4 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
               <Play className="w-3.5 h-3.5" /> {e.progress_percent > 0 ? 'Reprendre' : 'Commencer'}
             </Link>
@@ -69,7 +93,7 @@ export default async function MesFormationsPage() {
         <div className="mb-8">
           <h2 className="font-semibold text-gray-700 mb-4">En cours ({active.length})</h2>
           <div className="space-y-3">
-            {active.map(e => <CourseRow key={e.id} e={e} />)}
+            {active.map((e: any) => <CourseRow key={e.id} e={e} />)}
           </div>
         </div>
       )}
