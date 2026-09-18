@@ -48,6 +48,7 @@ export default function Footer() {
                 { label: 'Devenir formateur', href: '/devenir-formateur' },
                 { label: 'Certifications', href: '/certifications' },
                 { label: 'Blog', href: '/blog' },
+                { label: 'FAQ', href: '/faq' },
                 { label: 'Contact', href: '/contact' },
                 { label: 'Vérifier un certificat', href: '/verify' },
               ].map(link => (

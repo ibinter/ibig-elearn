@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { BookOpen, Award, TrendingUp, ArrowRight, Play, Flame, Star, Zap, Target, Trophy, ChevronRight } from 'lucide-react'
+import { BookOpen, Award, TrendingUp, ArrowRight, Play, Flame, Star, Zap, Target, Trophy, ChevronRight, BarChart2 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 
 export default async function TableauDeBordPage() {
@@ -43,6 +43,33 @@ export default async function TableauDeBordPage() {
       .limit(1)
       .single()
     if (lesson?.lesson) nextLesson = lesson.lesson as any
+  }
+
+  // Formations recommandées : même catégories que les inscriptions, exclure déjà inscrites
+  const enrolledCourseIds = enrollments?.map((e: any) => e.course?.id).filter(Boolean) ?? []
+  const enrolledCategories = [...new Set(enrollments?.map((e: any) => e.course?.category).filter(Boolean))]
+
+  let recommended: any[] = []
+  if (enrolledCategories.length > 0) {
+    const { data: recs } = await supabase
+      .from('courses')
+      .select('id, title, slug, thumbnail_url, duration_hours, category, price_xof, level, instructor:profiles(full_name)')
+      .in('category', enrolledCategories as string[])
+      .eq('is_published', true)
+      .not('id', 'in', `(${enrolledCourseIds.join(',') || '00000000-0000-0000-0000-000000000000'})`)
+      .order('total_enrollments', { ascending: false })
+      .limit(4)
+    recommended = recs ?? []
+  }
+  if (recommended.length < 4) {
+    const { data: popular } = await supabase
+      .from('courses')
+      .select('id, title, slug, thumbnail_url, duration_hours, category, price_xof, level, instructor:profiles(full_name)')
+      .eq('is_published', true)
+      .not('id', 'in', `(${[...enrolledCourseIds, ...recommended.map(r => r.id)].join(',') || '00000000-0000-0000-0000-000000000000'})`)
+      .order('total_enrollments', { ascending: false })
+      .limit(4 - recommended.length)
+    recommended = [...recommended, ...(popular ?? [])]
   }
 
   const stats = {
@@ -131,12 +158,13 @@ export default async function TableauDeBordPage() {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {[
           { label: 'Formations', value: stats.total, sub: 'inscrites', icon: BookOpen, color: 'text-[#0B3D91] bg-blue-50', href: '/mes-formations' },
           { label: 'En cours', value: stats.inProgress, sub: 'actives', icon: TrendingUp, color: 'text-orange-600 bg-orange-50', href: '/mes-formations' },
           { label: 'Terminées', value: stats.completed, sub: 'complétées', icon: Target, color: 'text-green-600 bg-green-50', href: '/mes-formations' },
           { label: 'Certificats', value: stats.certs, sub: 'obtenus', icon: Award, color: 'text-purple-600 bg-purple-50', href: '/mes-certificats' },
+          { label: 'Statistiques', value: '→', sub: 'mes stats', icon: BarChart2, color: 'text-pink-600 bg-pink-50', href: '/mes-stats' },
         ].map(s => (
           <Link key={s.label} href={s.href}
             className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-[#0B3D91]/20 transition-all group">
@@ -281,6 +309,35 @@ export default async function TableauDeBordPage() {
           </div>
         </div>
       </div>
+      {/* Formations recommandées */}
+      {recommended.length > 0 && (
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="font-bold text-gray-900">Recommandé pour vous</h2>
+            <Link href="/catalogue" className="text-sm text-[#0B3D91] hover:underline flex items-center gap-1">
+              Voir tout <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-gray-50">
+            {recommended.map((course: any) => (
+              <Link key={course.id} href={`/formation/${course.slug}`}
+                className="p-4 hover:bg-gray-50/60 transition-colors group">
+                <div className="aspect-video rounded-xl bg-gray-100 overflow-hidden mb-3">
+                  {course.thumbnail_url
+                    ? <img src={course.thumbnail_url} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    : <div className="w-full h-full ibig-gradient flex items-center justify-center"><BookOpen className="w-8 h-8 text-white/50" /></div>}
+                </div>
+                <p className="text-xs text-[#FFA500] font-semibold uppercase tracking-wide mb-1">{course.category}</p>
+                <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-[#0B3D91] transition-colors">{course.title}</h3>
+                <p className="text-xs text-gray-400">{(course.instructor as any)?.full_name}</p>
+                <p className="text-xs font-bold text-[#0B3D91] mt-2">
+                  {course.price_xof === 0 ? 'Gratuit' : `${course.price_xof?.toLocaleString()} XOF`}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

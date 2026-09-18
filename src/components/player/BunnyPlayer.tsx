@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { CheckCircle } from 'lucide-react'
+import CompletionCelebration from '@/components/ui/CompletionCelebration'
 
 interface Props {
   videoGuid: string
@@ -28,6 +29,7 @@ export default function BunnyPlayer({
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isCompleted, setIsCompleted] = useState(initialCompleted)
   const [watchedSeconds, setWatchedSeconds] = useState(lastPosition)
+  const [celebration, setCelebration] = useState<{ courseTitle?: string; certificateId?: string } | null>(null)
   const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined)
   const supabase = createClient()
 
@@ -35,6 +37,21 @@ export default function BunnyPlayer({
     `https://iframe.mediadelivery.net/embed/${libraryId}/${videoGuid}` +
     `?autoplay=false&loop=false&muted=false&preload=true&responsive=true` +
     (lastPosition > 5 ? `&start=${Math.floor(lastPosition)}` : '')
+
+  const triggerCertificate = useCallback(async () => {
+    try {
+      const res = await fetch('/api/certificates/auto-issue', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ courseId }),
+      })
+      const data = await res.json()
+      if (data.issued) {
+        const { data: course } = await supabase.from('courses').select('title').eq('id', courseId).single()
+        setCelebration({ courseTitle: (course as any)?.title, certificateId: data.certificateId })
+      }
+    } catch { /* non bloquant */ }
+  }, [courseId, supabase])
 
   const saveProgress = useCallback(async (seconds: number, completed: boolean) => {
     await supabase.from('lesson_progress').upsert({
@@ -63,11 +80,13 @@ export default function BunnyPlayer({
         if (duration > 0 && current / duration >= 0.9 && !isCompleted) {
           setIsCompleted(true)
           saveProgress(current, true)
+          triggerCertificate()
         }
       }
       if (event === 'ended') {
         setIsCompleted(true)
         saveProgress(videoDurationSeconds ?? watchedSeconds, true)
+        triggerCertificate()
       }
     }
 
@@ -92,6 +111,15 @@ export default function BunnyPlayer({
     : 0
 
   return (
+    <>
+    {celebration && (
+      <CompletionCelebration
+        courseTitle={celebration.courseTitle ?? ''}
+        certificateId={celebration.certificateId}
+        courseId={courseId}
+        onClose={() => setCelebration(null)}
+      />
+    )}
     <div className="bg-black relative">
       <div className="relative aspect-video w-full">
         <iframe
@@ -113,5 +141,6 @@ export default function BunnyPlayer({
         )}
       </div>
     </div>
+    </>
   )
 }

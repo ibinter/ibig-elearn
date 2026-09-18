@@ -64,7 +64,7 @@ export default async function MesFormationsPage() {
             <span>Inscrit le {formatDate(e.enrolled_at)}</span>
           </div>
         </div>
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 flex flex-col gap-2">
           {e.status === 'completed' ? (
             <span className="flex items-center gap-1.5 text-green-600 text-xs font-semibold bg-green-50 px-3 py-2 rounded-lg">
               <CheckCircle className="w-4 h-4" /> Terminé
@@ -77,6 +77,10 @@ export default async function MesFormationsPage() {
               <Play className="w-3.5 h-3.5" /> {e.progress_percent > 0 ? 'Reprendre' : 'Commencer'}
             </Link>
           )}
+          <Link href={`/mes-formations/${e.course?.slug}/progression`}
+            className="flex items-center justify-center gap-1 text-xs text-gray-400 hover:text-[#0B3D91] transition-colors">
+            Voir la progression →
+          </Link>
         </div>
       </div>
     </div>

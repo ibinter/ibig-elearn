@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked } from 'lucide-react'
+import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Profile } from '@/types'
@@ -98,6 +98,15 @@ export default function Navbar({ user }: NavbarProps) {
                     </Link>
                     <Link href="/classement" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <span className="text-base">🏆</span> Classement
+                    </Link>
+                    <Link href="/mes-stats" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                      <BarChart2 className="w-4 h-4" /> Mes statistiques
+                    </Link>
+                    <Link href="/mes-badges" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                      <Trophy className="w-4 h-4" /> Mes badges
+                    </Link>
+                    <Link href="/parrainage" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                      <Users className="w-4 h-4" /> Parrainage
                     </Link>
                     <Link href="/profil" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <User className="w-4 h-4" /> Mon profil

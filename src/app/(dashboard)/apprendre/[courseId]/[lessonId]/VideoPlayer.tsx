@@ -63,6 +63,16 @@ function NativePlayer({ videoUrl, lessonId, courseId, userId, lastPosition, isCo
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const supabase = createClient()
 
+  const triggerCertificate = useCallback(async () => {
+    try {
+      await fetch('/api/certificates/auto-issue', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ courseId }),
+      })
+    } catch { /* non bloquant */ }
+  }, [courseId])
+
   const saveProgress = useCallback(async (currentTime: number, completed: boolean) => {
     await supabase.from('lesson_progress').upsert({
       user_id: userId,
@@ -90,6 +100,7 @@ function NativePlayer({ videoUrl, lessonId, courseId, userId, lastPosition, isCo
     if (pct >= 90 && !isCompleted) {
       setIsCompleted(true)
       saveProgress(video.currentTime, true)
+      triggerCertificate()
     }
     clearTimeout(saveTimerRef.current)
     saveTimerRef.current = setTimeout(() => {
@@ -100,6 +111,7 @@ function NativePlayer({ videoUrl, lessonId, courseId, userId, lastPosition, isCo
   const handleEnded = () => {
     setIsCompleted(true)
     saveProgress(videoRef.current?.duration ?? 0, true)
+    triggerCertificate()
   }
 
   return (

@@ -4,10 +4,26 @@ import Image from 'next/image'
 import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle } from 'lucide-react'
 import CourseCard from '@/components/ui/CourseCard'
 
-export const revalidate = 3600
-
 export default async function AccueilPage() {
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Données personnalisées si connecté
+  let userProfile = null
+  let userEnrollments: any[] = []
+  if (user) {
+    const [{ data: profile }, { data: enrolls }] = await Promise.all([
+      supabase.from('profiles').select('full_name, streak_days, total_points').eq('id', user.id).single(),
+      supabase.from('enrollments')
+        .select('progress_percent, course:courses(id, title, slug, thumbnail_url)')
+        .eq('user_id', user.id)
+        .eq('status', 'active')
+        .order('last_accessed_at', { ascending: false, nullsFirst: false })
+        .limit(3),
+    ])
+    userProfile = profile
+    userEnrollments = enrolls ?? []
+  }
 
   const [
     { data: featuredCourses },
@@ -65,26 +81,68 @@ export default async function AccueilPage() {
           <div>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm mb-6">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              La plateforme eLearning panafricaine
+              {user ? `Bienvenue, ${userProfile?.full_name?.split(' ')[0] ?? 'Apprenant'} 👋` : 'La plateforme eLearning panafricaine'}
             </div>
             <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
-              Formez-vous avec les
-              <span className="text-[#FFA500]"> meilleurs experts </span>
-              d'Afrique
+              {user ? (
+                <>Continuez votre <span className="text-[#FFA500]">apprentissage</span> là où vous en étiez</>
+              ) : (
+                <>Formez-vous avec les<span className="text-[#FFA500]"> meilleurs experts </span>d&apos;Afrique</>
+              )}
             </h1>
             <p className="text-blue-100 text-lg mb-8 leading-relaxed">
-              IBIG E-LEARN vous donne accès à plus de 179 formations professionnelles certifiantes, conçues pour le marché africain, accessibles depuis votre téléphone.
+              {user
+                ? `Vous avez ${userEnrollments.length} formation${userEnrollments.length > 1 ? 's' : ''} en cours. ${(userProfile as any)?.streak_days > 0 ? `🔥 ${(userProfile as any).streak_days} jours de suite !` : 'Continuez sur votre lancée !'}`
+                : "IBIG E-LEARN vous donne accès à plus de 179 formations professionnelles certifiantes, conçues pour le marché africain, accessibles depuis votre téléphone."}
             </p>
             <div className="flex flex-wrap gap-3 mb-10">
-              <Link href="/catalogue"
-                className="flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-white font-bold px-6 py-3.5 rounded-2xl transition-colors text-sm">
-                Explorer les formations <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link href="/inscription"
-                className="flex items-center gap-2 border-2 border-white/30 hover:border-white text-white font-semibold px-6 py-3.5 rounded-2xl transition-colors text-sm">
-                Commencer gratuitement
-              </Link>
+              {user ? (
+                <>
+                  <Link href="/tableau-de-bord"
+                    className="flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-white font-bold px-6 py-3.5 rounded-2xl transition-colors text-sm">
+                    Mon tableau de bord <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/catalogue"
+                    className="flex items-center gap-2 border-2 border-white/30 hover:border-white text-white font-semibold px-6 py-3.5 rounded-2xl transition-colors text-sm">
+                    Nouvelles formations
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/catalogue"
+                    className="flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-white font-bold px-6 py-3.5 rounded-2xl transition-colors text-sm">
+                    Explorer les formations <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/inscription"
+                    className="flex items-center gap-2 border-2 border-white/30 hover:border-white text-white font-semibold px-6 py-3.5 rounded-2xl transition-colors text-sm">
+                    Commencer gratuitement
+                  </Link>
+                </>
+              )}
             </div>
+
+            {/* Formations en cours (si connecté) */}
+            {user && userEnrollments.length > 0 && (
+              <div className="space-y-2">
+                {userEnrollments.map((e: any) => (
+                  <Link key={(e.course as any)?.id} href={`/formation/${(e.course as any)?.slug}`}
+                    className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 transition-colors">
+                    <div className="w-8 h-8 rounded-lg bg-white/20 overflow-hidden flex-shrink-0">
+                      {(e.course as any)?.thumbnail_url
+                        ? <img src={(e.course as any).thumbnail_url} alt="" className="w-full h-full object-cover" />
+                        : <BookOpen className="w-4 h-4 text-white/50 m-auto mt-2" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold truncate">{(e.course as any)?.title}</p>
+                      <div className="h-1 bg-white/20 rounded-full mt-1 overflow-hidden">
+                        <div className="h-full bg-[#FFA500] rounded-full" style={{ width: `${e.progress_percent ?? 0}%` }} />
+                      </div>
+                    </div>
+                    <span className="text-xs text-blue-200 flex-shrink-0">{e.progress_percent ?? 0}%</span>
+                  </Link>
+                ))}
+              </div>
+            )}
             <div className="flex flex-wrap gap-6">
               {stats.map(s => (
                 <div key={s.label} className="flex items-center gap-2">

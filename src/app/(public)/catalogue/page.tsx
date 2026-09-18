@@ -221,6 +221,9 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                     {(course as any).price_xof === 0 && (
                       <span className="absolute top-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full bg-green-500 text-white">GRATUIT</span>
                     )}
+                    {(course as any).price_xof > 0 && (new Date().getTime() - new Date((course as any).created_at).getTime()) < 30 * 24 * 60 * 60 * 1000 && (
+                      <span className="absolute bottom-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full bg-[#FFA500] text-black">🆕 NOUVEAU</span>
+                    )}
                   </div>
                   <div className="p-4 flex flex-col flex-1">
                     <p className="text-xs font-medium text-[#0B3D91] mb-1">{(course.category as any)?.name}</p>
