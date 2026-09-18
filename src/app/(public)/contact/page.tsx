@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Phone, MapPin, MessageSquare, Send, CheckCircle, Loader2 } from 'lucide-react'
+import { Mail, Phone, MapPin, MessageSquare, Send, CheckCircle, Loader2, AlertCircle } from 'lucide-react'
 
 const SUBJECTS = [
   'Question sur une formation',
@@ -17,12 +17,25 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const [error, setError] = useState<string | null>(null)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1000))
-    setLoading(false)
-    setSent(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('Erreur serveur')
+      setSent(true)
+    } catch {
+      setError('Une erreur est survenue. Veuillez réessayer ou nous écrire directement à contact@ibiglearn.com')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -174,6 +187,12 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {error && (
+                    <div className="flex items-start gap-2 bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-sm text-red-700">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <span>{error}</span>
+                    </div>
+                  )}
                   <button
                     type="submit"
                     disabled={loading}

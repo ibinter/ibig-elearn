@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import type { Profile } from '@/types'
 import CurrencySelector from '@/components/ui/CurrencySelector'
 import GlobalSearch from '@/components/search/GlobalSearch'
-import NotificationBell from '@/components/notifications/NotificationBell'
+import NotificationBell from '@/components/ui/NotificationBell'
 
 interface NavbarProps {
   user?: Profile | null
