@@ -1,10 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { Star, Users, Clock, BookOpen, CheckCircle, Play, Award, ChevronDown } from 'lucide-react'
-import { formatPrice, formatDate } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import Link from 'next/link'
 import type { Course } from '@/types'
 import EnrollButton from './EnrollButton'
+import PriceDisplay from '@/components/ui/PriceDisplay'
+import ReviewsList from '@/components/reviews/ReviewsList'
+import ReviewForm from '@/components/reviews/ReviewForm'
+import StarRating from '@/components/reviews/StarRating'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -50,12 +54,11 @@ export default async function FormationPage({ params }: PageProps) {
     isEnrolled = !!enroll
   }
 
-  const { data: reviews } = await supabase
-    .from('reviews')
-    .select('*, user:profiles(full_name)')
-    .eq('course_id', course.id)
-    .order('created_at', { ascending: false })
-    .limit(5)
+  let myReview = null
+  if (user && isEnrolled) {
+    const { data } = await supabase.from('reviews').select('rating, comment').eq('user_id', user.id).eq('course_id', course.id).single()
+    myReview = data
+  }
 
   const c = course as Course
   const levelLabel: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
@@ -84,7 +87,7 @@ export default async function FormationPage({ params }: PageProps) {
                 <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4" /> <strong className="text-white">{totalLessons}</strong> leçons</span>
               </div>
               <div className="mt-4 text-sm text-blue-200">
-                Formateur : <Link href="#formateur" className="text-white underline">{(c.instructor as any)?.full_name}</Link>
+                Formateur : <Link href={`/formateur/${(c.instructor as any)?.id}`} className="text-white underline">{(c.instructor as any)?.full_name}</Link>
                 {' · '} Mis à jour le {formatDate(c.updated_at)}
               </div>
             </div>
@@ -154,36 +157,37 @@ export default async function FormationPage({ params }: PageProps) {
                   {(c.instructor as any)?.full_name?.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">{(c.instructor as any)?.full_name}</p>
+                  <Link href={`/formateur/${(c.instructor as any)?.id}`} className="font-bold text-gray-900 hover:text-[#0B3D91] transition-colors">{(c.instructor as any)?.full_name}</Link>
                   {(c.instructor as any)?.bio && <p className="text-gray-500 text-sm mt-1">{(c.instructor as any).bio}</p>}
                 </div>
               </div>
             </div>
 
-            {/* Avis */}
-            {reviews && reviews.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h2 className="font-bold text-gray-900 text-lg mb-4">Avis des apprenants</h2>
-                <div className="space-y-4">
-                  {(reviews as any[]).map(rev => (
-                    <div key={rev.id} className="border-b border-gray-50 pb-4 last:border-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-[#0B3D91] text-white flex items-center justify-center text-xs font-bold">
-                          {rev.user?.full_name?.charAt(0)}
-                        </div>
-                        <span className="font-semibold text-sm text-gray-900">{rev.user?.full_name}</span>
-                        <div className="flex gap-0.5 ml-auto">
-                          {Array.from({length: 5}).map((_, i) => (
-                            <Star key={i} className={`w-3.5 h-3.5 ${i < rev.rating ? 'text-[#FFA500] fill-[#FFA500]' : 'text-gray-200'}`} />
-                          ))}
-                        </div>
-                      </div>
-                      {rev.comment && <p className="text-sm text-gray-600">{rev.comment}</p>}
-                    </div>
-                  ))}
-                </div>
+            {/* Avis apprenants */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-bold text-gray-900 text-lg">Avis des apprenants</h2>
+                {(c as any).rating_avg > 0 && (
+                  <div className="flex items-center gap-2">
+                    <StarRating value={Math.round((c as any).rating_avg)} readonly size="sm" />
+                    <span className="text-sm font-bold text-gray-900">{Number((c as any).rating_avg).toFixed(1)}</span>
+                    <span className="text-sm text-gray-400">({(c as any).review_count ?? 0} avis)</span>
+                  </div>
+                )}
               </div>
-            )}
+
+              {/* Formulaire si inscrit */}
+              {isEnrolled && (
+                <div className="mb-8 p-5 bg-gray-50 rounded-xl border border-gray-100">
+                  <h3 className="font-semibold text-gray-900 mb-4">
+                    {myReview ? 'Modifier votre avis' : 'Donnez votre avis'}
+                  </h3>
+                  <ReviewForm courseId={course.id} existingReview={myReview ?? undefined} />
+                </div>
+              )}
+
+              <ReviewsList courseId={course.id} ratingAvg={(c as any).rating_avg ?? 0} reviewCount={(c as any).review_count ?? 0} />
+            </div>
           </div>
 
           {/* Sticky card inscription */}
@@ -196,10 +200,9 @@ export default async function FormationPage({ params }: PageProps) {
                   </div>
                 )}
                 <div className="p-6">
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-3xl font-bold text-[#0B3D91]">{formatPrice(c.price_xof)}</span>
+                  <div className="flex items-baseline gap-2 mb-4">
+                    <PriceDisplay price_xof={c.price_xof} price_eur={c.price_eur} price_usd={c.price_usd} className="text-3xl font-bold text-[#0B3D91]" />
                   </div>
-                  {c.price_eur && <p className="text-sm text-gray-400 mb-4">≈ {formatPrice(c.price_eur, 'EUR')} · {formatPrice(c.price_usd ?? 0, 'USD')}</p>}
 
                   <EnrollButton courseId={c.id} courseSlug={c.slug} isEnrolled={isEnrolled} isFree={c.price_xof === 0} isLoggedIn={!!user} />
 

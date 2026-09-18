@@ -1,8 +1,16 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { CurrencyProvider } from '@/lib/currency-context'
+import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
 
 const inter = Inter({ subsets: ['latin'] })
+
+export const viewport: Viewport = {
+  themeColor: '#0B3D91',
+  width: 'device-width',
+  initialScale: 1,
+}
 
 export const metadata: Metadata = {
   title: {
@@ -14,6 +22,19 @@ export const metadata: Metadata = {
   authors: [{ name: 'IBIG EDUFORM' }],
   creator: 'IBIG SOFT',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibiglearn.com'),
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'IBIG E-LEARN',
+  },
+  icons: {
+    icon: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/icon-192.png', sizes: '192x192' }],
+  },
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
@@ -24,7 +45,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <CurrencyProvider>{children}</CurrencyProvider>
+        <ServiceWorkerRegister />
+      </body>
     </html>
   )
 }

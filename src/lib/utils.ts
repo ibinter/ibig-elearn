@@ -7,19 +7,17 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatPrice(amount: number, currency: string = 'XOF'): string {
   const locales: Record<string, string> = {
-    XOF: 'fr-CI',
-    XAF: 'fr-CM',
-    EUR: 'fr-FR',
-    USD: 'en-US',
-    CAD: 'fr-CA',
-    MAD: 'fr-MA',
-    GNF: 'fr-GN',
-    CDF: 'fr-CD',
+    XOF: 'fr-CI', XAF: 'fr-CM', EUR: 'fr-FR', USD: 'en-US',
+    CAD: 'fr-CA', MAD: 'fr-MA', GNF: 'fr-GN', CDF: 'fr-CD',
+    DZD: 'fr-DZ', TND: 'fr-TN', NGN: 'en-NG', GHS: 'en-GH',
+    KES: 'sw-KE', ZAR: 'en-ZA', EGP: 'ar-EG', ETB: 'am-ET',
+    RWF: 'rw-RW', MGA: 'mg-MG', MUR: 'en-MU', SLL: 'en-SL',
   }
+  const noDecimals = ['XOF','XAF','GNF','CDF','RWF','UGX','TZS','KES','NGN','ETB','SLL','MGA']
   return new Intl.NumberFormat(locales[currency] ?? 'fr-FR', {
     style: 'currency',
     currency,
-    maximumFractionDigits: currency === 'XOF' || currency === 'XAF' || currency === 'GNF' || currency === 'CDF' ? 0 : 2,
+    maximumFractionDigits: noDecimals.includes(currency) ? 0 : 2,
   }).format(amount)
 }
 

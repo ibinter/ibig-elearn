@@ -6,6 +6,8 @@ import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard } from 'l
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Profile } from '@/types'
+import CurrencySelector from '@/components/ui/CurrencySelector'
+import GlobalSearch from '@/components/search/GlobalSearch'
 
 interface NavbarProps {
   user?: Profile | null
@@ -53,16 +55,25 @@ export default function Navbar({ user }: NavbarProps) {
             <Link href="/catalogue?featured=true" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
               Formations vedettes
             </Link>
+            <Link href="/blog" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
+              Blog
+            </Link>
+            <Link href="/entreprise" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
+              Entreprise
+            </Link>
             <Link href="/a-propos" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
               À propos
             </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
-              Contact
-            </Link>
+          </div>
+
+          {/* Search */}
+          <div className="hidden lg:block flex-1 max-w-xs mx-6">
+            <GlobalSearch />
           </div>
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
+            <CurrencySelector />
             {user ? (
               <div className="relative">
                 <button
@@ -113,6 +124,7 @@ export default function Navbar({ user }: NavbarProps) {
       {menuOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="px-4 py-3 space-y-1">
+            <GlobalSearch className="mb-3" />
             <Link href="/catalogue" className="block py-2.5 px-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium" onClick={() => setMenuOpen(false)}>Catalogue</Link>
             <Link href="/a-propos" className="block py-2.5 px-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium" onClick={() => setMenuOpen(false)}>À propos</Link>
             <Link href="/contact" className="block py-2.5 px-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium" onClick={() => setMenuOpen(false)}>Contact</Link>

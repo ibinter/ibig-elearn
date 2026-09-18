@@ -23,7 +23,7 @@ export default async function PaiementConfirmationPage({
     const { data } = await supabase
       .from('payments')
       .select('*, courses(title, slug)')
-      .eq('cinetpay_transaction_id', transaction_id)
+      .eq('provider_reference', transaction_id)
       .single()
     payment = data
   }

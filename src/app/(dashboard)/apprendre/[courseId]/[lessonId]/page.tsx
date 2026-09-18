@@ -5,6 +5,9 @@ import LessonSidebar from './LessonSidebar'
 import QuizSection from './QuizSection'
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle } from 'lucide-react'
+import CertificateButton from '@/components/ui/CertificateButton'
+import SaraChat from '@/components/sara/SaraChat'
+import DiscussionPanel from '@/components/forum/DiscussionPanel'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -58,13 +61,14 @@ export default async function ApprendrePage({ params }: PageProps) {
 
   // Quiz si applicable
   let quizQuestions = null
+  let bestPreviousScore: number | null = null
   if (currentLesson.type === 'quiz') {
-    const { data } = await supabase
-      .from('quiz_questions')
-      .select('*')
-      .eq('lesson_id', currentLesson.id)
-      .order('position')
-    quizQuestions = data
+    const [{ data: questions }, { data: attempts }] = await Promise.all([
+      supabase.from('quiz_questions').select('*').eq('lesson_id', currentLesson.id).order('position'),
+      supabase.from('quiz_attempts').select('score').eq('lesson_id', currentLesson.id).eq('user_id', user.id).order('score', { ascending: false }).limit(1),
+    ])
+    quizQuestions = questions
+    bestPreviousScore = attempts?.[0]?.score ?? null
   }
 
   return (
@@ -129,11 +133,32 @@ export default async function ApprendrePage({ params }: PageProps) {
                 lessonId={currentLesson.id}
                 courseId={courseId}
                 userId={user.id}
+                passingScore={currentLesson.quiz_passing_score ?? 70}
+                bestPreviousScore={bestPreviousScore}
               />
+            )}
+
+            {/* Forum de discussion */}
+            <DiscussionPanel
+              lessonId={currentLesson.id}
+              courseId={courseId}
+              currentUserId={user.id}
+            />
+
+            {enrollment.progress_percent >= 100 && (
+              <div className="mt-8 p-6 bg-gradient-to-r from-[#FFA500]/10 to-[#0B3D91]/10 border border-[#FFA500]/30 rounded-2xl">
+                <p className="text-white text-center font-semibold mb-4">🎉 Félicitations ! Vous avez terminé cette formation.</p>
+                <CertificateButton courseId={courseId} />
+              </div>
             )}
           </div>
         </main>
       </div>
+      <SaraChat
+        courseTitle={course.title}
+        lessonTitle={currentLesson.title}
+        lessonContent={currentLesson.content ?? undefined}
+      />
     </div>
   )
 }

@@ -46,12 +46,10 @@ export default async function MesCertificatsPage() {
                     className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold border border-[#0B3D91] text-[#0B3D91] py-2 rounded-lg hover:bg-[#0B3D91]/5 transition-colors">
                     <ExternalLink className="w-3.5 h-3.5" /> Vérifier
                   </Link>
-                  {cert.pdf_url && (
-                    <a href={cert.pdf_url} target="_blank" rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold bg-[#FFA500] text-black py-2 rounded-lg hover:bg-orange-500 transition-colors">
-                      <Download className="w-3.5 h-3.5" /> Télécharger
-                    </a>
-                  )}
+                  <Link href={`/mes-certificats/${cert.id}/imprimer`}
+                    className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold bg-[#FFA500] text-black py-2 rounded-lg hover:bg-orange-500 transition-colors">
+                    <Download className="w-3.5 h-3.5" /> Télécharger
+                  </Link>
                 </div>
               </div>
             </div>

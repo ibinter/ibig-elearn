@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { BookOpen, LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings } from 'lucide-react'
+import { BookOpen, LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings, Building2, Tag } from 'lucide-react'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -17,6 +17,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     { href: '/admin/utilisateurs', label: 'Utilisateurs', icon: Users },
     { href: '/admin/paiements', label: 'Paiements', icon: CreditCard },
     { href: '/admin/certificats', label: 'Certificats', icon: Award },
+    { href: '/admin/entreprise', label: 'Entreprise B2B', icon: Building2 },
+    { href: '/admin/coupons', label: 'Coupons & Promos', icon: Tag },
     { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
   ]
 

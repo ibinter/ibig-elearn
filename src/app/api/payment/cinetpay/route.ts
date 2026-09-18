@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { cookies } from 'next/headers'
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
@@ -44,6 +45,10 @@ export async function POST(request: NextRequest) {
   }
   const amount = amounts[currency] ?? course.price_xof
 
+  // Lire le code affilié depuis le cookie
+  const cookieStore = await cookies()
+  const refCode = cookieStore.get('ibig_ref')?.value ?? null
+
   // Créer le paiement en attente
   const transactionId = `IBIG-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`
   const { data: payment } = await supabase.from('payments').insert({
@@ -56,6 +61,7 @@ export async function POST(request: NextRequest) {
     provider_reference: transactionId,
     status: 'pending',
     invoice_number: transactionId,
+    metadata: refCode ? { ref_code: refCode } : {},
   }).select().single()
 
   // Appel CinetPay

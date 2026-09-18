@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { BookOpen, LayoutDashboard, GraduationCap, Award, User, LogOut } from 'lucide-react'
+import { BookOpen, LayoutDashboard, GraduationCap, Award, User, LogOut, Share2, BarChart2, MessageCircle, Trophy, Video } from 'lucide-react'
+import MobileNav from '@/components/layout/MobileNav'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -11,11 +12,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single()
 
+  const isFormateur = ['formateur', 'admin', 'coordinateur'].includes(profile?.role ?? '')
+
   const navItems = [
     { href: '/tableau-de-bord', label: 'Tableau de bord', icon: LayoutDashboard },
     { href: '/mes-formations', label: 'Mes formations', icon: GraduationCap },
     { href: '/mes-certificats', label: 'Mes certificats', icon: Award },
     { href: '/profil', label: 'Mon profil', icon: User },
+    { href: `/apprenant/${user.id}`, label: 'Profil public', icon: Share2 },
+    { href: '/messages', label: 'Messages', icon: MessageCircle },
+    { href: '/fidelite', label: 'Programme fidélité', icon: Trophy },
+    { href: '/sessions-live', label: 'Sessions live', icon: Video },
+    ...(isFormateur ? [{ href: '/formateur', label: 'Espace Formateur', icon: BarChart2 }] : []),
   ]
 
   return (
@@ -57,6 +65,20 @@ export default async function DashboardLayout({ children }: { children: React.Re
           ))}
         </nav>
 
+        {/* Bannière IBIG PARTNER */}
+        <div className="mx-3 mb-3 rounded-xl bg-gradient-to-br from-[#FFA500]/10 to-[#0B3D91]/10 border border-[#FFA500]/20 p-3">
+          <p className="text-xs font-bold text-gray-800 mb-0.5">💰 Gagnez des revenus</p>
+          <p className="text-xs text-gray-500 mb-2">Promouvez IBIG et touchez des commissions</p>
+          <a
+            href="https://ibigpartners.com/rejoindre"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center text-xs font-semibold text-white ibig-gradient rounded-lg py-1.5 hover:opacity-90 transition-opacity"
+          >
+            Rejoindre IBIG PARTNER →
+          </a>
+        </div>
+
         <div className="p-3 border-t border-gray-100">
           <Link href="/catalogue" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors mb-1">
             <BookOpen className="w-5 h-5" /> Découvrir des formations
@@ -79,8 +101,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <span className="font-bold text-[#0B3D91]">IBIG <span className="text-[#FFA500]">E-LEARN</span></span>
           </Link>
         </header>
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6 pb-20 lg:pb-6">{children}</main>
       </div>
+      <MobileNav />
     </div>
   )
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CreditCard, Phone, ShieldCheck, Loader2 } from 'lucide-react'
+import CouponInput from '@/components/checkout/CouponInput'
 
 interface Props {
   courseId: string
@@ -28,6 +29,13 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
   const [phone, setPhone] = useState(userPhone)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [finalAmount, setFinalAmount] = useState(amount)
+  const [couponId, setCouponId] = useState<string | null>(null)
+
+  function handleCoupon(result: { valid: boolean; couponId: string; finalAmount: number } | null) {
+    if (result) { setFinalAmount(result.finalAmount); setCouponId(result.couponId) }
+    else { setFinalAmount(amount); setCouponId(null) }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -40,41 +48,29 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           courseId,
-          amount,
+          amount: finalAmount,
           currency,
           description: courseName,
           customer_name: userName,
           customer_email: userEmail,
           customer_phone_number: phone,
           payment_method: method === 'card' ? 'CREDIT_CARD' : provider.toUpperCase(),
+          coupon_id: couponId,
         }),
       })
 
       const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || 'Erreur lors de l\'initiation du paiement.')
-        setLoading(false)
-        return
-      }
-
-      if (data.payment_url) {
-        window.location.href = data.payment_url
-      } else {
-        setError('URL de paiement non reçue.')
-        setLoading(false)
-      }
+      if (!res.ok) { setError(data.error || 'Erreur lors de l\'initiation du paiement.'); setLoading(false); return }
+      if (data.paymentUrl) window.location.href = data.paymentUrl
+      else { setError('URL de paiement non reçue.'); setLoading(false) }
     } catch {
       setError('Erreur réseau. Veuillez réessayer.')
       setLoading(false)
     }
   }
 
-  const formattedAmount = new Intl.NumberFormat('fr-FR', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0
-  }).format(amount)
+  const formattedAmount = new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(finalAmount)
+  const hasDiscount = finalAmount < amount
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -82,25 +78,13 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
       <div>
         <p className="text-sm font-medium text-gray-700 mb-3">Choisir un mode de paiement</p>
         <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={() => setMethod('mobile')}
-            className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
-              method === 'mobile' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
-          >
-            <Phone className="w-4 h-4" />
-            Mobile Money
+          <button type="button" onClick={() => setMethod('mobile')}
+            className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${method === 'mobile' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'}`}>
+            <Phone className="w-4 h-4" /> Mobile Money
           </button>
-          <button
-            type="button"
-            onClick={() => setMethod('card')}
-            className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${
-              method === 'card' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
-          >
-            <CreditCard className="w-4 h-4" />
-            Carte bancaire
+          <button type="button" onClick={() => setMethod('card')}
+            className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${method === 'card' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'}`}>
+            <CreditCard className="w-4 h-4" /> Carte bancaire
           </button>
         </div>
       </div>
@@ -110,64 +94,49 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
           <p className="text-sm font-medium text-gray-700 mb-3">Opérateur</p>
           <div className="grid grid-cols-2 gap-2">
             {MOBILE_MONEY.map(op => (
-              <button
-                key={op.id}
-                type="button"
-                onClick={() => setProvider(op.id)}
-                className={`flex items-center gap-2 p-3 rounded-lg border text-sm transition-colors ${
-                  provider === op.id ? 'border-blue-500 bg-blue-50 font-medium' : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <span>{op.emoji}</span>
-                {op.label}
+              <button key={op.id} type="button" onClick={() => setProvider(op.id)}
+                className={`flex items-center gap-2 p-3 rounded-lg border text-sm transition-colors ${provider === op.id ? 'border-blue-500 bg-blue-50 font-medium' : 'border-gray-200 hover:border-gray-300'}`}>
+                <span>{op.emoji}</span>{op.label}
               </button>
             ))}
           </div>
         </div>
       )}
 
-      {/* Numéro de téléphone */}
+      {/* Coupon */}
+      <div>
+        <p className="text-sm font-medium text-gray-700 mb-2">Code promo</p>
+        <CouponInput courseId={courseId} amount={amount} onApply={handleCoupon} />
+      </div>
+
+      {/* Téléphone */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           {method === 'mobile' ? 'Numéro Mobile Money' : 'Téléphone de contact'}
         </label>
-        <input
-          type="tel"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
-          required
+        <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} required
           placeholder="+225 07 00 00 00 00"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg p-3">
-          {error}
+      {/* Récapitulatif prix */}
+      {hasDiscount && (
+        <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center justify-between text-sm">
+          <span className="text-gray-500 line-through">{new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(amount)}</span>
+          <span className="font-bold text-green-700 text-base">{formattedAmount}</span>
         </div>
       )}
 
-      {/* Sécurité */}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg p-3">{error}</div>}
+
       <div className="flex items-start gap-2 bg-gray-50 rounded-lg p-3">
         <ShieldCheck className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
-        <p className="text-xs text-gray-600">
-          Paiement sécurisé via <strong>CinetPay</strong>. Vos données sont protégées par un chiffrement SSL.
-        </p>
+        <p className="text-xs text-gray-600">Paiement sécurisé via <strong>CinetPay</strong>. Données protégées SSL.</p>
       </div>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3.5 rounded-xl transition-colors disabled:opacity-60"
-      >
-        {loading ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Redirection vers le paiement...
-          </>
-        ) : (
-          <>Payer {formattedAmount}</>
-        )}
+      <button type="submit" disabled={loading}
+        className="w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3.5 rounded-xl transition-colors disabled:opacity-60">
+        {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Redirection...</> : <>Payer {formattedAmount}</>}
       </button>
 
       <p className="text-xs text-center text-gray-500">

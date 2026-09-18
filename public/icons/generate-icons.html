@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Icons</title></head>
+<body>
+<canvas id="c192" width="192" height="192"></canvas>
+<canvas id="c512" width="512" height="512"></canvas>
+<script>
+function drawIcon(canvas) {
+  const ctx = canvas.getContext('2d');
+  const s = canvas.width;
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, s, s);
+  grad.addColorStop(0, '#0B3D91');
+  grad.addColorStop(1, '#1a5cb8');
+  ctx.fillStyle = grad;
+  ctx.roundRect(0, 0, s, s, s * 0.18);
+  ctx.fill();
+  // Text IBIG
+  ctx.fillStyle = '#FFA500';
+  ctx.font = `bold ${s * 0.22}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.fillText('IBIG', s/2, s * 0.42);
+  ctx.fillStyle = 'white';
+  ctx.font = `bold ${s * 0.14}px Arial`;
+  ctx.fillText('E-LEARN', s/2, s * 0.62);
+}
+drawIcon(document.getElementById('c192'));
+drawIcon(document.getElementById('c512'));
+document.getElementById('c192').toBlob(b => {
+  const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'icon-192.png'; a.click();
+});
+setTimeout(() => {
+  document.getElementById('c512').toBlob(b => {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'icon-512.png'; a.click();
+  });
+}, 500);
+</script>
+</body>
+</html>

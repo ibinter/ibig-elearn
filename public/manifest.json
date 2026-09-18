@@ -1,0 +1,26 @@
+{
+  "name": "IBIG E-LEARN",
+  "short_name": "IBIG Learn",
+  "description": "La référence de la formation professionnelle en ligne en Afrique",
+  "start_url": "/tableau-de-bord",
+  "display": "standalone",
+  "background_color": "#0B3D91",
+  "theme_color": "#0B3D91",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "fr"
+}

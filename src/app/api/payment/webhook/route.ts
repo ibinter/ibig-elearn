@@ -1,11 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { sendEmail, inscriptionEmail } from '@/lib/email'
+import { reportSaleToPartners } from '@/lib/referral'
+import { felicitationsFormationEmail } from '@/lib/email-templates'
 
 export async function POST(request: NextRequest) {
-  const body = await request.json()
-  const { cpm_trans_id, cpm_result, cpm_error_message } = body
+  let body: Record<string, string>
+  try {
+    body = await request.json()
+  } catch {
+    // CinetPay peut envoyer en form-urlencoded
+    const text = await request.text()
+    body = Object.fromEntries(new URLSearchParams(text))
+  }
 
-  if (!cpm_trans_id) {
+  const transactionId = body.cpm_trans_id ?? body.transaction_id
+  const result = body.cpm_result ?? body.result
+  const errorMsg = body.cpm_error_message ?? body.error_message ?? ''
+
+  if (!transactionId) {
     return NextResponse.json({ error: 'transaction_id manquant' }, { status: 400 })
   }
 
@@ -14,22 +27,19 @@ export async function POST(request: NextRequest) {
   const { data: payment } = await supabase
     .from('payments')
     .select('*')
-    .eq('provider_reference', cpm_trans_id)
+    .eq('provider_reference', transactionId)
     .single()
 
   if (!payment) {
     return NextResponse.json({ error: 'Paiement introuvable' }, { status: 404 })
   }
 
-  if (cpm_result === '00') {
-    // Paiement réussi
+  if (result === '00') {
     await supabase.from('payments').update({
       status: 'completed',
-      metadata: { ...payment.metadata, cinetpay_response: body },
-      updated_at: new Date().toISOString(),
+      metadata: { cinetpay_response: body },
     }).eq('id', payment.id)
 
-    // Inscrire l'apprenant
     await supabase.from('enrollments').upsert({
       user_id: payment.user_id,
       course_id: payment.course_id,
@@ -40,15 +50,42 @@ export async function POST(request: NextRequest) {
       payment_reference: payment.provider_reference,
     }, { onConflict: 'user_id,course_id' })
 
-    // Incrémenter le compteur d'inscrits
     await supabase.rpc('increment_enrollment_count', { course_id_arg: payment.course_id })
+
+    // Email de confirmation + notification IBIG PARTNER
+    try {
+      const { data: profile } = await supabase.from('profiles').select('full_name, email, phone').eq('id', payment.user_id).single()
+      const { data: course } = await supabase.from('courses').select('title, slug').eq('id', payment.course_id).single()
+      if (profile?.email && course) {
+        const tpl = inscriptionEmail({ name: profile.full_name ?? 'Apprenant', courseTitle: course.title, courseSlug: course.slug })
+        await sendEmail({ to: profile.email, ...tpl })
+      }
+      // Notifier IBIG PARTNER si un code affilié est présent
+      const refCode = (payment.metadata as any)?.ref_code
+      if (refCode) {
+        await reportSaleToPartners({
+          partnerCode: refCode,
+          externalRef: payment.provider_reference,
+          amount: payment.amount,
+          currency: payment.currency,
+          customerName: profile?.full_name ?? undefined,
+          customerEmail: profile?.email ?? undefined,
+          customerPhone: profile?.phone ?? undefined,
+        })
+      }
+    } catch (e) { console.error('[webhook] email/referral error:', e) }
+
   } else {
     await supabase.from('payments').update({
       status: 'failed',
-      metadata: { error: cpm_error_message },
-      updated_at: new Date().toISOString(),
+      metadata: { error: errorMsg },
     }).eq('id', payment.id)
   }
 
+  return NextResponse.json({ status: 'ok' })
+}
+
+// CinetPay envoie parfois en GET pour la return_url
+export async function GET(request: NextRequest) {
   return NextResponse.json({ status: 'ok' })
 }

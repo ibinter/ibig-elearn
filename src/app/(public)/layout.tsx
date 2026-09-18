@@ -1,6 +1,8 @@
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/server'
+import { Suspense } from 'react'
+import RefCapture from '@/components/referral/RefCapture'
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -14,6 +16,7 @@ export default async function PublicLayout({ children }: { children: React.React
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Suspense><RefCapture /></Suspense>
       <Navbar user={profile} />
       <main className="flex-1">{children}</main>
       <Footer />
