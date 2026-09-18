@@ -78,8 +78,8 @@ export async function POST(req: NextRequest) {
     user_id: user.id,
     type: 'certificate',
     title: '🎓 Certificat obtenu !',
-    body: `Félicitations ! Vous avez terminé "${course?.title}" et reçu votre certificat.`,
-    url: `/mes-certificats/${certificate?.id}/imprimer`,
+    message: `Félicitations ! Vous avez terminé "${course?.title}" et reçu votre certificat.`,
+    link: `/mes-certificats/${certificate?.id}/imprimer`,
   })
 
   // Points de fidélité pour complétion
