@@ -9,6 +9,18 @@
   --color-ibig-green: #2ECC71;
 }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 @layer base {
   * {
     border-color: var(--color-gray-200, #e5e7eb);
