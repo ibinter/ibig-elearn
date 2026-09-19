@@ -21,6 +21,18 @@
   animation-play-state: paused;
 }
 
+@keyframes announcement {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+
+.animate-announcement {
+  animation: announcement 40s linear infinite;
+}
+.animate-announcement:hover {
+  animation-play-state: paused;
+}
+
 @layer base {
   * {
     border-color: var(--color-gray-200, #e5e7eb);
