@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import type { Course, Category } from '@/types'
 import CourseCard from '@/components/ui/CourseCard'
 import RecommendedCourses from '@/components/ui/RecommendedCourses'
+import CountUp from '@/components/ui/CountUp'
 
 async function getFeaturedCourses(): Promise<Course[]> {
   const supabase = await createClient()
@@ -197,17 +198,19 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
-              { value: `${stats.courses}+`, label: 'Formations', icon: BookOpen },
-              { value: stats.enrollments > 0 ? `${stats.enrollments.toLocaleString('fr-FR')}+` : '2 400+', label: 'Apprenants', icon: Users },
-              { value: stats.certificates > 0 ? `${stats.certificates.toLocaleString('fr-FR')}+` : '1 200+', label: 'Certificats délivrés', icon: Award },
-              { value: '12', label: 'Pays couverts', icon: Globe },
+              { end: stats.courses, suffix: '+', label: 'Formations', icon: BookOpen },
+              { end: stats.enrollments > 0 ? stats.enrollments : 2400, suffix: '+', label: 'Apprenants', icon: Users },
+              { end: stats.certificates > 0 ? stats.certificates : 1200, suffix: '+', label: 'Certificats délivrés', icon: Award },
+              { end: 12, suffix: '', label: 'Pays couverts', icon: Globe },
             ].map(s => (
               <div key={s.label} className="flex items-center gap-3 justify-center">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
                   <s.icon className="w-5 h-5 text-[#0B3D91]" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xl font-bold text-gray-900">{s.value}</div>
+                  <div className="text-xl font-bold text-gray-900">
+                    <CountUp end={s.end} suffix={s.suffix} />
+                  </div>
                   <div className="text-xs text-gray-500">{s.label}</div>
                 </div>
               </div>
