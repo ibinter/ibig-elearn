@@ -10,6 +10,8 @@ import SaraChat from '@/components/sara/SaraChat'
 import DiscussionPanel from '@/components/forum/DiscussionPanel'
 import LessonNotes from '@/components/apprendre/LessonNotes'
 import BookmarkButton from '@/components/apprendre/BookmarkButton'
+import MarkCompleteButton from '@/components/apprendre/MarkCompleteButton'
+import LessonNavigation from '@/components/apprendre/LessonNavigation'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -60,6 +62,12 @@ export default async function ApprendrePage({ params }: PageProps) {
     .eq('user_id', user.id)
     .eq('lesson_id', currentLesson.id)
     .single()
+
+  // Liste plate de toutes les leçons pour navigation prev/next
+  const allLessons = (modules ?? []).flatMap(m => (m.lessons ?? []).sort((a: any, b: any) => a.position - b.position))
+  const currentIdx = allLessons.findIndex((l: any) => l.id === currentLesson.id)
+  const prevLesson = currentIdx > 0 ? allLessons[currentIdx - 1] : null
+  const nextLesson = currentIdx < allLessons.length - 1 ? allLessons[currentIdx + 1] : null
 
   // Quiz si applicable
   let quizQuestions = null
@@ -118,7 +126,14 @@ export default async function ApprendrePage({ params }: PageProps) {
               <h2 className="text-xl font-bold text-white">{currentLesson.title}</h2>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <BookmarkButton lessonId={currentLesson.id} courseId={courseId} />
-                {progress?.is_completed && (
+                {currentLesson.type !== 'video' && currentLesson.type !== 'quiz' && (
+                  <MarkCompleteButton
+                    lessonId={currentLesson.id}
+                    courseId={courseId}
+                    isCompleted={progress?.is_completed ?? false}
+                  />
+                )}
+                {currentLesson.type === 'video' && progress?.is_completed && (
                   <span className="flex items-center gap-1.5 text-green-400 text-sm font-medium">
                     <CheckCircle className="w-5 h-5" /> Terminé
                   </span>
@@ -153,6 +168,13 @@ export default async function ApprendrePage({ params }: PageProps) {
               lessonId={currentLesson.id}
               courseId={courseId}
               currentUserId={user.id}
+            />
+
+            {/* Navigation leçon suivante / précédente */}
+            <LessonNavigation
+              courseId={courseId}
+              prevLesson={prevLesson ? { id: prevLesson.id, title: prevLesson.title } : null}
+              nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
             />
 
             {enrollment.progress_percent >= 100 && (

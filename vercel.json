@@ -11,5 +11,15 @@
         { "key": "Cache-Control", "value": "no-store, max-age=0" }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/notifications/rappel-inactif",
+      "schedule": "0 9 * * 1"
+    },
+    {
+      "path": "/api/certificates/auto-issue",
+      "schedule": "0 * * * *"
+    }
   ]
 }
