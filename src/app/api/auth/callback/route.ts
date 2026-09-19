@@ -25,18 +25,17 @@ export async function GET(request: NextRequest) {
     )
     const { data } = await supabase.auth.exchangeCodeForSession(code)
 
-    // Envoyer email bienvenu aux nouveaux utilisateurs Google OAuth
+    // Envoyer email bienvenu aux nouveaux utilisateurs (OAuth et email/password)
     if (data?.user) {
       const createdAt = new Date(data.user.created_at).getTime()
-      const isNew = Date.now() - createdAt < 60_000 // créé il y a moins d'1 min
+      const confirmedAt = data.user.email_confirmed_at ? new Date(data.user.email_confirmed_at).getTime() : 0
+      // Nouveau si créé < 30min OU confirmation email dans les 10min (1ère connexion via lien)
+      const isNew = Date.now() - createdAt < 30 * 60_000
+        || (confirmedAt > 0 && Date.now() - confirmedAt < 10 * 60_000)
       if (isNew) {
-        // Fire-and-forget — non bloquant
-        const baseUrl = origin
-        fetch(`${baseUrl}/api/email/bienvenu`, {
+        fetch(`${origin}/api/email/bienvenu`, {
           method: 'POST',
-          headers: {
-            'Cookie': cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; '),
-          },
+          headers: { 'Cookie': cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ') },
         }).catch(() => null)
       }
     }

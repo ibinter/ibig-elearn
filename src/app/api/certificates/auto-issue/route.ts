@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { sendEmail, certificatEmail } from '@/lib/email'
 
 // Appelée automatiquement quand la progression atteint 100%
 export async function POST(req: NextRequest) {
@@ -81,6 +82,19 @@ export async function POST(req: NextRequest) {
     message: `Félicitations ! Vous avez terminé "${course?.title}" et reçu votre certificat.`,
     link: `/mes-certificats/${certificate?.id}/imprimer`,
   })
+
+  // Email certificat
+  try {
+    const { data: profile } = await supabase.from('profiles').select('full_name, email').eq('id', user.id).single()
+    const certUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearn.vercel.app'}/mes-certificats/${certificate?.id}/imprimer`
+    const tpl = certificatEmail({
+      name: profile?.full_name ?? 'Apprenant',
+      courseTitle: course?.title ?? '',
+      certNumber,
+      certUrl,
+    })
+    await sendEmail({ to: profile?.email ?? user.email ?? '', ...tpl })
+  } catch { /* non bloquant */ }
 
   // Points de fidélité pour complétion
   try {

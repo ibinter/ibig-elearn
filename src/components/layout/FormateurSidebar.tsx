@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { LayoutDashboard, BookOpen, Users, BarChart2, PlusCircle, LogOut, Video, Bell, Menu, X } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Users, BarChart2, PlusCircle, LogOut, Video, Bell, Menu, X, DollarSign } from 'lucide-react'
 
 type NavItem = {
   href: string
@@ -23,6 +23,7 @@ const NAV: NavItem[] = [
   { href: '/formateur/formations/nouvelle', label: 'Nouvelle formation', icon: PlusCircle },
   { href: '/formateur/apprenants', label: 'Apprenants', icon: Users },
   { href: '/formateur/statistiques', label: 'Statistiques', icon: BarChart2 },
+  { href: '/formateur/revenus', label: 'Revenus', icon: DollarSign },
   { href: '/formateur/sessions-live', label: 'Sessions live', icon: Video },
   { href: '/formateur/notifier', label: 'Notifier', icon: Bell },
 ]

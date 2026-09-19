@@ -95,6 +95,75 @@ export function inscriptionEmail({ name, courseTitle, courseSlug }: { name: stri
   }
 }
 
+export function certificatEmail({ name, courseTitle, certNumber, certUrl }: { name: string; courseTitle: string; certNumber: string; certUrl: string }) {
+  return {
+    subject: `🎓 Votre certificat IBIG E-LEARN — ${courseTitle}`,
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f6fb;font-family:'Segoe UI',Arial,sans-serif">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6fb;padding:32px 16px">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(11,61,145,.08)">
+        <tr>
+          <td style="background:linear-gradient(135deg,#0B3D91,#1558c0);padding:32px 40px;text-align:center">
+            <p style="margin:0;font-size:22px;font-weight:800;color:#ffffff">IBIG <span style="color:#FFA500">E-LEARN</span></p>
+            <p style="margin:8px 0 0;font-size:13px;color:#a8c4f0">Certificat de réussite</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px">
+            <div style="text-align:center;margin-bottom:32px">
+              <div style="width:72px;height:72px;background:linear-gradient(135deg,#FFA500,#ff8c00);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:16px">🎓</div>
+              <p style="margin:0 0 8px;font-size:26px;font-weight:800;color:#1a1a2e">Félicitations, ${name} !</p>
+              <p style="margin:0;font-size:15px;color:#666;line-height:1.6">Vous avez brillamment terminé la formation</p>
+            </div>
+
+            <div style="background:linear-gradient(135deg,#f0f4ff,#e8f0fe);border:2px solid #0B3D91;border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:center">
+              <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#0B3D91;text-transform:uppercase;letter-spacing:1px">Formation certifiée</p>
+              <p style="margin:0;font-size:18px;font-weight:800;color:#1a1a2e">${courseTitle}</p>
+            </div>
+
+            <div style="background:#f8f9fc;border-radius:10px;padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <p style="margin:0 0 2px;font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px">Numéro de certificat</p>
+                <p style="margin:0;font-size:14px;font-weight:700;color:#1a1a2e;font-family:monospace">${certNumber}</p>
+              </div>
+              <div style="text-align:right">
+                <p style="margin:0 0 2px;font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px">Délivré le</p>
+                <p style="margin:0;font-size:13px;font-weight:600;color:#1a1a2e">${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+              </div>
+            </div>
+
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:24px">
+              <tr>
+                <td style="background:#0B3D91;border-radius:10px;text-align:center">
+                  <a href="${certUrl}" style="display:block;padding:14px 28px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none">
+                    📥 Télécharger mon certificat
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0;font-size:13px;color:#888;line-height:1.7;text-align:center">
+              Ce certificat est vérifiable en ligne. Partagez-le sur LinkedIn ou envoyez-le directement à vos employeurs.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f8f9fc;padding:20px 40px;text-align:center;border-top:1px solid #eef0f5">
+            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARN · <a href="https://ibig-elearn.vercel.app" style="color:#0B3D91;text-decoration:none">ibig-elearn.vercel.app</a></p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  }
+}
+
 export function bienvenuEmail({ name, email }: { name: string; email: string }) {
   const url = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearn.vercel.app'}/catalogue`
   return {
