@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { CheckCircle, XCircle, RotateCcw, Trophy, Clock } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -29,13 +29,38 @@ export default function QuizSection({ questions, lessonId, courseId, userId, pas
   const [score, setScore] = useState(0)
   const supabase = createClient()
 
+  // Timer — 90 secondes par question
+  const timeLimit = questions.length * 90
+  const [timeLeft, setTimeLeft] = useState(timeLimit)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    if (submitted) { if (timerRef.current) clearInterval(timerRef.current); return }
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current!)
+          handleSubmitInternal()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [submitted]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const fmtTime = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
+  const timerUrgent = timeLeft < 30 && !submitted
+
   const handleSelect = (questionIndex: number, optionIndex: number) => {
     if (submitted) return
     setAnswers(prev => ({ ...prev, [questionIndex]: optionIndex }))
   }
 
-  const handleSubmit = async () => {
-    const correctCount = questions.filter((q, i) => answers[i] === q.correct_option).length
+  // Extracted for use by both button and timer auto-submit
+  const handleSubmitInternal = async (currentAnswers?: Record<number, number>) => {
+    const ans = currentAnswers ?? answers
+    const correctCount = questions.filter((q, i) => ans[i] === q.correct_option).length
     const scorePercent = Math.round((correctCount / questions.length) * 100)
     setScore(scorePercent)
     setSubmitted(true)
@@ -44,7 +69,7 @@ export default function QuizSection({ questions, lessonId, courseId, userId, pas
     await supabase.from('quiz_attempts').insert({
       user_id: userId,
       lesson_id: lessonId,
-      answers: Object.values(answers),
+      answers: Object.values(ans),
       score: scorePercent,
       passed,
     })
@@ -61,10 +86,13 @@ export default function QuizSection({ questions, lessonId, courseId, userId, pas
     }
   }
 
+  const handleSubmit = () => handleSubmitInternal(answers)
+
   const handleReset = () => {
     setAnswers({})
     setSubmitted(false)
     setScore(0)
+    setTimeLeft(timeLimit)
   }
 
   const allAnswered = Object.keys(answers).length === questions.length
@@ -72,17 +100,28 @@ export default function QuizSection({ questions, lessonId, courseId, userId, pas
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h3 className="text-white font-bold text-lg">Quiz — {questions.length} question{questions.length > 1 ? 's' : ''}</h3>
           <p className="text-gray-400 text-sm">Score minimum pour valider : <span className="text-[#FFA500] font-semibold">{passingScore}%</span></p>
         </div>
-        {bestPreviousScore != null && !submitted && (
-          <div className="flex items-center gap-2 text-sm text-gray-400 bg-gray-800 rounded-xl px-3 py-2">
-            <Trophy className="w-4 h-4 text-[#FFA500]" />
-            Meilleur score : <span className={cn('font-bold', bestPreviousScore >= passingScore ? 'text-green-400' : 'text-red-400')}>{bestPreviousScore}%</span>
-          </div>
-        )}
+        <div className="flex items-center gap-3">
+          {!submitted && (
+            <div className={cn(
+              'flex items-center gap-2 text-sm font-bold px-3 py-2 rounded-xl transition-colors',
+              timerUrgent ? 'bg-red-900/40 text-red-400 animate-pulse' : 'bg-gray-800 text-gray-300'
+            )}>
+              <Clock className="w-4 h-4" />
+              {fmtTime(timeLeft)}
+            </div>
+          )}
+          {bestPreviousScore != null && !submitted && (
+            <div className="flex items-center gap-2 text-sm text-gray-400 bg-gray-800 rounded-xl px-3 py-2">
+              <Trophy className="w-4 h-4 text-[#FFA500]" />
+              Meilleur : <span className={cn('font-bold', bestPreviousScore >= passingScore ? 'text-green-400' : 'text-red-400')}>{bestPreviousScore}%</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {submitted && (

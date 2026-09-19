@@ -17,6 +17,8 @@ export default async function AdminPage() {
     { data: topCourses },
     { data: revenueData },
     { data: countryData },
+    { data: allUsersCreated },
+    { data: allEnrollments },
   ] = await Promise.all([
     supabase.from('profiles').select('*', { count: 'exact', head: true }),
     supabase.from('courses').select('*', { count: 'exact', head: true }).eq('is_published', true),
@@ -27,6 +29,8 @@ export default async function AdminPage() {
     supabase.from('courses').select('id, title, slug, enrollment_count, price_xof, is_featured').eq('is_published', true).order('enrollment_count', { ascending: false }).limit(5),
     supabase.from('payments').select('amount, currency, created_at').eq('status', 'completed'),
     supabase.from('profiles').select('country').not('country', 'is', null),
+    supabase.from('profiles').select('created_at').order('created_at'),
+    supabase.from('enrollments').select('enrolled_at').order('enrolled_at'),
   ])
 
   const totalRevenue = revenueData?.filter(p => p.currency === 'XOF').reduce((s, p) => s + p.amount, 0) ?? 0
@@ -46,6 +50,24 @@ export default async function AdminPage() {
     count: revenueData?.filter(p => p.created_at.slice(0, 7) === m.key).length ?? 0,
   }))
   const maxRevenue = Math.max(...revenueByMonth.map(m => m.xof + m.eur * 655), 1)
+
+  // Croissance utilisateurs & inscriptions (12 mois)
+  const growthMonths = Array.from({ length: 12 }, (_, i) => {
+    const d = new Date()
+    d.setMonth(d.getMonth() - (11 - i))
+    return { key: d.toISOString().slice(0, 7), label: d.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' }), users: 0, enrollments: 0 }
+  })
+  allUsersCreated?.forEach(u => {
+    const key = u.created_at.slice(0, 7)
+    const m = growthMonths.find(m => m.key === key)
+    if (m) m.users++
+  })
+  allEnrollments?.forEach(e => {
+    const key = (e.enrolled_at ?? '').slice(0, 7)
+    const m = growthMonths.find(m => m.key === key)
+    if (m) m.enrollments++
+  })
+  const maxGrowth = Math.max(...growthMonths.map(m => Math.max(m.users, m.enrollments)), 1)
 
   // Pays top
   const countryCount: Record<string, number> = {}
@@ -84,6 +106,38 @@ export default async function AdminPage() {
             <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
           </div>
         ))}
+      </div>
+
+      {/* Graphique croissance utilisateurs & inscriptions */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h2 className="font-bold text-gray-900">Croissance — 12 derniers mois</h2>
+            <p className="text-xs text-gray-400 mt-0.5">Nouveaux utilisateurs et inscriptions par mois</p>
+          </div>
+          <div className="flex items-center gap-4 text-xs text-gray-500">
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-[#0B3D91] inline-block" /> Utilisateurs</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-[#FFA500] inline-block" /> Inscriptions</span>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <svg viewBox={`0 0 ${growthMonths.length * 56} 120`} className="w-full" style={{ minWidth: '520px' }}>
+            {growthMonths.map((m, i) => {
+              const x = i * 56 + 4
+              const uH = Math.round((m.users / maxGrowth) * 80)
+              const eH = Math.round((m.enrollments / maxGrowth) * 80)
+              return (
+                <g key={m.key}>
+                  <rect x={x} y={90 - uH} width={22} height={uH || 2} rx={4} fill="#0B3D91" opacity={0.85} />
+                  <rect x={x + 24} y={90 - eH} width={22} height={eH || 2} rx={4} fill="#FFA500" opacity={0.85} />
+                  {m.users > 0 && <text x={x + 11} y={90 - uH - 3} textAnchor="middle" fontSize="8" fill="#374151" fontWeight="600">{m.users}</text>}
+                  {m.enrollments > 0 && <text x={x + 35} y={90 - eH - 3} textAnchor="middle" fontSize="8" fill="#374151" fontWeight="600">{m.enrollments}</text>}
+                  <text x={x + 24} y={108} textAnchor="middle" fontSize="9" fill="#9ca3af">{m.label}</text>
+                </g>
+              )
+            })}
+          </svg>
+        </div>
       </div>
 
       {/* Graphique revenus 12 mois */}

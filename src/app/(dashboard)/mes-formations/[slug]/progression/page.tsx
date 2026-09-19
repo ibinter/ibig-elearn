@@ -1,165 +1,232 @@
 import { createClient } from '@/lib/supabase/server'
-import { notFound } from 'next/navigation'
+import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle, Circle, Lock, Play, Award, ChevronLeft, Clock } from 'lucide-react'
+import { CheckCircle, Circle, Play, FileText, HelpCircle, Lock, ArrowLeft, Award, Clock } from 'lucide-react'
 
 interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-export default async function CourseProgressionPage({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params
+  const supabase = await createClient()
+  const { data } = await supabase.from('courses').select('title').eq('slug', slug).single()
+  return { title: data ? `Progression — ${data.title}` : 'Progression' }
+}
+
+export default async function ProgressionPage({ params }: PageProps) {
   const { slug } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/connexion')
 
   const { data: course } = await supabase
     .from('courses')
-    .select('id, title, slug, thumbnail_url, duration_hours, total_lessons, instructor:profiles(full_name)')
+    .select('id, title, slug, thumbnail_url, duration_hours')
     .eq('slug', slug)
     .single()
-
   if (!course) notFound()
 
   const { data: enrollment } = await supabase
     .from('enrollments')
-    .select('progress_percent, status, completed_at, enrolled_at')
-    .eq('user_id', user!.id)
+    .select('progress_percent, status, enrolled_at, completed_at')
+    .eq('user_id', user.id)
     .eq('course_id', course.id)
     .single()
-
-  if (!enrollment) notFound()
+  if (!enrollment) redirect(`/formation/${slug}`)
 
   const { data: modules } = await supabase
     .from('modules')
-    .select('id, title, order_index, lessons(id, title, order_index, duration_minutes, video_url)')
+    .select('id, title, position, lessons(id, title, type, video_duration_seconds, position)')
     .eq('course_id', course.id)
-    .order('order_index')
+    .order('position')
 
-  const { data: completedLessons } = await supabase
-    .from('lesson_progress')
-    .select('lesson_id, completed_at, watch_time_seconds')
-    .eq('user_id', user!.id)
-    .eq('course_id', course.id)
-    .eq('is_completed', true)
+  const allLessonIds = (modules ?? []).flatMap((m: any) => (m.lessons ?? []).map((l: any) => l.id))
 
-  const completedIds = new Set(completedLessons?.map(l => l.lesson_id))
-  const completedMap = new Map(completedLessons?.map(l => [l.lesson_id, l]))
+  const { data: progressRows } = allLessonIds.length
+    ? await supabase
+        .from('lesson_progress')
+        .select('lesson_id, is_completed, completed_at')
+        .eq('user_id', user.id)
+        .in('lesson_id', allLessonIds)
+    : { data: [] }
 
-  const { data: certificate } = await supabase
+  const { data: quizAttempts } = await supabase
+    .from('quiz_attempts')
+    .select('lesson_id, score, passed')
+    .eq('user_id', user.id)
+    .order('score', { ascending: false })
+
+  const { data: cert } = await supabase
     .from('certificates')
-    .select('id, certificate_number, issued_at')
-    .eq('user_id', user!.id)
+    .select('id')
+    .eq('user_id', user.id)
     .eq('course_id', course.id)
     .single()
 
-  const pct = enrollment.progress_percent ?? 0
-  const isComplete = pct >= 100
+  const progressMap: Record<string, { is_completed: boolean; completed_at?: string }> = {}
+  for (const p of (progressRows ?? [])) {
+    progressMap[p.lesson_id] = { is_completed: p.is_completed, completed_at: p.completed_at }
+  }
 
-  let cumulativeLessons = 0
+  const bestQuizScore: Record<string, number> = {}
+  for (const a of (quizAttempts ?? [])) {
+    if (!bestQuizScore[a.lesson_id] || a.score > bestQuizScore[a.lesson_id]) {
+      bestQuizScore[a.lesson_id] = a.score
+    }
+  }
+
+  function typeIcon(type: string) {
+    if (type === 'video') return <Play className="w-3.5 h-3.5" />
+    if (type === 'quiz') return <HelpCircle className="w-3.5 h-3.5" />
+    return <FileText className="w-3.5 h-3.5" />
+  }
+
+  function fmtDuration(secs?: number) {
+    if (!secs) return null
+    const m = Math.floor(secs / 60)
+    const s = secs % 60
+    return m > 0 ? `${m}min${s > 0 ? ` ${s}s` : ''}` : `${s}s`
+  }
+
+  const totalLessons = allLessonIds.length
+  const completedLessons = Object.values(progressMap).filter(p => p.is_completed).length
 
   return (
-    <div className="max-w-3xl space-y-6">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      {/* Back */}
+      <Link href="/mes-formations" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 mb-6 transition-colors">
+        <ArrowLeft className="w-4 h-4" /> Mes formations
+      </Link>
+
       {/* Header */}
-      <div>
-        <Link href="/mes-formations" className="flex items-center gap-1 text-sm text-gray-500 hover:text-[#0B3D91] mb-4 transition-colors">
-          <ChevronLeft className="w-4 h-4" /> Mes formations
-        </Link>
-        <div className="flex gap-4 items-start">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+        <div className="flex items-start gap-4">
           {course.thumbnail_url && (
             <img src={course.thumbnail_url} alt={course.title} className="w-20 h-14 rounded-xl object-cover flex-shrink-0" />
           )}
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-bold text-gray-900 leading-tight">{course.title}</h1>
-            <p className="text-sm text-gray-500 mt-0.5">{(course.instructor as any)?.full_name} · {course.duration_hours}h · {course.total_lessons} leçons</p>
+            <h1 className="text-xl font-bold text-gray-900 mb-2">{course.title}</h1>
+            <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+              <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {course.duration_hours}h de contenu</span>
+              <span>{totalLessons} leçons</span>
+            </div>
+            {/* Barre de progression globale */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 bg-gray-100 rounded-full h-3">
+                <div
+                  className="h-3 rounded-full transition-all"
+                  style={{
+                    width: `${enrollment.progress_percent}%`,
+                    background: enrollment.progress_percent >= 100 ? '#22c55e' : 'linear-gradient(90deg,#0B3D91,#FFA500)',
+                  }}
+                />
+              </div>
+              <span className="text-sm font-bold text-gray-900 whitespace-nowrap">{enrollment.progress_percent}%</span>
+            </div>
+            <p className="text-xs text-gray-400 mt-1">{completedLessons} / {totalLessons} leçons terminées</p>
           </div>
         </div>
+
+        {cert && (
+          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-xl flex items-center gap-3">
+            <Award className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-yellow-900">Formation certifiée !</p>
+              <p className="text-xs text-yellow-700">Vous avez obtenu votre certificat pour cette formation.</p>
+            </div>
+            <Link href={`/mes-certificats/${cert.id}/imprimer`} className="text-xs font-semibold text-yellow-700 hover:text-yellow-900 underline">
+              Voir
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* Progression globale */}
-      <div className={`rounded-2xl p-5 ${isComplete ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' : 'bg-gradient-to-r from-[#0B3D91] to-blue-700 text-white'}`}>
-        <div className="flex items-center justify-between mb-3">
-          <p className="font-bold text-lg">{pct}% complété</p>
-          {isComplete && <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">✅ Terminé</span>}
-        </div>
-        <div className="h-2.5 bg-white/20 rounded-full overflow-hidden mb-3">
-          <div className="h-full bg-white rounded-full transition-all" style={{ width: `${pct}%` }} />
-        </div>
-        <p className="text-sm text-white/70">
-          {completedIds.size} leçon{completedIds.size > 1 ? 's' : ''} sur {course.total_lessons} terminée{completedIds.size > 1 ? 's' : ''}
-        </p>
-      </div>
-
-      {/* Certificat */}
-      {certificate && (
-        <div className="bg-gradient-to-r from-[#FFA500]/10 to-yellow-50 border border-[#FFA500]/30 rounded-2xl p-4 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-[#FFA500]/20 flex items-center justify-center flex-shrink-0">
-            <Award className="w-6 h-6 text-[#FFA500]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-gray-900 text-sm">Certificat obtenu !</p>
-            <p className="text-xs text-gray-500 font-mono mt-0.5">{certificate.certificate_number}</p>
-          </div>
-          <Link href={`/mes-certificats/${certificate.id}/imprimer`}
-            className="flex-shrink-0 text-xs font-semibold text-[#FFA500] bg-white border border-[#FFA500]/30 px-3 py-2 rounded-lg hover:bg-[#FFA500] hover:text-white transition-colors">
-            Voir le certificat
-          </Link>
-        </div>
-      )}
-
-      {/* Modules + leçons */}
+      {/* Modules & Leçons */}
       <div className="space-y-4">
-        {modules?.map((mod: any) => {
-          const lessons = [...(mod.lessons ?? [])].sort((a: any, b: any) => a.order_index - b.order_index)
-          const modCompleted = lessons.filter((l: any) => completedIds.has(l.id)).length
-          cumulativeLessons += lessons.length
+        {(modules as any[])?.map((mod, mi) => {
+          const lessons = [...(mod.lessons ?? [])].sort((a: any, b: any) => a.position - b.position)
+          const modCompleted = lessons.filter((l: any) => progressMap[l.id]?.is_completed).length
+          const modPct = lessons.length ? Math.round((modCompleted / lessons.length) * 100) : 0
 
           return (
             <div key={mod.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-5 py-4 bg-gray-50/60 border-b border-gray-100 flex items-center justify-between">
-                <div>
-                  <h2 className="font-bold text-gray-900 text-sm">{mod.title}</h2>
-                  <p className="text-xs text-gray-400 mt-0.5">{modCompleted}/{lessons.length} leçons</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-20 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#0B3D91] rounded-full" style={{ width: `${lessons.length ? (modCompleted / lessons.length) * 100 : 0}%` }} />
+              {/* Module header */}
+              <div className="px-5 py-4 border-b border-gray-50 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                    modPct === 100 ? 'bg-green-100 text-green-700' : 'bg-blue-50 text-[#0B3D91]'
+                  }`}>
+                    {modPct === 100 ? '✓' : mi + 1}
                   </div>
-                  <span className="text-xs text-gray-400 font-medium">{lessons.length ? Math.round((modCompleted / lessons.length) * 100) : 0}%</span>
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm">{mod.title}</p>
+                    <p className="text-xs text-gray-400">{modCompleted}/{lessons.length} leçons</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="w-20 bg-gray-100 rounded-full h-1.5">
+                    <div className="h-1.5 rounded-full bg-[#0B3D91] transition-all" style={{ width: `${modPct}%` }} />
+                  </div>
+                  <span className="text-xs text-gray-500 w-8 text-right">{modPct}%</span>
                 </div>
               </div>
+
+              {/* Leçons */}
               <div className="divide-y divide-gray-50">
-                {lessons.map((lesson: any, idx: number) => {
-                  const done = completedIds.has(lesson.id)
-                  const lessonData = completedMap.get(lesson.id)
-                  const isFirst = idx === 0 || lessons.slice(0, idx).some((l: any) => completedIds.has(l.id)) || idx === 0
+                {lessons.map((lesson: any, li: number) => {
+                  const prog = progressMap[lesson.id]
+                  const done = prog?.is_completed ?? false
+                  const qScore = lesson.type === 'quiz' ? bestQuizScore[lesson.id] : undefined
 
                   return (
                     <Link
                       key={lesson.id}
                       href={`/apprendre/${course.id}/${lesson.id}`}
-                      className="flex items-center gap-4 px-5 py-3.5 hover:bg-gray-50/60 transition-colors group"
+                      className={`flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50/60 transition-colors group ${done ? '' : 'opacity-90'}`}
                     >
-                      <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${done ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
-                        {done ? <CheckCircle className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium truncate ${done ? 'text-green-700' : 'text-gray-700 group-hover:text-[#0B3D91]'}`}>
-                          {lesson.title}
-                        </p>
-                        {done && lessonData && (
-                          <p className="text-xs text-gray-400 mt-0.5">
-                            Terminée · {Math.round((lessonData.watch_time_seconds ?? 0) / 60)} min regardées
-                          </p>
+                      {/* Icône statut */}
+                      <div className="flex-shrink-0">
+                        {done ? (
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                        ) : (
+                          <Circle className="w-5 h-5 text-gray-300 group-hover:text-gray-400 transition-colors" />
                         )}
                       </div>
-                      {lesson.duration_minutes && (
-                        <span className="flex items-center gap-1 text-xs text-gray-400 flex-shrink-0">
-                          <Clock className="w-3 h-3" />{lesson.duration_minutes}min
-                        </span>
-                      )}
-                      {!done && (
-                        <Play className="w-4 h-4 text-gray-300 group-hover:text-[#0B3D91] flex-shrink-0 transition-colors" />
-                      )}
+
+                      {/* Type icon */}
+                      <div className={`w-6 h-6 rounded flex items-center justify-center flex-shrink-0 ${
+                        lesson.type === 'video' ? 'bg-blue-50 text-blue-500' :
+                        lesson.type === 'quiz' ? 'bg-orange-50 text-orange-500' :
+                        'bg-gray-50 text-gray-400'
+                      }`}>
+                        {typeIcon(lesson.type)}
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm truncate ${done ? 'text-gray-700' : 'text-gray-600'}`}>
+                          <span className="text-gray-400 text-xs mr-1.5">{mi + 1}.{li + 1}</span>
+                          {lesson.title}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3 flex-shrink-0">
+                        {qScore !== undefined && (
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                            qScore >= 70 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
+                          }`}>
+                            {qScore}%
+                          </span>
+                        )}
+                        {lesson.video_duration_seconds && (
+                          <span className="text-xs text-gray-400">{fmtDuration(lesson.video_duration_seconds)}</span>
+                        )}
+                        {done && prog?.completed_at && (
+                          <span className="text-xs text-gray-300">
+                            {new Date(prog.completed_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                          </span>
+                        )}
+                      </div>
                     </Link>
                   )
                 })}
@@ -169,12 +236,11 @@ export default async function CourseProgressionPage({ params }: PageProps) {
         })}
       </div>
 
-      {/* CTA si pas encore commencé */}
-      {pct === 0 && (
-        <div className="text-center py-4">
-          <Link href={`/apprendre/${course.id}/intro`}
-            className="inline-flex items-center gap-2 ibig-gradient text-white font-bold px-8 py-3.5 rounded-xl hover:opacity-90 transition-opacity">
-            <Play className="w-5 h-5" /> Commencer la formation
+      {enrollment.status === 'completed' && !cert && (
+        <div className="mt-6 p-5 bg-gradient-to-r from-[#FFA500]/10 to-[#0B3D91]/10 border border-[#FFA500]/30 rounded-2xl text-center">
+          <p className="font-semibold text-gray-900 mb-2">🎉 Formation terminée !</p>
+          <Link href={`/apprendre/${course.id}/intro`} className="text-sm text-[#0B3D91] hover:underline">
+            Générer mon certificat
           </Link>
         </div>
       )}
