@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Users, BookOpen, Award, DollarSign, TrendingUp, Activity, ArrowRight, MapPin, BarChart3 } from 'lucide-react'
 import { formatPrice, formatDate } from '@/lib/utils'
 import Link from 'next/link'
+import RealtimeActivityFeed from '@/components/admin/RealtimeActivityFeed'
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -265,6 +266,26 @@ export default async function AdminPage() {
           </div>
         </div>
       </div>
+
+      {/* Activité en direct */}
+      {(() => {
+        const initialActivities = [
+          ...(recentPayments ?? []).slice(0, 5).map((p: any) => ({
+            id: p.id,
+            type: 'payment' as const,
+            label: `Paiement de ${formatPrice(p.amount, p.currency)}${p.user?.full_name ? ` — ${p.user.full_name}` : ''}`,
+            time: p.created_at,
+            amount: p.amount,
+          })),
+          ...(recentUsers ?? []).slice(0, 5).map((u: any) => ({
+            id: u.id,
+            type: 'user' as const,
+            label: `${u.full_name ?? 'Nouvel utilisateur'} vient de s'inscrire`,
+            time: u.created_at,
+          })),
+        ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 10)
+        return <RealtimeActivityFeed initialActivities={initialActivities} />
+      })()}
     </div>
   )
 }

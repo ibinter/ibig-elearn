@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Bell, Award, BookOpen, Tag, Info, X, Check, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 
 interface Notif {
   id: string
@@ -37,6 +38,7 @@ export default function NotificationBell() {
   const [open, setOpen] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const supabase = createClient()
 
   const unread = notifs.filter(n => !n.is_read).length
 
@@ -46,6 +48,34 @@ export default function NotificationBell() {
       .then(data => { setNotifs(data); setLoaded(true) })
       .catch(() => setLoaded(true))
   }, [])
+
+  // Supabase Realtime — nouvelles notifications push
+  useEffect(() => {
+    let userId: string | null = null
+    supabase.auth.getUser().then(({ data }) => {
+      userId = data.user?.id ?? null
+      if (!userId) return
+
+      const channel = supabase
+        .channel(`notifs:${userId}`)
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'notifications',
+            filter: `user_id=eq.${userId}`,
+          },
+          (payload) => {
+            const n = payload.new as Notif
+            setNotifs(prev => [n, ...prev])
+          }
+        )
+        .subscribe()
+
+      return () => { supabase.removeChannel(channel) }
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {

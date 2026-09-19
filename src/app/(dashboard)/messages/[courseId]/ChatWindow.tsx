@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { Send, Loader2 } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 interface Message {
   id: string; content: string; is_read: boolean; created_at: string; sender_id: string
@@ -18,10 +19,39 @@ export default function ChatWindow({ courseId, recipientId, currentUserId, initi
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
+  const supabase = createClient()
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  // Supabase Realtime — écoute les nouveaux messages de cette conversation
+  useEffect(() => {
+    const channel = supabase
+      .channel(`messages:${courseId}:${recipientId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `course_id=eq.${courseId}`,
+        },
+        (payload) => {
+          const msg = payload.new as Message
+          // N'ajouter que les messages de l'autre partie (les nôtres sont déjà ajoutés localement)
+          if (msg.sender_id !== currentUserId) {
+            setMessages(prev => {
+              if (prev.some(m => m.id === msg.id)) return prev
+              return [...prev, msg]
+            })
+          }
+        }
+      )
+      .subscribe()
+
+    return () => { supabase.removeChannel(channel) }
+  }, [courseId, recipientId, currentUserId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   async function send(e: React.FormEvent) {
     e.preventDefault()
