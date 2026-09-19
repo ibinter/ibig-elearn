@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/client'
 import { User, Mail, Phone, MapPin, Globe, Camera, Save, AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
 
 const COUNTRIES = [
@@ -11,10 +11,7 @@ const COUNTRIES = [
 ]
 
 export default function ProfilPage() {
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabase = createClient()
 
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)

@@ -3,6 +3,7 @@ import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCir
 import { createClient } from '@/lib/supabase/server'
 import type { Course, Category } from '@/types'
 import CourseCard from '@/components/ui/CourseCard'
+import RecommendedCourses from '@/components/ui/RecommendedCourses'
 
 async function getFeaturedCourses(): Promise<Course[]> {
   const supabase = await createClient()
@@ -265,6 +266,13 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* ── RECOMMANDÉS ── */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RecommendedCourses title="Formations populaires" />
+        </div>
+      </section>
 
       {/* ── COMMENT ÇA MARCHE ── */}
       <section className="py-16 bg-gray-50">

@@ -3,8 +3,8 @@ import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Users, Award, TrendingUp, Clock, BarChart2 } from 'lucide-react'
 
-export default async function FormationStatsPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export default async function FormationStatsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/connexion')
@@ -14,8 +14,8 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
 
   const { data: course } = await supabase
     .from('courses')
-    .select('id, title, total_lessons, price_xof, is_published')
-    .eq('slug', slug)
+    .select('id, title, slug, total_lessons, price_xof, is_published')
+    .eq('id', id)
     .single()
 
   if (!course) notFound()
@@ -26,12 +26,12 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
     { data: certs },
     { data: recentEnrolls },
   ] = await Promise.all([
-    supabase.from('enrollments').select('id, progress_percent, is_completed, enrolled_at').eq('course_id', course.id),
-    supabase.from('lesson_progress').select('watch_time_seconds, is_completed, updated_at').eq('course_id', course.id),
-    supabase.from('certificates').select('id, issued_at').eq('course_id', course.id),
+    supabase.from('enrollments').select('id, progress_percent, is_completed, enrolled_at').eq('course_id', id),
+    supabase.from('lesson_progress').select('watch_time_seconds, is_completed, updated_at').eq('course_id', id),
+    supabase.from('certificates').select('id, issued_at').eq('course_id', id),
     supabase.from('enrollments')
       .select('enrolled_at, progress_percent, user:profiles(full_name, country)')
-      .eq('course_id', course.id)
+      .eq('course_id', id)
       .order('enrolled_at', { ascending: false })
       .limit(10),
   ])
@@ -41,11 +41,8 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
   const completionRate = totalEnrolls > 0 ? Math.round((completed / totalEnrolls) * 100) : 0
   const totalWatchSec = (progress ?? []).reduce((s, r) => s + (r.watch_time_seconds ?? 0), 0)
   const totalHours = Math.floor(totalWatchSec / 3600)
-
-  // Revenus estimés
   const revenue = totalEnrolls * (course.price_xof ?? 0)
 
-  // Activité 30 derniers jours
   const now = new Date()
   const days30 = Array.from({ length: 30 }, (_, i) => {
     const d = new Date(now); d.setDate(d.getDate() - (29 - i))
@@ -79,13 +76,12 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
           <h1 className="text-xl font-bold text-gray-900 truncate">{course.title}</h1>
           <p className="text-sm text-gray-500">Statistiques de la formation</p>
         </div>
-        <Link href={`/formateur/formations/${slug}/editer`}
+        <Link href={`/formateur/formations/${id}/modifier`}
           className="text-sm text-[#0B3D91] border border-[#0B3D91] px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
           Éditer
         </Link>
       </div>
 
-      {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
@@ -98,7 +94,6 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
         ))}
       </div>
 
-      {/* Revenu */}
       {course.price_xof > 0 && (
         <div className="ibig-gradient rounded-2xl p-5 text-white flex items-center gap-5">
           <div className="text-4xl">💰</div>
@@ -110,7 +105,6 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
         </div>
       )}
 
-      {/* Heatmap inscriptions 30j */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
         <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
           <BarChart2 className="w-4 h-4 text-[#0B3D91]" /> Inscriptions — 30 derniers jours
@@ -130,12 +124,9 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
             )
           })}
         </div>
-        <p className="text-xs text-gray-400 mt-2 text-center">
-          {totalEnrolls} inscriptions au total depuis la création
-        </p>
+        <p className="text-xs text-gray-400 mt-2 text-center">{totalEnrolls} inscriptions au total</p>
       </div>
 
-      {/* Derniers inscrits */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-50">
           <h2 className="font-bold text-gray-900">Derniers apprenants</h2>

@@ -26,7 +26,7 @@ function typeIcon(type: string) {
 function fmtDate(s: string) {
   const d = new Date(s)
   const diff = (Date.now() - d.getTime()) / 1000
-  if (diff < 60) return 'À l'instant'
+  if (diff < 60) return "À l'instant"
   if (diff < 3600) return `Il y a ${Math.floor(diff / 60)}min`
   if (diff < 86400) return `Il y a ${Math.floor(diff / 3600)}h`
   return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })

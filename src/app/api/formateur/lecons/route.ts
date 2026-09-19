@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
   // Mettre à jour total_lessons sur la formation
-  await supabase.rpc('update_course_lesson_count', { p_course_id: course_id }).catch(() => null)
+  await supabase.rpc('update_course_lesson_count', { p_course_id: course_id })
 
   return NextResponse.json(data, { status: 201 })
 }

@@ -73,7 +73,7 @@ export default async function MesFavorisPage() {
                 )}
                 <div className="flex items-center justify-between pt-1">
                   <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{levelLabel[course.level] ?? course.level}</span>
-                  <PriceDisplay priceXof={course.price_xof} className="text-sm font-bold text-[#0B3D91]" />
+                  <PriceDisplay price_xof={course.price_xof} className="text-sm font-bold text-[#0B3D91]" />
                 </div>
                 <Link href={`/formation/${course.slug}`}
                   className="block w-full text-center ibig-gradient text-white text-xs font-semibold py-2.5 rounded-xl hover:opacity-90 transition-opacity mt-2">

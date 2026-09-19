@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/client'
 import {
   Save, Loader2, AlertCircle, PlusCircle, Trash2, GripVertical,
   ChevronDown, ChevronRight, Play, BookOpen, HelpCircle, FileText,
@@ -11,10 +11,7 @@ import {
 import Link from 'next/link'
 import BunnyUpload from '@/components/formateur/BunnyUpload'
 
-const supabase = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabase = createClient()
 
 const LEVELS = [
   { value: 'debutant', label: 'Débutant' },

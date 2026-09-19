@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound, redirect } from 'next/navigation'
 import BunnyPlayer from '@/components/player/BunnyPlayer'
+import QuizPlayer from '@/components/player/QuizPlayer'
 import SaraChat from '@/components/sara/SaraChat'
 import { CheckCircle, Lock, PlayCircle, ChevronLeft, ChevronRight, BookOpen, List } from 'lucide-react'
 import Link from 'next/link'
@@ -48,7 +49,7 @@ export default async function CoursLessonPage({ params }: Props) {
   // Récupérer toutes les leçons du cours
   const { data: lessons } = await supabase
     .from('lessons')
-    .select('id, title, position, video_url, duration_seconds, is_preview')
+    .select('id, title, position, video_url, duration_seconds, is_preview, type, quiz_passing_score')
     .eq('course_id', course.id)
     .order('position')
 
@@ -141,8 +142,16 @@ export default async function CoursLessonPage({ params }: Props) {
 
         {/* Contenu principal */}
         <main className="flex-1 overflow-y-auto">
-          {/* Vidéo */}
-          {videoGuid && videoLibraryId ? (
+          {/* Contenu : quiz ou vidéo */}
+          {(lesson as any).type === 'quiz' ? (
+            <QuizPlayer
+              lessonId={lessonId}
+              courseId={course.id}
+              userId={user.id}
+              passingScore={(lesson as any).quiz_passing_score ?? 70}
+              isCompleted={progress?.is_completed ?? false}
+            />
+          ) : videoGuid && videoLibraryId ? (
             <BunnyPlayer
               videoGuid={videoGuid}
               libraryId={videoLibraryId}

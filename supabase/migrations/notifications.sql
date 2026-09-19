@@ -1,29 +1,20 @@
--- Notifications in-app
 CREATE TABLE IF NOT EXISTS notifications (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  type TEXT NOT NULL, -- 'certificate', 'enrollment', 'badge', 'system', 'promo'
-  title TEXT NOT NULL,
-  message TEXT,
-  link TEXT,
-  is_read BOOLEAN NOT NULL DEFAULT false,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
+  type text NOT NULL, -- 'enrollment', 'certificate', 'message', 'live', 'achievement', 'system'
+  title text NOT NULL,
+  body text,
+  link text,
+  is_read boolean DEFAULT false,
+  created_at timestamptz DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS notifications_user_id_idx ON notifications(user_id);
-CREATE INDEX IF NOT EXISTS notifications_unread_idx ON notifications(user_id, is_read) WHERE is_read = false;
+CREATE INDEX IF NOT EXISTS notifications_created_at_idx ON notifications(created_at DESC);
 
--- RLS
 ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "users can read own notifications"
-  ON notifications FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "users can update own notifications"
-  ON notifications FOR UPDATE
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "service role can insert notifications"
-  ON notifications FOR INSERT
-  WITH CHECK (true);
+CREATE POLICY "notifications_own" ON notifications FOR ALL USING (user_id = auth.uid());
+CREATE POLICY "notifications_admin_insert" ON notifications FOR INSERT WITH CHECK (
+  EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('admin', 'coordinateur', 'formateur'))
+);

@@ -90,7 +90,7 @@ export default async function RecherchePage({ searchParams }: PageProps) {
                   )}
                   <div className="flex items-center justify-between pt-1">
                     <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{levelLabel[course.level] ?? course.level}</span>
-                    <PriceDisplay priceXof={course.price_xof} className="text-sm font-bold text-[#0B3D91]" />
+                    <PriceDisplay price_xof={course.price_xof} className="text-sm font-bold text-[#0B3D91]" />
                   </div>
                 </div>
               </Link>

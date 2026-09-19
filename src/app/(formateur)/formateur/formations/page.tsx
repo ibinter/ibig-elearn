@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import { PlusCircle, Pencil, Eye, Users, BookOpen } from 'lucide-react'
+import { PlusCircle, Pencil, Eye, Users, BookOpen, ListOrdered } from 'lucide-react'
 
 export default async function FormateurFormationsPage() {
   const cookieStore = await cookies()
@@ -97,6 +97,13 @@ export default async function FormateurFormationsPage() {
                           title="Voir"
                         >
                           <Eye className="w-4 h-4" />
+                        </Link>
+                        <Link
+                          href={`/formateur/formations/${course.id}/lecons`}
+                          className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-purple-600 transition-colors"
+                          title="Gérer les leçons"
+                        >
+                          <ListOrdered className="w-4 h-4" />
                         </Link>
                         <Link
                           href={`/formateur/formations/${course.id}/modifier`}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/client'
 import { Save, Loader2, AlertCircle } from 'lucide-react'
 
 const LEVELS = [
@@ -17,10 +17,7 @@ const LANGUAGES = ['Français', 'Anglais', 'Arabe', 'Portugais', 'Wolof', 'Dioul
 
 export default function NouvelleFormationPage() {
   const router = useRouter()
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabase = createClient()
 
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([])
   const [form, setForm] = useState({
