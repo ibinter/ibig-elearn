@@ -91,7 +91,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar filtres */}
         <aside className="lg:w-64 flex-shrink-0">
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sticky top-20">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold text-gray-900 flex items-center gap-2"><Filter className="w-4 h-4" /> Filtres</h2>
               {activeFilterCount > 0 && (

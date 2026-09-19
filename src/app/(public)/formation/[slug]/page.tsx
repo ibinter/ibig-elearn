@@ -192,7 +192,7 @@ export default async function FormationPage({ params }: PageProps) {
 
           {/* Sticky card inscription */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                 {c.thumbnail_url && (
                   <div className="aspect-video bg-gray-100">
