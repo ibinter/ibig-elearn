@@ -38,6 +38,19 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true })
 }
 
+// DELETE : supprime la note d'une leçon
+export async function DELETE(req: NextRequest) {
+  const lessonId = req.nextUrl.searchParams.get('lesson_id')
+  if (!lessonId) return NextResponse.json({ error: 'lesson_id requis' }, { status: 400 })
+
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
+
+  await supabase.from('lesson_notes').delete().eq('user_id', user.id).eq('lesson_id', lessonId)
+  return NextResponse.json({ ok: true })
+}
+
 // GET toutes les notes d'un cours
 export async function PUT(req: NextRequest) {
   const supabase = await createClient()

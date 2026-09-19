@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Plus, Eye, EyeOff, Trash2, Edit2, BookOpen, Clock, Loader2, X, Save } from 'lucide-react'
+import RichTextEditor from '@/components/admin/RichTextEditor'
 
 type Post = {
   id: string
@@ -190,11 +191,11 @@ export default function AdminBlogPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">Contenu (HTML ou texte) *</label>
-            <textarea value={(form as any).content ?? ''} rows={10}
-              onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/20 resize-y"
-              placeholder="<h2>Introduction</h2><p>Contenu de l'article...</p>"
+            <label className="block text-xs font-medium text-gray-500 mb-1">Contenu *</label>
+            <RichTextEditor
+              value={(form as any).content ?? ''}
+              onChange={html => setForm(f => ({ ...f, content: html }))}
+              placeholder="Rédigez le contenu de l'article…"
             />
           </div>
 

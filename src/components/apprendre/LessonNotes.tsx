@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { FileText, Save, CheckCircle, Loader2 } from 'lucide-react'
+import { FileText, Save, CheckCircle, Loader2, Trash2 } from 'lucide-react'
 
 interface Props {
   lessonId: string
@@ -10,7 +10,7 @@ interface Props {
 
 export default function LessonNotes({ lessonId, courseId }: Props) {
   const [content, setContent] = useState('')
-  const [status, setStatus] = useState<'idle' | 'saving' | 'saved'>('idle')
+  const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'deleting'>('idle')
   const [open, setOpen] = useState(false)
   const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastSaved = useRef('')
@@ -36,6 +36,15 @@ export default function LessonNotes({ lessonId, courseId }: Props) {
     setStatus('saved')
     setTimeout(() => setStatus('idle'), 2000)
   }, [lessonId, courseId])
+
+  const deleteNote = useCallback(async () => {
+    if (!confirm('Supprimer cette note ?')) return
+    setStatus('deleting')
+    await fetch(`/api/notes?lesson_id=${lessonId}`, { method: 'DELETE' })
+    setContent('')
+    lastSaved.current = ''
+    setStatus('idle')
+  }, [lessonId])
 
   const onChange = (val: string) => {
     setContent(val)
@@ -66,7 +75,16 @@ export default function LessonNotes({ lessonId, courseId }: Props) {
             className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30 resize-none placeholder:text-gray-400"
           />
           <div className="flex items-center justify-between text-xs text-gray-400">
-            <span>{content.length} caractère{content.length !== 1 ? 's' : ''}</span>
+            <div className="flex items-center gap-3">
+              <span>{content.length} caractère{content.length !== 1 ? 's' : ''}</span>
+              {content && (
+                <button onClick={deleteNote} disabled={status === 'deleting'}
+                  className="flex items-center gap-1 text-red-400 hover:text-red-600 transition-colors disabled:opacity-50">
+                  {status === 'deleting' ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
+                  Supprimer
+                </button>
+              )}
+            </div>
             <span className="flex items-center gap-1">
               {status === 'saving' && <><Loader2 className="w-3 h-3 animate-spin" /> Sauvegarde…</>}
               {status === 'saved' && <><CheckCircle className="w-3 h-3 text-green-500" /> Sauvegardé</>}
