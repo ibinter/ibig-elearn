@@ -4,19 +4,27 @@ import { useEffect, useState } from 'react'
 import { Copy, Check, Share2, Users, Gift, Trophy } from 'lucide-react'
 
 export default function ParrainagePage() {
+  interface Referral { id: string; status: string; created_at: string; name: string; country?: string | null }
   const [data, setData] = useState<{
     code: string; referralUrl: string; totalRefs: number; rewardedRefs: number; pointsPerReferral: number
+    referrals: Referral[]
   } | null>(null)
-  const [copied, setCopied] = useState(false)
+  const [copiedCode, setCopiedCode] = useState(false)
+  const [copiedUrl, setCopiedUrl] = useState(false)
 
   useEffect(() => {
     fetch('/api/referral').then(r => r.json()).then(setData)
   }, [])
 
-  const copy = async (text: string) => {
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  const copyCode = async () => {
+    if (!data) return
+    await navigator.clipboard.writeText(data.code)
+    setCopiedCode(true); setTimeout(() => setCopiedCode(false), 2000)
+  }
+  const copyUrl = async () => {
+    if (!data) return
+    await navigator.clipboard.writeText(data.referralUrl)
+    setCopiedUrl(true); setTimeout(() => setCopiedUrl(false), 2000)
   }
 
   const shareWhatsApp = () => {
@@ -69,10 +77,10 @@ export default function ParrainagePage() {
           <div className="flex items-center gap-3">
             <code className="text-2xl font-mono font-bold text-[#0B3D91] tracking-widest">{data?.code ?? '...'}</code>
             <button
-              onClick={() => data && copy(data.code)}
+              onClick={copyCode}
               className="text-xs flex items-center gap-1 text-gray-400 hover:text-[#0B3D91] transition-colors"
             >
-              {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+              {copiedCode ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
         </div>
@@ -80,10 +88,10 @@ export default function ParrainagePage() {
         <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 mb-5">
           <span className="flex-1 text-sm text-gray-600 truncate font-mono">{data?.referralUrl ?? '...'}</span>
           <button
-            onClick={() => data && copy(data.referralUrl)}
+            onClick={copyUrl}
             className="flex items-center gap-1.5 text-xs font-semibold text-white bg-[#0B3D91] px-3 py-2 rounded-lg hover:bg-blue-800 transition-colors flex-shrink-0"
           >
-            {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedUrl ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             Copier
           </button>
         </div>
@@ -107,6 +115,36 @@ export default function ParrainagePage() {
           </button>
         </div>
       </div>
+
+      {/* Liste des filleuls */}
+      {data && data.referrals.length > 0 && (
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-50">
+            <h2 className="font-bold text-gray-900">Mes filleuls ({data.referrals.length})</h2>
+          </div>
+          <div className="divide-y divide-gray-50">
+            {data.referrals.map(r => (
+              <div key={r.id} className="flex items-center gap-3 px-6 py-3.5">
+                <div className="w-8 h-8 rounded-full bg-[#0B3D91] text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+                  {r.name.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900">{r.name}</p>
+                  <p className="text-xs text-gray-400">
+                    {r.country && `${r.country} · `}
+                    Inscrit le {new Date(r.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </p>
+                </div>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full flex-shrink-0 ${
+                  r.status === 'rewarded' ? 'bg-green-100 text-green-700' : 'bg-yellow-50 text-yellow-700'
+                }`}>
+                  {r.status === 'rewarded' ? `+${data.pointsPerReferral} pts` : 'En attente'}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Comment ça marche */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">

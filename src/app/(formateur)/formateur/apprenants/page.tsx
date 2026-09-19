@@ -1,20 +1,20 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
-import { Users, BookOpen, TrendingUp } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
+import { Users, BookOpen, TrendingUp, Search, Download } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
+import Link from 'next/link'
 
-export default async function FormateurApprenantsPage() {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  )
+interface PageProps {
+  searchParams: Promise<{ q?: string; cours?: string; statut?: string }>
+}
+
+export default async function FormateurApprenantsPage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const { data: enrollments } = await supabase
+  let query = supabase
     .from('enrollments')
     .select(`
       id, progress_percent, status, enrolled_at,
@@ -24,6 +24,26 @@ export default async function FormateurApprenantsPage() {
     .eq('course.instructor_id', user.id)
     .order('enrolled_at', { ascending: false })
 
+  if (params.statut === 'completed') query = query.eq('status', 'completed')
+  else if (params.statut === 'active') query = query.eq('status', 'active')
+
+  const { data: enrollmentsRaw } = await query
+
+  // Filtrage côté serveur pour q (nom/email) et cours
+  let enrollments = (enrollmentsRaw ?? []) as any[]
+  if (params.q) {
+    const q = params.q.toLowerCase()
+    enrollments = enrollments.filter(e =>
+      e.user?.full_name?.toLowerCase().includes(q) ||
+      e.user?.email?.toLowerCase().includes(q)
+    )
+  }
+  if (params.cours) {
+    enrollments = enrollments.filter(e =>
+      e.course?.title?.toLowerCase().includes(params.cours!.toLowerCase())
+    )
+  }
+
   const uniqueStudents = new Set(enrollments?.map((e: any) => e.user?.email)).size
   const completed = enrollments?.filter(e => e.status === 'completed').length ?? 0
   const avgProgress = enrollments?.length
@@ -32,10 +52,50 @@ export default async function FormateurApprenantsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Mes apprenants</h1>
-        <p className="text-gray-500 text-sm mt-1">{enrollments?.length ?? 0} inscription(s)</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Mes apprenants</h1>
+          <p className="text-gray-500 text-sm mt-1">{enrollments.length} inscription(s){params.q || params.cours || params.statut ? ' — filtrés' : ''}</p>
+        </div>
+        <a href="/api/formateur/apprenants/export" download
+          className="flex items-center gap-2 text-sm font-semibold text-[#0B3D91] border border-[#0B3D91] px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors">
+          <Download className="w-4 h-4" /> Exporter CSV
+        </a>
       </div>
+
+      {/* Recherche & filtres */}
+      <form method="get" className="bg-white rounded-xl border border-gray-200 p-4 flex flex-wrap gap-3 items-end">
+        <div className="flex-1 min-w-[180px]">
+          <label className="text-xs font-medium text-gray-500 mb-1 block">Recherche (nom / email)</label>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input name="q" defaultValue={params.q} placeholder="Nom ou email..."
+              className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]" />
+          </div>
+        </div>
+        <div className="flex-1 min-w-[160px]">
+          <label className="text-xs font-medium text-gray-500 mb-1 block">Formation</label>
+          <input name="cours" defaultValue={params.cours} placeholder="Titre de la formation..."
+            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]" />
+        </div>
+        <div>
+          <label className="text-xs font-medium text-gray-500 mb-1 block">Statut</label>
+          <select name="statut" defaultValue={params.statut ?? ''}
+            className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91] bg-white">
+            <option value="">Tous</option>
+            <option value="active">En cours</option>
+            <option value="completed">Terminés</option>
+          </select>
+        </div>
+        <button type="submit" className="px-4 py-2 bg-[#0B3D91] text-white text-sm font-semibold rounded-lg hover:bg-blue-800 transition-colors">
+          Filtrer
+        </button>
+        {(params.q || params.cours || params.statut) && (
+          <Link href="/formateur/apprenants" className="px-4 py-2 text-sm text-gray-500 hover:text-gray-800 transition-colors">
+            Réinitialiser
+          </Link>
+        )}
+      </form>
 
       {/* Stats */}
       <div className="grid sm:grid-cols-3 gap-4">
@@ -68,7 +128,7 @@ export default async function FormateurApprenantsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {(enrollments as any[])?.map(e => (
+            {enrollments.map(e => (
               <tr key={e.id} className="hover:bg-gray-50">
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-2">

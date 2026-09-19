@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { Trophy, Star, Gift, Zap, Share2, BookOpen, Award } from 'lucide-react'
+import ClaimButton from '@/components/fidelite/ClaimButton'
 
 const REWARDS = [
   { points: 500, label: 'Accès 1 cours gratuit', icon: BookOpen, color: 'from-blue-500 to-blue-700' },
@@ -94,7 +95,7 @@ export default async function FidelitePage() {
           {REWARDS.map(r => {
             const unlocked = totalPoints >= r.points
             return (
-              <div key={r.points} className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${unlocked ? 'border-[#0B3D91]/20 bg-[#0B3D91]/5' : 'border-gray-100 bg-gray-50 opacity-60'}`}>
+              <div key={r.points} className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${unlocked ? 'border-[#0B3D91]/20 bg-[#0B3D91]/5' : 'border-gray-100 bg-gray-50 opacity-70'}`}>
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${r.color} flex items-center justify-center flex-shrink-0`}>
                   <r.icon className="w-6 h-6 text-white" />
                 </div>
@@ -102,13 +103,7 @@ export default async function FidelitePage() {
                   <p className="font-semibold text-gray-900 text-sm">{r.label}</p>
                   <p className="text-xs text-gray-500">{r.points.toLocaleString('fr-FR')} points requis</p>
                 </div>
-                {unlocked ? (
-                  <button className="px-4 py-1.5 bg-[#0B3D91] text-white text-xs font-semibold rounded-lg hover:bg-[#0a3480] transition-colors">
-                    Réclamer
-                  </button>
-                ) : (
-                  <span className="text-xs text-gray-400 font-medium">{(r.points - totalPoints).toLocaleString('fr-FR')} pts manquants</span>
-                )}
+                <ClaimButton points={r.points} userPoints={totalPoints} />
               </div>
             )
           })}

@@ -21,23 +21,27 @@ export async function GET() {
     await supabase.from('profiles').update({ referral_code: code }).eq('id', user.id)
   }
 
-  // Comptage des filleuls
-  const { count: totalRefs } = await supabase
+  // Filleuls avec détails
+  const { data: referrals, count: totalRefs } = await supabase
     .from('referrals')
-    .select('*', { count: 'exact', head: true })
+    .select('id, status, created_at, referred:profiles!referrals_referred_id_fkey(full_name, country, created_at)', { count: 'exact' })
     .eq('referrer_id', user.id)
+    .order('created_at', { ascending: false })
 
-  const { count: rewardedRefs } = await supabase
-    .from('referrals')
-    .select('*', { count: 'exact', head: true })
-    .eq('referrer_id', user.id)
-    .eq('status', 'rewarded')
+  const rewardedRefs = referrals?.filter(r => r.status === 'rewarded').length ?? 0
 
   return NextResponse.json({
     code,
     referralUrl: `https://ibig-elearn.vercel.app/inscription?ref=${code}`,
     totalRefs: totalRefs ?? 0,
-    rewardedRefs: rewardedRefs ?? 0,
+    rewardedRefs,
     pointsPerReferral: 50,
+    referrals: (referrals ?? []).map(r => ({
+      id: r.id,
+      status: r.status,
+      created_at: r.created_at,
+      name: (r.referred as any)?.full_name ?? 'Anonyme',
+      country: (r.referred as any)?.country ?? null,
+    })),
   })
 }
