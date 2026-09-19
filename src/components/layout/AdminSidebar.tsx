@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Menu, X, LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings, Building2, Tag, Target, Bell, FileText, Mail } from 'lucide-react'
+import { BookOpen, Menu, X, LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings, Building2, Tag, Target, Bell, FileText, Mail, Star } from 'lucide-react'
 
 type Props = {
   userName: string
@@ -23,6 +23,7 @@ const NAV = [
   { href: '/admin/notifications', label: 'Notifications', icon: Bell },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/newsletter', label: 'Newsletter', icon: Mail },
+  { href: '/admin/temoignages', label: 'Témoignages', icon: Star },
   { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
 ]
 

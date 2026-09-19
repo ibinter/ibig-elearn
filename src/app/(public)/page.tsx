@@ -50,6 +50,17 @@ async function getTopInstructors() {
   return data ?? []
 }
 
+async function getPublishedTestimonials() {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('testimonials')
+    .select('*')
+    .eq('is_published', true)
+    .order('position')
+    .limit(6)
+  return data ?? []
+}
+
 const CATEGORY_ICONS: Record<string, string> = {
   'informatique-et-technologie': '💻',
   'management-et-leadership': '🎯',
@@ -119,11 +130,12 @@ const COUNTRIES = [
 ]
 
 export default async function HomePage() {
-  const [featuredCourses, categories, stats, instructors] = await Promise.all([
+  const [featuredCourses, categories, stats, instructors, testimonials] = await Promise.all([
     getFeaturedCourses(),
     getTopCategories(),
     getStats(),
     getTopInstructors(),
+    getPublishedTestimonials(),
   ])
 
   return (
@@ -355,35 +367,40 @@ export default async function HomePage() {
       </section>
 
       {/* ── TÉMOIGNAGES ── */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Ils nous font confiance</h2>
-            <p className="text-gray-500">Des professionnels de toute l'Afrique témoignent</p>
-          </div>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {TESTIMONIALS.map(t => (
-              <div key={t.name} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col">
-                <div className="flex gap-0.5 mb-4">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-[#FFA500] fill-[#FFA500]" />
-                  ))}
-                </div>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1 mb-5 italic">&ldquo;{t.text}&rdquo;</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                  <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold flex-shrink-0`}>
-                    {t.initials}
+      {(testimonials.length > 0 || true) && (
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">Ils nous font confiance</h2>
+              <p className="text-gray-500">Des professionnels de toute l'Afrique témoignent</p>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {(testimonials.length > 0 ? testimonials : TESTIMONIALS.map((t: any) => ({
+                id: t.name, author_name: t.name, author_role: t.role, content: t.text,
+                rating: t.rating, initials: t.initials, color: t.color
+              }))).map((t: any) => (
+                <div key={t.id ?? t.author_name} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col">
+                  <div className="flex gap-0.5 mb-4">
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-[#FFA500] fill-[#FFA500]" />
+                    ))}
                   </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
-                    <p className="text-gray-400 text-xs">{t.role}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1 mb-5 italic">&ldquo;{t.content ?? t.text}&rdquo;</p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div className={`w-10 h-10 rounded-full ${t.color ?? 'bg-blue-600'} flex items-center justify-center text-white text-sm font-bold flex-shrink-0`}>
+                      {t.initials || (t.author_name ?? '').slice(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">{t.author_name}</p>
+                      <p className="text-gray-400 text-xs">{t.author_role}{t.author_country ? `, ${t.author_country}` : ''}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── PAYS COUVERTS ── */}
       <section className="py-12 bg-[#0B3D91]">

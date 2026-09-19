@@ -9,6 +9,7 @@ import type { Profile } from '@/types'
 import CurrencySelector from '@/components/ui/CurrencySelector'
 import GlobalSearch from '@/components/search/GlobalSearch'
 import NotificationBell from '@/components/ui/NotificationBell'
+import DarkModeToggle from '@/components/ui/DarkModeToggle'
 
 interface NavbarProps {
   user?: Profile | null
@@ -77,6 +78,7 @@ export default function Navbar({ user }: NavbarProps) {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
+            <DarkModeToggle />
             <CurrencySelector />
             {user && <NotificationBell />}
             {user ? (
