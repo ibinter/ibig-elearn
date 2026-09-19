@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, BookOpen } from 'lucide-react'
 import LessonsEditor from './LessonsEditor'
+import SubmitForApproval from '@/components/formateur/SubmitForApproval'
 
 interface Props { params: Promise<{ id: string }> }
 
@@ -14,7 +15,7 @@ export default async function FormationLeconsPage({ params }: Props) {
 
   const { data: course } = await supabase
     .from('courses')
-    .select('id, title, instructor_id')
+    .select('id, title, instructor_id, approval_status, is_published')
     .eq('id', id)
     .single()
 
@@ -52,6 +53,7 @@ export default async function FormationLeconsPage({ params }: Props) {
             className="text-sm text-[#0B3D91] border border-[#0B3D91] px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
             Statistiques
           </Link>
+          <SubmitForApproval courseId={id} approvalStatus={(course as any).approval_status ?? null} isPublished={(course as any).is_published} />
         </div>
       </div>
 

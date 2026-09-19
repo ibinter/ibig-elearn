@@ -12,6 +12,7 @@ import LessonNotes from '@/components/apprendre/LessonNotes'
 import BookmarkButton from '@/components/apprendre/BookmarkButton'
 import MarkCompleteButton from '@/components/apprendre/MarkCompleteButton'
 import LessonNavigation from '@/components/apprendre/LessonNavigation'
+import LessonQA from '@/components/apprendre/LessonQA'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -161,6 +162,11 @@ export default async function ApprendrePage({ params }: PageProps) {
             {/* Notes de cours */}
             <div className="mb-8 bg-gray-800 rounded-2xl overflow-hidden">
               <LessonNotes lessonId={currentLesson.id} courseId={courseId} />
+            </div>
+
+            {/* Q&A par leçon */}
+            <div className="mb-8 bg-gray-800 rounded-2xl p-6">
+              <LessonQA lessonId={currentLesson.id} courseId={courseId} userId={user.id} />
             </div>
 
             {/* Forum de discussion */}

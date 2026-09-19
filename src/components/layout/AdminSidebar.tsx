@@ -20,6 +20,8 @@ const NAV = [
   { href: '/admin/entreprise', label: 'Entreprise B2B', icon: Building2 },
   { href: '/admin/parcours', label: 'Parcours', icon: Target },
   { href: '/admin/coupons', label: 'Coupons & Promos', icon: Tag },
+  { href: '/admin/approbations', label: 'Approbations', icon: BookOpen },
+  { href: '/admin/virements', label: 'Virements', icon: CreditCard },
   { href: '/admin/notifications', label: 'Notifications', icon: Bell },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/newsletter', label: 'Newsletter', icon: Mail },

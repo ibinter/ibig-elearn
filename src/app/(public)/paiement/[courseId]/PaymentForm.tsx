@@ -31,6 +31,7 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
   const [error, setError] = useState('')
   const [finalAmount, setFinalAmount] = useState(amount)
   const [couponId, setCouponId] = useState<string | null>(null)
+  const [planMode, setPlanMode] = useState<'full' | '3x'>('full')
 
   function handleCoupon(result: { valid: boolean; couponId: string; finalAmount: number } | null) {
     if (result) { setFinalAmount(result.finalAmount); setCouponId(result.couponId) }
@@ -48,7 +49,8 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           courseId,
-          amount: finalAmount,
+          amount: planMode === '3x' ? installment : finalAmount,
+          totalAmount: finalAmount,
           currency,
           description: courseName,
           customer_name: userName,
@@ -56,6 +58,8 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
           customer_phone_number: phone,
           payment_method: method === 'card' ? 'CREDIT_CARD' : provider.toUpperCase(),
           coupon_id: couponId,
+          plan_mode: planMode,
+          installment_number: planMode === '3x' ? 1 : null,
         }),
       })
 
@@ -69,11 +73,40 @@ export default function PaymentForm({ courseId, amount, currency, courseName, us
     }
   }
 
-  const formattedAmount = new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(finalAmount)
+  const installment = Math.ceil(finalAmount / 3)
+  const formattedAmount = new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(planMode === '3x' ? installment : finalAmount)
+  const formattedTotal = new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(finalAmount)
   const hasDiscount = finalAmount < amount
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Plan de paiement */}
+      {finalAmount > 10000 && (
+        <div>
+          <p className="text-sm font-medium text-gray-700 mb-3">Plan de paiement</p>
+          <div className="grid grid-cols-2 gap-3">
+            <button type="button" onClick={() => setPlanMode('full')}
+              className={`p-4 rounded-xl border-2 text-left transition-all ${planMode === 'full' ? 'border-[#0B3D91] bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}>
+              <p className="font-bold text-gray-900 text-sm">Paiement intégral</p>
+              <p className="text-[#0B3D91] font-semibold mt-1">{formattedTotal}</p>
+              <p className="text-xs text-gray-500 mt-0.5">Une seule fois</p>
+            </button>
+            <button type="button" onClick={() => setPlanMode('3x')}
+              className={`p-4 rounded-xl border-2 text-left transition-all relative ${planMode === '3x' ? 'border-[#FFA500] bg-orange-50' : 'border-gray-200 hover:border-gray-300'}`}>
+              <span className="absolute -top-2 -right-2 bg-[#FFA500] text-black text-[10px] font-bold px-2 py-0.5 rounded-full">POPULAIRE</span>
+              <p className="font-bold text-gray-900 text-sm">Payer en 3×</p>
+              <p className="text-orange-600 font-semibold mt-1">{new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(installment)}/mois</p>
+              <p className="text-xs text-gray-500 mt-0.5">Sans frais supplémentaires</p>
+            </button>
+          </div>
+          {planMode === '3x' && (
+            <div className="mt-3 bg-orange-50 border border-orange-200 rounded-xl p-3 text-xs text-orange-800">
+              💳 Vous payez <strong>{new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(installment)}</strong> maintenant, puis le même montant pendant 2 mois. Total : <strong>{formattedTotal}</strong>.
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Méthode de paiement */}
       <div>
         <p className="text-sm font-medium text-gray-700 mb-3">Choisir un mode de paiement</p>
