@@ -8,6 +8,8 @@ import { ArrowLeft, CheckCircle } from 'lucide-react'
 import CertificateButton from '@/components/ui/CertificateButton'
 import SaraChat from '@/components/sara/SaraChat'
 import DiscussionPanel from '@/components/forum/DiscussionPanel'
+import LessonNotes from '@/components/apprendre/LessonNotes'
+import BookmarkButton from '@/components/apprendre/BookmarkButton'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -114,11 +116,14 @@ export default async function ApprendrePage({ params }: PageProps) {
           <div className="max-w-4xl mx-auto p-6">
             <div className="flex items-start justify-between mb-6">
               <h2 className="text-xl font-bold text-white">{currentLesson.title}</h2>
-              {progress?.is_completed && (
-                <span className="flex items-center gap-1.5 text-green-400 text-sm font-medium">
-                  <CheckCircle className="w-5 h-5" /> Terminé
-                </span>
-              )}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <BookmarkButton lessonId={currentLesson.id} courseId={courseId} />
+                {progress?.is_completed && (
+                  <span className="flex items-center gap-1.5 text-green-400 text-sm font-medium">
+                    <CheckCircle className="w-5 h-5" /> Terminé
+                  </span>
+                )}
+              </div>
             </div>
 
             {currentLesson.content && (
@@ -137,6 +142,11 @@ export default async function ApprendrePage({ params }: PageProps) {
                 bestPreviousScore={bestPreviousScore}
               />
             )}
+
+            {/* Notes de cours */}
+            <div className="mb-8 bg-gray-800 rounded-2xl overflow-hidden">
+              <LessonNotes lessonId={currentLesson.id} courseId={courseId} />
+            </div>
 
             {/* Forum de discussion */}
             <DiscussionPanel

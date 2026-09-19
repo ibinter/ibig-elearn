@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart } from 'lucide-react'
+import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Profile } from '@/types'
@@ -52,6 +52,9 @@ export default function Navbar({ user }: NavbarProps) {
           <div className="hidden md:flex items-center gap-6">
             <Link href="/catalogue" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
               Catalogue
+            </Link>
+            <Link href="/parcours" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
+              Parcours
             </Link>
             <Link href="/catalogue?featured=true" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors">
               Formations vedettes
@@ -111,6 +114,9 @@ export default function Navbar({ user }: NavbarProps) {
                     </Link>
                     <Link href="/mes-favoris" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <Heart className="w-4 h-4" /> Mes favoris
+                    </Link>
+                    <Link href="/mes-notes" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                      <FileText className="w-4 h-4" /> Mes notes
                     </Link>
                     <Link href="/mes-stats" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
                       <BarChart2 className="w-4 h-4" /> Mes statistiques
