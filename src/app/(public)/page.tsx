@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCircle, TrendingUp, Star, Zap, Target, BarChart3, Clock, BadgeCheck, Flame } from 'lucide-react'
+import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCircle, TrendingUp, Star, Zap, Target, BarChart3, Clock, BadgeCheck, Flame, Play, ChevronRight, MapPin, Sparkles, Trophy, Rocket } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import type { Course, Category } from '@/types'
 import CourseCard from '@/components/ui/CourseCard'
@@ -35,32 +35,18 @@ async function getStats() {
     supabase.from('certificates').select('*', { count: 'exact', head: true }),
     supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'formateur'),
   ])
-  return {
-    courses: courses ?? 0,
-    enrollments: enrollments ?? 0,
-    certificates: certificates ?? 0,
-    instructors: instructors ?? 0,
-  }
+  return { courses: courses ?? 0, enrollments: enrollments ?? 0, certificates: certificates ?? 0, instructors: instructors ?? 0 }
 }
 
 async function getTopInstructors() {
   const supabase = await createClient()
-  const { data } = await supabase
-    .from('profiles')
-    .select('id, full_name, avatar_url, bio, country')
-    .eq('role', 'formateur')
-    .limit(4)
+  const { data } = await supabase.from('profiles').select('id, full_name, avatar_url, bio, country').eq('role', 'formateur').limit(4)
   return data ?? []
 }
 
 async function getPublishedTestimonials() {
   const supabase = await createClient()
-  const { data } = await supabase
-    .from('testimonials')
-    .select('*')
-    .eq('is_published', true)
-    .order('position')
-    .limit(9)
+  const { data } = await supabase.from('testimonials').select('*').eq('is_published', true).order('position').limit(9)
   return data ?? []
 }
 
@@ -99,20 +85,9 @@ const FALLBACK_TESTIMONIALS = [
   { id: '6', author_name: 'Awa Sow', author_role: 'Consultante RH', author_country: 'Sénégal', content: "Les formateurs sont de vrais praticiens, pas des théoriciens. Ils comprennent les enjeux RH en Afrique de l'Ouest. Mes clients apprécient mon évolution.", rating: 5, color: 'bg-teal-600' },
 ]
 
-const SUCCESS_STATS = [
-  { value: '94%', label: 'taux de satisfaction', icon: Star, color: 'text-yellow-500' },
-  { value: '3×', label: 'gain de productivité moyen', icon: TrendingUp, color: 'text-green-500' },
-  { value: '72h', label: 'délai moyen pour décrocher une promo', icon: Clock, color: 'text-blue-500' },
-  { value: '12', label: 'pays d\'Afrique couverts', icon: Globe, color: 'text-purple-500' },
-]
-
 export default async function HomePage() {
   const [featuredCourses, categories, stats, instructors, testimonials] = await Promise.all([
-    getFeaturedCourses(),
-    getTopCategories(),
-    getStats(),
-    getTopInstructors(),
-    getPublishedTestimonials(),
+    getFeaturedCourses(), getTopCategories(), getStats(), getTopInstructors(), getPublishedTestimonials(),
   ])
 
   const allTestimonials = (testimonials.length > 0
@@ -122,196 +97,279 @@ export default async function HomePage() {
   return (
     <div className="overflow-x-hidden">
 
-      {/* ═══════════════════ HERO ═══════════════════ */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-[#040e24]">
-        {/* Background layers */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91] via-[#0c2d6b] to-[#040e24]" />
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full bg-[#FFA500]/10 blur-[120px] -translate-y-1/3 translate-x-1/4" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[100px] translate-y-1/2 -translate-x-1/4" />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        </div>
+      {/* ═══════════════════════════════════════════════
+          HERO — CINÉMATIQUE
+      ═══════════════════════════════════════════════ */}
+      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #051530 30%, #071e45 60%, #020b1a 100%)' }}>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-0 w-full">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left col */}
-            <div>
-              {/* Live ticker */}
-              <div className="mb-6">
+        {/* Orbs animés */}
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full opacity-20 blur-[100px] animate-float-slow"
+          style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] animate-float"
+          style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
+        <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] rounded-full opacity-10 blur-[60px] -translate-x-1/2 -translate-y-1/2"
+          style={{ background: 'radial-gradient(circle, #4f8ef7, transparent)' }} />
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.025]"
+          style={{ backgroundImage: 'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+
+        {/* Noise texture */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-0 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-screen lg:min-h-0 lg:py-20">
+
+            {/* COL GAUCHE */}
+            <div className="pt-8 lg:pt-0">
+              <div className="mb-8 animate-fadeInUp">
                 <LiveTicker />
               </div>
 
-              <div className="mb-3">
-                <span className="text-[#FFA500] text-sm font-bold uppercase tracking-widest">
+              {/* Badge */}
+              <div className="mb-5 animate-fadeInUp-delay">
+                <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FFA500]/20 to-[#FFA500]/5 border border-[#FFA500]/30 text-[#FFA500] rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em]">
+                  <Sparkles className="w-3.5 h-3.5" />
                   #1 Plateforme eLearning en Afrique francophone
                 </span>
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] text-white mb-6">
-                Formez-vous.<br />
-                <span className="relative inline-block">
-                  <span className="text-[#FFA500]">Certifiez-vous.</span>
-                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
-                    <path d="M2 8 Q75 2 150 8 Q225 14 298 8" stroke="#FFA500" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.5"/>
-                  </svg>
-                </span><br />
-                Évoluez.
+              {/* Titre massif */}
+              <h1 className="text-[3rem] sm:text-[4rem] lg:text-[4.5rem] xl:text-[5.5rem] font-black leading-[1.0] text-white mb-6 tracking-tight animate-fadeInUp-delay">
+                La plateforme<br />
+                <span className="relative">
+                  <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700, #FFA500)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                    qui forme
+                  </span>
+                </span>{' '}
+                l&apos;Afrique<br />
+                <span className="text-white/90">de demain.</span>
               </h1>
 
-              <p className="text-blue-200 text-lg leading-relaxed mb-10 max-w-lg">
-                Des formations <strong className="text-white">professionnelles certifiantes</strong> adaptées
-                au marché africain. Payez en francs CFA, apprenez à votre rythme, obtenez un certificat
-                <strong className="text-white"> vérifiable et reconnu</strong>.
+              <p className="text-blue-200/80 text-base sm:text-lg leading-relaxed mb-10 max-w-[520px] animate-fadeInUp-delay2">
+                Formations <strong className="text-white">certifiantes et professionnelles</strong> adaptées
+                au marché africain — payez en Mobile Money, apprenez à votre rythme,
+                obtenez un certificat <strong className="text-white">reconnu et vérifiable</strong> dans 12 pays.
               </p>
 
-              <HeroCTA />
+              <div className="animate-fadeInUp-delay2">
+                <HeroCTA />
+              </div>
 
               {/* Trust badges */}
-              <div className="flex flex-wrap gap-4 mt-10">
+              <div className="flex flex-wrap gap-x-6 gap-y-3 mt-10 animate-fadeInUp-delay3">
                 {[
                   { icon: BadgeCheck, text: 'Certificats vérifiables', color: 'text-green-400' },
                   { icon: Smartphone, text: 'Mobile Money', color: 'text-yellow-400' },
-                  { icon: Globe, text: '18 devises', color: 'text-blue-400' },
+                  { icon: Globe, text: '12 pays', color: 'text-blue-400' },
                   { icon: Zap, text: 'Accès immédiat', color: 'text-orange-400' },
                 ].map(({ icon: Icon, text, color }) => (
-                  <div key={text} className="flex items-center gap-1.5 text-sm text-blue-100">
+                  <div key={text} className="flex items-center gap-1.5 text-sm text-blue-200/70">
                     <Icon className={`w-4 h-4 ${color}`} />
                     {text}
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Right col — floating cards */}
-            <div className="hidden lg:block relative h-[540px]">
-              {/* Main card */}
-              <div className="absolute top-16 left-8 right-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 rounded-xl bg-[#FFA500] flex items-center justify-center">
-                    <Award className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-sm">Certificat obtenu 🎉</p>
-                    <p className="text-blue-300 text-xs">Management Stratégique</p>
-                  </div>
-                  <div className="ml-auto text-xs text-green-400 font-semibold bg-green-400/15 px-2 py-1 rounded-full">
-                    Félicitations !
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 gap-3">
-                  {[
-                    { label: 'Formations', value: stats.courses > 0 ? stats.courses + '+' : '184+', icon: BookOpen },
-                    { label: 'Apprenants', value: stats.enrollments > 100 ? (stats.enrollments / 1000).toFixed(1) + 'k+' : '2.4k+', icon: Users },
-                    { label: 'Certifiés', value: stats.certificates > 100 ? stats.certificates + '+' : '1.2k+', icon: Award },
-                    { label: 'Pays', value: '12', icon: Globe },
-                  ].map(s => (
-                    <div key={s.label} className="bg-white/10 rounded-2xl p-3 text-center">
-                      <s.icon className="w-5 h-5 text-[#FFA500] mx-auto mb-1.5" />
-                      <p className="text-white font-bold text-lg">{s.value}</p>
-                      <p className="text-blue-300 text-[10px]">{s.label}</p>
-                    </div>
+              {/* Rating social proof */}
+              <div className="flex items-center gap-4 mt-8 pt-8 border-t border-white/10 animate-fadeInUp-delay3">
+                <div className="flex -space-x-2">
+                  {['🇨🇮','🇸🇳','🇨🇲','🇲🇱','🇧🇫'].map((flag, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0B3D91] to-[#1558c0] border-2 border-[#020b1a] flex items-center justify-center text-xs">{flag}</div>
                   ))}
                 </div>
-              </div>
-
-              {/* Floating mini cards */}
-              <div className="absolute bottom-20 left-4 bg-white rounded-2xl shadow-2xl p-4 flex items-center gap-3 max-w-[220px]">
-                <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-5 h-5 text-green-600" />
-                </div>
                 <div>
-                  <p className="text-xs text-gray-500">Progression ce mois</p>
-                  <p className="font-bold text-gray-900">+34 nouvelles inscriptions</p>
-                </div>
-              </div>
-
-              <div className="absolute bottom-4 right-4 bg-white rounded-2xl shadow-2xl p-4 flex items-center gap-3 max-w-[210px]">
-                <div className="text-2xl">⭐</div>
-                <div>
-                  <p className="font-bold text-gray-900 text-sm">Note moyenne 4.8/5</p>
-                  <div className="flex gap-0.5 mt-1">
-                    {[1,2,3,4,5].map(i => (
-                      <div key={i} className={`h-1.5 w-6 rounded-full ${i <= 4 ? 'bg-[#FFA500]' : 'bg-gray-200'}`} />
-                    ))}
+                  <div className="flex gap-0.5 mb-0.5">
+                    {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 text-[#FFA500] fill-[#FFA500]" />)}
                   </div>
+                  <p className="text-xs text-blue-200/70"><strong className="text-white">{stats.enrollments > 0 ? stats.enrollments.toLocaleString('fr-FR') : '2 400'}+</strong> apprenants nous font confiance</p>
                 </div>
               </div>
             </div>
+
+            {/* COL DROITE — Dashboard mockup */}
+            <div className="hidden lg:flex justify-end items-center animate-fadeInUp-delay">
+              <div className="relative w-full max-w-[480px]">
+
+                {/* Carte centrale principale */}
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+                  style={{ background: 'linear-gradient(135deg, rgba(11,61,145,0.4), rgba(4,14,36,0.8))', backdropFilter: 'blur(20px)' }}>
+                  <div className="p-6">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                        <span className="text-white font-bold text-sm">Tableau de bord</span>
+                      </div>
+                      <span className="text-xs text-blue-300/70">IBIG E-LEARN</span>
+                    </div>
+
+                    {/* Stats grid */}
+                    <div className="grid grid-cols-3 gap-3 mb-5">
+                      {[
+                        { label: 'Formations', value: stats.courses > 0 ? `${stats.courses}+` : '184+', icon: BookOpen, color: 'from-blue-500/20 to-blue-600/10', iconColor: 'text-blue-400' },
+                        { label: 'Apprenants', value: stats.enrollments > 1000 ? `${Math.floor(stats.enrollments/1000)}k+` : '2.4k+', icon: Users, color: 'from-green-500/20 to-green-600/10', iconColor: 'text-green-400' },
+                        { label: 'Pays', value: '12', icon: Globe, color: 'from-orange-500/20 to-orange-600/10', iconColor: 'text-orange-400' },
+                      ].map(s => (
+                        <div key={s.label} className={`bg-gradient-to-br ${s.color} rounded-2xl p-3 border border-white/10 text-center`}>
+                          <s.icon className={`w-5 h-5 ${s.iconColor} mx-auto mb-1.5`} />
+                          <p className="text-white font-black text-xl">{s.value}</p>
+                          <p className="text-blue-300/70 text-[10px] mt-0.5">{s.label}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Progress bar */}
+                    <div className="bg-white/5 rounded-2xl p-4 mb-4 border border-white/8">
+                      <div className="flex items-center justify-between mb-2">
+                        <div>
+                          <p className="text-white text-xs font-semibold">Management Stratégique</p>
+                          <p className="text-blue-300/60 text-[10px]">Module 4 / 8 en cours</p>
+                        </div>
+                        <span className="text-[#FFA500] text-xs font-black">68%</span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-2">
+                        <div className="h-2 rounded-full animate-shimmer" style={{ width: '68%', background: 'linear-gradient(90deg, #FFA500, #FFD700)' }} />
+                      </div>
+                    </div>
+
+                    {/* Certificate earned */}
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-green-500/15 to-emerald-600/10 border border-green-500/25 rounded-2xl p-3">
+                      <div className="w-9 h-9 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                        <Award className="w-5 h-5 text-green-400" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-white text-xs font-bold">Certificat obtenu ! 🎉</p>
+                        <p className="text-green-300/70 text-[10px]">Comptabilité SYSCOHADA — Décroché aujourd&apos;hui</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating card — note */}
+                <div className="absolute -top-6 -right-6 bg-white rounded-2xl shadow-2xl p-4 flex items-center gap-3 animate-float"
+                  style={{ maxWidth: '200px' }}>
+                  <div className="text-2xl">⭐</div>
+                  <div>
+                    <p className="font-black text-gray-900 text-sm">4.8/5</p>
+                    <p className="text-xs text-gray-500">Note moyenne</p>
+                  </div>
+                </div>
+
+                {/* Floating card — new enrollment */}
+                <div className="absolute -bottom-5 -left-6 bg-white rounded-2xl shadow-2xl p-3.5 flex items-center gap-3 animate-float-delay"
+                  style={{ maxWidth: '230px' }}>
+                  <div className="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900 text-xs">+12 inscrits</p>
+                    <p className="text-gray-400 text-[10px]">ces 2 dernières heures</p>
+                  </div>
+                </div>
+
+                {/* Glow ring */}
+                <div className="absolute inset-0 rounded-3xl animate-glow pointer-events-none" />
+              </div>
+            </div>
+
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-blue-300 opacity-60">
-          <span className="text-xs uppercase tracking-widest">Découvrir</span>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-blue-300/50">
           <div className="w-5 h-8 border-2 border-current rounded-full flex justify-center pt-1.5">
             <div className="w-1 h-1.5 bg-current rounded-full animate-bounce" />
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ STATS BAND ═══════════════════ */}
-      <section className="bg-white border-y border-gray-100 py-8">
+      {/* ═══════════════════════════════════════════════
+          STATS BAND — CHIFFRES CLÉS
+      ═══════════════════════════════════════════════ */}
+      <section className="relative py-0 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-gray-100">
             {[
-              { end: stats.courses > 0 ? stats.courses : 184, suffix: '+', label: 'Formations certifiantes', icon: BookOpen, color: 'bg-blue-50 text-[#0B3D91]' },
-              { end: stats.enrollments > 0 ? stats.enrollments : 2400, suffix: '+', label: 'Apprenants inscrits', icon: Users, color: 'bg-green-50 text-green-600' },
-              { end: stats.certificates > 0 ? stats.certificates : 1200, suffix: '+', label: 'Certificats délivrés', icon: Award, color: 'bg-orange-50 text-orange-600' },
-              { end: 12, suffix: ' pays', label: 'Afrique francophone', icon: Globe, color: 'bg-purple-50 text-purple-600' },
-            ].map(s => (
-              <div key={s.label} className="flex flex-col items-center gap-2">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${s.color} mb-1`}>
-                  <s.icon className="w-6 h-6" />
+              { end: stats.courses > 0 ? stats.courses : 184, suffix: '+', label: 'Formations certifiantes', sub: 'disponibles maintenant', icon: BookOpen, color: 'text-[#0B3D91]', bg: 'bg-blue-50' },
+              { end: stats.enrollments > 0 ? stats.enrollments : 2400, suffix: '+', label: 'Apprenants actifs', sub: 'à travers 12 pays', icon: Users, color: 'text-green-600', bg: 'bg-green-50' },
+              { end: stats.certificates > 0 ? stats.certificates : 1200, suffix: '+', label: 'Certificats délivrés', sub: 'vérifiables par QR code', icon: Award, color: 'text-orange-600', bg: 'bg-orange-50' },
+              { end: 12, suffix: ' pays', label: 'Pays couverts', sub: 'Afrique francophone', icon: Globe, color: 'text-purple-600', bg: 'bg-purple-50' },
+            ].map((s, i) => (
+              <div key={i} className="flex flex-col items-center py-10 px-6 gap-3 group hover:bg-gray-50/50 transition-colors">
+                <div className={`w-14 h-14 rounded-2xl ${s.bg} ${s.color} flex items-center justify-center mb-1 group-hover:scale-110 transition-transform`}>
+                  <s.icon className="w-7 h-7" />
                 </div>
-                <div className="text-3xl font-black text-gray-900">
+                <div className="text-4xl sm:text-5xl font-black text-gray-900">
                   <CountUp end={s.end} suffix={s.suffix} />
                 </div>
-                <p className="text-sm text-gray-500 font-medium">{s.label}</p>
+                <div className="text-center">
+                  <p className="font-bold text-gray-900 text-sm">{s.label}</p>
+                  <p className="text-gray-400 text-xs mt-0.5">{s.sub}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
       </section>
 
-      {/* ═══════════════════ CATÉGORIES ═══════════════════ */}
-      <section className="py-20 bg-gray-50">
+      {/* ═══════════════════════════════════════════════
+          CATÉGORIES — GRILLE PREMIUM
+      ═══════════════════════════════════════════════ */}
+      <section className="py-24" style={{ background: 'linear-gradient(180deg, #f8faff 0%, #ffffff 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-[#0B3D91] text-sm font-bold uppercase tracking-widest mb-3 block">Nos domaines</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Explorez 25+ domaines professionnels</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Tous les secteurs porteurs du marché africain, couverts par nos experts</p>
+          <div className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-50 px-4 py-1.5 rounded-full">
+              <Target className="w-3.5 h-3.5" /> Nos domaines
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4 leading-tight">
+              25+ domaines professionnels<br />
+              <span style={{ background: 'linear-gradient(90deg, #0B3D91, #1a6cc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                couverts par nos experts
+              </span>
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Tous les secteurs porteurs du marché africain, enseignés par des praticiens reconnus</p>
           </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {categories.map(cat => (
+            {categories.map((cat, i) => (
               <Link key={cat.slug} href={`/catalogue?categorie=${cat.slug}`}
-                className="group relative flex flex-col items-center gap-2 p-4 rounded-2xl bg-white border border-gray-100 hover:border-[#0B3D91]/30 hover:shadow-lg hover:-translate-y-1.5 transition-all text-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91]/0 to-[#0B3D91]/0 group-hover:from-[#0B3D91]/5 group-hover:to-blue-50/50 transition-all" />
-                <span className="text-3xl relative z-10">{CATEGORY_ICONS[cat.slug] ?? '📚'}</span>
-                <span className="font-semibold text-xs leading-tight text-gray-700 group-hover:text-[#0B3D91] transition-colors relative z-10">{cat.name}</span>
+                className="group relative flex flex-col items-center gap-2.5 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-[#0B3D91]/20 transition-all duration-300 text-center overflow-hidden">
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                  style={{ background: `linear-gradient(135deg, hsl(${200 + i * 15}, 70%, 97%), white)` }} />
+                <span className="text-3xl relative z-10 group-hover:scale-110 transition-transform duration-300">{CATEGORY_ICONS[cat.slug] ?? '📚'}</span>
+                <span className="font-semibold text-[11px] leading-tight text-gray-700 group-hover:text-[#0B3D91] transition-colors relative z-10">{cat.name}</span>
               </Link>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link href="/catalogue" className="inline-flex items-center gap-2 bg-[#0B3D91] text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-900 transition-colors">
-              Voir les 25+ domaines <ArrowRight className="w-4 h-4" />
+
+          <div className="text-center mt-10">
+            <Link href="/catalogue"
+              className="inline-flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] font-bold px-8 py-3.5 rounded-2xl hover:bg-[#0B3D91] hover:text-white transition-all group">
+              Voir les 25+ domaines <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ FORMATIONS VEDETTES ═══════════════════ */}
+      {/* ═══════════════════════════════════════════════
+          FORMATIONS VEDETTES
+      ═══════════════════════════════════════════════ */}
       {featuredCourses.length > 0 && (
-        <section className="py-20">
+        <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-10">
+            <div className="flex items-end justify-between mb-12">
               <div>
-                <span className="text-[#0B3D91] text-sm font-bold uppercase tracking-widest mb-2 block">Top formations</span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Les plus populaires</h2>
-                <p className="text-gray-500">Plébiscitées par nos apprenants à travers toute l'Afrique</p>
+                <span className="inline-flex items-center gap-2 text-orange-600 text-xs font-bold uppercase tracking-widest mb-3 bg-orange-50 px-4 py-1.5 rounded-full">
+                  <Flame className="w-3.5 h-3.5" /> Top formations
+                </span>
+                <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-2">Les plus populaires</h2>
+                <p className="text-gray-500">Plébiscitées par nos apprenants à travers toute l&apos;Afrique</p>
               </div>
-              <Link href="/catalogue?featured=true" className="hidden sm:flex items-center gap-1 text-[#0B3D91] font-semibold hover:underline text-sm flex-shrink-0">
+              <Link href="/catalogue?featured=true" className="hidden sm:flex items-center gap-1.5 text-[#0B3D91] font-bold hover:underline text-sm flex-shrink-0 bg-blue-50 px-4 py-2 rounded-xl hover:bg-blue-100 transition-colors">
                 Voir tout <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -320,119 +378,156 @@ export default async function HomePage() {
                 <CourseCard key={course.id} course={course} />
               ))}
             </div>
-            <div className="text-center mt-8 sm:hidden">
-              <Link href="/catalogue" className="inline-flex items-center gap-2 text-[#0B3D91] font-semibold text-sm">
-                Voir toutes les formations <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
           </div>
         </section>
       )}
 
-      {/* ═══════════════════ RECOMMANDÉS ═══════════════════ */}
-      <section className="py-8 pb-20">
+      {/* ═══════════════════════════════════════════════
+          RECOMMANDÉS
+      ═══════════════════════════════════════════════ */}
+      <section className="pb-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RecommendedCourses title="Formations populaires" />
         </div>
       </section>
 
-      {/* ═══════════════════ COMMENT ÇA MARCHE ═══════════════════ */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-[#0B3D91] text-sm font-bold uppercase tracking-widest mb-3 block">Simple & rapide</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Commencez en 3 étapes</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">De l'inscription à la certification, tout se passe en ligne, depuis votre téléphone</p>
+      {/* ═══════════════════════════════════════════════
+          COMMENT ÇA MARCHE — TIMELINE
+      ═══════════════════════════════════════════════ */}
+      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f8faff 0%, #eef3ff 50%, #f8faff 100%)' }}>
+        {/* Decorative circles */}
+        <div className="absolute top-20 -left-20 w-64 h-64 rounded-full opacity-30 blur-3xl" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
+        <div className="absolute bottom-20 -right-20 w-64 h-64 rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-100/70 px-4 py-1.5 rounded-full">
+              <Rocket className="w-3.5 h-3.5" /> Simple & rapide
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">De zéro à certifié<br />en 3 étapes</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Depuis votre smartphone, en francs CFA, en quelques semaines</p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-8">
+
+          <div className="grid sm:grid-cols-3 gap-0 relative">
+            {/* Connecting line */}
+            <div className="hidden sm:block absolute top-16 left-[16.66%] right-[16.66%] h-0.5"
+              style={{ background: 'linear-gradient(90deg, #0B3D91, #FFA500, #10b981)' }} />
+
             {[
               {
-                step: '01',
-                icon: BookOpen,
-                title: 'Choisissez votre formation',
-                desc: 'Parcourez nos 184 formations certifiantes. Filtrez par domaine, niveau, durée et budget. Lisez les avis des apprenants.',
-                color: 'from-blue-500 to-[#0B3D91]',
-                light: 'bg-blue-50 text-[#0B3D91]',
+                step: '1', icon: BookOpen, title: 'Choisissez',
+                desc: "Parcourez 184 formations certifiantes. Filtrez par domaine, niveau et budget. Lisez les avis d'autres professionnels africains.",
+                gradient: 'from-[#0B3D91] to-blue-600',
                 badge: 'Gratuit',
+                badgeColor: 'bg-blue-100 text-[#0B3D91]',
+                detail: '📍 Depuis Abidjan, Dakar, Douala, Bamako…',
               },
               {
-                step: '02',
-                icon: CheckCircle,
-                title: 'Payez en toute sécurité',
-                desc: 'Orange Money, MTN Mobile Money, Wave, carte bancaire ou virement. 18 devises africaines acceptées. Garantie 7 jours.',
-                color: 'from-orange-400 to-orange-600',
-                light: 'bg-orange-50 text-orange-600',
-                badge: 'Sécurisé',
+                step: '2', icon: Smartphone, title: 'Payez',
+                desc: 'Orange Money, MTN, Wave, carte bancaire. 12 devises africaines. Garantie satisfait ou remboursé 7 jours sans conditions.',
+                gradient: 'from-[#FFA500] to-orange-500',
+                badge: 'Sécurisé SSL',
+                badgeColor: 'bg-orange-100 text-orange-700',
+                detail: '💳 XOF, XAF, GNF, MAD, NGN et plus',
               },
               {
-                step: '03',
-                icon: Award,
-                title: 'Obtenez votre certificat',
-                desc: 'Apprenez à votre rythme, sur mobile ou desktop. Réussissez l\'évaluation et téléchargez votre certificat vérifiable en PDF.',
-                color: 'from-green-400 to-teal-600',
-                light: 'bg-green-50 text-green-600',
-                badge: 'Vérifiable',
+                step: '3', icon: Award, title: 'Certifiez-vous',
+                desc: 'Apprenez à votre rythme sur mobile ou desktop. Réussissez l\'évaluation et téléchargez votre certificat PDF vérifiable.',
+                gradient: 'from-emerald-500 to-teal-600',
+                badge: 'Vérifiable QR',
+                badgeColor: 'bg-green-100 text-green-700',
+                detail: '🏆 Reconnu par les entreprises africaines',
               },
-            ].map((item) => (
-              <div key={item.step} className="relative bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 group overflow-hidden">
-                <div className={`absolute top-0 right-0 w-24 h-24 rounded-bl-3xl bg-gradient-to-br ${item.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
-                <div className="flex items-start justify-between mb-6">
-                  <div className={`w-14 h-14 rounded-2xl ${item.light} flex items-center justify-center`}>
-                    <item.icon className="w-7 h-7" />
-                  </div>
-                  <span className={`text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r ${item.color} text-white`}>
-                    {item.badge}
-                  </span>
+            ].map((item, i) => (
+              <div key={i} className="relative flex flex-col items-center text-center px-4 sm:px-8">
+                {/* Step circle */}
+                <div className={`relative z-10 w-14 h-14 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-6 shadow-lg shadow-current/30`}>
+                  <item.icon className="w-6 h-6 text-white" />
+                  <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white border-2 border-gray-100 flex items-center justify-center text-[10px] font-black text-gray-700">{item.step}</div>
                 </div>
-                <div className="text-5xl font-black text-gray-100 mb-2">{item.step}</div>
-                <h3 className="font-bold text-gray-900 text-lg mb-3">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+
+                <span className={`text-xs font-bold px-3 py-1 rounded-full mb-3 ${item.badgeColor}`}>{item.badge}</span>
+                <h3 className="text-2xl font-black text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-4">{item.desc}</p>
+                <p className="text-xs text-gray-400 italic">{item.detail}</p>
               </div>
             ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <Link href="/inscription"
+              className="group inline-flex items-center gap-3 font-black text-black px-10 py-5 rounded-2xl text-base shadow-2xl hover:scale-105 transition-all"
+              style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', boxShadow: '0 20px 40px rgba(255,165,0,0.3)' }}>
+              Commencer maintenant — C&apos;est gratuit
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ CHIFFRES DU SUCCÈS ═══════════════════ */}
-      <section className="py-20 bg-gradient-to-br from-[#0B3D91] to-[#040e24] text-white relative overflow-hidden">
+      {/* ═══════════════════════════════════════════════
+          CHIFFRES DU SUCCÈS — IMPACT SECTION
+      ═══════════════════════════════════════════════ */}
+      <section className="py-24 relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #071e45 50%, #020b1a 100%)' }}>
         <div className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#FFA500]/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-10 blur-[100px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-10 blur-[80px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-[#FFA500] text-sm font-bold uppercase tracking-widest mb-3 block">Impact réel</span>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Des résultats concrets pour vos apprenants</h2>
-            <p className="text-blue-200 max-w-xl mx-auto">Chaque formation IBIG E-LEARN est conçue pour transformer votre carrière et générer un ROI immédiat</p>
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 text-[#FFA500] text-xs font-bold uppercase tracking-widest mb-4 border border-[#FFA500]/30 bg-[#FFA500]/10 px-4 py-1.5 rounded-full">
+              <TrendingUp className="w-3.5 h-3.5" /> Impact réel
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-black mb-4 leading-tight">
+              Des résultats concrets<br />
+              <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                pour votre carrière
+              </span>
+            </h2>
+            <p className="text-blue-200/70 max-w-xl mx-auto">Chaque formation est conçue pour transformer votre expertise et générer un ROI immédiat</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {SUCCESS_STATS.map(s => (
-              <div key={s.label} className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-6 text-center hover:bg-white/15 transition-colors">
+          {/* Big impact stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+            {[
+              { value: '94%', label: 'taux de satisfaction', sub: 'sur 1 200+ avis vérifiés', icon: Star, color: 'text-yellow-400', border: 'border-yellow-400/20' },
+              { value: '3×', label: 'gain de productivité', sub: 'reporté par nos apprenants', icon: TrendingUp, color: 'text-green-400', border: 'border-green-400/20' },
+              { value: '< 4h', label: 'pour voir un impact', sub: 'sur votre poste de travail', icon: Clock, color: 'text-blue-400', border: 'border-blue-400/20' },
+              { value: '12', label: 'pays couverts', sub: 'Afrique francophone', icon: Globe, color: 'text-purple-400', border: 'border-purple-400/20' },
+            ].map(s => (
+              <div key={s.label} className={`relative rounded-3xl p-6 text-center border ${s.border} overflow-hidden hover:scale-105 transition-transform`}
+                style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)' }}>
                 <s.icon className={`w-8 h-8 ${s.color} mx-auto mb-3`} />
-                <div className="text-4xl font-black text-white mb-2">{s.value}</div>
-                <p className="text-blue-200 text-sm">{s.label}</p>
+                <div className="text-4xl sm:text-5xl font-black text-white mb-1">{s.value}</div>
+                <p className="font-semibold text-white/90 text-sm">{s.label}</p>
+                <p className="text-blue-300/50 text-xs mt-1">{s.sub}</p>
               </div>
             ))}
           </div>
 
           {/* Features grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: Award, title: 'Certifications vérifiables', desc: 'QR code unique, vérifiable par tout employeur ou partenaire en temps réel.', color: 'text-yellow-400' },
-              { icon: Smartphone, title: 'Mobile-first & hors-ligne', desc: 'Apprenez sur 3G. Téléchargez les cours pour les zones à faible connectivité.', color: 'text-green-400' },
-              { icon: Globe, title: '18 devises africaines', desc: 'XOF, XAF, GNF, MAD, NGN, KES… Payez dans votre monnaie locale.', color: 'text-blue-400' },
-              { icon: Users, title: 'Formateurs experts africains', desc: 'Praticiens reconnus, ancrés dans la réalité des marchés africains.', color: 'text-purple-400' },
-              { icon: Shield, title: 'Paiements 100% sécurisés', desc: 'CinetPay SSL. Garantie satisfait ou remboursé 7 jours sans conditions.', color: 'text-red-400' },
-              { icon: Target, title: 'Accès à vie au contenu', desc: 'Payez une fois, accédez pour toujours. Mises à jour incluses gratuitement.', color: 'text-orange-400' },
+              { icon: Award, title: 'Certifications vérifiables', desc: 'QR code unique, vérifiable par tout employeur ou partenaire en temps réel.', accent: 'text-yellow-400' },
+              { icon: Smartphone, title: 'Mobile-first & hors-ligne', desc: 'Apprenez sur 3G. Téléchargez les cours pour les zones à faible connectivité.', accent: 'text-green-400' },
+              { icon: Globe, title: '12 devises africaines', desc: 'XOF, XAF, GNF, MAD, NGN, KES… Payez dans votre monnaie locale.', accent: 'text-blue-400' },
+              { icon: Users, title: 'Formateurs praticiens', desc: 'Experts reconnus, ancrés dans la réalité des marchés et entreprises africains.', accent: 'text-purple-400' },
+              { icon: Shield, title: 'Garantie 7 jours', desc: 'Satisfait ou remboursé, sans condition. Votre investissement est protégé.', accent: 'text-red-400' },
+              { icon: Target, title: 'Accès à vie', desc: 'Payez une fois, accédez pour toujours. Toutes les mises à jour incluses.', accent: 'text-orange-400' },
             ].map(item => (
-              <div key={item.title} className="flex gap-4 bg-white/8 border border-white/10 rounded-2xl p-5 hover:bg-white/12 transition-colors group">
-                <div className="flex-shrink-0">
-                  <item.icon className={`w-6 h-6 ${item.color} mt-0.5`} />
+              <div key={item.title} className="flex gap-4 rounded-2xl p-5 border border-white/8 hover:border-white/15 transition-colors group cursor-default"
+                style={{ background: 'rgba(255,255,255,0.04)' }}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5`}
+                  style={{ background: 'rgba(255,255,255,0.07)' }}>
+                  <item.icon className={`w-5 h-5 ${item.accent}`} />
                 </div>
                 <div>
                   <h3 className="font-bold text-white mb-1 text-sm">{item.title}</h3>
-                  <p className="text-blue-200 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="text-blue-200/60 text-xs leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -440,17 +535,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ TÉMOIGNAGES ═══════════════════ */}
-      <section className="py-20 bg-gray-50">
+      {/* ═══════════════════════════════════════════════
+          TÉMOIGNAGES — SOCIAL PROOF MASSIF
+      ═══════════════════════════════════════════════ */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-[#0B3D91] text-sm font-bold uppercase tracking-widest mb-3 block">Témoignages</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Ils ont transformé leur carrière</h2>
-            <div className="flex items-center justify-center gap-2 text-gray-500 mb-2">
+          <div className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-50 px-4 py-1.5 rounded-full">
+              <Trophy className="w-3.5 h-3.5" /> Témoignages
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
+              Ils ont transformé<br />
+              <span style={{ background: 'linear-gradient(90deg, #0B3D91, #1a6cc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                leur carrière
+              </span>
+            </h2>
+            <div className="flex items-center justify-center gap-2 text-gray-500">
               <div className="flex gap-0.5">
                 {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 text-[#FFA500] fill-[#FFA500]" />)}
               </div>
-              <span className="font-bold text-gray-900">4.8/5</span>
+              <span className="font-black text-gray-900 text-lg">4.8/5</span>
               <span>· Plus de 1 200 avis vérifiés</span>
             </div>
           </div>
@@ -458,98 +562,126 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ PAYS — MARQUEE ═══════════════════ */}
-      <section className="py-10 bg-[#0B3D91] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.05]"
+      {/* ═══════════════════════════════════════════════
+          PAYS — MARQUEE BAND
+      ═══════════════════════════════════════════════ */}
+      <section className="relative py-10 overflow-hidden" style={{ background: 'linear-gradient(90deg, #0B3D91, #1a4faa, #0B3D91)' }}>
+        <div className="absolute inset-0 opacity-[0.06]"
           style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
-          <p className="text-center text-blue-200 text-sm font-semibold uppercase tracking-widest">
-            🌍 Disponible dans 12 pays d'Afrique francophone
+        <div className="max-w-7xl mx-auto px-4 mb-4">
+          <p className="text-center text-blue-200/80 text-sm font-bold uppercase tracking-widest">
+            🌍 Disponible dans 12 pays d&apos;Afrique francophone
           </p>
         </div>
         <CountriesMarquee />
       </section>
 
-      {/* ═══════════════════ FORMATEURS ═══════════════════ */}
+      {/* ═══════════════════════════════════════════════
+          FORMATEURS
+      ═══════════════════════════════════════════════ */}
       {instructors.length > 0 && (
-        <section className="py-20">
+        <section className="py-24 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <span className="text-[#0B3D91] text-sm font-bold uppercase tracking-widest mb-3 block">Nos experts</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Apprenez des meilleurs</h2>
+            <div className="text-center mb-14">
+              <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-50 px-4 py-1.5 rounded-full">
+                <Users className="w-3.5 h-3.5" /> Nos experts
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">Apprenez des meilleurs</h2>
               <p className="text-gray-500 max-w-xl mx-auto">Des praticiens reconnus dans leurs domaines, ancrés dans les réalités africaines</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {instructors.map((f: any) => (
                 <Link key={f.id} href={`/formateur/${f.id}`}
-                  className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm p-6 text-center hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91]/0 to-[#0B3D91]/0 group-hover:from-blue-50 group-hover:to-white transition-all" />
+                  className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm p-8 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden">
+                  {/* Background accent */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
+                    style={{ background: 'linear-gradient(135deg, #f0f4ff, white)' }} />
+
                   <div className="relative">
-                    <div className="w-20 h-20 rounded-full bg-[#0B3D91]/10 flex items-center justify-center text-[#0B3D91] font-bold text-2xl mx-auto mb-4 overflow-hidden ring-4 ring-gray-100 group-hover:ring-[#0B3D91]/20 transition-all">
-                      {f.avatar_url
-                        ? <img src={f.avatar_url} alt={f.full_name} className="w-full h-full object-cover" />
-                        : f.full_name?.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
+                    <div className="relative inline-block mb-5">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#0B3D91] to-[#1a6cc4] flex items-center justify-center text-white font-black text-2xl mx-auto overflow-hidden ring-4 ring-white shadow-lg group-hover:ring-[#0B3D91]/20 transition-all">
+                        {f.avatar_url
+                          ? <img src={f.avatar_url} alt={f.full_name} className="w-full h-full object-cover" />
+                          : f.full_name?.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-400 border-2 border-white flex items-center justify-center">
+                        <BadgeCheck className="w-3 h-3 text-white" />
+                      </div>
                     </div>
-                    <p className="font-bold text-gray-900 group-hover:text-[#0B3D91] transition-colors">{f.full_name}</p>
-                    {f.country && <p className="text-xs text-gray-400 mt-0.5 flex items-center justify-center gap-1"><Globe className="w-3 h-3" />{f.country}</p>}
+
+                    <p className="font-black text-gray-900 group-hover:text-[#0B3D91] transition-colors text-lg">{f.full_name}</p>
+                    {f.country && (
+                      <p className="text-xs text-gray-400 mt-1 flex items-center justify-center gap-1">
+                        <MapPin className="w-3 h-3" />{f.country}
+                      </p>
+                    )}
                     {f.bio && <p className="text-xs text-gray-500 mt-3 line-clamp-2 leading-relaxed">{f.bio}</p>}
-                    <div className="mt-4 inline-flex items-center gap-1 text-xs text-[#0B3D91] font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                      Voir le profil <ArrowRight className="w-3 h-3" />
+                    <div className="mt-4 inline-flex items-center gap-1 text-xs text-[#0B3D91] font-bold opacity-0 group-hover:opacity-100 transition-opacity bg-blue-50 px-3 py-1.5 rounded-full">
+                      Voir le profil <ChevronRight className="w-3 h-3" />
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
-            <div className="text-center mt-8">
-              <Link href="/catalogue" className="inline-flex items-center gap-2 text-[#0B3D91] font-semibold hover:underline text-sm">
-                Découvrir toutes nos formations <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
           </div>
         </section>
       )}
 
-      {/* ═══════════════════ CTA FINAL ═══════════════════ */}
-      <section className="py-24 bg-gradient-to-br from-[#040e24] via-[#0B3D91] to-[#1558c0] text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]"
+      {/* ═══════════════════════════════════════════════
+          CTA FINAL — ULTRA IMPACTANT
+      ═══════════════════════════════════════════════ */}
+      <section className="relative py-28 overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #0d2d6e 40%, #020b1a 100%)' }}>
+        {/* Animated orbs */}
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] animate-float-slow"
+          style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
+        <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] rounded-full opacity-10 blur-[80px] animate-float"
+          style={{ background: 'radial-gradient(circle, #4f8ef7, transparent)' }} />
+
+        <div className="absolute inset-0 opacity-[0.03]"
           style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#FFA500]/15 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl" />
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-[#FFA500]/20 border border-[#FFA500]/30 text-[#FFA500] rounded-full px-4 py-2 text-sm font-bold mb-8">
-            <Flame className="w-4 h-4" />
-            <span>{stats.courses > 0 ? stats.courses : 184}+ formations disponibles · Rejoignez {stats.enrollments > 0 ? stats.enrollments.toLocaleString('fr-FR') : '2 400'}+ apprenants</span>
+          {/* Live counter */}
+          <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold mb-10 border border-[#FFA500]/30"
+            style={{ background: 'rgba(255,165,0,0.12)' }}>
+            <span className="w-2 h-2 rounded-full bg-[#FFA500] animate-pulse" />
+            <span className="text-[#FFA500]">{stats.courses > 0 ? stats.courses : 184}+ formations · {stats.enrollments > 0 ? stats.enrollments.toLocaleString('fr-FR') : '2 400'}+ apprenants actifs</span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl font-black mb-6 leading-tight">
-            Votre carrière ne peut pas<br />
-            <span className="text-[#FFA500]">attendre demain.</span>
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 leading-[1.05] tracking-tight">
+            Votre carrière<br />
+            ne peut pas attendre<br />
+            <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700, #FFA500)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              demain.
+            </span>
           </h2>
-          <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Des professionnels de toute l'Afrique se forment <strong className="text-white">dès aujourd'hui</strong> sur IBIG E-LEARN.
+
+          <p className="text-blue-200/70 text-lg sm:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+            Des professionnels de toute l&apos;Afrique se forment <strong className="text-white">dès aujourd&apos;hui</strong>.
             Inscription gratuite, paiement Mobile Money, certificat en quelques semaines.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/inscription"
-              className="group flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-10 py-5 rounded-2xl transition-all text-base shadow-2xl shadow-orange-500/40 hover:scale-105">
-              Créer mon compte gratuitement <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              className="group relative inline-flex items-center justify-center gap-3 font-black text-black px-10 py-5 rounded-2xl text-base transition-all hover:scale-105"
+              style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', boxShadow: '0 20px 50px rgba(255,165,0,0.4)' }}>
+              <span>Créer mon compte — C&apos;est gratuit</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link href="/catalogue"
-              className="flex items-center justify-center gap-2 bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-10 py-5 rounded-2xl transition-all text-base hover:scale-105">
+              className="inline-flex items-center justify-center gap-2 border border-white/20 hover:border-white/40 text-white font-bold px-10 py-5 rounded-2xl transition-all text-base hover:bg-white/5">
               Explorer le catalogue
             </Link>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 text-blue-300 text-sm">
+          <div className="flex flex-wrap justify-center gap-6 text-blue-300/70 text-sm">
             {[
               { icon: CheckCircle, text: 'Inscription 100% gratuite' },
-              { icon: Shield, text: 'Paiement Mobile Money sécurisé' },
+              { icon: Shield, text: 'Garantie 7 jours' },
               { icon: BadgeCheck, text: 'Certificat vérifiable' },
-              { icon: Zap, text: 'Accès immédiat après paiement' },
+              { icon: Zap, text: 'Accès immédiat' },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-1.5">
+              <div key={text} className="flex items-center gap-2">
                 <Icon className="w-4 h-4 text-green-400" />
                 {text}
               </div>
