@@ -1,10 +1,26 @@
-﻿'use client'
+'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Eye, EyeOff, Loader2, LogIn } from 'lucide-react'
+import { Eye, EyeOff, Loader2, LogIn, Shield } from 'lucide-react'
+
+interface SSOProvider {
+  id: string
+  provider_type: string
+  button_label: string
+  button_logo_url: string | null
+}
+
+function useDebounce<T>(value: T, delay: number): T {
+  const [debounced, setDebounced] = useState(value)
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay)
+    return () => clearTimeout(t)
+  }, [value, delay])
+  return debounced
+}
 
 export default function ConnexionPage() {
   const [email, setEmail] = useState('')
@@ -12,23 +28,42 @@ export default function ConnexionPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const [ssoLoading, setSsoLoading] = useState(false)
   const [error, setError] = useState('')
+  const [ssoProvider, setSsoProvider] = useState<SSOProvider | null>(null)
+  const [detectingSSO, setDetectingSSO] = useState(false)
   const router = useRouter()
+  const lastChecked = useRef('')
+
+  const debouncedEmail = useDebounce(email, 600)
+
+  // Détection SSO automatique selon le domaine email
+  useEffect(() => {
+    const domain = debouncedEmail.includes('@') ? debouncedEmail.split('@')[1] : ''
+    if (!domain || domain === lastChecked.current) return
+    lastChecked.current = domain
+    setDetectingSSO(true)
+    fetch('/api/sso/detect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: debouncedEmail }),
+    })
+      .then(r => r.json())
+      .then(d => setSsoProvider(d.provider ?? null))
+      .finally(() => setDetectingSSO(false))
+  }, [debouncedEmail])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
-
     const supabase = createClient()
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-
     if (error) {
       setError('Email ou mot de passe incorrect.')
       setLoading(false)
       return
     }
-
     const params = new URLSearchParams(window.location.search)
     router.push(params.get('redirectTo') ?? '/tableau-de-bord')
     router.refresh()
@@ -41,10 +76,37 @@ export default function ConnexionPage() {
     const next = params.get('redirectTo') ?? '/tableau-de-bord'
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`,
-      },
+      options: { redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}` },
     })
+  }
+
+  const handleSSO = async () => {
+    if (!ssoProvider) return
+    setSsoLoading(true)
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const next = params.get('redirectTo') ?? '/tableau-de-bord'
+      const res = await fetch('/api/sso/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ provider_id: ssoProvider.id, redirect_to: next }),
+      })
+      const data = await res.json()
+
+      if (data.oauth_provider) {
+        const supabase = createClient()
+        await supabase.auth.signInWithOAuth({
+          provider: data.oauth_provider,
+          options: { redirectTo: data.callback_url },
+        })
+      } else if (data.redirect_url) {
+        window.location.href = data.redirect_url
+      } else {
+        setError(data.error ?? 'Erreur SSO')
+      }
+    } finally {
+      setSsoLoading(false)
+    }
   }
 
   return (
@@ -56,12 +118,8 @@ export default function ConnexionPage() {
         </div>
 
         {/* Google OAuth */}
-        <button
-          type="button"
-          onClick={handleGoogle}
-          disabled={googleLoading}
-          className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-60 mb-4"
-        >
+        <button type="button" onClick={handleGoogle} disabled={googleLoading}
+          className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-60 mb-3">
           {googleLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
             <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden>
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -73,28 +131,44 @@ export default function ConnexionPage() {
           {googleLoading ? 'Redirection...' : 'Continuer avec Google'}
         </button>
 
+        {/* Bouton SSO — apparaît dynamiquement */}
+        {ssoProvider && (
+          <button type="button" onClick={handleSSO} disabled={ssoLoading}
+            className="w-full flex items-center justify-center gap-3 border-2 border-[#0B3D91]/40 bg-[#0B3D91]/5 rounded-xl py-3 px-4 text-sm font-semibold text-[#0B3D91] hover:bg-[#0B3D91]/10 transition-colors disabled:opacity-60 mb-3 animate-in fade-in duration-300">
+            {ssoLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+              ssoProvider.button_logo_url
+                ? <img src={ssoProvider.button_logo_url} alt="" className="w-5 h-5 object-contain" onError={e => (e.currentTarget.style.display = 'none')} />
+                : <Shield className="w-5 h-5" />
+            )}
+            {ssoLoading ? 'Connexion SSO...' : ssoProvider.button_label}
+          </button>
+        )}
+
         <div className="relative mb-4">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100" /></div>
-          <div className="relative flex justify-center"><span className="bg-white px-3 text-xs text-gray-400">ou</span></div>
+          <div className="relative flex justify-center"><span className="bg-white px-3 text-xs text-gray-400">ou avec votre email</span></div>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
-            {error}
-          </div>
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{error}</div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Adresse email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              placeholder="vous@exemple.com"
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] focus:border-transparent text-sm"
-            />
+            <div className="relative">
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
+                placeholder="vous@exemple.com"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] focus:border-transparent text-sm" />
+              {detectingSSO && (
+                <Loader2 className="w-4 h-4 animate-spin text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" />
+              )}
+            </div>
+            {ssoProvider && (
+              <p className="text-xs text-[#0B3D91] mt-1.5 flex items-center gap-1">
+                <Shield className="w-3 h-3" /> SSO disponible pour ce domaine
+              </p>
+            )}
           </div>
           <div>
             <div className="flex items-center justify-between mb-1.5">
@@ -102,25 +176,18 @@ export default function ConnexionPage() {
               <Link href="/mot-de-passe-oublie" className="text-xs text-[#0B3D91] hover:underline">Mot de passe oublié ?</Link>
             </div>
             <div className="relative">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] focus:border-transparent text-sm pr-12"
-              />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <input type={showPassword ? 'text' : 'password'} value={password}
+                onChange={e => setPassword(e.target.value)} required placeholder="••••••••"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] focus:border-transparent text-sm pr-12" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-2 ibig-gradient text-white font-semibold py-3.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
-          >
+          <button type="submit" disabled={loading}
+            className="w-full flex items-center justify-center gap-2 ibig-gradient text-white font-semibold py-3.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <LogIn className="w-5 h-5" />}
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
@@ -128,9 +195,7 @@ export default function ConnexionPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Pas encore de compte ?{' '}
-          <Link href="/inscription" className="text-[#0B3D91] font-semibold hover:underline">
-            S&apos;inscrire gratuitement
-          </Link>
+          <Link href="/inscription" className="text-[#0B3D91] font-semibold hover:underline">S&apos;inscrire gratuitement</Link>
         </p>
       </div>
     </div>
