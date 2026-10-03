@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { Building2, Mail, Phone, Users, Calendar, MessageSquare } from 'lucide-react'
+import { Building2, Mail, Phone, Users, Calendar, MessageSquare, PlusCircle } from 'lucide-react'
+import Link from 'next/link'
 import B2BStatusActions from './B2BStatusActions'
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
@@ -34,6 +35,10 @@ export default async function AdminEntreprisePage() {
           </h1>
           <p className="text-gray-500 text-sm mt-1">Gérez les demandes de formation corporate</p>
         </div>
+        <Link href="/admin/entreprise/cohortes"
+          className="flex items-center gap-2 ibig-gradient text-white text-sm font-semibold px-4 py-2 rounded-xl hover:opacity-90 transition-opacity">
+          <Users className="w-4 h-4" /> Cohortes
+        </Link>
       </div>
 
       {/* Stats */}
@@ -105,7 +110,17 @@ export default async function AdminEntreprisePage() {
                   </div>
                 )}
 
-                <B2BStatusActions requestId={req.id} currentStatus={req.status} currentNotes={req.notes} />
+                <div className="flex items-center justify-between gap-3">
+                  <B2BStatusActions requestId={req.id} currentStatus={req.status} currentNotes={req.notes} />
+                  {req.status === 'won' && (
+                    <Link
+                      href={`/admin/entreprise/cohortes?new=1&request_id=${req.id}`}
+                      className="flex items-center gap-1.5 border border-[#0B3D91] text-[#0B3D91] text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors whitespace-nowrap flex-shrink-0"
+                    >
+                      <PlusCircle className="w-3.5 h-3.5" /> Créer cohorte
+                    </Link>
+                  )}
+                </div>
               </div>
             )
           })}
