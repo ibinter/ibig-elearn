@@ -50,7 +50,7 @@ export default function ConfidentialitePage() {
             <li>Droit à la portabilité</li>
             <li>Droit d&apos;opposition au traitement</li>
           </ul>
-          <p className="mt-3">Pour exercer ces droits : <strong>privacy@ibiglearn.com</strong></p>
+          <p className="mt-3">Pour exercer ces droits : <strong>privacy@ibig-elearning.com</strong></p>
         </section>
 
         <section>
@@ -62,7 +62,7 @@ export default function ConfidentialitePage() {
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">6. Contact</h2>
-          <p>Pour toute question relative à votre vie privée : <strong>contact@ibiglearn.com</strong></p>
+          <p>Pour toute question relative à votre vie privée : <strong>contact@ibig-elearning.com</strong></p>
         </section>
       </div>
     </div>

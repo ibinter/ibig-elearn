@@ -30,7 +30,7 @@ export default function DevenirFormateurPage() {
           <p className="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
             Rejoignez notre réseau de formateurs experts et créez des formations professionnelles certifiantes pour des milliers d'apprenants africains.
           </p>
-          <a href="mailto:formateurs@ibiglearn.com"
+          <a href="mailto:formateurs@ibig-elearning.com"
             className="inline-flex items-center gap-2 bg-[#FFA500] hover:bg-orange-500 text-black font-bold px-8 py-4 rounded-xl transition-colors text-base">
             <Mail className="w-5 h-5" /> Postuler maintenant
           </a>
@@ -103,9 +103,9 @@ export default function DevenirFormateurPage() {
           <h2 className="text-3xl font-bold mb-4">Prêt à transmettre votre savoir ?</h2>
           <p className="text-blue-100 mb-6">Envoyez-nous votre candidature. Notre équipe vous répond dans les 5 jours ouvrés.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="mailto:formateurs@ibiglearn.com"
+            <a href="mailto:formateurs@ibig-elearning.com"
               className="flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-orange-500 text-black font-bold px-8 py-4 rounded-xl transition-colors">
-              <Mail className="w-5 h-5" /> formateurs@ibiglearn.com
+              <Mail className="w-5 h-5" /> formateurs@ibig-elearning.com
             </a>
             <Link href="/contact"
               className="flex items-center justify-center gap-2 bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl transition-colors">

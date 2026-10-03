@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import type { MetadataRoute } from 'next'
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibiglearn.com'
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
 
 const BLOG_SLUGS = [
   'reconversion-professionnelle-afrique',

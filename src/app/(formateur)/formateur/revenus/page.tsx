@@ -1,18 +1,13 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import { DollarSign, TrendingUp, BookOpen, Calendar } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import Link from 'next/link'
 
 export default async function FormateurRevenusPage() {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  )
-
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/connexion')
   if (!user) return null
 
   // Cours du formateur

@@ -8,7 +8,7 @@ export default function CGUPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">1. Acceptation des conditions</h2>
           <p>
-            En accédant à la plateforme IBIG E-LEARN (ibiglearn.com), vous acceptez les présentes conditions d&apos;utilisation. Si vous n&apos;acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
+            En accédant à la plateforme IBIG E-LEARN (ibig-elearning.com), vous acceptez les présentes conditions d&apos;utilisation. Si vous n&apos;acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
           </p>
         </section>
 
@@ -60,7 +60,7 @@ export default function CGUPage() {
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">7. Contact</h2>
-          <p>Pour toute question : <strong>contact@ibiglearn.com</strong></p>
+          <p>Pour toute question : <strong>contact@ibig-elearning.com</strong></p>
         </section>
       </div>
     </div>

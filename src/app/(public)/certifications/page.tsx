@@ -56,7 +56,7 @@ export default function CertificationsPage() {
               <div className="space-y-4">
                 {[
                   { icon: Shield, title: 'Anti-fraude', desc: 'Chaque code est unique et cryptographiquement sécurisé. Impossible à falsifier.' },
-                  { icon: Globe, title: 'Vérification publique', desc: 'N\'importe qui peut vérifier l\'authenticité de votre certificat sur ibiglearn.com/verify.' },
+                  { icon: Globe, title: 'Vérification publique', desc: 'N\'importe qui peut vérifier l\'authenticité de votre certificat sur ibig-elearning.com/verify.' },
                   { icon: Award, title: 'Reconnu par les employeurs', desc: 'Nos certificats sont reconnus par nos partenaires entreprises dans 12 pays africains.' },
                   { icon: CheckCircle, title: 'Valable à vie', desc: 'Votre certificat ne expire jamais et reste vérifiable indéfiniment sur notre plateforme.' },
                 ].map(item => (
@@ -90,7 +90,7 @@ export default function CertificationsPage() {
                 <div className="bg-white/10 rounded-xl p-3 font-mono text-sm text-[#FFA500] font-bold tracking-wider">
                   IBIG-XXXX-YYYY-ZZZZ
                 </div>
-                <p className="text-blue-300 text-xs mt-3">Délivré le 17 septembre 2026 · ibiglearn.com</p>
+                <p className="text-blue-300 text-xs mt-3">Délivré le 17 septembre 2026 · ibig-elearning.com</p>
               </div>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function CertificationsPage() {
               </Link>
             </form>
           </div>
-          <p className="text-xs text-gray-400 mt-3">Ou accédez directement : ibiglearn.com/verify/[code]</p>
+          <p className="text-xs text-gray-400 mt-3">Ou accédez directement : ibig-elearning.com/verify/[code]</p>
         </div>
       </section>
 

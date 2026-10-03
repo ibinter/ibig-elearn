@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   // Notification email admin
   try {
-    const adminEmail = process.env.ADMIN_EMAIL ?? process.env.EMAIL_FROM ?? 'contact@ibiglearn.com'
+    const adminEmail = process.env.ADMIN_EMAIL ?? process.env.EMAIL_FROM ?? 'contact@ibig-elearning.com'
     await sendEmail({
       to: adminEmail,
       subject: `🏢 Nouvelle demande B2B — ${company}`,

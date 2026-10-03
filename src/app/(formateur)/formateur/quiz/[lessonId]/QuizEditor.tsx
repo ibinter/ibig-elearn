@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Plus, Trash2, Save, ChevronDown, ChevronUp, ToggleLeft } from 'lucide-react'
+import { useState, useTransition } from 'react'
+import { Plus, Trash2, GripVertical, Save, CheckCircle, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface Question {
   id?: string
@@ -20,181 +20,255 @@ interface Props {
   initialPassingScore: number
 }
 
+function newQuestion(position: number): Question {
+  return { question: '', type: 'mcq', options: ['', '', '', ''], correct_option: 0, explanation: '', position }
+}
+
 export default function QuizEditor({ lessonId, courseId, initialQuestions, initialPassingScore }: Props) {
-  const [questions, setQuestions] = useState<Question[]>(initialQuestions.length ? initialQuestions : [])
+  const [questions, setQuestions] = useState<Question[]>(
+    initialQuestions.length ? initialQuestions : [newQuestion(0)]
+  )
   const [passingScore, setPassingScore] = useState(initialPassingScore)
-  const [saving, setSaving] = useState(false)
+  const [expanded, setExpanded] = useState<number>(0)
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState('')
+  const [isPending, startTransition] = useTransition()
 
-  const addQuestion = (type: 'mcq' | 'true_false') => {
-    setQuestions(prev => [...prev, {
-      question: '',
-      type,
-      options: type === 'mcq' ? ['', '', '', ''] : ['Vrai', 'Faux'],
-      correct_option: 0,
-      explanation: '',
-      position: prev.length,
-    }])
+  function addQuestion() {
+    const next = newQuestion(questions.length)
+    setQuestions(q => [...q, next])
+    setExpanded(questions.length)
   }
 
-  const updateQuestion = (idx: number, updates: Partial<Question>) => {
-    setQuestions(prev => prev.map((q, i) => i === idx ? { ...q, ...updates } : q))
+  function removeQuestion(idx: number) {
+    setQuestions(q => q.filter((_, i) => i !== idx).map((q, i) => ({ ...q, position: i })))
+    setExpanded(prev => prev >= idx ? Math.max(0, prev - 1) : prev)
   }
 
-  const removeQuestion = (idx: number) => {
-    setQuestions(prev => prev.filter((_, i) => i !== idx).map((q, i) => ({ ...q, position: i })))
+  function updateQuestion(idx: number, patch: Partial<Question>) {
+    setQuestions(q => q.map((item, i) => i === idx ? { ...item, ...patch } : item))
   }
 
-  const updateOption = (qIdx: number, oIdx: number, value: string) => {
-    setQuestions(prev => prev.map((q, i) => {
-      if (i !== qIdx) return q
-      const options = [...q.options]
-      options[oIdx] = value
-      return { ...q, options }
+  function updateOption(qIdx: number, oIdx: number, val: string) {
+    setQuestions(q => q.map((item, i) => {
+      if (i !== qIdx) return item
+      const opts = [...item.options]
+      opts[oIdx] = val
+      return { ...item, options: opts }
     }))
   }
 
-  const addOption = (qIdx: number) => {
-    setQuestions(prev => prev.map((q, i) => i === qIdx ? { ...q, options: [...q.options, ''] } : q))
+  function setType(idx: number, type: 'mcq' | 'true_false') {
+    const opts = type === 'true_false' ? ['Vrai', 'Faux'] : ['', '', '', '']
+    updateQuestion(idx, { type, options: opts, correct_option: 0 })
   }
 
-  const removeOption = (qIdx: number, oIdx: number) => {
-    setQuestions(prev => prev.map((q, i) => {
-      if (i !== qIdx) return q
-      const options = q.options.filter((_, j) => j !== oIdx)
-      return { ...q, options, correct_option: Math.min(q.correct_option, options.length - 1) }
-    }))
+  function moveUp(idx: number) {
+    if (idx === 0) return
+    setQuestions(q => {
+      const arr = [...q]
+      ;[arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]]
+      return arr.map((q, i) => ({ ...q, position: i }))
+    })
+    setExpanded(idx - 1)
   }
 
-  const handleSave = async () => {
-    setSaving(true)
-    try {
-      const res = await fetch('/api/quiz/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lessonId, courseId, questions, passingScore }),
-      })
-      if (res.ok) {
+  function moveDown(idx: number) {
+    if (idx === questions.length - 1) return
+    setQuestions(q => {
+      const arr = [...q]
+      ;[arr[idx], arr[idx + 1]] = [arr[idx + 1], arr[idx]]
+      return arr.map((q, i) => ({ ...q, position: i }))
+    })
+    setExpanded(idx + 1)
+  }
+
+  async function handleSave() {
+    setError('')
+    setSaved(false)
+
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i]
+      if (!q.question.trim()) { setError(`Question ${i + 1} : énoncé vide.`); setExpanded(i); return }
+      if (q.options.some(o => !o.trim())) { setError(`Question ${i + 1} : toutes les options doivent être remplies.`); setExpanded(i); return }
+    }
+
+    startTransition(async () => {
+      try {
+        const res = await fetch('/api/formateur/quiz', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lessonId, passingScore, questions }),
+        })
+        if (!res.ok) { const d = await res.json(); setError(d.error ?? 'Erreur de sauvegarde'); return }
         setSaved(true)
         setTimeout(() => setSaved(false), 3000)
-      }
-    } finally {
-      setSaving(false)
-    }
+      } catch { setError('Erreur réseau.') }
+    })
   }
 
+  const OPTION_LABELS = ['A', 'B', 'C', 'D']
+
   return (
-    <div className="space-y-6">
-      {/* Config score */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center gap-6">
-        <div>
-          <label className="text-sm font-semibold text-gray-700 block mb-1">Score minimum pour valider (%)</label>
+    <div className="space-y-5">
+      {/* Score de réussite */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Score minimum de réussite</label>
+        <div className="flex items-center gap-4">
           <input
-            type="number" min={0} max={100} value={passingScore}
+            type="range" min={10} max={100} step={5} value={passingScore}
             onChange={e => setPassingScore(Number(e.target.value))}
-            className="w-24 border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold text-center"
+            className="flex-1 accent-[#0B3D91]"
           />
+          <span className="w-16 text-center font-bold text-[#0B3D91] text-lg">{passingScore}%</span>
         </div>
-        <div className="flex-1" />
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#0B3D91] text-white rounded-xl text-sm font-semibold hover:bg-[#0a3480] disabled:opacity-50 transition-colors"
-        >
-          <Save className="w-4 h-4" />
-          {saving ? 'Enregistrement...' : saved ? '✓ Enregistré !' : 'Enregistrer'}
-        </button>
+        <p className="text-xs text-gray-400 mt-1">Les apprenants doivent obtenir au moins {passingScore}% pour valider ce quiz.</p>
       </div>
 
       {/* Questions */}
-      {questions.map((q, qi) => (
-        <div key={qi} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-3 px-5 py-3 bg-gray-50 border-b border-gray-100">
-            <span className="text-xs font-bold text-gray-500 bg-gray-200 rounded-full w-6 h-6 flex items-center justify-center">{qi + 1}</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${q.type === 'true_false' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
-              {q.type === 'true_false' ? 'Vrai / Faux' : 'QCM'}
+      {questions.map((q, idx) => (
+        <div key={idx} className={`bg-white rounded-2xl border shadow-sm overflow-hidden transition-all ${expanded === idx ? 'border-[#0B3D91]/30' : 'border-gray-100'}`}>
+          {/* Header question */}
+          <button
+            type="button"
+            onClick={() => setExpanded(expanded === idx ? -1 : idx)}
+            className="w-full flex items-center gap-3 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+          >
+            <span className="w-7 h-7 rounded-full bg-[#0B3D91]/10 text-[#0B3D91] text-xs font-bold flex items-center justify-center flex-shrink-0">
+              {idx + 1}
             </span>
-            <div className="flex-1" />
-            <button onClick={() => removeQuestion(qi)} className="text-red-400 hover:text-red-600 p-1">
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="p-5 space-y-4">
-            <div>
-              <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Question</label>
-              <textarea
-                value={q.question}
-                onChange={e => updateQuestion(qi, { question: e.target.value })}
-                placeholder="Saisissez votre question..."
-                rows={2}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:border-[#0B3D91]"
-              />
+            <span className="flex-1 text-sm font-medium text-gray-700 truncate">
+              {q.question || <span className="text-gray-400 italic">Nouvelle question</span>}
+            </span>
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <button type="button" onClick={e => { e.stopPropagation(); moveUp(idx) }} disabled={idx === 0}
+                className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600 disabled:opacity-30 transition-colors">
+                <ChevronUp className="w-3.5 h-3.5" />
+              </button>
+              <button type="button" onClick={e => { e.stopPropagation(); moveDown(idx) }} disabled={idx === questions.length - 1}
+                className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600 disabled:opacity-30 transition-colors">
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+              <button type="button" onClick={e => { e.stopPropagation(); removeQuestion(idx) }}
+                className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors ml-1">
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+              {expanded === idx ? <ChevronUp className="w-4 h-4 text-gray-400 ml-1" /> : <ChevronDown className="w-4 h-4 text-gray-400 ml-1" />}
             </div>
+          </button>
 
-            <div>
-              <label className="text-xs font-semibold text-gray-500 uppercase mb-2 block">
-                Options — cliquez sur le cercle pour marquer la bonne réponse
-              </label>
-              <div className="space-y-2">
-                {q.options.map((opt, oi) => (
-                  <div key={oi} className="flex items-center gap-2">
-                    <button
-                      onClick={() => updateQuestion(qi, { correct_option: oi })}
-                      className={`w-6 h-6 rounded-full border-2 flex-shrink-0 transition-colors ${q.correct_option === oi ? 'bg-green-500 border-green-500' : 'border-gray-300 hover:border-green-400'}`}
-                    />
-                    {q.type === 'mcq' ? (
-                      <>
-                        <input
-                          value={opt}
-                          onChange={e => updateOption(qi, oi, e.target.value)}
-                          placeholder={`Option ${String.fromCharCode(65 + oi)}`}
-                          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#0B3D91]"
-                        />
-                        {q.options.length > 2 && (
-                          <button onClick={() => removeOption(qi, oi)} className="text-gray-400 hover:text-red-500 p-1">
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        )}
-                      </>
-                    ) : (
-                      <span className="text-sm font-medium text-gray-700">{opt}</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-              {q.type === 'mcq' && q.options.length < 6 && (
-                <button onClick={() => addOption(qi)} className="mt-2 text-xs text-[#0B3D91] hover:underline flex items-center gap-1">
-                  <Plus className="w-3 h-3" /> Ajouter une option
+          {/* Corps question */}
+          {expanded === idx && (
+            <div className="px-5 pb-5 border-t border-gray-50 space-y-4 pt-4">
+              {/* Type */}
+              <div className="flex gap-2">
+                <button type="button" onClick={() => setType(idx, 'mcq')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${q.type === 'mcq' ? 'bg-[#0B3D91] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                  Choix multiple
                 </button>
-              )}
-            </div>
+                <button type="button" onClick={() => setType(idx, 'true_false')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${q.type === 'true_false' ? 'bg-[#0B3D91] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                  Vrai / Faux
+                </button>
+              </div>
 
-            <div>
-              <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Explication (optionnel)</label>
-              <input
-                value={q.explanation}
-                onChange={e => updateQuestion(qi, { explanation: e.target.value })}
-                placeholder="Explication affichée après soumission..."
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#0B3D91]"
-              />
+              {/* Énoncé */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Énoncé de la question *</label>
+                <textarea
+                  value={q.question}
+                  onChange={e => updateQuestion(idx, { question: e.target.value })}
+                  rows={2}
+                  placeholder="Entrez la question..."
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30 focus:border-[#0B3D91] resize-none"
+                />
+              </div>
+
+              {/* Options */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Options (cliquez sur la bonne réponse) *</label>
+                <div className="space-y-2">
+                  {q.options.map((opt, oIdx) => (
+                    <div key={oIdx} className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => updateQuestion(idx, { correct_option: oIdx })}
+                        className={`w-7 h-7 rounded-full border-2 flex items-center justify-center flex-shrink-0 text-xs font-bold transition-all ${
+                          q.correct_option === oIdx
+                            ? 'border-green-500 bg-green-500 text-white'
+                            : 'border-gray-300 text-gray-500 hover:border-green-400'
+                        }`}
+                      >
+                        {OPTION_LABELS[oIdx]}
+                      </button>
+                      <input
+                        type="text"
+                        value={opt}
+                        onChange={e => updateOption(idx, oIdx, e.target.value)}
+                        placeholder={`Option ${OPTION_LABELS[oIdx]}`}
+                        className={`flex-1 border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 transition-all ${
+                          q.correct_option === oIdx
+                            ? 'border-green-400 bg-green-50 focus:ring-green-200'
+                            : 'border-gray-200 focus:ring-[#0B3D91]/20 focus:border-[#0B3D91]'
+                        }`}
+                      />
+                      {q.correct_option === oIdx && (
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-400 mt-1.5">La lettre verte = bonne réponse</p>
+              </div>
+
+              {/* Explication */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Explication (affichée après réponse)</label>
+                <textarea
+                  value={q.explanation}
+                  onChange={e => updateQuestion(idx, { explanation: e.target.value })}
+                  rows={2}
+                  placeholder="Expliquez pourquoi cette réponse est correcte..."
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30 focus:border-[#0B3D91] resize-none"
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ))}
 
-      {/* Add buttons */}
-      <div className="flex gap-3">
+      {/* Ajouter question */}
+      <button
+        type="button"
+        onClick={addQuestion}
+        className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#0B3D91] text-gray-400 hover:text-[#0B3D91] rounded-2xl py-4 text-sm font-medium transition-all"
+      >
+        <Plus className="w-4 h-4" /> Ajouter une question
+      </button>
+
+      {/* Erreur */}
+      {error && (
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" /> {error}
+        </div>
+      )}
+
+      {/* Bouton sauvegarder */}
+      <div className="flex items-center justify-between pt-2">
+        <p className="text-xs text-gray-400">{questions.length} question{questions.length > 1 ? 's' : ''}</p>
         <button
-          onClick={() => addQuestion('mcq')}
-          className="flex items-center gap-2 px-4 py-2.5 border-2 border-dashed border-[#0B3D91]/30 text-[#0B3D91] rounded-xl text-sm font-medium hover:border-[#0B3D91] hover:bg-[#0B3D91]/5 transition-colors"
+          type="button"
+          onClick={handleSave}
+          disabled={isPending}
+          className="flex items-center gap-2 ibig-gradient text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
         >
-          <Plus className="w-4 h-4" /> Ajouter QCM
-        </button>
-        <button
-          onClick={() => addQuestion('true_false')}
-          className="flex items-center gap-2 px-4 py-2.5 border-2 border-dashed border-purple-300 text-purple-700 rounded-xl text-sm font-medium hover:border-purple-500 hover:bg-purple-50 transition-colors"
-        >
-          <ToggleLeft className="w-4 h-4" /> Ajouter Vrai/Faux
+          {isPending ? (
+            <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Sauvegarde...</>
+          ) : saved ? (
+            <><CheckCircle className="w-4 h-4" /> Sauvegardé !</>
+          ) : (
+            <><Save className="w-4 h-4" /> Sauvegarder le quiz</>
+          )}
         </button>
       </div>
     </div>

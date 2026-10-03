@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS platform_settings (
 
 INSERT INTO platform_settings (key, value, label, category) VALUES
   ('platform_name', 'IBIG E-LEARN', 'Nom de la plateforme', 'general'),
-  ('platform_domain', 'ibiglearn.com', 'Domaine', 'general'),
-  ('contact_email', 'contact@ibiglearn.com', 'Email de contact', 'general'),
+  ('platform_domain', 'ibig-elearning.com', 'Domaine', 'general'),
+  ('contact_email', 'contact@ibig-elearning.com', 'Email de contact', 'general'),
   ('default_language', 'fr', 'Langue par défaut', 'general'),
   ('default_currency', 'XOF', 'Devise par défaut', 'general'),
   ('platform_commission_pct', '20', 'Commission plateforme (%)', 'payment'),

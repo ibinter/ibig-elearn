@@ -10,8 +10,8 @@ export default function MentionsLegalesPage() {
             <p><strong>Raison sociale :</strong> IBIG SARL – Intermark Business International Group</p>
             <p><strong>Marque :</strong> IBIG EDUFORM</p>
             <p><strong>Siège social :</strong> Abidjan, Côte d&apos;Ivoire</p>
-            <p><strong>Email :</strong> contact@ibiglearn.com</p>
-            <p><strong>Site web :</strong> ibiglearn.com</p>
+            <p><strong>Email :</strong> contact@ibig-elearning.com</p>
+            <p><strong>Site web :</strong> ibig-elearning.com</p>
           </div>
         </section>
 

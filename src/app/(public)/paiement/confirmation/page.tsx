@@ -1,5 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { CheckCircle, XCircle, BookOpen } from 'lucide-react'
 
@@ -11,12 +10,7 @@ export default async function PaiementConfirmationPage({
   const params = await searchParams
   const { transaction_id, status, course_id } = params
 
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  )
+  const supabase = await createClient()
 
   let payment = null
   if (transaction_id) {

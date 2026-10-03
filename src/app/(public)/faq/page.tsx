@@ -54,7 +54,7 @@ const FAQ = [
     category: 'Technique & Support',
     items: [
       { q: "La plateforme fonctionne-t-elle sur mobile ?", a: "Oui ! IBIG E-LEARN est optimisée pour mobile. Vous pouvez aussi l'installer comme application (PWA) depuis Chrome sur Android ou Safari sur iPhone." },
-      { q: "J'ai un problème technique, qui contacter ?", a: "Utilisez le formulaire de contact sur /contact ou écrivez à support@ibiglearn.com. Vous pouvez aussi utiliser SARA pour les questions courantes." },
+      { q: "J'ai un problème technique, qui contacter ?", a: "Utilisez le formulaire de contact sur /contact ou écrivez à support@ibig-elearning.com. Vous pouvez aussi utiliser SARA pour les questions courantes." },
       { q: "La vidéo ne se charge pas, que faire ?", a: "Vérifiez votre connexion internet. Si le problème persiste, essayez de vider le cache du navigateur ou d'utiliser un autre navigateur (Chrome recommandé). Contactez le support si cela continue." },
     ]
   },

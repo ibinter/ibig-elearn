@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   keywords: ['formation en ligne', 'e-learning', 'Afrique', 'certification', 'IBIG', 'cours en ligne'],
   authors: [{ name: 'IBIG EDUFORM' }],
   creator: 'IBIG SOFT',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibiglearn.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'),
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -39,6 +39,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'fr_FR',
     siteName: 'IBIG E-LEARN',
+    title: 'IBIG E-LEARN — Formation professionnelle en ligne',
+    description: 'La référence de la formation professionnelle en ligne en Afrique francophone. Formez-vous en ligne, certifiez-vous, progressez.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'IBIG E-LEARN — Formation professionnelle en ligne',
+    description: 'La référence de la formation professionnelle en ligne en Afrique francophone.',
   },
 }
 

@@ -61,6 +61,40 @@ export async function PATCH(req: NextRequest) {
   return NextResponse.json({ ok: true })
 }
 
+// PUT : sauvegarde complète du quiz (remplace toutes les questions)
+export async function PUT(req: NextRequest) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
+
+  const { lessonId, passingScore, questions } = await req.json()
+  if (!lessonId || !Array.isArray(questions)) return NextResponse.json({ error: 'Données manquantes' }, { status: 400 })
+  if (!await checkLessonOwner(supabase, lessonId, user.id)) return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
+
+  // Mettre à jour le score de passage
+  await supabase.from('lessons').update({ quiz_passing_score: passingScore }).eq('id', lessonId)
+
+  // Supprimer toutes les questions existantes
+  await supabase.from('quiz_questions').delete().eq('lesson_id', lessonId)
+
+  // Insérer les nouvelles questions
+  if (questions.length > 0) {
+    const rows = questions.map((q: any, i: number) => ({
+      lesson_id: lessonId,
+      question: q.question,
+      type: q.type ?? 'mcq',
+      options: q.options,
+      correct_option: q.correct_option,
+      explanation: q.explanation || null,
+      position: i,
+    }))
+    const { error } = await supabase.from('quiz_questions').insert(rows)
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ ok: true })
+}
+
 // DELETE : supprimer une question
 export async function DELETE(req: NextRequest) {
   const supabase = await createClient()

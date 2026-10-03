@@ -4,6 +4,16 @@ import { BookOpen, Filter, Search, Star, Users, Clock } from 'lucide-react'
 import PriceDisplay from '@/components/ui/PriceDisplay'
 import type { Course, Category } from '@/types'
 
+export const metadata = {
+  title: 'Catalogue des formations professionnelles',
+  description: 'Explorez 184+ formations certifiantes en ligne adaptées aux marchés africains. Filtrez par domaine, niveau, prix, langue. Payez en Mobile Money.',
+  openGraph: {
+    title: 'Catalogue — IBIG E-LEARN',
+    description: '184+ formations certifiantes pour les professionnels d\'Afrique francophone.',
+    type: 'website' as const,
+  },
+}
+
 interface PageProps {
   searchParams: Promise<{
     categorie?: string; niveau?: string; q?: string; featured?: string

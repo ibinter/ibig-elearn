@@ -65,7 +65,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-blue-200">
               <li>📍 Abidjan Cocody Riviera Palmeraie</li>
               <li>📞 +225 XX XX XX XX XX</li>
-              <li>✉️ contact@ibiglearn.com</li>
+              <li>✉️ contact@ibig-elearning.com</li>
               <li className="pt-2">
                 <span className="text-white font-medium">Paiements acceptés</span>
                 <div className="flex gap-2 mt-2 flex-wrap">

@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Champs manquants' }, { status: 400 })
   }
 
-  const adminEmail = process.env.ADMIN_EMAIL ?? 'contact@ibiglearn.com'
+  const adminEmail = process.env.ADMIN_EMAIL ?? 'contact@ibig-elearning.com'
 
   // Email à l'équipe IBIG
   await sendEmail({

@@ -10,7 +10,7 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 const DATABASE_URL = process.env.DATABASE_URL
 
-const EMAIL = process.env.ADMIN_EMAIL || 'admin@ibiglearn.com'
+const EMAIL = process.env.ADMIN_EMAIL || 'admin@ibig-elearning.com'
 const PASSWORD = process.env.ADMIN_PASSWORD  // requis via env
 const FULL_NAME = 'Administrateur IBIG'
 

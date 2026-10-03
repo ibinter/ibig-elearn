@@ -8,7 +8,7 @@ export default function CGVPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">1. Objet</h2>
           <p>
-            Les présentes CGV régissent les conditions dans lesquelles IBIG SARL (ci-après &quot;IBIG E-LEARN&quot;) propose à la vente des formations en ligne sur la plateforme ibiglearn.com.
+            Les présentes CGV régissent les conditions dans lesquelles IBIG SARL (ci-après &quot;IBIG E-LEARN&quot;) propose à la vente des formations en ligne sur la plateforme ibig-elearning.com.
           </p>
         </section>
 
@@ -27,14 +27,14 @@ export default function CGVPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">4. Droit de rétractation</h2>
           <p>
-            Conformément à la réglementation en vigueur, vous disposez d&apos;un délai de <strong>14 jours</strong> à compter de l&apos;achat pour exercer votre droit de rétractation, sauf si vous avez commencé à accéder au contenu numérique. Pour exercer ce droit : <strong>support@ibiglearn.com</strong>.
+            Conformément à la réglementation en vigueur, vous disposez d&apos;un délai de <strong>14 jours</strong> à compter de l&apos;achat pour exercer votre droit de rétractation, sauf si vous avez commencé à accéder au contenu numérique. Pour exercer ce droit : <strong>support@ibig-elearning.com</strong>.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">5. Certificats</h2>
           <p>
-            Un certificat de réussite numérique est émis automatiquement à l&apos;issue de 100% de complétion de la formation. Ce certificat est vérifiable publiquement via un code unique sur ibiglearn.com/verify/[code].
+            Un certificat de réussite numérique est émis automatiquement à l&apos;issue de 100% de complétion de la formation. Ce certificat est vérifiable publiquement via un code unique sur ibig-elearning.com/verify/[code].
           </p>
         </section>
 
@@ -52,7 +52,7 @@ export default function CGVPage() {
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">8. Contact</h2>
-          <p><strong>IBIG SARL</strong> — support@ibiglearn.com</p>
+          <p><strong>IBIG SARL</strong> — support@ibig-elearning.com</p>
         </section>
       </div>
     </div>

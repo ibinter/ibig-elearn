@@ -1,4 +1,4 @@
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibiglearn.com'
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
 
 function emailWrapper(content: string) {
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>

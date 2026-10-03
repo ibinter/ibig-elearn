@@ -17,9 +17,35 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params
   const supabase = await createClient()
-  const { data } = await supabase.from('courses').select('title, short_description').eq('slug', slug).single()
+  const { data } = await supabase
+    .from('courses')
+    .select('title, short_description, thumbnail_url, instructor:profiles(full_name), category:categories(name)')
+    .eq('slug', slug)
+    .single()
   if (!data) return { title: 'Formation introuvable' }
-  return { title: data.title, description: data.short_description }
+
+  const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+  const url = `${BASE_URL}/formation/${slug}`
+  const description = data.short_description ?? `Formation professionnelle certifiante en ${(data.category as any)?.name ?? 'développement professionnel'} — IBIG E-LEARN`
+
+  return {
+    title: data.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: data.title,
+      description,
+      url,
+      type: 'article',
+      siteName: 'IBIG E-LEARN',
+      locale: 'fr_FR',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: data.title,
+      description,
+    },
+  }
 }
 
 export default async function FormationPage({ params }: PageProps) {
@@ -64,8 +90,50 @@ export default async function FormationPage({ params }: PageProps) {
   const levelLabel: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
   const totalLessons = modules?.reduce((acc: number, m: any) => acc + (m.lessons?.length ?? 0), 0) ?? 0
 
+  const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: c.title,
+    description: c.short_description ?? c.title,
+    url: `${BASE_URL}/formation/${c.slug}`,
+    image: c.thumbnail_url ?? `${BASE_URL}/og-default.png`,
+    provider: {
+      '@type': 'Organization',
+      name: 'IBIG E-LEARN',
+      sameAs: BASE_URL,
+    },
+    instructor: {
+      '@type': 'Person',
+      name: (c.instructor as any)?.full_name ?? 'IBIG Expert',
+    },
+    courseMode: 'online',
+    educationalLevel: levelLabel[c.level] ?? c.level,
+    inLanguage: c.language ?? 'fr',
+    offers: c.price_xof > 0 ? {
+      '@type': 'Offer',
+      price: c.price_xof,
+      priceCurrency: 'XOF',
+      availability: 'https://schema.org/InStock',
+      url: `${BASE_URL}/formation/${c.slug}`,
+    } : {
+      '@type': 'Offer',
+      price: 0,
+      priceCurrency: 'XOF',
+      availability: 'https://schema.org/InStock',
+    },
+    aggregateRating: c.rating_count > 0 ? {
+      '@type': 'AggregateRating',
+      ratingValue: c.rating_average,
+      reviewCount: c.rating_count,
+      bestRating: 5,
+      worstRating: 1,
+    } : undefined,
+  }
+
   return (
     <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Header bleu */}
       <div className="ibig-gradient text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

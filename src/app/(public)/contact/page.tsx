@@ -32,7 +32,7 @@ export default function ContactPage() {
       if (!res.ok) throw new Error('Erreur serveur')
       setSent(true)
     } catch {
-      setError('Une erreur est survenue. Veuillez réessayer ou nous écrire directement à contact@ibiglearn.com')
+      setError('Une erreur est survenue. Veuillez réessayer ou nous écrire directement à contact@ibig-elearning.com')
     } finally {
       setLoading(false)
     }
@@ -58,8 +58,8 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-gray-500 mb-0.5">Email</p>
-                  <a href="mailto:contact@ibiglearn.com" className="text-sm text-[#0B3D91] hover:underline font-medium">
-                    contact@ibiglearn.com
+                  <a href="mailto:contact@ibig-elearning.com" className="text-sm text-[#0B3D91] hover:underline font-medium">
+                    contact@ibig-elearning.com
                   </a>
                 </div>
               </div>
@@ -110,8 +110,8 @@ export default function ContactPage() {
             <p className="text-blue-200 text-sm leading-relaxed">
               Rejoignez notre réseau de formateurs et partagez vos expertises avec des milliers d'apprenants africains.
             </p>
-            <a href="mailto:formateurs@ibiglearn.com" className="mt-3 inline-block text-sm font-semibold text-[#FFA500] hover:text-orange-300 transition-colors">
-              formateurs@ibiglearn.com →
+            <a href="mailto:formateurs@ibig-elearning.com" className="mt-3 inline-block text-sm font-semibold text-[#FFA500] hover:text-orange-300 transition-colors">
+              formateurs@ibig-elearning.com →
             </a>
           </div>
         </div>

@@ -48,7 +48,7 @@ export default function VerifyPage() {
 
         <p className="text-xs text-gray-400 mt-4">
           Vous pouvez aussi accéder directement via :{' '}
-          <code className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600">ibiglearn.com/verify/[code]</code>
+          <code className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600">ibig-elearning.com/verify/[code]</code>
         </p>
 
         <div className="mt-6">
