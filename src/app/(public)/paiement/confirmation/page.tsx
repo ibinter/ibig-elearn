@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { CheckCircle, XCircle, BookOpen } from 'lucide-react'
+import { CheckCircle, XCircle, BookOpen, FileText } from 'lucide-react'
 
 export default async function PaiementConfirmationPage({
   searchParams,
@@ -57,6 +57,15 @@ export default async function PaiementConfirmationPage({
               >
                 Voir mes formations
               </Link>
+              {payment?.id && (
+                <Link
+                  href={`/mes-factures/${payment.id}`}
+                  className="flex items-center justify-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors"
+                >
+                  <FileText className="w-4 h-4" />
+                  Télécharger ma facture
+                </Link>
+              )}
             </div>
           </>
         ) : (

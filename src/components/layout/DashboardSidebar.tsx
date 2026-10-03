@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, LogOut, Menu, X, LayoutDashboard, GraduationCap, Award, User, Share2, BarChart2, MessageCircle, Trophy, Video, Target, Bell } from 'lucide-react'
+import { BookOpen, LogOut, Menu, X, LayoutDashboard, GraduationCap, Award, User, Share2, BarChart2, MessageCircle, Trophy, Video, Target, Bell, FileText } from 'lucide-react'
 import NotificationBell from '@/components/ui/NotificationBell'
 
 type Props = {
@@ -23,6 +23,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
     { href: '/mes-formations', label: 'Mes formations', icon: GraduationCap },
     { href: '/mes-parcours', label: 'Mes parcours', icon: Target },
     { href: '/mes-certificats', label: 'Mes certificats', icon: Award },
+    { href: '/mes-factures', label: 'Mes factures', icon: FileText },
     { href: '/profil', label: 'Mon profil', icon: User },
     { href: `/apprenant/${userId}`, label: 'Profil public', icon: Share2 },
     { href: '/messages', label: 'Messages', icon: MessageCircle },
