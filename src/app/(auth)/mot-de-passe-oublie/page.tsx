@@ -9,11 +9,11 @@ export default function MotDePasseOubliePage() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
-  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    const supabase = createClient()
     await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reinitialiser-mot-de-passe`,
     })

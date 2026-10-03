@@ -38,7 +38,6 @@ function InscriptionForm() {
   const [refCode, setRefCode] = useState('')
   const router = useRouter()
   const searchParams = useSearchParams()
-  const supabase = createClient()
 
   useEffect(() => {
     const ref = searchParams.get('ref')
@@ -47,6 +46,7 @@ function InscriptionForm() {
 
   const handleGoogle = async () => {
     setGoogleLoading(true)
+    const supabase = createClient()
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -59,6 +59,7 @@ function InscriptionForm() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    const supabase = createClient()
 
     if (form.password.length < 8) {
       setError('Le mot de passe doit contenir au moins 8 caractères.')

@@ -14,13 +14,13 @@ export default function ConnexionPage() {
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
-  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
+    const supabase = createClient()
     const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
@@ -36,6 +36,7 @@ export default function ConnexionPage() {
 
   const handleGoogle = async () => {
     setGoogleLoading(true)
+    const supabase = createClient()
     const params = new URLSearchParams(window.location.search)
     const next = params.get('redirectTo') ?? '/tableau-de-bord'
     await supabase.auth.signInWithOAuth({
