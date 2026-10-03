@@ -44,7 +44,7 @@ export default async function PaiementConfirmationPage({
             <div className="flex flex-col gap-3">
               {course_id && (
                 <Link
-                  href={`/apprendre/${course_id}/debut`}
+                  href={`/apprendre/${course_id}/intro`}
                   className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors"
                 >
                   <BookOpen className="w-4 h-4" />

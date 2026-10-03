@@ -28,7 +28,7 @@ export default async function PaiementPage({ params }: { params: Promise<{ cours
     .eq('course_id', courseId)
     .single()
 
-  if (existing) redirect(`/apprendre/${courseId}/debut`)
+  if (existing) redirect(`/apprendre/${courseId}/intro`)
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -54,7 +54,7 @@ export default async function PaiementPage({ params }: { params: Promise<{ cours
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 text-sm">Sous-total</span>
                     <span className="font-semibold text-gray-900">
-                      {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: course.currency || 'XOF', maximumFractionDigits: 0 }).format(course.price)}
+                      {new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(course.price_xof)} FCFA
                     </span>
                   </div>
                 </div>
@@ -68,8 +68,8 @@ export default async function PaiementPage({ params }: { params: Promise<{ cours
               <h1 className="text-xl font-bold text-gray-900 mb-6">Finaliser le paiement</h1>
               <PaymentForm
                 courseId={courseId}
-                amount={course.price}
-                currency={course.currency || 'XOF'}
+                amount={course.price_xof}
+                currency="XOF"
                 courseName={course.title}
                 userEmail={user.email!}
                 userPhone={profile?.phone || ''}

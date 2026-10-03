@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     currency,
     description: `Formation : ${course.title}`,
     notify_url: `${appUrl}/api/payment/webhook`,
-    return_url: `${appUrl}/paiement/confirmation?ref=${transactionId}`,
+    return_url: `${appUrl}/paiement/confirmation?transaction_id=${transactionId}&course_id=${courseId}`,
     channels: 'ALL',
     lang: 'fr',
     metadata: JSON.stringify({ userId: user.id, courseId, paymentId: payment?.id }),

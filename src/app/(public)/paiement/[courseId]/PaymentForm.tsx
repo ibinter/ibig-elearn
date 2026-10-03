@@ -1,9 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { CreditCard, Phone, ShieldCheck, Loader2 } from 'lucide-react'
-import CouponInput from '@/components/checkout/CouponInput'
+import { Loader2, ShieldCheck, Smartphone, CreditCard, ExternalLink } from 'lucide-react'
 
 interface Props {
   courseId: string
@@ -15,167 +13,129 @@ interface Props {
   userName: string
 }
 
-const MOBILE_MONEY = [
-  { id: 'orange_money', label: 'Orange Money', emoji: '🟠' },
-  { id: 'mtn_money', label: 'MTN Mobile Money', emoji: '🟡' },
-  { id: 'wave', label: 'Wave', emoji: '🔵' },
-  { id: 'moov_money', label: 'Moov Money', emoji: '🟢' },
+const CURRENCIES = [
+  { value: 'XOF', label: 'Francs CFA (XOF)', flag: '🌍' },
+  { value: 'EUR', label: 'Euro (EUR)', flag: '🇪🇺' },
+  { value: 'USD', label: 'Dollar US (USD)', flag: '🇺🇸' },
 ]
 
-export default function PaymentForm({ courseId, amount, currency, courseName, userEmail, userPhone, userName }: Props) {
-  const router = useRouter()
-  const [method, setMethod] = useState<'mobile' | 'card'>('mobile')
-  const [provider, setProvider] = useState('orange_money')
-  const [phone, setPhone] = useState(userPhone)
+export default function PaymentForm({ courseId, amount, currency: defaultCurrency, courseName, userEmail, userPhone, userName }: Props) {
+  const [currency, setCurrency] = useState(defaultCurrency || 'XOF')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [finalAmount, setFinalAmount] = useState(amount)
-  const [couponId, setCouponId] = useState<string | null>(null)
-  const [planMode, setPlanMode] = useState<'full' | '3x'>('full')
 
-  function handleCoupon(result: { valid: boolean; couponId: string; finalAmount: number } | null) {
-    if (result) { setFinalAmount(result.finalAmount); setCouponId(result.couponId) }
-    else { setFinalAmount(amount); setCouponId(null) }
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
+  const handlePay = async () => {
     setError('')
-
+    setLoading(true)
     try {
       const res = await fetch('/api/payment/cinetpay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          courseId,
-          amount: planMode === '3x' ? installment : finalAmount,
-          totalAmount: finalAmount,
-          currency,
-          description: courseName,
-          customer_name: userName,
-          customer_email: userEmail,
-          customer_phone_number: phone,
-          payment_method: method === 'card' ? 'CREDIT_CARD' : provider.toUpperCase(),
-          coupon_id: couponId,
-          plan_mode: planMode,
-          installment_number: planMode === '3x' ? 1 : null,
-        }),
+        body: JSON.stringify({ courseId, currency }),
       })
-
       const data = await res.json()
-      if (!res.ok) { setError(data.error || 'Erreur lors de l\'initiation du paiement.'); setLoading(false); return }
-      if (data.paymentUrl) window.location.href = data.paymentUrl
-      else { setError('URL de paiement non reçue.'); setLoading(false) }
+      if (!res.ok || !data.paymentUrl) {
+        setError(data.error ?? 'Une erreur est survenue. Veuillez réessayer.')
+        return
+      }
+      window.location.href = data.paymentUrl
     } catch {
-      setError('Erreur réseau. Veuillez réessayer.')
+      setError('Erreur réseau. Vérifiez votre connexion et réessayez.')
+    } finally {
       setLoading(false)
     }
   }
 
-  const installment = Math.ceil(finalAmount / 3)
-  const formattedAmount = new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(planMode === '3x' ? installment : finalAmount)
-  const formattedTotal = new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(finalAmount)
-  const hasDiscount = finalAmount < amount
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Plan de paiement */}
-      {finalAmount > 10000 && (
-        <div>
-          <p className="text-sm font-medium text-gray-700 mb-3">Plan de paiement</p>
-          <div className="grid grid-cols-2 gap-3">
-            <button type="button" onClick={() => setPlanMode('full')}
-              className={`p-4 rounded-xl border-2 text-left transition-all ${planMode === 'full' ? 'border-[#0B3D91] bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}>
-              <p className="font-bold text-gray-900 text-sm">Paiement intégral</p>
-              <p className="text-[#0B3D91] font-semibold mt-1">{formattedTotal}</p>
-              <p className="text-xs text-gray-500 mt-0.5">Une seule fois</p>
-            </button>
-            <button type="button" onClick={() => setPlanMode('3x')}
-              className={`p-4 rounded-xl border-2 text-left transition-all relative ${planMode === '3x' ? 'border-[#FFA500] bg-orange-50' : 'border-gray-200 hover:border-gray-300'}`}>
-              <span className="absolute -top-2 -right-2 bg-[#FFA500] text-black text-[10px] font-bold px-2 py-0.5 rounded-full">POPULAIRE</span>
-              <p className="font-bold text-gray-900 text-sm">Payer en 3×</p>
-              <p className="text-orange-600 font-semibold mt-1">{new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(installment)}/mois</p>
-              <p className="text-xs text-gray-500 mt-0.5">Sans frais supplémentaires</p>
-            </button>
+    <div className="space-y-6">
+      {/* Infos utilisateur */}
+      <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+        <div className="flex justify-between">
+          <span className="text-gray-500">Nom</span>
+          <span className="font-medium text-gray-900">{userName || '—'}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-500">Email</span>
+          <span className="font-medium text-gray-900">{userEmail}</span>
+        </div>
+        {userPhone && (
+          <div className="flex justify-between">
+            <span className="text-gray-500">Téléphone</span>
+            <span className="font-medium text-gray-900">{userPhone}</span>
           </div>
-          {planMode === '3x' && (
-            <div className="mt-3 bg-orange-50 border border-orange-200 rounded-xl p-3 text-xs text-orange-800">
-              💳 Vous payez <strong>{new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(installment)}</strong> maintenant, puis le même montant pendant 2 mois. Total : <strong>{formattedTotal}</strong>.
-            </div>
-          )}
+        )}
+      </div>
+
+      {/* Sélection devise */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Devise de paiement</label>
+        <div className="grid grid-cols-3 gap-2">
+          {CURRENCIES.map(c => (
+            <button
+              key={c.value}
+              type="button"
+              onClick={() => setCurrency(c.value)}
+              className={`flex flex-col items-center p-3 rounded-xl border-2 text-xs font-medium transition-all ${
+                currency === c.value
+                  ? 'border-[#0B3D91] bg-blue-50 text-[#0B3D91]'
+                  : 'border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
+            >
+              <span className="text-xl mb-1">{c.flag}</span>
+              {c.value}
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-gray-400 mt-2">
+          La conversion est effectuée automatiquement par CinetPay.
+        </p>
+      </div>
+
+      {/* Méthodes acceptées */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Modes de paiement acceptés</label>
+        <div className="flex flex-wrap gap-2">
+          {['Orange Money', 'MTN Mobile', 'Wave', 'Moov Money', 'Carte Visa/MC'].map(m => (
+            <span key={m} className="flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full">
+              <Smartphone className="w-3 h-3" />
+              {m}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Erreur */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">
+          {error}
         </div>
       )}
 
-      {/* Méthode de paiement */}
-      <div>
-        <p className="text-sm font-medium text-gray-700 mb-3">Choisir un mode de paiement</p>
-        <div className="grid grid-cols-2 gap-3">
-          <button type="button" onClick={() => setMethod('mobile')}
-            className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${method === 'mobile' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'}`}>
-            <Phone className="w-4 h-4" /> Mobile Money
-          </button>
-          <button type="button" onClick={() => setMethod('card')}
-            className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-colors ${method === 'card' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'}`}>
-            <CreditCard className="w-4 h-4" /> Carte bancaire
-          </button>
-        </div>
-      </div>
-
-      {method === 'mobile' && (
-        <div>
-          <p className="text-sm font-medium text-gray-700 mb-3">Opérateur</p>
-          <div className="grid grid-cols-2 gap-2">
-            {MOBILE_MONEY.map(op => (
-              <button key={op.id} type="button" onClick={() => setProvider(op.id)}
-                className={`flex items-center gap-2 p-3 rounded-lg border text-sm transition-colors ${provider === op.id ? 'border-blue-500 bg-blue-50 font-medium' : 'border-gray-200 hover:border-gray-300'}`}>
-                <span>{op.emoji}</span>{op.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Coupon */}
-      <div>
-        <p className="text-sm font-medium text-gray-700 mb-2">Code promo</p>
-        <CouponInput courseId={courseId} amount={amount} onApply={handleCoupon} />
-      </div>
-
-      {/* Téléphone */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          {method === 'mobile' ? 'Numéro Mobile Money' : 'Téléphone de contact'}
-        </label>
-        <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} required
-          placeholder="+225 07 00 00 00 00"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      </div>
-
-      {/* Récapitulatif prix */}
-      {hasDiscount && (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center justify-between text-sm">
-          <span className="text-gray-500 line-through">{new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(amount)}</span>
-          <span className="font-bold text-green-700 text-base">{formattedAmount}</span>
-        </div>
-      )}
-
-      {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg p-3">{error}</div>}
-
-      <div className="flex items-start gap-2 bg-gray-50 rounded-lg p-3">
-        <ShieldCheck className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
-        <p className="text-xs text-gray-600">Paiement sécurisé via <strong>CinetPay</strong>. Données protégées SSL.</p>
-      </div>
-
-      <button type="submit" disabled={loading}
-        className="w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3.5 rounded-xl transition-colors disabled:opacity-60">
-        {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Redirection...</> : <>Payer {formattedAmount}</>}
+      {/* Bouton paiement */}
+      <button
+        onClick={handlePay}
+        disabled={loading}
+        className="w-full flex items-center justify-center gap-3 py-4 bg-[#0B3D91] hover:bg-[#0a3480] text-white font-bold rounded-xl text-base transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {loading ? (
+          <>
+            <Loader2 className="w-5 h-5 animate-spin" />
+            Redirection vers CinetPay…
+          </>
+        ) : (
+          <>
+            <CreditCard className="w-5 h-5" />
+            Payer maintenant
+            <ExternalLink className="w-4 h-4 opacity-70" />
+          </>
+        )}
       </button>
 
-      <p className="text-xs text-center text-gray-500">
-        En cliquant sur &quot;Payer&quot;, vous acceptez nos{' '}
-        <a href="/cgv" className="underline">Conditions générales de vente</a>.
-      </p>
-    </form>
+      {/* Garanties */}
+      <div className="flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-xl p-3">
+        <ShieldCheck className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+        <span>Paiement 100% sécurisé via CinetPay. Garantie satisfait ou remboursé 7 jours. Aucune donnée bancaire stockée sur nos serveurs.</span>
+      </div>
+    </div>
   )
 }
