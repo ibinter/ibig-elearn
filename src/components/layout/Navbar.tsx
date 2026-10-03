@@ -10,6 +10,8 @@ import CurrencySelector from '@/components/ui/CurrencySelector'
 import GlobalSearch from '@/components/search/GlobalSearch'
 import NotificationBell from '@/components/ui/NotificationBell'
 import DarkModeToggle from '@/components/ui/DarkModeToggle'
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher'
+import { useLocale } from '@/i18n/client'
 
 interface NavbarProps {
   user?: Profile | null
@@ -18,6 +20,7 @@ interface NavbarProps {
 function CatalogueDropdown() {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const { t } = useLocale()
 
   useEffect(() => {
     function handler(e: MouseEvent) {
@@ -28,9 +31,9 @@ function CatalogueDropdown() {
   }, [])
 
   const items = [
-    { href: '/catalogue', icon: Layers, label: 'Tout le catalogue', desc: '184+ formations certifiantes', color: 'text-[#0B3D91]' },
-    { href: '/catalogue?featured=true', icon: Star, label: 'Formations vedettes', desc: 'Les plus populaires', color: 'text-[#FFA500]' },
-    { href: '/parcours', icon: TrendingUp, label: 'Parcours métiers', desc: 'Progressions guidées', color: 'text-green-600' },
+    { href: '/catalogue', icon: Layers, label: t.nav.catalog, desc: t.nav.catalogDesc, color: 'text-[#0B3D91]' },
+    { href: '/catalogue?featured=true', icon: Star, label: t.nav.featured, desc: t.nav.featuredDesc, color: 'text-[#FFA500]' },
+    { href: '/parcours', icon: TrendingUp, label: t.nav.paths, desc: t.nav.pathsDesc, color: 'text-green-600' },
   ]
 
   return (
@@ -78,6 +81,7 @@ export default function Navbar({ user }: NavbarProps) {
   const profileRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const supabase = createClient()
+  const { t } = useLocale()
 
   useEffect(() => {
     function handler(e: MouseEvent) {
@@ -112,7 +116,7 @@ export default function Navbar({ user }: NavbarProps) {
             </div>
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-black text-[#0B3D91] text-base tracking-tight">IBIG</span>
-              <span className="font-black text-[#FFA500] text-base tracking-tight -mt-1">E-LEARN</span>
+              <span className="font-black text-[#FFA500] text-base tracking-tight -mt-1">E-LEARNING</span>
             </div>
           </Link>
 
@@ -120,13 +124,13 @@ export default function Navbar({ user }: NavbarProps) {
           <div className="hidden md:flex items-center gap-5 flex-1">
             <CatalogueDropdown />
             <Link href="/blog" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
-              Blog
+              {t.nav.blog}
             </Link>
             <Link href="/entreprise" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
-              Entreprise
+              {t.nav.enterprise}
             </Link>
             <Link href="/a-propos" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
-              À propos
+              {t.locale === 'en' ? 'About' : 'À propos'}
             </Link>
 
             {/* Search — takes remaining space */}
@@ -137,6 +141,7 @@ export default function Navbar({ user }: NavbarProps) {
 
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+            <LanguageSwitcher />
             <DarkModeToggle />
             <CurrencySelector />
             {user && <NotificationBell />}
@@ -206,11 +211,11 @@ export default function Navbar({ user }: NavbarProps) {
               <div className="flex items-center gap-2">
                 <Link href="/connexion"
                   className="text-sm font-semibold text-gray-700 hover:text-[#0B3D91] px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap">
-                  Connexion
+                  {t.nav.login}
                 </Link>
                 <Link href="/inscription"
                   className="text-sm font-bold text-white ibig-gradient px-4 py-2.5 rounded-xl hover:opacity-90 transition-opacity shadow-sm whitespace-nowrap">
-                  S&apos;inscrire gratuitement
+                  {t.locale === 'en' ? 'Sign up free' : "S'inscrire gratuitement"}
                 </Link>
               </div>
             )}
