@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { CurrencyProvider } from '@/lib/currency-context'
 import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
+import { getTenant } from '@/lib/tenant'
+import TenantTheme from '@/components/tenant/TenantTheme'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -49,10 +51,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const tenant = await getTenant()
   return (
     <html lang="fr">
       <body className={inter.className}>
+        {tenant && <TenantTheme tenant={tenant} />}
         <CurrencyProvider>{children}</CurrencyProvider>
         <ServiceWorkerRegister />
       </body>
