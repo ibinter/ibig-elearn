@@ -1,6 +1,7 @@
 'use client'
 
 import { useCurrency, type Currency } from '@/lib/currency-context'
+import { useLocale } from '@/i18n/client'
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
@@ -8,59 +9,66 @@ interface CurrencyOption {
   value: Currency
   label: string
   flag: string
-  name: string
+  fr: string
+  en: string
 }
 
-const GROUPS: { title: string; options: CurrencyOption[] }[] = [
+const GROUPS_DATA: { fr: string; en: string; options: CurrencyOption[] }[] = [
   {
-    title: 'Afrique de l\'Ouest',
+    fr: 'Afrique de l\'Ouest',
+    en: 'West Africa',
     options: [
-      { value: 'XOF', label: 'XOF', flag: '🌍', name: 'Franc CFA (UEMOA)' },
-      { value: 'GNF', label: 'GNF', flag: '🇬🇳', name: 'Franc guinéen' },
-      { value: 'NGN', label: 'NGN', flag: '🇳🇬', name: 'Naira nigérian' },
-      { value: 'GHS', label: 'GHS', flag: '🇬🇭', name: 'Cedi ghanéen' },
+      { value: 'XOF', label: 'XOF', flag: '🌍', fr: 'Franc CFA (UEMOA)', en: 'CFA Franc (UEMOA)' },
+      { value: 'GNF', label: 'GNF', flag: '🇬🇳', fr: 'Franc guinéen', en: 'Guinean Franc' },
+      { value: 'NGN', label: 'NGN', flag: '🇳🇬', fr: 'Naira nigérian', en: 'Nigerian Naira' },
+      { value: 'GHS', label: 'GHS', flag: '🇬🇭', fr: 'Cedi ghanéen', en: 'Ghanaian Cedi' },
     ],
   },
   {
-    title: 'Afrique Centrale',
+    fr: 'Afrique Centrale',
+    en: 'Central Africa',
     options: [
-      { value: 'XAF', label: 'XAF', flag: '🌍', name: 'Franc CFA (CEMAC)' },
-      { value: 'CDF', label: 'CDF', flag: '🇨🇩', name: 'Franc congolais' },
+      { value: 'XAF', label: 'XAF', flag: '🌍', fr: 'Franc CFA (CEMAC)', en: 'CFA Franc (CEMAC)' },
+      { value: 'CDF', label: 'CDF', flag: '🇨🇩', fr: 'Franc congolais', en: 'Congolese Franc' },
     ],
   },
   {
-    title: 'Afrique du Nord',
+    fr: 'Afrique du Nord',
+    en: 'North Africa',
     options: [
-      { value: 'MAD', label: 'MAD', flag: '🇲🇦', name: 'Dirham marocain' },
-      { value: 'DZD', label: 'DZD', flag: '🇩🇿', name: 'Dinar algérien' },
-      { value: 'TND', label: 'TND', flag: '🇹🇳', name: 'Dinar tunisien' },
-      { value: 'EGP', label: 'EGP', flag: '🇪🇬', name: 'Livre égyptienne' },
+      { value: 'MAD', label: 'MAD', flag: '🇲🇦', fr: 'Dirham marocain', en: 'Moroccan Dirham' },
+      { value: 'DZD', label: 'DZD', flag: '🇩🇿', fr: 'Dinar algérien', en: 'Algerian Dinar' },
+      { value: 'TND', label: 'TND', flag: '🇹🇳', fr: 'Dinar tunisien', en: 'Tunisian Dinar' },
+      { value: 'EGP', label: 'EGP', flag: '🇪🇬', fr: 'Livre égyptienne', en: 'Egyptian Pound' },
     ],
   },
   {
-    title: 'Afrique de l\'Est & Sud',
+    fr: 'Afrique de l\'Est & Sud',
+    en: 'East & Southern Africa',
     options: [
-      { value: 'KES', label: 'KES', flag: '🇰🇪', name: 'Shilling kényan' },
-      { value: 'ETB', label: 'ETB', flag: '🇪🇹', name: 'Birr éthiopien' },
-      { value: 'RWF', label: 'RWF', flag: '🇷🇼', name: 'Franc rwandais' },
-      { value: 'ZAR', label: 'ZAR', flag: '🇿🇦', name: 'Rand sud-africain' },
-      { value: 'MGA', label: 'MGA', flag: '🇲🇬', name: 'Ariary malgache' },
-      { value: 'MUR', label: 'MUR', flag: '🇲🇺', name: 'Roupie mauricienne' },
+      { value: 'KES', label: 'KES', flag: '🇰🇪', fr: 'Shilling kényan', en: 'Kenyan Shilling' },
+      { value: 'ETB', label: 'ETB', flag: '🇪🇹', fr: 'Birr éthiopien', en: 'Ethiopian Birr' },
+      { value: 'RWF', label: 'RWF', flag: '🇷🇼', fr: 'Franc rwandais', en: 'Rwandan Franc' },
+      { value: 'ZAR', label: 'ZAR', flag: '🇿🇦', fr: 'Rand sud-africain', en: 'South African Rand' },
+      { value: 'MGA', label: 'MGA', flag: '🇲🇬', fr: 'Ariary malgache', en: 'Malagasy Ariary' },
+      { value: 'MUR', label: 'MUR', flag: '🇲🇺', fr: 'Roupie mauricienne', en: 'Mauritian Rupee' },
     ],
   },
   {
-    title: 'International',
+    fr: 'International',
+    en: 'International',
     options: [
-      { value: 'EUR', label: 'EUR', flag: '🇪🇺', name: 'Euro' },
-      { value: 'USD', label: 'USD', flag: '🇺🇸', name: 'Dollar américain' },
+      { value: 'EUR', label: 'EUR', flag: '🇪🇺', fr: 'Euro', en: 'Euro' },
+      { value: 'USD', label: 'USD', flag: '🇺🇸', fr: 'Dollar américain', en: 'US Dollar' },
     ],
   },
 ]
 
-const ALL_OPTIONS = GROUPS.flatMap(g => g.options)
+const ALL_OPTIONS = GROUPS_DATA.flatMap(g => g.options)
 
 export default function CurrencySelector() {
   const { currency, setCurrency } = useCurrency()
+  const { locale } = useLocale()
   const [open, setOpen] = useState(false)
   const current = ALL_OPTIONS.find(o => o.value === currency) ?? ALL_OPTIONS[0]
 
@@ -80,10 +88,10 @@ export default function CurrencySelector() {
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute right-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-50 max-h-[420px] overflow-y-auto">
-            {GROUPS.map(group => (
-              <div key={group.title}>
+            {GROUPS_DATA.map(group => (
+              <div key={group.en}>
                 <p className="px-3 pt-2 pb-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                  {group.title}
+                  {locale === 'en' ? group.en : group.fr}
                 </p>
                 {group.options.map(opt => (
                   <button
@@ -97,7 +105,7 @@ export default function CurrencySelector() {
                   >
                     <span className="text-base">{opt.flag}</span>
                     <span className="font-medium w-9 flex-shrink-0">{opt.label}</span>
-                    <span className="text-xs text-gray-400 truncate">{opt.name}</span>
+                    <span className="text-xs text-gray-400 truncate">{locale === 'en' ? opt.en : opt.fr}</span>
                   </button>
                 ))}
               </div>
