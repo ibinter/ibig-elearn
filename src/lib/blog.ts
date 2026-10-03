@@ -1,4 +1,4 @@
-export interface Article {
+﻿export interface Article {
   slug: string
   category: string
   categoryColor: string
@@ -41,9 +41,9 @@ L'une des barrières historiques à l'e-learning en Afrique était l'accès aux 
 - **73%** des apprenants africains accèdent aux cours via smartphone
 - **12 pays** couverts par les grandes plateformes d'e-learning francophones
 
-### IBIG E-LEARN, acteur de cette transformation
+### IBIG E-LEARNING, acteur de cette transformation
 
-Conçue spécifiquement pour les besoins africains — des contenus en français, des prix adaptés en XOF/EUR/USD, un support mobile optimisé — IBIG E-LEARN incarne cette nouvelle génération de plateformes au service du développement professionnel panafricain.
+Conçue spécifiquement pour les besoins africains — des contenus en français, des prix adaptés en XOF/EUR/USD, un support mobile optimisé — IBIG E-LEARNING incarne cette nouvelle génération de plateformes au service du développement professionnel panafricain.
 
 > "La formation ne doit plus être un privilège géographique. Elle doit être accessible à tout Africain qui a la volonté d'apprendre." — IBIG EDUFORM
 
@@ -80,7 +80,7 @@ Avant tout, identifiez vos compétences transférables. Un comptable peut deveni
 Orientez-vous vers des secteurs en croissance : tech, finance mobile, santé digitale, e-commerce, formation en ligne.
 
 **3. Se former rapidement**
-Les formations courtes et certifiantes (3 à 6 mois) permettent d'acquérir les compétences clés sans interrompre son activité. IBIG E-LEARN propose des parcours adaptés.
+Les formations courtes et certifiantes (3 à 6 mois) permettent d'acquérir les compétences clés sans interrompre son activité. IBIG E-LEARNING propose des parcours adaptés.
 
 **4. Construire son réseau**
 En Afrique, le réseau est capital. Rejoignez des associations professionnelles, des groupes LinkedIn, des événements de networking.
@@ -135,7 +135,7 @@ ChatGPT, Midjourney, outils d'automatisation : apprendre à utiliser l'IA comme 
 
 ### Comment acquérir ces compétences ?
 
-IBIG E-LEARN propose des formations certifiantes dans chacun de ces domaines, conçues par des experts africains, à des prix accessibles en Mobile Money.
+IBIG E-LEARNING propose des formations certifiantes dans chacun de ces domaines, conçues par des experts africains, à des prix accessibles en Mobile Money.
     `,
   },
   {
@@ -159,7 +159,7 @@ Cette question revient souvent chez nos apprenants. La réponse dépend de votre
 
 **Coût réduit** : pas de transport, pas d'hébergement, pas de matériel imprimé. Les formations en ligne coûtent souvent 3 à 5 fois moins cher.
 
-**Accès à l'expertise mondiale** : une formation IBIG E-LEARN vous connecte aux meilleurs formateurs du continent, peu importe où vous êtes.
+**Accès à l'expertise mondiale** : une formation IBIG E-LEARNING vous connecte aux meilleurs formateurs du continent, peu importe où vous êtes.
 
 **Certifications reconnues** : nos certificats sont vérifiables en ligne et de plus en plus acceptés par les employeurs.
 
@@ -175,7 +175,7 @@ Cette question revient souvent chez nos apprenants. La réponse dépend de votre
 
 Pour les compétences en gestion, marketing, finance, numérique et soft skills : **la formation en ligne est idéale**. Pour les métiers à forte composante pratique : combinez les deux formats — théorie en ligne, pratique en présentiel.
 
-IBIG E-LEARN a conçu ses formations pour maximiser l'apprentissage à distance : vidéos courtes, quiz interactifs, forum de discussion, suivi de progression et assistant pédagogique SARA disponible 24h/24.
+IBIG E-LEARNING a conçu ses formations pour maximiser l'apprentissage à distance : vidéos courtes, quiz interactifs, forum de discussion, suivi de progression et assistant pédagogique SARA disponible 24h/24.
     `,
   },
   {
@@ -230,7 +230,7 @@ SGBCI, BICICI, Ecobank, Société Générale CI : plusieurs options disponibles.
 
 ### Ressources utiles
 
-IBIG E-LEARN propose une formation complète "Lancer son entreprise en Afrique" avec des modules sur le business plan, la fiscalité africaine et la levée de fonds.
+IBIG E-LEARNING propose une formation complète "Lancer son entreprise en Afrique" avec des modules sur le business plan, la fiscalité africaine et la levée de fonds.
     `,
   },
   {
@@ -266,7 +266,7 @@ L'immobilier reste l'un des investissements préférés des Africains. Dans un c
 
 ### Comment se former à l'investissement immobilier ?
 
-IBIG E-LEARN propose une formation "Investir dans l'immobilier en Afrique" couvrant l'analyse de marché, le financement, la gestion locative et la fiscalité immobilière africaine.
+IBIG E-LEARNING propose une formation "Investir dans l'immobilier en Afrique" couvrant l'analyse de marché, le financement, la gestion locative et la fiscalité immobilière africaine.
     `,
   },
   {
@@ -306,9 +306,9 @@ Depuis l'intégration du Mobile Money dans les plateformes e-learning :
 - Des apprenants dans des villes secondaires (Daloa, Ziguinchor, Bobo-Dioulasso) accèdent aux formations pour la première fois
 - Le taux d'abandon avant paiement a chuté de 65% à 12%
 
-### IBIG E-LEARN et le Mobile Money
+### IBIG E-LEARNING et le Mobile Money
 
-IBIG E-LEARN accepte Orange Money, MTN Mobile Money, Wave et Moov Money dans tous les pays couverts. Notre intégration via CinetPay garantit des transactions sécurisées et instantanées, 24h/24.
+IBIG E-LEARNING accepte Orange Money, MTN Mobile Money, Wave et Moov Money dans tous les pays couverts. Notre intégration via CinetPay garantit des transactions sécurisées et instantanées, 24h/24.
     `,
   },
 ]

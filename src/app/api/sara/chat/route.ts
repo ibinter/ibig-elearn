@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import Anthropic from '@anthropic-ai/sdk'
 
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   if (!messages?.length) return NextResponse.json({ error: 'Messages requis' }, { status: 400 })
 
-  const systemPrompt = `Tu es SARA, l'assistante pédagogique IA de la plateforme IBIG E-LEARN — une plateforme panafricaine de formation en ligne.
+  const systemPrompt = `Tu es SARA, l'assistante pédagogique IA de la plateforme IBIG E-LEARNING — une plateforme panafricaine de formation en ligne.
 
 Ton rôle : aider les apprenants à comprendre les concepts de leur formation, répondre à leurs questions, et les encourager dans leur parcours.
 

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -7,7 +7,7 @@ import { X, Zap } from 'lucide-react'
 const MESSAGES = [
   { text: '🎓 Nouvelle formation disponible : Intelligence Artificielle & Automatisation des PME africaines', link: '/catalogue' },
   { text: '🔥 -20% sur toutes les formations ce mois — code promo : IBIG20', link: '/catalogue' },
-  { text: '🌍 IBIG E-LEARN est maintenant disponible dans 12 pays d\'Afrique francophone', link: '/a-propos' },
+  { text: '🌍 IBIG E-LEARNING est maintenant disponible dans 12 pays d\'Afrique francophone', link: '/a-propos' },
   { text: '🏆 Plus de 1 200 certificats délivrés — rejoignez la communauté des professionnels certifiés !', link: '/inscription' },
   { text: '📱 Mobile Money accepté : Orange Money, MTN, Wave, Moov — payez dans votre monnaie locale', link: '/catalogue' },
 ]

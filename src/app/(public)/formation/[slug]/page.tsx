@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { Star, Users, Clock, BookOpen, CheckCircle, Play, Award, ChevronDown } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
   const url = `${BASE_URL}/formation/${slug}`
-  const description = data.short_description ?? `Formation professionnelle certifiante en ${(data.category as any)?.name ?? 'développement professionnel'} — IBIG E-LEARN`
+  const description = data.short_description ?? `Formation professionnelle certifiante en ${(data.category as any)?.name ?? 'développement professionnel'} — IBIG E-LEARNING`
 
   return {
     title: data.title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps) {
       description,
       url,
       type: 'article',
-      siteName: 'IBIG E-LEARN',
+      siteName: 'IBIG E-LEARNING',
       locale: 'fr_FR',
     },
     twitter: {
@@ -100,7 +100,7 @@ export default async function FormationPage({ params }: PageProps) {
     image: c.thumbnail_url ?? `${BASE_URL}/og-default.png`,
     provider: {
       '@type': 'Organization',
-      name: 'IBIG E-LEARN',
+      name: 'IBIG E-LEARNING',
       sameAs: BASE_URL,
     },
     instructor: {

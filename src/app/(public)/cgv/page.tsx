@@ -1,4 +1,4 @@
-export default function CGVPage() {
+﻿export default function CGVPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Conditions générales de vente</h1>
@@ -8,7 +8,7 @@ export default function CGVPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">1. Objet</h2>
           <p>
-            Les présentes CGV régissent les conditions dans lesquelles IBIG SARL (ci-après &quot;IBIG E-LEARN&quot;) propose à la vente des formations en ligne sur la plateforme ibig-elearning.com.
+            Les présentes CGV régissent les conditions dans lesquelles IBIG SARL (ci-après &quot;IBIG E-LEARNING&quot;) propose à la vente des formations en ligne sur la plateforme ibig-elearning.com.
           </p>
         </section>
 
@@ -41,7 +41,7 @@ export default function CGVPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">6. Responsabilité</h2>
           <p>
-            IBIG E-LEARN s&apos;engage à fournir des formations de qualité mais ne peut garantir un résultat particulier. La plateforme peut être temporairement indisponible pour maintenance. En cas d&apos;indisponibilité prolongée, les délais d&apos;accès seront prorogés en conséquence.
+            IBIG E-LEARNING s&apos;engage à fournir des formations de qualité mais ne peut garantir un résultat particulier. La plateforme peut être temporairement indisponible pour maintenance. En cas d&apos;indisponibilité prolongée, les délais d&apos;accès seront prorogés en conséquence.
           </p>
         </section>
 

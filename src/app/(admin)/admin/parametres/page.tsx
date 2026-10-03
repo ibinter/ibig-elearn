@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
@@ -52,7 +52,7 @@ export default function AdminParametresPage() {
           <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
             <Settings className="w-6 h-6 text-[#0B3D91]" /> Paramètres
           </h1>
-          <p className="text-gray-500">Configuration générale de la plateforme IBIG E-LEARN</p>
+          <p className="text-gray-500">Configuration générale de la plateforme IBIG E-LEARNING</p>
         </div>
         <button
           onClick={save}

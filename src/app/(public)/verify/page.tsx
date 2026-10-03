@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -23,7 +23,7 @@ export default function VerifyPage() {
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Vérifier un certificat</h1>
         <p className="text-gray-500 text-sm mb-8">
-          Entrez le code de vérification figurant sur un certificat IBIG E-LEARN pour confirmer son authenticité.
+          Entrez le code de vérification figurant sur un certificat IBIG E-LEARNING pour confirmer son authenticité.
         </p>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">

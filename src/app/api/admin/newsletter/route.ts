@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   for (let i = 0; i < emails.length; i += BATCH) {
     const batch = emails.slice(i, i + BATCH)
     await resend.emails.send({
-      from: 'IBIG E-LEARN <no-reply@ibig-elearn.com>',
+      from: 'IBIG E-LEARNING <no-reply@ibig-elearn.com>',
       to: batch,
       subject,
       html,

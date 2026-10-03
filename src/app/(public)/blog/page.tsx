@@ -1,11 +1,11 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowRight, Clock, Eye } from 'lucide-react'
 import { articles } from '@/lib/blog'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Blog — IBIG E-LEARN',
+  title: 'Blog — IBIG E-LEARNING',
   description: 'Conseils, actualités et ressources pour votre développement professionnel en Afrique francophone.',
   keywords: ['blog formation Afrique', 'conseils carrière Afrique', 'développement professionnel'],
 }
@@ -67,7 +67,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Blog IBIG E-LEARN</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Blog IBIG E-LEARNING</h1>
           <p className="text-gray-500 max-w-xl">Conseils, actualités et ressources pour votre développement professionnel en Afrique.</p>
         </div>
 
@@ -135,7 +135,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
                 <h3 className="font-bold text-gray-900 mt-2 mb-2 leading-snug group-hover:text-[#0B3D91] transition-colors line-clamp-2">{post.title}</h3>
                 {post.excerpt && <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-3">{post.excerpt}</p>}
                 <div className="flex items-center justify-between text-xs text-gray-400">
-                  <span>{Array.isArray(post.author) ? (post.author[0]?.full_name ?? 'IBIG E-LEARN') : (post.author?.full_name ?? 'IBIG E-LEARN')}</span>
+                  <span>{Array.isArray(post.author) ? (post.author[0]?.full_name ?? 'IBIG E-LEARNING') : (post.author?.full_name ?? 'IBIG E-LEARNING')}</span>
                   <div className="flex items-center gap-2">
                     {post.reading_time_minutes && <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {post.reading_time_minutes} min</span>}
                   </div>
@@ -179,7 +179,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Blog IBIG E-LEARN</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Blog IBIG E-LEARNING</h1>
         <p className="text-gray-500 max-w-xl">Conseils, actualités et ressources pour votre développement professionnel en Afrique.</p>
       </div>
 

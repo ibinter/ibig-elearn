@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { Shield, CheckCircle, XCircle, Award, User, BookOpen, Calendar } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
@@ -8,8 +8,8 @@ interface Props { params: Promise<{ code: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params
   return {
-    title: `Vérification certificat ${code} — IBIG E-LEARN`,
-    description: 'Vérification de l\'authenticité d\'un certificat IBIG E-LEARN.',
+    title: `Vérification certificat ${code} — IBIG E-LEARNING`,
+    description: 'Vérification de l\'authenticité d\'un certificat IBIG E-LEARNING.',
   }
 }
 
@@ -52,7 +52,7 @@ export default async function VerifyCertificatePage({ params }: Props) {
                 <div className="flex items-center gap-3 mb-4">
                   <Award className="w-8 h-8 text-[#FFA500]" />
                   <div>
-                    <p className="text-blue-200 text-xs font-medium">IBIG E-LEARN</p>
+                    <p className="text-blue-200 text-xs font-medium">IBIG E-LEARNING</p>
                     <p className="font-bold">Certificat de complétion</p>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ export default async function VerifyCertificatePage({ params }: Props) {
 
               <div className="px-6 py-4 bg-green-50 border-t border-green-100 flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <p className="text-xs text-green-700 font-medium">Certificat vérifié et authentifié par IBIG E-LEARN</p>
+                <p className="text-xs text-green-700 font-medium">Certificat vérifié et authentifié par IBIG E-LEARNING</p>
               </div>
             </div>
 
@@ -123,7 +123,7 @@ export default async function VerifyCertificatePage({ params }: Props) {
               <p className="text-sm font-semibold text-amber-800 mb-2">Vérifiez :</p>
               <ul className="text-sm text-amber-700 space-y-1 list-disc list-inside">
                 <li>Que le code a été saisi correctement (majuscules, sans espaces)</li>
-                <li>Que le document provient bien d'IBIG E-LEARN</li>
+                <li>Que le document provient bien d'IBIG E-LEARNING</li>
                 <li>Que la formation a bien été complétée avant cette vérification</li>
               </ul>
             </div>

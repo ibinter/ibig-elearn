@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Building2, Users, Award, BarChart3, CheckCircle, Phone, Mail, ArrowRight, Shield, Globe } from 'lucide-react'
 import B2BContactForm from './B2BContactForm'
 
 export const metadata: Metadata = {
-  title: 'IBIG E-LEARN Entreprise — Formation en groupe pour vos équipes',
-  description: 'Formez vos équipes avec IBIG E-LEARN Entreprise. Accès multi-utilisateurs, suivi des progressions, certificats personnalisés. Devis sur mesure pour PME et grandes entreprises en Afrique.',
+  title: 'IBIG E-LEARNING Entreprise — Formation en groupe pour vos équipes',
+  description: 'Formez vos équipes avec IBIG E-LEARNING Entreprise. Accès multi-utilisateurs, suivi des progressions, certificats personnalisés. Devis sur mesure pour PME et grandes entreprises en Afrique.',
   keywords: ['formation entreprise Afrique', 'e-learning B2B', 'formation équipe Afrique', 'corporate learning Afrique'],
 }
 

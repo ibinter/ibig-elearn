@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle } from 'lucide-react'
@@ -64,7 +64,7 @@ export default async function AccueilPage() {
   ]
 
   const temoignages = [
-    { nom: 'Aminata Koné', pays: 'Côte d\'Ivoire', role: 'DRH', text: 'IBIG E-LEARN m\'a permis d\'obtenir ma certification en GRH en seulement 3 mois. Les cours sont adaptés à notre contexte africain.', note: 5 },
+    { nom: 'Aminata Koné', pays: 'Côte d\'Ivoire', role: 'DRH', text: 'IBIG E-LEARNING m\'a permis d\'obtenir ma certification en GRH en seulement 3 mois. Les cours sont adaptés à notre contexte africain.', note: 5 },
     { nom: 'Moussa Diallo', pays: 'Sénégal', role: 'Entrepreneur', text: 'J\'ai lancé mon entreprise grâce à la formation en Entrepreneuriat. L\'assistant SARA est incroyable pour répondre à mes questions.', note: 5 },
     { nom: 'Fatoumata Bah', pays: 'Guinée', role: 'Comptable', text: 'Le paiement en Mobile Money facilite l\'accès aux formations. Je recommande à tous mes collègues.', note: 5 },
   ]
@@ -93,7 +93,7 @@ export default async function AccueilPage() {
             <p className="text-blue-100 text-lg mb-8 leading-relaxed">
               {user
                 ? `Vous avez ${userEnrollments.length} formation${userEnrollments.length > 1 ? 's' : ''} en cours. ${(userProfile as any)?.streak_days > 0 ? `🔥 ${(userProfile as any).streak_days} jours de suite !` : 'Continuez sur votre lancée !'}`
-                : "IBIG E-LEARN vous donne accès à plus de 179 formations professionnelles certifiantes, conçues pour le marché africain, accessibles depuis votre téléphone."}
+                : "IBIG E-LEARNING vous donne accès à plus de 179 formations professionnelles certifiantes, conçues pour le marché africain, accessibles depuis votre téléphone."}
             </p>
             <div className="flex flex-wrap gap-3 mb-10">
               {user ? (
@@ -231,7 +231,7 @@ export default async function AccueilPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Pourquoi IBIG E-LEARN ?</h2>
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Pourquoi IBIG E-LEARNING ?</h2>
             <p className="text-gray-500">Une plateforme pensée pour les professionnels africains</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -286,7 +286,7 @@ export default async function AccueilPage() {
             Commencez votre formation aujourd'hui
           </h2>
           <p className="text-blue-100 mb-8 text-lg">
-            Rejoignez plus de 5 000 professionnels qui font confiance à IBIG E-LEARN pour leur développement de compétences.
+            Rejoignez plus de 5 000 professionnels qui font confiance à IBIG E-LEARNING pour leur développement de compétences.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/inscription"

@@ -1,7 +1,7 @@
-import { ImageResponse } from 'next/og'
+﻿import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'IBIG E-LEARN — Formation professionnelle en Afrique'
+export const alt = 'IBIG E-LEARNING — Formation professionnelle en Afrique'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 

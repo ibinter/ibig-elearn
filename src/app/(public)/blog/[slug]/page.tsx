@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ArrowLeft, Clock, User, Tag, Eye } from 'lucide-react'
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (dbPost) {
     return {
-      title: `${dbPost.title} — IBIG E-LEARN Blog`,
+      title: `${dbPost.title} — IBIG E-LEARNING Blog`,
       description: dbPost.excerpt ?? undefined,
       openGraph: { title: dbPost.title, description: dbPost.excerpt ?? undefined, type: 'article', images: dbPost.cover_image ? [dbPost.cover_image] : [] },
     }
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = articles.find(a => a.slug === slug)
   if (!article) return { title: 'Article introuvable' }
   return {
-    title: `${article.title} — IBIG E-LEARN Blog`,
+    title: `${article.title} — IBIG E-LEARNING Blog`,
     description: article.excerpt,
     keywords: article.keywords,
     openGraph: { title: article.title, description: article.excerpt, type: 'article' },

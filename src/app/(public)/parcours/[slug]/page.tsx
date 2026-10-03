@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, BookOpen, Clock, Target, CheckCircle, Lock, ChevronRight, Star, Award, Play } from 'lucide-react'
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createClient()
   const { data } = await supabase.from('learning_paths').select('title, short_description').eq('slug', slug).single()
   if (!data) return { title: 'Parcours introuvable' }
-  return { title: `${data.title} — Parcours IBIG E-LEARN`, description: data.short_description ?? undefined }
+  return { title: `${data.title} — Parcours IBIG E-LEARNING`, description: data.short_description ?? undefined }
 }
 
 const levelLabel: Record<string, string> = {

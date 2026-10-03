@@ -1,7 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { Award, CheckCircle, Shield, QrCode, Globe, BookOpen } from 'lucide-react'
 
-export const metadata = { title: 'Certifications — IBIG E-LEARN', description: 'Découvrez nos certifications professionnelles vérifiables, reconnues dans 12 pays africains.' }
+export const metadata = { title: 'Certifications — IBIG E-LEARNING', description: 'Découvrez nos certifications professionnelles vérifiables, reconnues dans 12 pays africains.' }
 
 export default function CertificationsPage() {
   return (
@@ -12,7 +12,7 @@ export default function CertificationsPage() {
           <div className="w-16 h-16 rounded-full bg-[#FFA500]/20 flex items-center justify-center mx-auto mb-5">
             <Award className="w-8 h-8 text-[#FFA500]" />
           </div>
-          <h1 className="text-4xl font-bold mb-4">Certifications IBIG E-LEARN</h1>
+          <h1 className="text-4xl font-bold mb-4">Certifications IBIG E-LEARNING</h1>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto">
             Chaque certificat délivré porte un code unique vérifiable en ligne. Prouvez vos compétences à vos employeurs et partenaires partout en Afrique.
           </p>
@@ -101,7 +101,7 @@ export default function CertificationsPage() {
       <section className="py-16 bg-white">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-3">Vérifier un certificat</h2>
-          <p className="text-gray-500 mb-6 text-sm">Entrez le code de vérification pour confirmer l'authenticité d'un certificat IBIG E-LEARN.</p>
+          <p className="text-gray-500 mb-6 text-sm">Entrez le code de vérification pour confirmer l'authenticité d'un certificat IBIG E-LEARNING.</p>
           <div className="flex gap-3 max-w-md mx-auto">
             <form action="" className="flex gap-3 w-full">
               <input

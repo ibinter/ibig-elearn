@@ -1,4 +1,4 @@
-export default function MentionsLegalesPage() {
+﻿export default function MentionsLegalesPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Mentions légales</h1>
@@ -27,7 +27,7 @@ export default function MentionsLegalesPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">Propriété intellectuelle</h2>
           <p className="text-gray-600">
-            L&apos;ensemble des contenus présents sur le site IBIG E-LEARN (textes, images, vidéos, logos) sont la propriété exclusive d&apos;IBIG SARL ou de ses partenaires formateurs. Toute reproduction, distribution ou utilisation sans autorisation écrite est strictement interdite.
+            L&apos;ensemble des contenus présents sur le site IBIG E-LEARNING (textes, images, vidéos, logos) sont la propriété exclusive d&apos;IBIG SARL ou de ses partenaires formateurs. Toute reproduction, distribution ou utilisation sans autorisation écrite est strictement interdite.
           </p>
         </section>
 

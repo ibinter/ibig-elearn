@@ -1,7 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { Users, Globe, Award, Target, Heart, BookOpen } from 'lucide-react'
 
-export const metadata = { title: 'À propos — IBIG E-LEARN', description: 'Découvrez IBIG E-LEARN, la plateforme panafricaine de formation professionnelle en ligne.' }
+export const metadata = { title: 'À propos — IBIG E-LEARNING', description: 'Découvrez IBIG E-LEARNING, la plateforme panafricaine de formation professionnelle en ligne.' }
 
 const team = [
   { name: 'Équipe IBIG EDUFORM', role: 'Pôle formation du groupe IBIG SARL', initial: 'I' },
@@ -30,7 +30,7 @@ export default function AProposPage() {
             <span className="text-[#FFA500]">dès aujourd'hui</span>
           </h1>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-            IBIG E-LEARN est la plateforme de formation professionnelle en ligne d'IBIG SARL (Intermark Business International Group), conçue pour répondre aux besoins de développement des compétences en Afrique.
+            IBIG E-LEARNING est la plateforme de formation professionnelle en ligne d'IBIG SARL (Intermark Business International Group), conçue pour répondre aux besoins de développement des compétences en Afrique.
           </p>
         </div>
       </section>
@@ -45,7 +45,7 @@ export default function AProposPage() {
                 Nous croyons que chaque professionnel africain mérite d'accéder à des formations de qualité, sans barrières géographiques, linguistiques ou financières.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Avec IBIG E-LEARN, nous mettons à la disposition des apprenants des contenus créés par des experts praticiens, disponibles 24h/24 depuis n'importe quel appareil, payables en Mobile Money.
+                Avec IBIG E-LEARNING, nous mettons à la disposition des apprenants des contenus créés par des experts praticiens, disponibles 24h/24 depuis n'importe quel appareil, payables en Mobile Money.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 À terme, nous visons <strong>60 000 apprenants actifs</strong> dans <strong>12 pays africains</strong>, avec plus de <strong>150 formations certifiantes</strong> couvrant les secteurs porteurs du continent.

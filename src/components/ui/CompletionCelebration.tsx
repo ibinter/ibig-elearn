@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -29,7 +29,7 @@ export default function CompletionCelebration({ courseTitle, certificateId, cour
   }
 
   const shareWhatsApp = () => {
-    const msg = `🎓 Je viens de terminer la formation "${courseTitle}" sur IBIG E-LEARN et j'ai obtenu mon certificat ! 🏆`
+    const msg = `🎓 Je viens de terminer la formation "${courseTitle}" sur IBIG E-LEARNING et j'ai obtenu mon certificat ! 🏆`
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
   }
 

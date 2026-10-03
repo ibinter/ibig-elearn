@@ -1,4 +1,4 @@
-export default function ConfidentialitePage() {
+﻿export default function ConfidentialitePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Politique de confidentialité</h1>
@@ -7,7 +7,7 @@ export default function ConfidentialitePage() {
       <div className="space-y-8 text-gray-600">
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">1. Données collectées</h2>
-          <p>Lors de votre inscription sur IBIG E-LEARN, nous collectons :</p>
+          <p>Lors de votre inscription sur IBIG E-LEARNING, nous collectons :</p>
           <ul className="list-disc list-inside mt-2 space-y-1">
             <li>Nom complet et adresse email</li>
             <li>Numéro de téléphone (optionnel)</li>

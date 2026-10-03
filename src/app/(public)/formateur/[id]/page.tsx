@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, Users, Star, Award, MapPin, Globe } from 'lucide-react'
@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { data } = await supabase.from('profiles').select('full_name, bio, country').eq('id', id).single()
   if (!data) return { title: 'Formateur introuvable' }
   return {
-    title: `${data.full_name} — Formateur IBIG E-LEARN`,
-    description: data.bio ?? `Découvrez les formations de ${data.full_name} sur IBIG E-LEARN.`,
+    title: `${data.full_name} — Formateur IBIG E-LEARNING`,
+    description: data.bio ?? `Découvrez les formations de ${data.full_name} sur IBIG E-LEARNING.`,
   }
 }
 
@@ -61,7 +61,7 @@ export default async function FormateurPublicPage({ params }: PageProps) {
           </div>
           <div className="flex-1">
             <h1 className="text-2xl sm:text-3xl font-bold">{formateur.full_name}</h1>
-            <p className="text-blue-200 text-sm mt-1">Formateur certifié IBIG E-LEARN</p>
+            <p className="text-blue-200 text-sm mt-1">Formateur certifié IBIG E-LEARNING</p>
             {formateur.country && (
               <p className="flex items-center gap-1.5 text-blue-200 text-sm mt-1">
                 <MapPin className="w-3.5 h-3.5" />{formateur.country}

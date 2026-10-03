@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
@@ -61,7 +61,7 @@ export default async function FacturePage({ params }: Props) {
                     <span className="text-white font-black text-base">I</span>
                   </div>
                   <div>
-                    <p className="text-[#0B3D91] font-black text-lg leading-none tracking-tight">IBIG E-LEARN</p>
+                    <p className="text-[#0B3D91] font-black text-lg leading-none tracking-tight">IBIG E-LEARNING</p>
                     <p className="text-[#FFA500] text-[10px] font-semibold tracking-widest uppercase">Plateforme panafricaine</p>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export default async function FacturePage({ params }: Props) {
                   <tr className="border-b border-gray-100">
                     <td className="px-4 py-4">
                       <p className="font-semibold text-gray-900">{course?.title ?? 'Formation en ligne'}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">Accès à vie · Certificat inclus · Plateforme IBIG E-LEARN</p>
+                      <p className="text-xs text-gray-500 mt-0.5">Accès à vie · Certificat inclus · Plateforme IBIG E-LEARNING</p>
                     </td>
                     <td className="px-4 py-4 text-center text-gray-700">1</td>
                     <td className="px-4 py-4 text-right font-semibold text-gray-900">

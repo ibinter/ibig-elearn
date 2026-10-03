@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { formatDate } from '@/lib/utils'
 import PrintButton from './PrintButton'
@@ -43,7 +43,7 @@ export default async function ImprimerCertificatPage({ params }: PageProps) {
           </a>
           {/* Partage WhatsApp */}
           <a
-            href={`https://wa.me/?text=${encodeURIComponent(`🎓 J'ai obtenu mon certificat "${course?.title}" sur IBIG E-LEARN !\n\nVérifiez : https://ibig-elearn.vercel.app/verify/${cert.verification_code}`)}`}
+            href={`https://wa.me/?text=${encodeURIComponent(`🎓 J'ai obtenu mon certificat "${course?.title}" sur IBIG E-LEARNING !\n\nVérifiez : https://ibig-elearn.vercel.app/verify/${cert.verification_code}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-[#25D366] text-white hover:bg-[#128C7E] transition-colors"
@@ -81,7 +81,7 @@ export default async function ImprimerCertificatPage({ params }: PageProps) {
                 <span className="text-white text-lg font-black">I</span>
               </div>
               <div className="text-left">
-                <p className="text-[#0B3D91] font-black text-xl leading-none tracking-tight">IBIG E-LEARN</p>
+                <p className="text-[#0B3D91] font-black text-xl leading-none tracking-tight">IBIG E-LEARNING</p>
                 <p className="text-[#FFA500] text-xs font-semibold tracking-widest uppercase">Plateforme panafricaine</p>
               </div>
             </div>

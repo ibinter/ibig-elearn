@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { Users, BookOpen, Award, DollarSign, TrendingUp, Activity, ArrowRight, MapPin, BarChart3, Download } from 'lucide-react'
 import { formatPrice, formatDate } from '@/lib/utils'
 import Link from 'next/link'
@@ -86,7 +86,7 @@ export default async function AdminPage() {
       <div className="flex items-start justify-between mb-8 flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Tableau de bord Admin</h1>
-          <p className="text-gray-500">Vue d&apos;ensemble de la plateforme IBIG E-LEARN</p>
+          <p className="text-gray-500">Vue d&apos;ensemble de la plateforme IBIG E-LEARNING</p>
         </div>
         <div className="flex gap-2">
           <Link href="/admin/rapports" className="flex items-center gap-1.5 border border-gray-200 text-gray-700 text-sm font-medium px-3 py-1.5 rounded-xl hover:bg-gray-50 transition-colors">

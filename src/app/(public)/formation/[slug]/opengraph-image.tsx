@@ -1,8 +1,8 @@
-import { ImageResponse } from 'next/og'
+﻿import { ImageResponse } from 'next/og'
 import { createClient } from '@/lib/supabase/server'
 
 export const runtime = 'nodejs'
-export const alt = 'Formation IBIG E-LEARN'
+export const alt = 'Formation IBIG E-LEARNING'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 

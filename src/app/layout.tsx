@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+﻿import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { CurrencyProvider } from '@/lib/currency-context'
@@ -14,8 +14,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'IBIG E-LEARN — Formation professionnelle en ligne',
-    template: '%s | IBIG E-LEARN',
+    default: 'IBIG E-LEARNING — Formation professionnelle en ligne',
+    template: '%s | IBIG E-LEARNING',
   },
   description: 'La référence de la formation professionnelle en ligne en Afrique francophone. Formez-vous en ligne, certifiez-vous, progressez.',
   keywords: ['formation en ligne', 'e-learning', 'Afrique', 'certification', 'IBIG', 'cours en ligne'],
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'IBIG E-LEARN',
+    title: 'IBIG E-LEARNING',
   },
   icons: {
     icon: [
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    siteName: 'IBIG E-LEARN',
-    title: 'IBIG E-LEARN — Formation professionnelle en ligne',
+    siteName: 'IBIG E-LEARNING',
+    title: 'IBIG E-LEARNING — Formation professionnelle en ligne',
     description: 'La référence de la formation professionnelle en ligne en Afrique francophone. Formez-vous en ligne, certifiez-vous, progressez.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'IBIG E-LEARN — Formation professionnelle en ligne',
+    title: 'IBIG E-LEARNING — Formation professionnelle en ligne',
     description: 'La référence de la formation professionnelle en ligne en Afrique francophone.',
   },
 }

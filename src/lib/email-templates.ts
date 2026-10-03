@@ -1,4 +1,4 @@
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+﻿const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
 
 function emailWrapper(content: string) {
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -10,7 +10,7 @@ function emailWrapper(content: string) {
 </td></tr>
 <tr><td style="padding:36px 40px">${content}</td></tr>
 <tr><td style="background:#f8f9fc;padding:16px 40px;text-align:center;border-top:1px solid #eef0f5">
-  <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARN · <a href="${BASE}" style="color:#0B3D91;text-decoration:none">${BASE.replace('https://', '')}</a></p>
+  <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARNING · <a href="${BASE}" style="color:#0B3D91;text-decoration:none">${BASE.replace('https://', '')}</a></p>
 </td></tr>
 </table></td></tr></table></body></html>`
 }
@@ -51,7 +51,7 @@ export function felicitationsFormationEmail({ name, courseTitle, certId }: { nam
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center;margin-bottom:20px">
         <p style="margin:0 0 4px;font-size:13px;color:#166534;font-weight:600">Certificat de réussite</p>
         <p style="margin:0;font-size:16px;font-weight:700;color:#15803d">${courseTitle}</p>
-        <p style="margin:4px 0 0;font-size:12px;color:#4ade80">Délivré par IBIG E-LEARN · Vérifiable en ligne</p>
+        <p style="margin:4px 0 0;font-size:12px;color:#4ade80">Délivré par IBIG E-LEARNING · Vérifiable en ligne</p>
       </div>
       ${btn(`${BASE}/mes-certificats/${certId}`, '📜 Télécharger mon certificat', '#FFA500', '#000')}
       <p style="margin:0;font-size:13px;color:#666;line-height:1.7">

@@ -1,10 +1,10 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { Trophy, Flame, Star, Award, TrendingUp, Medal } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Classement — IBIG E-LEARN',
-  description: 'Les apprenants les plus actifs de la plateforme IBIG E-LEARN.',
+  title: 'Classement — IBIG E-LEARNING',
+  description: 'Les apprenants les plus actifs de la plateforme IBIG E-LEARNING.',
 }
 
 export const revalidate = 300
@@ -48,7 +48,7 @@ export default async function ClassementPage() {
         <div className="inline-flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-full px-4 py-1.5 text-sm text-yellow-700 font-semibold mb-4">
           <Trophy className="w-4 h-4" /> Classement des apprenants
         </div>
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Les champions IBIG E-LEARN</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Les champions IBIG E-LEARNING</h1>
         <p className="text-gray-500">Complétez des leçons chaque jour pour grimper au classement</p>
       </div>
 

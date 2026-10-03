@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { sendEmail } from '@/lib/email'
 
@@ -69,7 +69,7 @@ function relanceEmailHtml({
   </tr>
   <tr>
     <td style="background:#f8f9fc;padding:16px 40px;text-align:center;border-top:1px solid #eef0f5">
-      <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARN · <a href="${APP_URL}" style="color:#0B3D91;text-decoration:none">ibig-elearning.com</a></p>
+      <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARNING · <a href="${APP_URL}" style="color:#0B3D91;text-decoration:none">ibig-elearning.com</a></p>
     </td>
   </tr>
 </table>
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
 
       await sendEmail({
         to: u.email,
-        subject: `${encouragement} Reprenez ${u.course_title} sur IBIG E-LEARN`,
+        subject: `${encouragement} Reprenez ${u.course_title} sur IBIG E-LEARNING`,
         html: relanceEmailHtml({
           name: u.full_name?.split(' ')[0] ?? u.email.split('@')[0],
           courseTitle: u.course_title,

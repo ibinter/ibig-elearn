@@ -1,10 +1,10 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { BookOpen, Clock, Star, Target, ChevronRight, Award } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Parcours de formation — IBIG E-LEARN',
+  title: 'Parcours de formation — IBIG E-LEARNING',
   description: 'Des séquences de formations organisées par experts pour vous emmener du débutant à l\'expert dans votre domaine.',
 }
 

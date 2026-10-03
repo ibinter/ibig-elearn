@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -52,7 +52,7 @@ export default function ConnexionPage() {
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Bon retour !</h1>
-          <p className="text-gray-500 text-sm">Connectez-vous à votre espace IBIG E-LEARN</p>
+          <p className="text-gray-500 text-sm">Connectez-vous à votre espace IBIG E-LEARNING</p>
         </div>
 
         {/* Google OAuth */}

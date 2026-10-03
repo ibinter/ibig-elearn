@@ -1,7 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { CheckCircle, Users, Globe, TrendingUp, Star, Mail } from 'lucide-react'
 
-export const metadata = { title: 'Devenir formateur — IBIG E-LEARN', description: 'Partagez votre expertise et touchez des milliers d\'apprenants africains sur IBIG E-LEARN.' }
+export const metadata = { title: 'Devenir formateur — IBIG E-LEARNING', description: 'Partagez votre expertise et touchez des milliers d\'apprenants africains sur IBIG E-LEARNING.' }
 
 const avantages = [
   { icon: Users, title: 'Audience panafricaine', desc: 'Accédez à une audience de milliers de professionnels dans 12 pays.' },
@@ -41,7 +41,7 @@ export default function DevenirFormateurPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Pourquoi enseigner sur IBIG E-LEARN ?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">Pourquoi enseigner sur IBIG E-LEARNING ?</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {avantages.map(a => (

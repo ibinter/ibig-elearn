@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -90,7 +90,7 @@ export function HeroCTA() {
                 src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
                 className="w-full h-full"
                 allow="autoplay; fullscreen"
-                title="IBIG E-LEARN — Présentation"
+                title="IBIG E-LEARNING — Présentation"
               />
             </div>
           </div>

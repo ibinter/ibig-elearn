@@ -1,4 +1,4 @@
-export default function CGUPage() {
+﻿export default function CGUPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Conditions générales d&apos;utilisation</h1>
@@ -8,7 +8,7 @@ export default function CGUPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">1. Acceptation des conditions</h2>
           <p>
-            En accédant à la plateforme IBIG E-LEARN (ibig-elearning.com), vous acceptez les présentes conditions d&apos;utilisation. Si vous n&apos;acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
+            En accédant à la plateforme IBIG E-LEARNING (ibig-elearning.com), vous acceptez les présentes conditions d&apos;utilisation. Si vous n&apos;acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
           </p>
         </section>
 
@@ -21,13 +21,13 @@ export default function CGUPage() {
             <li>Vous devez fournir des informations exactes lors de l&apos;inscription</li>
             <li>Un seul compte par personne est autorisé</li>
             <li>Le partage de compte est strictement interdit</li>
-            <li>Vous devez notifier immédiatement IBIG E-LEARN de tout accès non autorisé</li>
+            <li>Vous devez notifier immédiatement IBIG E-LEARNING de tout accès non autorisé</li>
           </ul>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">3. Utilisation acceptable</h2>
-          <p>En utilisant IBIG E-LEARN, vous vous engagez à :</p>
+          <p>En utilisant IBIG E-LEARNING, vous vous engagez à :</p>
           <ul className="list-disc list-inside mt-2 space-y-1">
             <li>Utiliser la plateforme uniquement à des fins légales et personnelles</li>
             <li>Ne pas reproduire, distribuer ou revendre les contenus des formations</li>
@@ -47,14 +47,14 @@ export default function CGUPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">5. Suspension de compte</h2>
           <p>
-            IBIG E-LEARN se réserve le droit de suspendre ou supprimer tout compte en cas de violation des présentes CGU, sans préavis ni remboursement, notamment en cas de partage de compte ou d&apos;utilisation frauduleuse.
+            IBIG E-LEARNING se réserve le droit de suspendre ou supprimer tout compte en cas de violation des présentes CGU, sans préavis ni remboursement, notamment en cas de partage de compte ou d&apos;utilisation frauduleuse.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">6. Modifications</h2>
           <p>
-            IBIG E-LEARN peut modifier les présentes CGU à tout moment. Les utilisateurs seront informés par email. La poursuite de l&apos;utilisation de la plateforme après modification vaut acceptation des nouvelles conditions.
+            IBIG E-LEARNING peut modifier les présentes CGU à tout moment. Les utilisateurs seront informés par email. La poursuite de l&apos;utilisation de la plateforme après modification vaut acceptation des nouvelles conditions.
           </p>
         </section>
 

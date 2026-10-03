@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail } from '@/lib/email'
 
 export async function POST(req: NextRequest) {
@@ -32,7 +32,7 @@ ${message.replace(/\n/g, '<br>')}
   // Accusé de réception à l'expéditeur
   await sendEmail({
     to: email,
-    subject: `✅ Votre message a bien été reçu — IBIG E-LEARN`,
+    subject: `✅ Votre message a bien été reçu — IBIG E-LEARNING`,
     html: `
 <!DOCTYPE html><html><body style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px">
 <div style="background:linear-gradient(135deg,#0B3D91,#1a6bd4);padding:32px;border-radius:16px;text-align:center;margin-bottom:24px">

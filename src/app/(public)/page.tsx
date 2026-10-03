@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCircle, TrendingUp, Star, Zap, Target, BarChart3, Clock, BadgeCheck, Flame, Play, ChevronRight, MapPin, Sparkles, Trophy, Rocket } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import type { Course, Category } from '@/types'
@@ -77,7 +77,7 @@ const CATEGORY_ICONS: Record<string, string> = {
 }
 
 const FALLBACK_TESTIMONIALS = [
-  { id: '1', author_name: 'Kouassi Ange-Brice', author_role: 'Directeur Commercial', author_country: "Côte d'Ivoire", content: "IBIG E-LEARN m'a permis de me certifier en marketing digital sans quitter Abidjan. La qualité des formateurs et les cas pratiques africains font toute la différence.", rating: 5, color: 'bg-blue-600' },
+  { id: '1', author_name: 'Kouassi Ange-Brice', author_role: 'Directeur Commercial', author_country: "Côte d'Ivoire", content: "IBIG E-LEARNING m'a permis de me certifier en marketing digital sans quitter Abidjan. La qualité des formateurs et les cas pratiques africains font toute la différence.", rating: 5, color: 'bg-blue-600' },
   { id: '2', author_name: 'Fatou Diallo', author_role: 'Responsable RH', author_country: 'Sénégal', content: "J'ai obtenu ma certification GRH en 3 mois tout en travaillant à temps plein. Le paiement en Orange Money et le contenu téléchargeable m'ont énormément facilité la vie.", rating: 5, color: 'bg-green-600' },
   { id: '3', author_name: 'Moussa Traoré', author_role: 'Entrepreneur', author_country: 'Mali', content: "La formation en comptabilité SYSCOHADA est exactement ce qu'il me fallait pour gérer ma PME. Les formateurs connaissent les réalités du marché africain.", rating: 5, color: 'bg-orange-600' },
   { id: '4', author_name: 'Aminata Koné', author_role: 'Chef de Projet IT', author_country: 'Guinée', content: "La certification PMP adaptée au contexte africain m'a ouvert des portes insoupçonnées. Formation de très haute qualité, je recommande vivement.", rating: 5, color: 'bg-purple-600' },
@@ -202,7 +202,7 @@ export default async function HomePage() {
                         <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                         <span className="text-white font-bold text-sm">Tableau de bord</span>
                       </div>
-                      <span className="text-xs text-blue-300/70">IBIG E-LEARN</span>
+                      <span className="text-xs text-blue-300/70">IBIG E-LEARNING</span>
                     </div>
 
                     {/* Stats grid */}

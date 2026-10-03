@@ -1,4 +1,4 @@
-interface EmailPayload {
+﻿interface EmailPayload {
   to: string
   subject: string
   html: string
@@ -84,7 +84,7 @@ export function inscriptionEmail({ name, courseTitle, courseSlug }: { name: stri
         <!-- Footer -->
         <tr>
           <td style="background:#f8f9fc;padding:20px 40px;text-align:center;border-top:1px solid #eef0f5">
-            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARN · <a href="https://ibig-elearn.vercel.app" style="color:#0B3D91;text-decoration:none">ibig-elearn.vercel.app</a></p>
+            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARNING · <a href="https://ibig-elearn.vercel.app" style="color:#0B3D91;text-decoration:none">ibig-elearn.vercel.app</a></p>
           </td>
         </tr>
       </table>
@@ -97,7 +97,7 @@ export function inscriptionEmail({ name, courseTitle, courseSlug }: { name: stri
 
 export function certificatEmail({ name, courseTitle, certNumber, certUrl }: { name: string; courseTitle: string; certNumber: string; certUrl: string }) {
   return {
-    subject: `🎓 Votre certificat IBIG E-LEARN — ${courseTitle}`,
+    subject: `🎓 Votre certificat IBIG E-LEARNING — ${courseTitle}`,
     html: `
 <!DOCTYPE html>
 <html lang="fr">
@@ -153,7 +153,7 @@ export function certificatEmail({ name, courseTitle, certNumber, certUrl }: { na
         </tr>
         <tr>
           <td style="background:#f8f9fc;padding:20px 40px;text-align:center;border-top:1px solid #eef0f5">
-            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARN · <a href="https://ibig-elearn.vercel.app" style="color:#0B3D91;text-decoration:none">ibig-elearn.vercel.app</a></p>
+            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARNING · <a href="https://ibig-elearn.vercel.app" style="color:#0B3D91;text-decoration:none">ibig-elearn.vercel.app</a></p>
           </td>
         </tr>
       </table>
@@ -167,7 +167,7 @@ export function certificatEmail({ name, courseTitle, certNumber, certUrl }: { na
 export function bienvenuEmail({ name, email }: { name: string; email: string }) {
   const url = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearn.vercel.app'}/catalogue`
   return {
-    subject: 'Bienvenue sur IBIG E-LEARN 🎓',
+    subject: 'Bienvenue sur IBIG E-LEARNING 🎓',
     html: `
 <!DOCTYPE html>
 <html lang="fr">
@@ -202,7 +202,7 @@ export function bienvenuEmail({ name, email }: { name: string; email: string }) 
         </tr>
         <tr>
           <td style="background:#f8f9fc;padding:16px 40px;text-align:center;border-top:1px solid #eef0f5">
-            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARN</p>
+            <p style="margin:0;font-size:12px;color:#999">© 2026 IBIG E-LEARNING</p>
           </td>
         </tr>
       </table>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import { Copy, Check, Share2, Users, Gift, Trophy } from 'lucide-react'
@@ -29,15 +29,15 @@ export default function ParrainagePage() {
 
   const shareWhatsApp = () => {
     if (!data) return
-    const msg = `🎓 Je t'invite à rejoindre IBIG E-LEARN, la plateforme de formation panafricaine !\nUtilise mon lien pour t'inscrire gratuitement : ${data.referralUrl}`
+    const msg = `🎓 Je t'invite à rejoindre IBIG E-LEARNING, la plateforme de formation panafricaine !\nUtilise mon lien pour t'inscrire gratuitement : ${data.referralUrl}`
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
   }
 
   const shareEmail = () => {
     if (!data) return
-    const subject = encodeURIComponent("Je t'invite sur IBIG E-LEARN !")
+    const subject = encodeURIComponent("Je t'invite sur IBIG E-LEARNING !")
     const body = encodeURIComponent(
-      `Bonjour,\n\nJe t'invite à rejoindre IBIG E-LEARN, la plateforme de formation panafricaine.\n\nInscris-toi gratuitement avec mon lien : ${data.referralUrl}\n\nÀ bientôt sur la plateforme !`
+      `Bonjour,\n\nJe t'invite à rejoindre IBIG E-LEARNING, la plateforme de formation panafricaine.\n\nInscris-toi gratuitement avec mon lien : ${data.referralUrl}\n\nÀ bientôt sur la plateforme !`
     )
     window.open(`mailto:?subject=${subject}&body=${body}`)
   }

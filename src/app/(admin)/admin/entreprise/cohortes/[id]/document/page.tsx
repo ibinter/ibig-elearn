@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
@@ -48,7 +48,7 @@ export default async function DocumentPage({ params }: { params: Promise<{ id: s
         {/* En-tête */}
         <div className="flex items-start justify-between">
           <div>
-            <div className="text-2xl font-black text-[#0B3D91]">IBIG E-LEARN</div>
+            <div className="text-2xl font-black text-[#0B3D91]">IBIG E-LEARNING</div>
             <div className="text-sm text-gray-500 mt-1">Plateforme panafricaine de formation en ligne</div>
             <div className="text-sm text-gray-500">contact@ibig-elearning.com</div>
             <div className="text-sm text-gray-500">ibig-elearning.com</div>
@@ -64,7 +64,7 @@ export default async function DocumentPage({ params }: { params: Promise<{ id: s
         <div className="grid grid-cols-2 gap-8">
           <div className="bg-gray-50 rounded-xl p-4">
             <div className="text-xs font-bold text-gray-400 uppercase mb-2">Émis par</div>
-            <div className="font-semibold text-gray-900">IBIG E-LEARN</div>
+            <div className="font-semibold text-gray-900">IBIG E-LEARNING</div>
             <div className="text-sm text-gray-600">Plateforme de formation</div>
           </div>
           <div className="bg-blue-50 rounded-xl p-4">

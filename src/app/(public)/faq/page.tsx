@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, Search, MessageCircle } from 'lucide-react'
@@ -8,7 +8,7 @@ const FAQ = [
   {
     category: 'Inscription & Compte',
     items: [
-      { q: "Comment créer un compte sur IBIG E-LEARN ?", a: "Cliquez sur \"S'inscrire gratuitement\" en haut de la page. Vous pouvez vous inscrire avec votre email ou directement avec votre compte Google en un clic." },
+      { q: "Comment créer un compte sur IBIG E-LEARNING ?", a: "Cliquez sur \"S'inscrire gratuitement\" en haut de la page. Vous pouvez vous inscrire avec votre email ou directement avec votre compte Google en un clic." },
       { q: "L'inscription est-elle gratuite ?", a: "Oui, la création de compte est 100% gratuite. Certaines formations sont également gratuites. Pour les formations payantes, vous réglez uniquement à l'inscription à la formation." },
       { q: "J'ai oublié mon mot de passe, que faire ?", a: "Cliquez sur \"Connexion\" puis sur \"Mot de passe oublié\". Vous recevrez un email de réinitialisation en quelques minutes. Vérifiez aussi vos spams." },
       { q: "Puis-je me connecter avec Google ?", a: "Oui ! Sur la page de connexion ou d'inscription, cliquez sur \"Continuer avec Google\" pour vous connecter instantanément sans créer de mot de passe." },
@@ -18,7 +18,7 @@ const FAQ = [
     category: 'Formations & Apprentissage',
     items: [
       { q: "Comment accéder à mes formations ?", a: "Après inscription et paiement (si la formation est payante), rendez-vous dans \"Mes formations\" depuis votre tableau de bord. Vos formations sont disponibles 24h/24." },
-      { q: "Les formations sont-elles disponibles hors ligne ?", a: "IBIG E-LEARN est une Progressive Web App (PWA). Installez-la sur votre téléphone depuis votre navigateur pour une meilleure expérience. Le contenu vidéo nécessite une connexion internet." },
+      { q: "Les formations sont-elles disponibles hors ligne ?", a: "IBIG E-LEARNING est une Progressive Web App (PWA). Installez-la sur votre téléphone depuis votre navigateur pour une meilleure expérience. Le contenu vidéo nécessite une connexion internet." },
       { q: "Combien de temps ai-je accès à une formation ?", a: "L'accès est illimité dans le temps. Une fois inscrit, vous pouvez reprendre la formation quand vous voulez, sans date d'expiration." },
       { q: "Comment obtenir mon certificat ?", a: "Votre certificat est émis automatiquement dès que vous atteignez 100% de complétion de la formation. Vous le trouverez dans la section \"Mes certificats\" et vous recevrez une notification." },
       { q: "Puis-je poser des questions à l'assistant SARA ?", a: "Oui ! SARA est notre assistante IA disponible dans chaque leçon. Cliquez sur l'icône de chat pendant votre formation pour poser vos questions pédagogiques en temps réel." },
@@ -37,7 +37,7 @@ const FAQ = [
   {
     category: 'Certificats & Reconnaissance',
     items: [
-      { q: "Les certificats sont-ils reconnus par les entreprises ?", a: "Les certificats IBIG E-LEARN sont reconnus par les entreprises partenaires d'IBIG EDUFORM en Côte d'Ivoire et dans les pays couverts. Chaque certificat comporte un QR code de vérification d'authenticité." },
+      { q: "Les certificats sont-ils reconnus par les entreprises ?", a: "Les certificats IBIG E-LEARNING sont reconnus par les entreprises partenaires d'IBIG EDUFORM en Côte d'Ivoire et dans les pays couverts. Chaque certificat comporte un QR code de vérification d'authenticité." },
       { q: "Comment vérifier l'authenticité d'un certificat ?", a: "Chaque certificat a un code de vérification unique. Scannez le QR code ou rendez-vous sur ibig-elearn.vercel.app/verify et entrez le code pour vérifier instantanément." },
       { q: "Puis-je partager mon certificat sur LinkedIn ?", a: "Absolument ! Sur la page de votre certificat, cliquez sur le bouton LinkedIn pour le partager directement sur votre profil professionnel." },
     ]
@@ -45,7 +45,7 @@ const FAQ = [
   {
     category: 'Formateurs',
     items: [
-      { q: "Comment devenir formateur sur IBIG E-LEARN ?", a: "Envoyez votre candidature via la page \"Devenir formateur\". Notre équipe examine votre profil et vous contacte sous 5 jours ouvrés. Pas besoin d'être une grande entreprise — les experts indépendants sont les bienvenus !" },
+      { q: "Comment devenir formateur sur IBIG E-LEARNING ?", a: "Envoyez votre candidature via la page \"Devenir formateur\". Notre équipe examine votre profil et vous contacte sous 5 jours ouvrés. Pas besoin d'être une grande entreprise — les experts indépendants sont les bienvenus !" },
       { q: "Quelle est la rémunération des formateurs ?", a: "Les formateurs reçoivent un pourcentage des ventes de leurs formations. La commission exacte est définie dans votre contrat formateur lors de l'intégration." },
       { q: "Quels outils ont les formateurs pour créer leurs cours ?", a: "L'espace formateur inclut un éditeur de formation complet (modules, leçons, quiz), l'upload vidéo via Bunny Stream, un tableau de bord analytique et la possibilité d'envoyer des notifications aux apprenants." },
     ]
@@ -53,7 +53,7 @@ const FAQ = [
   {
     category: 'Technique & Support',
     items: [
-      { q: "La plateforme fonctionne-t-elle sur mobile ?", a: "Oui ! IBIG E-LEARN est optimisée pour mobile. Vous pouvez aussi l'installer comme application (PWA) depuis Chrome sur Android ou Safari sur iPhone." },
+      { q: "La plateforme fonctionne-t-elle sur mobile ?", a: "Oui ! IBIG E-LEARNING est optimisée pour mobile. Vous pouvez aussi l'installer comme application (PWA) depuis Chrome sur Android ou Safari sur iPhone." },
       { q: "J'ai un problème technique, qui contacter ?", a: "Utilisez le formulaire de contact sur /contact ou écrivez à support@ibig-elearning.com. Vous pouvez aussi utiliser SARA pour les questions courantes." },
       { q: "La vidéo ne se charge pas, que faire ?", a: "Vérifiez votre connexion internet. Si le problème persiste, essayez de vider le cache du navigateur ou d'utiliser un autre navigateur (Chrome recommandé). Contactez le support si cela continue." },
     ]

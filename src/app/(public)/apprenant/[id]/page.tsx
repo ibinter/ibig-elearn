@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Award, BookOpen, Flame, Star, MapPin, Calendar, ExternalLink } from 'lucide-react'
@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps) {
   const supabase = await createClient()
   const { data } = await supabase.from('profiles').select('full_name, country').eq('id', id).single()
   if (!data) return { title: 'Profil introuvable' }
-  return { title: `${data.full_name} — IBIG E-LEARN` }
+  return { title: `${data.full_name} — IBIG E-LEARNING` }
 }
 
 export default async function ProfilPublicPage({ params }: PageProps) {
@@ -57,7 +57,7 @@ export default async function ProfilPublicPage({ params }: PageProps) {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-4 py-4">
         <div className="max-w-4xl mx-auto">
-          <Link href="/" className="text-[#0B3D91] font-bold text-xl">IBIG E-LEARN</Link>
+          <Link href="/" className="text-[#0B3D91] font-bold text-xl">IBIG E-LEARNING</Link>
         </div>
       </header>
 
