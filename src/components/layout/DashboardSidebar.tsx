@@ -27,6 +27,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
     { href: '/profil', label: 'Mon profil', icon: User },
     { href: `/apprenant/${userId}`, label: 'Profil public', icon: Share2 },
     { href: '/messages', label: 'Messages', icon: MessageCircle },
+    { href: '/mes-badges', label: 'Mes badges', icon: Award },
     { href: '/fidelite', label: 'Programme fidélité', icon: Trophy },
     { href: '/sessions-live', label: 'Sessions live', icon: Video },
     { href: '/notifications', label: 'Notifications', icon: Bell },

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Menu, X, LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings, Building2, Tag, Target, Bell, FileText, Mail, Star, BarChart3, Download, Zap } from 'lucide-react'
+import { BookOpen, Menu, X, LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings, Building2, Tag, Target, Bell, FileText, Mail, Star, BarChart3, Download, Zap, Video } from 'lucide-react'
 
 type Props = {
   userName: string
@@ -29,6 +29,8 @@ const NAV = [
   { href: '/admin/rapports', label: 'Rapports avancés', icon: BarChart3 },
   { href: '/admin/exports', label: 'Exports comptables', icon: Download },
   { href: '/admin/relances', label: 'Relances inactivité', icon: Zap },
+  { href: '/admin/badges', label: 'Badges', icon: Award },
+  { href: '/admin/sessions-live', label: 'Classes virtuelles', icon: Video },
   { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
 ]
 
