@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { Video, ExternalLink, Calendar, Clock } from 'lucide-react'
+import { Video, ExternalLink, Calendar, Clock, Download } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function LiveSessionsLearnerPage() {
   const supabase = await createClient()
@@ -30,8 +31,24 @@ export default async function LiveSessionsLearnerPage() {
 
   const platformLabels: Record<string, string> = { zoom: '📹 Zoom', meet: '📞 Google Meet', other: '🔗 Autre' }
 
+  function buildGCalUrl(s: any) {
+    const start = new Date(s.scheduled_at)
+    const end = new Date(start.getTime() + s.duration_minutes * 60000)
+    const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+    const course = s.course as any
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: `${s.title} — ${course?.title ?? ''}`,
+      dates: `${fmt(start)}/${fmt(end)}`,
+      details: `Rejoindre : ${s.meeting_url}`,
+      location: s.meeting_url,
+    })
+    return `https://calendar.google.com/calendar/render?${params}`
+  }
+
   const SessionCard = ({ s }: { s: any }) => {
     const date = new Date(s.scheduled_at)
+    const isPast = date < now
     const isNow = date <= now && new Date(date.getTime() + s.duration_minutes * 60000) > now
     return (
       <div className={`bg-white rounded-2xl border ${isNow ? 'border-[#0B3D91] shadow-md' : 'border-gray-100 shadow-sm'} p-5 flex items-start gap-4`}>
@@ -57,10 +74,26 @@ export default async function LiveSessionsLearnerPage() {
             <span className="text-xs text-gray-500">{platformLabels[s.platform] ?? '🔗'}</span>
           </div>
         </div>
-        <a href={s.meeting_url} target="_blank" rel="noopener noreferrer"
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg flex-shrink-0 transition-colors ${isNow ? 'bg-[#0B3D91] text-white hover:bg-[#0a3480]' : 'border border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
-          Rejoindre <ExternalLink className="w-3 h-3" />
-        </a>
+        <div className="flex flex-col gap-1.5 flex-shrink-0">
+          <a href={s.meeting_url} target="_blank" rel="noopener noreferrer"
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${isNow ? 'bg-[#0B3D91] text-white hover:bg-[#0a3480]' : 'border border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
+            Rejoindre <ExternalLink className="w-3 h-3" />
+          </a>
+          {!isPast && (
+            <div className="flex gap-1">
+              <Link href={`/api/live-sessions/${s.id}/ical`}
+                className="flex items-center gap-1 px-2 py-1 text-[10px] text-gray-500 hover:text-gray-700 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
+                title="Télécharger (.ics)">
+                <Download className="w-3 h-3" /> iCal
+              </Link>
+              <a href={buildGCalUrl(s)} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1 px-2 py-1 text-[10px] text-gray-500 hover:text-gray-700 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
+                title="Ajouter à Google Agenda">
+                <Calendar className="w-3 h-3" /> GCal
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
