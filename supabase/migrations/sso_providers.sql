@@ -1,21 +1,23 @@
 -- SSO Providers par organisation B2B
+-- org_id : UUID libre (pas de FK sur b2b_organizations qui n'existe pas encore)
 CREATE TABLE IF NOT EXISTS sso_providers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  org_id UUID NOT NULL REFERENCES b2b_organizations(id) ON DELETE CASCADE,
+  org_id UUID NOT NULL,                     -- référence libre vers un groupe / client B2B
+  org_name TEXT NOT NULL DEFAULT '',        -- nom de l'organisation (dénormalisé pour affichage)
   provider_type TEXT NOT NULL CHECK (provider_type IN ('google','microsoft','saml','oidc')),
-  -- Domaines email autorisés (ex: ['totalenergies.com','total.com'])
+  -- Domaines email autorisés (ex: {'totalenergies.com','total.com'})
   email_domains TEXT[] NOT NULL DEFAULT '{}',
   -- Config OIDC/OAuth2
   client_id TEXT,
   client_secret TEXT,
   -- OIDC: issuer URL (ex: https://accounts.google.com)
   issuer_url TEXT,
-  -- SAML: metadata URL ou XML
+  -- SAML: metadata URL
   saml_metadata_url TEXT,
   saml_metadata_xml TEXT,
   -- Redirect après SSO login
   redirect_url TEXT,
-  -- Labels
+  -- Labels bouton
   button_label TEXT NOT NULL DEFAULT 'Se connecter via SSO',
   button_logo_url TEXT,
   is_active BOOLEAN NOT NULL DEFAULT true,

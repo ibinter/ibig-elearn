@@ -12,12 +12,10 @@ export default async function SSOPage() {
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
   if (!profile || !['admin', 'coordinateur'].includes(profile.role)) redirect('/admin')
 
-  const [{ data: providers }, { data: orgs }] = await Promise.all([
-    supabase.from('sso_providers')
-      .select('*, org:b2b_organizations(id, name)')
-      .order('created_at', { ascending: false }),
-    supabase.from('b2b_organizations').select('id, name').order('name'),
-  ])
+  const { data: providers } = await supabase
+    .from('sso_providers')
+    .select('*')
+    .order('created_at', { ascending: false })
 
-  return <SSOManager initialProviders={providers ?? []} orgs={orgs ?? []} />
+  return <SSOManager initialProviders={providers ?? []} />
 }

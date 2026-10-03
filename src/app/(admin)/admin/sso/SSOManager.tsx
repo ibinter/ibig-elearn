@@ -6,7 +6,7 @@ import { Plus, Edit2, Trash2, Shield, CheckCircle, XCircle, Building2 } from 'lu
 interface SSOProvider {
   id: string
   org_id: string
-  org?: { id: string; name: string }
+  org_name: string
   provider_type: 'google' | 'microsoft' | 'saml' | 'oidc'
   email_domains: string[]
   client_id: string | null
@@ -18,8 +18,7 @@ interface SSOProvider {
   created_at: string
 }
 
-interface Org { id: string; name: string }
-interface Props { initialProviders: SSOProvider[]; orgs: Org[] }
+interface Props { initialProviders: SSOProvider[] }
 
 const PROVIDER_LABELS: Record<string, string> = {
   google: 'Google Workspace',
@@ -32,14 +31,15 @@ const PROVIDER_ICONS: Record<string, string> = {
 }
 
 const DEFAULT_FORM = {
-  org_id: '', provider_type: 'google' as SSOProvider['provider_type'],
+  org_name: '',
+  provider_type: 'google' as SSOProvider['provider_type'],
   email_domains_str: '',
   client_id: '', client_secret: '', issuer_url: '',
   saml_metadata_url: '', button_label: 'Se connecter via SSO',
   button_logo_url: '', is_active: true,
 }
 
-export default function SSOManager({ initialProviders, orgs }: Props) {
+export default function SSOManager({ initialProviders }: Props) {
   const [providers, setProviders] = useState(initialProviders)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<SSOProvider | null>(null)
@@ -48,41 +48,34 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
   const [error, setError] = useState('')
 
   function openCreate() {
-    setEditing(null)
-    setForm({ ...DEFAULT_FORM, org_id: orgs[0]?.id ?? '' })
-    setError('')
-    setShowForm(true)
+    setEditing(null); setForm(DEFAULT_FORM); setError(''); setShowForm(true)
   }
 
   function openEdit(p: SSOProvider) {
     setEditing(p)
     setForm({
-      org_id: p.org_id,
+      org_name: p.org_name,
       provider_type: p.provider_type,
       email_domains_str: p.email_domains.join(', '),
-      client_id: p.client_id ?? '',
-      client_secret: '',
+      client_id: p.client_id ?? '', client_secret: '',
       issuer_url: p.issuer_url ?? '',
       saml_metadata_url: p.saml_metadata_url ?? '',
       button_label: p.button_label,
       button_logo_url: p.button_logo_url ?? '',
       is_active: p.is_active,
     })
-    setError('')
-    setShowForm(true)
+    setError(''); setShowForm(true)
   }
 
   async function handleSave() {
-    if (!form.org_id || !form.email_domains_str.trim()) {
-      setError('Organisation et domaines email obligatoires')
-      return
+    if (!form.org_name.trim() || !form.email_domains_str.trim()) {
+      setError('Nom organisation et domaines email obligatoires'); return
     }
     setSaving(true); setError('')
     try {
       const domains = form.email_domains_str.split(/[\s,;]+/).map(d => d.trim().toLowerCase()).filter(Boolean)
       const payload = {
-        org_id: form.org_id,
-        provider_type: form.provider_type,
+        org_name: form.org_name.trim(), provider_type: form.provider_type,
         email_domains: domains,
         client_id: form.client_id || null,
         ...(form.client_secret ? { client_secret: form.client_secret } : {}),
@@ -98,10 +91,11 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
       const data = await res.json()
       if (!res.ok) { setError(data.error); return }
 
-      // Refetch list to get org name
-      const listRes = await fetch('/api/admin/sso')
-      const list = await listRes.json()
-      setProviders(list)
+      if (editing) {
+        setProviders(prev => prev.map(x => x.id === editing.id ? data : x))
+      } else {
+        setProviders(prev => [data, ...prev])
+      }
       setShowForm(false)
     } finally { setSaving(false) }
   }
@@ -119,7 +113,7 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
     })
     if (res.ok) {
       const data = await res.json()
-      setProviders(prev => prev.map(x => x.id === p.id ? { ...x, ...data } : x))
+      setProviders(prev => prev.map(x => x.id === p.id ? data : x))
     }
   }
 
@@ -130,16 +124,10 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
           <h1 className="text-2xl font-bold text-gray-900">SSO Entreprise</h1>
           <p className="text-gray-500 text-sm mt-1">Connexion unique pour les équipes de vos clients B2B</p>
         </div>
-        {orgs.length > 0 ? (
-          <button onClick={openCreate}
-            className="flex items-center gap-2 bg-[#0B3D91] text-white px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-800 transition-colors">
-            <Plus className="w-4 h-4" /> Nouveau provider SSO
-          </button>
-        ) : (
-          <p className="text-sm text-amber-600 bg-amber-50 px-3 py-2 rounded-xl">
-            Créez d'abord une organisation B2B pour configurer le SSO.
-          </p>
-        )}
+        <button onClick={openCreate}
+          className="flex items-center gap-2 bg-[#0B3D91] text-white px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-800 transition-colors">
+          <Plus className="w-4 h-4" /> Nouveau provider SSO
+        </button>
       </div>
 
       {/* KPIs */}
@@ -157,12 +145,11 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
         ))}
       </div>
 
-      {/* Table */}
       {providers.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
           <Shield className="w-12 h-12 mx-auto mb-3 opacity-30" />
           <p className="text-lg font-medium">Aucun provider SSO configuré</p>
-          <p className="text-sm mt-1">Configurez Google Workspace, Azure AD ou SAML pour vos clients</p>
+          <p className="text-sm mt-1">Configurez Google Workspace, Azure AD ou SAML pour vos clients B2B</p>
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
@@ -180,7 +167,7 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <Building2 className="w-4 h-4 text-gray-400" />
-                      <span className="font-semibold text-gray-900">{p.org?.name ?? p.org_id}</span>
+                      <span className="font-semibold text-gray-900">{p.org_name}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3">
@@ -207,12 +194,10 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => openEdit(p)}
-                        className="p-1.5 text-gray-400 hover:text-[#0B3D91] hover:bg-blue-50 rounded-lg transition-colors">
+                      <button onClick={() => openEdit(p)} className="p-1.5 text-gray-400 hover:text-[#0B3D91] hover:bg-blue-50 rounded-lg transition-colors">
                         <Edit2 className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleDelete(p.id)}
-                        className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                      <button onClick={() => handleDelete(p.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
@@ -224,7 +209,6 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
         </div>
       )}
 
-      {/* Modal Form */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl">
@@ -237,19 +221,17 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
               {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl text-sm">{error}</div>}
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Organisation B2B *</label>
-                <select value={form.org_id} onChange={e => setForm(f => ({ ...f, org_id: e.target.value }))}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30">
-                  {orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}
-                </select>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Nom de l'organisation *</label>
+                <input value={form.org_name} onChange={e => setForm(f => ({ ...f, org_name: e.target.value }))}
+                  placeholder="TotalEnergies CI"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Type de provider *</label>
                 <div className="grid grid-cols-2 gap-2">
                   {(Object.entries(PROVIDER_LABELS) as [SSOProvider['provider_type'], string][]).map(([type, label]) => (
-                    <button key={type} type="button"
-                      onClick={() => setForm(f => ({ ...f, provider_type: type }))}
+                    <button key={type} type="button" onClick={() => setForm(f => ({ ...f, provider_type: type }))}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-medium transition-colors ${form.provider_type === type ? 'border-[#0B3D91] bg-[#0B3D91]/5 text-[#0B3D91]' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
                       {PROVIDER_ICONS[type]} {label}
                     </button>
@@ -259,18 +241,14 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                  Domaines email autorisés * <span className="font-normal text-gray-400">(séparés par virgule)</span>
+                  Domaines email * <span className="font-normal text-gray-400">(séparés par virgule)</span>
                 </label>
-                <input value={form.email_domains_str}
-                  onChange={e => setForm(f => ({ ...f, email_domains_str: e.target.value }))}
+                <input value={form.email_domains_str} onChange={e => setForm(f => ({ ...f, email_domains_str: e.target.value }))}
                   placeholder="totalenergies.com, total.com"
                   className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
-                <p className="text-xs text-gray-400 mt-1">
-                  Les utilisateurs avec ces domaines verront le bouton SSO sur la page de connexion
-                </p>
+                <p className="text-xs text-gray-400 mt-1">Les utilisateurs avec ces domaines verront le bouton SSO à la connexion</p>
               </div>
 
-              {/* Config selon le type */}
               {(form.provider_type === 'google' || form.provider_type === 'microsoft' || form.provider_type === 'oidc') && (
                 <>
                   <div>
@@ -280,7 +258,9 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
                       className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Client Secret {editing && <span className="text-gray-400 font-normal">(laisser vide pour conserver)</span>}</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                      Client Secret {editing && <span className="text-gray-400 font-normal">(laisser vide pour conserver)</span>}
+                    </label>
                     <input type="password" value={form.client_secret} onChange={e => setForm(f => ({ ...f, client_secret: e.target.value }))}
                       placeholder="••••••••••••"
                       className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
@@ -290,7 +270,7 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
 
               {form.provider_type === 'oidc' && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Issuer URL (OIDC)</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Issuer URL</label>
                   <input value={form.issuer_url} onChange={e => setForm(f => ({ ...f, issuer_url: e.target.value }))}
                     placeholder="https://accounts.google.com"
                     className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
@@ -301,7 +281,7 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1.5">URL des métadonnées SAML</label>
                   <input value={form.saml_metadata_url} onChange={e => setForm(f => ({ ...f, saml_metadata_url: e.target.value }))}
-                    placeholder="https://login.microsoftonline.com/xxx/federationmetadata/2007-06/federationmetadata.xml"
+                    placeholder="https://login.microsoftonline.com/xxx/federationmetadata/..."
                     className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
                 </div>
               )}
@@ -314,23 +294,20 @@ export default function SSOManager({ initialProviders, orgs }: Props) {
                     className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">URL icône bouton</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">URL icône</label>
                   <input value={form.button_logo_url} onChange={e => setForm(f => ({ ...f, button_logo_url: e.target.value }))}
                     placeholder="https://cdn.example.com/logo.png"
                     className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
                 </div>
               </div>
 
-              {/* Aperçu bouton SSO */}
-              <div>
-                <p className="text-xs font-semibold text-gray-500 mb-2">Aperçu du bouton sur la page de connexion :</p>
+              <div className="rounded-xl p-3 bg-gray-50">
+                <p className="text-xs font-semibold text-gray-500 mb-2">Aperçu bouton :</p>
                 <button type="button" disabled
-                  className="w-full flex items-center justify-center gap-3 border-2 border-[#0B3D91]/30 rounded-xl py-3 px-4 text-sm font-semibold text-[#0B3D91] bg-[#0B3D91]/5">
-                  {form.button_logo_url && (
-                    <img src={form.button_logo_url} alt="" className="w-5 h-5 object-contain"
-                      onError={e => (e.currentTarget.style.display = 'none')} />
-                  )}
-                  <Shield className="w-4 h-4" />
+                  className="w-full flex items-center justify-center gap-3 border-2 border-[#0B3D91]/30 rounded-xl py-3 px-4 text-sm font-semibold text-[#0B3D91] bg-white">
+                  {form.button_logo_url
+                    ? <img src={form.button_logo_url} alt="" className="w-5 h-5 object-contain" onError={e => (e.currentTarget.style.display = 'none')} />
+                    : <Shield className="w-4 h-4" />}
                   {form.button_label || 'Se connecter via SSO'}
                 </button>
               </div>
