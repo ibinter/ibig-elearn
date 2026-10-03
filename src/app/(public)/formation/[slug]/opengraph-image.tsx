@@ -60,7 +60,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               }}>
                 <span style={{ color: 'white', fontSize: '22px', fontWeight: 900 }}>IBIG</span>
               </div>
-              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '20px' }}>E-LEARN</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '20px' }}>E-LEARNING</span>
             </div>
             <div style={{
               background: 'rgba(255,165,0,0.15)',

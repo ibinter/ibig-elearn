@@ -33,7 +33,7 @@ function relanceEmailHtml({
 <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(11,61,145,.08)">
   <tr>
     <td style="background:linear-gradient(135deg,#0B3D91,#1558c0);padding:32px 40px;text-align:center">
-      <p style="margin:0;font-size:22px;font-weight:800;color:#fff">IBIG <span style="color:#FFA500">E-LEARN</span></p>
+      <p style="margin:0;font-size:22px;font-weight:800;color:#fff">IBIG <span style="color:#FFA500">E-LEARNING</span></p>
       <p style="margin:8px 0 0;font-size:13px;color:#a8c4f0">Votre formation vous attend</p>
     </td>
   </tr>

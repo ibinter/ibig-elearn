@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
@@ -55,7 +55,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
           </div>
           <div>
             <span className="font-bold text-[#0B3D91] text-base">IBIG</span>
-            <span className="font-bold text-[#FFA500] text-base ml-0.5">E-LEARN</span>
+            <span className="font-bold text-[#FFA500] text-base ml-0.5">E-LEARNING</span>
           </div>
         </Link>
         <button onClick={() => setOpen(false)} className="lg:hidden p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
@@ -128,7 +128,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
           <div className="w-7 h-7 rounded-lg ibig-gradient flex items-center justify-center">
             <BookOpen className="w-3.5 h-3.5 text-white" />
           </div>
-          <span className="font-bold text-[#0B3D91] text-sm">IBIG <span className="text-[#FFA500]">E-LEARN</span></span>
+          <span className="font-bold text-[#0B3D91] text-sm">IBIG <span className="text-[#FFA500]">E-LEARNING</span></span>
         </Link>
         <NotificationBell />
       </header>

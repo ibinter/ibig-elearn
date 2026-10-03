@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { BookOpen } from 'lucide-react'
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <BookOpen className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-[#0B3D91] text-lg">IBIG</span>
-          <span className="font-bold text-[#FFA500] text-lg -ml-1">E-LEARN</span>
+          <span className="font-bold text-[#FFA500] text-lg -ml-1">E-LEARNING</span>
         </Link>
       </header>
       <main className="flex-1 flex items-center justify-center p-4">

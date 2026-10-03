@@ -6,7 +6,7 @@ function emailWrapper(content: string) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6fb;padding:32px 16px"><tr><td align="center">
 <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(11,61,145,.08)">
 <tr><td style="background:linear-gradient(135deg,#0B3D91,#1558c0);padding:28px 40px;text-align:center">
-  <p style="margin:0;font-size:20px;font-weight:800;color:#fff">IBIG <span style="color:#FFA500">E-LEARN</span></p>
+  <p style="margin:0;font-size:20px;font-weight:800;color:#fff">IBIG <span style="color:#FFA500">E-LEARNING</span></p>
 </td></tr>
 <tr><td style="padding:36px 40px">${content}</td></tr>
 <tr><td style="background:#f8f9fc;padding:16px 40px;text-align:center;border-top:1px solid #eef0f5">

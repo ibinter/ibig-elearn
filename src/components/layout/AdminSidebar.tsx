@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
@@ -59,7 +59,7 @@ export default function AdminSidebar({ userName, userInitial, userRole }: Props)
           </div>
           <div>
             <span className="font-bold text-white text-sm">IBIG</span>
-            <span className="font-bold text-[#FFA500] text-sm ml-0.5">E-LEARN</span>
+            <span className="font-bold text-[#FFA500] text-sm ml-0.5">E-LEARNING</span>
           </div>
         </Link>
         <button onClick={() => setOpen(false)} className="lg:hidden p-1 rounded-lg text-blue-300 hover:text-white hover:bg-white/10 transition-colors">
@@ -117,7 +117,7 @@ export default function AdminSidebar({ userName, userInitial, userRole }: Props)
           <Menu className="w-5 h-5" />
         </button>
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-bold text-white text-sm">IBIG <span className="text-[#FFA500]">E-LEARN</span></span>
+          <span className="font-bold text-white text-sm">IBIG <span className="text-[#FFA500]">E-LEARNING</span></span>
         </Link>
         <div className="w-9" />
       </header>

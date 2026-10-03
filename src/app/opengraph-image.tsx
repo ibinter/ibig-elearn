@@ -41,7 +41,7 @@ export default function Image() {
             <span style={{ color: 'white', fontSize: '28px', fontWeight: 900, letterSpacing: '-0.5px' }}>IBIG</span>
           </div>
           <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '28px', fontWeight: 300 }}>|</span>
-          <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '24px', fontWeight: 600 }}>E-LEARN</span>
+          <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '24px', fontWeight: 600 }}>E-LEARNING</span>
         </div>
 
         {/* Titre principal */}
