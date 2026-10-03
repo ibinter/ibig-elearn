@@ -43,10 +43,19 @@ export async function POST(req: NextRequest) {
 
   if (error || !cert) return NextResponse.json({ error: 'Erreur création certificat' }, { status: 500 })
 
-  // Email de félicitations
+  // Email de félicitations + notification in-app
   try {
     const { data: profile } = await supabase.from('profiles').select('full_name, email').eq('id', user.id).single()
     const { data: course } = await supabase.from('courses').select('title').eq('id', courseId).single()
+    if (course) {
+      await supabase.from('notifications').insert({
+        user_id: user.id,
+        type: 'certificate',
+        title: '🎓 Certificat obtenu !',
+        body: `Félicitations ! Vous avez terminé "${course.title}" et reçu votre certificat.`,
+        link: `/mes-certificats/${cert.id}/imprimer`,
+      })
+    }
     if (profile?.email && course) {
       const tpl = felicitationsFormationEmail({
         name: profile.full_name ?? 'Apprenant',

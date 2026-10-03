@@ -60,6 +60,16 @@ export async function POST(request: NextRequest) {
         const tpl = inscriptionEmail({ name: profile.full_name ?? 'Apprenant', courseTitle: course.title, courseSlug: course.slug })
         await sendEmail({ to: profile.email, ...tpl })
       }
+      // Notification in-app
+      if (course) {
+        await supabase.from('notifications').insert({
+          user_id: payment.user_id,
+          type: 'enrollment',
+          title: `Inscription confirmée — ${course.title}`,
+          body: 'Votre paiement a été validé. Vous pouvez commencer à apprendre maintenant.',
+          link: `/apprendre/${payment.course_id}/intro`,
+        })
+      }
       // Notifier IBIG PARTNER si un code affilié est présent
       const refCode = (payment.metadata as any)?.ref_code
       if (refCode) {
