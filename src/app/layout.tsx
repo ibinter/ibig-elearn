@@ -32,10 +32,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/logo-icon.webp', type: 'image/webp' },
       { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/icons/icon-192.png', sizes: '192x192' }],
+    apple: [{ url: '/logo-icon.webp', type: 'image/webp' }],
+    shortcut: '/logo-icon.webp',
   },
   openGraph: {
     type: 'website',
@@ -43,6 +45,7 @@ export const metadata: Metadata = {
     siteName: 'IBIG E-LEARNING',
     title: 'IBIG E-LEARNING — Formation professionnelle en ligne',
     description: 'La référence de la formation professionnelle en ligne en Afrique francophone. Formez-vous en ligne, certifiez-vous, progressez.',
+    images: [{ url: '/logo-full.webp', width: 1200, height: 630, alt: 'IBIG E-LEARNING' }],
   },
   twitter: {
     card: 'summary_large_image',
