@@ -93,13 +93,15 @@ export default async function FormationPage({ params }: PageProps) {
   const allLessons = modules?.flatMap((m: any) => m.lessons ?? []) ?? []
   const lessonTypes = [...new Set(allLessons.map((l: any) => l.type).filter(Boolean))]
   const formatLabels: Record<string, { label: string; icon: string }> = {
-    video:  { label: 'Vidéo',    icon: '🎬' },
-    audio:  { label: 'Audio',    icon: '🎧' },
-    text:   { label: 'Texte',    icon: '📄' },
-    texte:  { label: 'Texte',    icon: '📄' },
-    quiz:   { label: 'Quiz',     icon: '📝' },
-    pdf:    { label: 'PDF',      icon: '📑' },
-    live:   { label: 'Live',     icon: '📡' },
+    video:    { label: 'Vidéo',    icon: '🎬' },
+    audio:    { label: 'Audio',    icon: '🎧' },
+    text:     { label: 'Texte',    icon: '📄' },
+    texte:    { label: 'Texte',    icon: '📄' },
+    quiz:     { label: 'Quiz',     icon: '📝' },
+    pdf:      { label: 'PDF',      icon: '📑' },
+    live:     { label: 'Live',     icon: '📡' },
+    document: { label: 'Document', icon: '📄' },
+    image:    { label: 'Image',    icon: '🖼️' },
   }
 
   const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
@@ -177,7 +179,7 @@ export default async function FormationPage({ params }: PageProps) {
             </div>
           )}
           <div className="mt-4 text-sm text-blue-200">
-            Formateur : <Link href={`/formateur/${(c.instructor as any)?.id}`} className="text-white underline">{(c.instructor as any)?.full_name}</Link>
+            Formateur : <span className="text-white">{(c.instructor as any)?.full_name}</span>
             {' · '} Mis à jour le {formatDate(c.updated_at)}
           </div>
         </div>
