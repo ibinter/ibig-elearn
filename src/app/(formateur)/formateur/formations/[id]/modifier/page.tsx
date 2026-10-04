@@ -95,7 +95,8 @@ export default function ModifierFormationPage() {
   async function addModule() {
     const pos = modules.length
     const { data, error } = await supabase.from('modules').insert({ course_id: id, title: 'Nouveau module', position: pos }).select().single()
-    if (error || !data) return
+    if (error) { showFlash('err', `Erreur module : ${error.message}`); return }
+    if (!data) return
     setModules(m => [...m, { ...data, lessons: [], open: true }])
   }
 
@@ -119,7 +120,8 @@ export default function ModifierFormationPage() {
     const { data, error } = await supabase.from('lessons').insert({
       module_id: modId, course_id: id, title: 'Nouvelle leçon', type: 'video', position: pos, is_free_preview: false,
     }).select().single()
-    if (error || !data) return
+    if (error) { showFlash('err', `Erreur leçon : ${error.message}`); return }
+    if (!data) return
     setModules(m => m.map(mod => mod.id === modId ? { ...mod, lessons: [...mod.lessons, data as Lesson] } : mod))
   }
 
