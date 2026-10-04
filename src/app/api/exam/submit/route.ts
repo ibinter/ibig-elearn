@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
-  const { lessonId, courseId, answers, timeUsedSeconds } = await req.json()
+  const { lessonId, courseId, answers, timeUsedSeconds, tabSwitchCount, autoSubmitted } = await req.json()
   if (!lessonId || !courseId || !answers) {
     return NextResponse.json({ error: 'Paramètres manquants' }, { status: 400 })
   }
@@ -51,6 +51,20 @@ export async function POST(req: NextRequest) {
     .eq('id', lessonId).single()
 
   const passingScore = lesson?.exam_passing_score ?? 80
+  const timeLimitSeconds = ((lesson as any)?.exam_duration_minutes ?? 60) * 60
+
+  // Détection de triche
+  const flags: string[] = []
+  if ((tabSwitchCount ?? 0) >= 3) flags.push(`${tabSwitchCount} changements d'onglet`)
+  if (autoSubmitted) flags.push('Soumission automatique (timer ou onglet)')
+  if (timeUsedSeconds != null && timeUsedSeconds < questions.length * 5) {
+    flags.push(`Temps trop rapide : ${timeUsedSeconds}s pour ${questions.length} questions`)
+  }
+  if (timeUsedSeconds != null && timeUsedSeconds > timeLimitSeconds + 60) {
+    flags.push(`Temps dépassé côté client : ${timeUsedSeconds}s (limite ${timeLimitSeconds}s)`)
+  }
+  const isFlagged = flags.length > 0
+
   const passed = score >= passingScore
 
   // Numéro de la tentative
@@ -72,6 +86,9 @@ export async function POST(req: NextRequest) {
     time_used_seconds: timeUsedSeconds ?? null,
     submitted_at: new Date().toISOString(),
     attempt_number: attemptNumber,
+    tab_switch_count: tabSwitchCount ?? 0,
+    is_flagged: isFlagged,
+    flag_reason: flags.join(' | ') || null,
   })
 
   if (passed) {

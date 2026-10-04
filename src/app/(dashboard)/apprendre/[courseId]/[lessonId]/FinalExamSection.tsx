@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Clock, AlertTriangle, Trophy, XCircle, CheckCircle, RefreshCw, Award, Lock } from 'lucide-react'
+import { Clock, AlertTriangle, Trophy, XCircle, CheckCircle, RefreshCw, Award, Lock, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
@@ -35,11 +35,26 @@ interface Props {
 
 type Phase = 'intro' | 'running' | 'submitted'
 
+const TAB_SWITCH_LIMIT = 3
+
+function shuffle<T>(arr: T[], seed: string): T[] {
+  const copy = [...arr]
+  let hash = 0
+  for (let i = 0; i < seed.length; i++) hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0
+  for (let i = copy.length - 1; i > 0; i--) {
+    hash = ((hash * 1664525) + 1013904223) | 0
+    const j = Math.abs(hash) % (i + 1)
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
+  }
+  return copy
+}
+
 export default function FinalExamSection({
   lessonId, courseId, questions, durationMinutes, passingScore,
   maxAttempts, attemptsLeft, isAvailable, pastAttempts, courseSlug,
 }: Props) {
   const [phase, setPhase] = useState<Phase>('intro')
+  const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>(questions)
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [timeLeft, setTimeLeft] = useState(durationMinutes * 60)
   const [result, setResult] = useState<{
@@ -51,17 +66,24 @@ export default function FinalExamSection({
   const startedAt = useRef<number>(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  const handleSubmit = useCallback(async (auto = false) => {
+  // Anti-triche : détection changement d'onglet
+  const [tabSwitches, setTabSwitches] = useState(0)
+  const [showTabWarning, setShowTabWarning] = useState(false)
+
+  const handleSubmit = useCallback(async (auto = false, forcedTabSwitches?: number) => {
     if (loading) return
     setLoading(true)
     if (timerRef.current) clearInterval(timerRef.current)
 
     const timeUsed = Math.round((Date.now() - startedAt.current) / 1000)
+    const switchCount = forcedTabSwitches ?? tabSwitches
     const payload = {
       lessonId,
       courseId,
       answers: Object.entries(answers).map(([question_id, selected_option]) => ({ question_id, selected_option })),
       timeUsedSeconds: timeUsed,
+      tabSwitchCount: switchCount,
+      autoSubmitted: auto,
     }
 
     try {
@@ -79,9 +101,9 @@ export default function FinalExamSection({
     } finally {
       setLoading(false)
     }
-  }, [lessonId, courseId, answers, loading])
+  }, [lessonId, courseId, answers, loading, tabSwitches])
 
-  // Démarrer le chrono quand phase = running
+  // Timer
   useEffect(() => {
     if (phase !== 'running') return
     startedAt.current = Date.now()
@@ -99,6 +121,25 @@ export default function FinalExamSection({
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [phase, durationMinutes, handleSubmit])
 
+  // Détection changement d'onglet — actif seulement pendant l'examen
+  useEffect(() => {
+    if (phase !== 'running') return
+    const handleVisibility = () => {
+      if (document.hidden) {
+        setTabSwitches(prev => {
+          const next = prev + 1
+          setShowTabWarning(true)
+          if (next >= TAB_SWITCH_LIMIT) {
+            handleSubmit(true, next)
+          }
+          return next
+        })
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => document.removeEventListener('visibilitychange', handleVisibility)
+  }, [phase, handleSubmit])
+
   const fmtTime = (s: number) => {
     const m = Math.floor(s / 60)
     const sec = s % 60
@@ -106,8 +147,8 @@ export default function FinalExamSection({
   }
 
   const answered = Object.keys(answers).length
-  const pct = questions.length > 0 ? Math.round((answered / questions.length) * 100) : 0
-  const isUrgent = timeLeft <= 300  // 5 min restantes
+  const pct = shuffledQuestions.length > 0 ? Math.round((answered / shuffledQuestions.length) * 100) : 0
+  const isUrgent = timeLeft <= 300
 
   // ---- PHASE INTRO ----
   if (phase === 'intro') {
@@ -172,23 +213,31 @@ export default function FinalExamSection({
             <Award className="w-6 h-6 text-green-400 flex-shrink-0" />
             <div>
               <p className="text-green-300 font-semibold text-sm">Félicitations ! Vous avez déjà réussi cet examen.</p>
-              <Link href={`/mes-certificats`} className="text-green-400 text-xs hover:underline mt-0.5 block">Voir mon certificat →</Link>
+              <Link href="/mes-certificats" className="text-green-400 text-xs hover:underline mt-0.5 block">Voir mon certificat →</Link>
             </div>
           </div>
         )}
 
-        <div className="bg-gray-900/60 rounded-xl p-4 text-xs text-gray-400 space-y-1">
+        <div className="bg-gray-900/60 rounded-xl p-4 text-xs text-gray-400 space-y-1.5">
           <p>⚠️ <strong className="text-gray-300">Une fois commencé, le chronomètre ne peut pas être mis en pause.</strong></p>
+          <p>🔒 <strong className="text-gray-300">Ne changez pas d'onglet</strong> — après {TAB_SWITCH_LIMIT} sorties, l'examen sera soumis automatiquement.</p>
+          <p>📵 Copier-coller et clic droit sont désactivés pendant l'examen.</p>
           <p>📱 Assurez-vous d'être dans un endroit calme avec une bonne connexion internet.</p>
-          <p>🔒 Ne fermez pas l'onglet — cela soumettra automatiquement vos réponses.</p>
         </div>
 
         {isAvailable && attemptsLeft > 0 && (
           <button
-            onClick={() => { setAnswers({}); setPhase('running') }}
+            onClick={() => {
+              const seed = `${lessonId}-${Date.now()}`
+              setShuffledQuestions(shuffle(questions, seed))
+              setAnswers({})
+              setTabSwitches(0)
+              setShowTabWarning(false)
+              setPhase('running')
+            }}
             className="w-full py-4 bg-gradient-to-r from-[#FFA500] to-orange-600 hover:from-orange-500 hover:to-orange-700 text-black font-bold text-base rounded-2xl transition-all shadow-lg"
           >
-            {pastAttempts.length === 0 ? 'Commencer l\'examen' : 'Nouvelle tentative'} →
+            {pastAttempts.length === 0 ? "Commencer l'examen" : 'Nouvelle tentative'} →
           </button>
         )}
         {attemptsLeft === 0 && !alreadyPassed && (
@@ -203,7 +252,35 @@ export default function FinalExamSection({
   // ---- PHASE RUNNING ----
   if (phase === 'running') {
     return (
-      <div className="space-y-4">
+      <div
+        className="space-y-4"
+        onCopy={e => e.preventDefault()}
+        onCut={e => e.preventDefault()}
+        onContextMenu={e => e.preventDefault()}
+      >
+        {/* Avertissement changement d'onglet */}
+        {showTabWarning && (
+          <div className={cn(
+            'rounded-xl p-4 flex items-start gap-3 border',
+            tabSwitches >= TAB_SWITCH_LIMIT
+              ? 'bg-red-900/50 border-red-500 text-red-300'
+              : 'bg-yellow-900/30 border-yellow-600 text-yellow-300'
+          )}>
+            <EyeOff className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              {tabSwitches >= TAB_SWITCH_LIMIT ? (
+                <p className="font-semibold">Soumission automatique — Trop de changements d&apos;onglet ({tabSwitches})</p>
+              ) : (
+                <>
+                  <p className="font-semibold">Changement d&apos;onglet détecté ({tabSwitches}/{TAB_SWITCH_LIMIT})</p>
+                  <p className="text-xs mt-0.5 opacity-80">L&apos;examen sera soumis automatiquement à {TAB_SWITCH_LIMIT} sorties.</p>
+                </>
+              )}
+            </div>
+            <button onClick={() => setShowTabWarning(false)} className="text-xs opacity-60 hover:opacity-100 flex-shrink-0">✕</button>
+          </div>
+        )}
+
         {/* Barre de progression + chrono */}
         <div className={cn(
           'sticky top-0 z-10 rounded-2xl p-4 flex items-center justify-between gap-4 shadow-lg transition-colors',
@@ -213,7 +290,7 @@ export default function FinalExamSection({
             <div className="flex-1 bg-gray-700 rounded-full h-2 overflow-hidden">
               <div className="h-full bg-[#FFA500] rounded-full transition-all" style={{ width: `${pct}%` }} />
             </div>
-            <span className="text-gray-400 text-xs whitespace-nowrap">{answered}/{questions.length}</span>
+            <span className="text-gray-400 text-xs whitespace-nowrap">{answered}/{shuffledQuestions.length}</span>
           </div>
           <div className={cn('flex items-center gap-2 font-mono font-bold text-lg', isUrgent ? 'text-red-400' : 'text-white')}>
             <Clock className={cn('w-5 h-5', isUrgent && 'animate-pulse')} />
@@ -229,10 +306,10 @@ export default function FinalExamSection({
         )}
 
         {/* Questions */}
-        <div className="space-y-6">
-          {questions.map((q, idx) => (
+        <div className="space-y-6 select-none">
+          {shuffledQuestions.map((q, idx) => (
             <div key={q.id} className="bg-gray-800/50 rounded-2xl p-5">
-              <p className="text-gray-400 text-xs font-semibold mb-2">Question {idx + 1}/{questions.length}</p>
+              <p className="text-gray-400 text-xs font-semibold mb-2">Question {idx + 1}/{shuffledQuestions.length}</p>
               <p className="text-white font-medium mb-4 leading-relaxed">{q.question}</p>
               <div className="space-y-2">
                 {q.options.map((opt, oi) => (
@@ -267,11 +344,11 @@ export default function FinalExamSection({
             disabled={loading}
             className="w-full py-4 bg-[#0B3D91] hover:bg-[#0a3480] text-white font-bold text-base rounded-2xl transition-colors disabled:opacity-60 shadow-xl"
           >
-            {loading ? 'Soumission en cours…' : `Soumettre l'examen (${answered}/${questions.length} répondues)`}
+            {loading ? 'Soumission en cours…' : `Soumettre l'examen (${answered}/${shuffledQuestions.length} répondues)`}
           </button>
-          {answered < questions.length && (
+          {answered < shuffledQuestions.length && (
             <p className="text-center text-xs text-yellow-400 mt-2">
-              {questions.length - answered} question{questions.length - answered > 1 ? 's' : ''} sans réponse — elles compteront comme incorrectes.
+              {shuffledQuestions.length - answered} question{shuffledQuestions.length - answered > 1 ? 's' : ''} sans réponse — elles compteront comme incorrectes.
             </p>
           )}
         </div>
