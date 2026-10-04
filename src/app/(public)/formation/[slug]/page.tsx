@@ -90,6 +90,18 @@ export default async function FormationPage({ params }: PageProps) {
   const levelLabel: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
   const totalLessons = modules?.reduce((acc: number, m: any) => acc + (m.lessons?.length ?? 0), 0) ?? 0
 
+  const allLessons = modules?.flatMap((m: any) => m.lessons ?? []) ?? []
+  const lessonTypes = [...new Set(allLessons.map((l: any) => l.type).filter(Boolean))]
+  const formatLabels: Record<string, { label: string; icon: string }> = {
+    video:  { label: 'Vidéo',    icon: '🎬' },
+    audio:  { label: 'Audio',    icon: '🎧' },
+    text:   { label: 'Texte',    icon: '📄' },
+    texte:  { label: 'Texte',    icon: '📄' },
+    quiz:   { label: 'Quiz',     icon: '📝' },
+    pdf:    { label: 'PDF',      icon: '📑' },
+    live:   { label: 'Live',     icon: '📡' },
+  }
+
   const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -152,6 +164,18 @@ export default async function FormationPage({ params }: PageProps) {
             <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> <strong className="text-white">{c.duration_hours}h</strong> de contenu</span>
             <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4" /> <strong className="text-white">{totalLessons}</strong> leçons</span>
           </div>
+          {lessonTypes.length > 0 && (
+            <div className="flex flex-wrap gap-2 justify-center mt-5">
+              {lessonTypes.map((type: any) => {
+                const fmt = formatLabels[type] ?? { label: type, icon: '📁' }
+                return (
+                  <span key={type} className="inline-flex items-center gap-1.5 text-xs bg-white/15 border border-white/20 px-3 py-1 rounded-full">
+                    {fmt.icon} {fmt.label}
+                  </span>
+                )
+              })}
+            </div>
+          )}
           <div className="mt-4 text-sm text-blue-200">
             Formateur : <Link href={`/formateur/${(c.instructor as any)?.id}`} className="text-white underline">{(c.instructor as any)?.full_name}</Link>
             {' · '} Mis à jour le {formatDate(c.updated_at)}
