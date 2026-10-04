@@ -49,6 +49,7 @@ CREATE POLICY "xp_events_insert_service" ON public.xp_events
 -- Incrémente xp_points du profil + calcule le niveau + insère l'event
 -- ────────────────────────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS public.award_xp(uuid,text,integer,uuid,text);
 CREATE OR REPLACE FUNCTION public.award_xp(
   p_user_id    uuid,
   p_event_type text,
@@ -140,6 +141,7 @@ CREATE POLICY "league_participants_update_own" ON public.league_participants
 -- et inscrit l'utilisateur (max 30 par groupe)
 -- ────────────────────────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS public.assign_to_league(uuid);
 CREATE OR REPLACE FUNCTION public.assign_to_league(p_user_id uuid)
 RETURNS void
 LANGUAGE plpgsql
@@ -211,6 +213,7 @@ $$;
 --   - promouvoir / rétrograder les utilisateurs
 -- ────────────────────────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS public.process_league_week(date);
 CREATE OR REPLACE FUNCTION public.process_league_week(p_week_start date)
 RETURNS void
 LANGUAGE plpgsql
@@ -286,6 +289,7 @@ $$;
 -- Dès qu'un xp_event est inséré, MAJ le participant de la ligue courante
 -- ────────────────────────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS public.trg_xp_event_to_league();
 CREATE OR REPLACE FUNCTION public.trg_xp_event_to_league()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -362,6 +366,7 @@ CREATE POLICY "exam_attempts_insert_own" ON public.final_exam_attempts
 -- 10. FONCTION exam_attempts_left
 -- ────────────────────────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS public.exam_attempts_left(uuid,uuid);
 CREATE OR REPLACE FUNCTION public.exam_attempts_left(
   p_user_id   uuid,
   p_lesson_id uuid
