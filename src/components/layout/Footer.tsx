@@ -49,8 +49,7 @@ export default async function Footer() {
               {[
                 { label: t.footer.about, href: '/a-propos' },
                 { label: t.footer.blog, href: '/blog' },
-                { label: t.locale === 'en' ? 'Help center' : 'Centre d\'aide', href: '/aide' },
-                { label: t.footer.faq, href: '/faq' },
+{ label: t.footer.faq, href: '/faq' },
                 { label: t.footer.contact, href: '/contact' },
                 { label: t.locale === 'en' ? 'Verify certificate' : 'Vérifier un certificat', href: '/verify' },
               ].map(link => (

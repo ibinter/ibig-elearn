@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { LayoutDashboard, BookOpen, Users, BarChart2, PlusCircle, LogOut, Video, Bell, Menu, X, DollarSign, Tag, MessageSquare, Banknote } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Users, BarChart2, PlusCircle, LogOut, Video, Bell, Menu, X, DollarSign, Tag, MessageSquare, Banknote, HelpCircle } from 'lucide-react'
 
 type NavItem = {
   href: string
@@ -29,6 +29,7 @@ const NAV: NavItem[] = [
   { href: '/formateur/messagerie', label: 'Messagerie', icon: MessageSquare },
   { href: '/formateur/virements', label: 'Virements', icon: Banknote },
   { href: '/formateur/notifier', label: 'Notifier', icon: Bell },
+  { href: '/aide/formateur', label: 'Guide & Aide', icon: HelpCircle },
 ]
 
 export default function FormateurSidebar({ userName, userInitial }: Props) {

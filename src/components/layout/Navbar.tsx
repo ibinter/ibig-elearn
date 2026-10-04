@@ -128,9 +128,6 @@ export default function Navbar({ user }: NavbarProps) {
             <Link href="/a-propos" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               {t.locale === 'en' ? 'About' : 'À propos'}
             </Link>
-            <Link href="/aide" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
-              {t.locale === 'en' ? 'Help' : 'Aide'}
-            </Link>
 
             {/* Search — takes remaining space */}
             <div className="flex-1 min-w-0 max-w-xs">
