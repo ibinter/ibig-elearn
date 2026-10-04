@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json()
-  const { courseId, currency = 'XOF' } = body
+  const { courseId, currency = 'XOF', installments = 1, enrollmentMode = 'guide' } = body
 
   if (!courseId) {
     return NextResponse.json({ error: 'courseId requis' }, { status: 400 })
@@ -40,10 +40,12 @@ export async function POST(request: NextRequest) {
 
   const amounts: Record<string, number> = {
     XOF: course.price_xof,
+    XAF: course.price_xof,
     EUR: course.price_eur ?? Math.round(course.price_xof / 655),
     USD: course.price_usd ?? Math.round(course.price_xof / 600),
   }
-  const amount = amounts[currency] ?? course.price_xof
+  const totalAmount = amounts[currency] ?? course.price_xof
+  const amount = installments === 3 ? Math.ceil(totalAmount / 3) : totalAmount
 
   // Lire le code affilié depuis le cookie
   const cookieStore = await cookies()
@@ -61,8 +63,24 @@ export async function POST(request: NextRequest) {
     provider_reference: transactionId,
     status: 'pending',
     invoice_number: transactionId,
-    metadata: refCode ? { ref_code: refCode } : {},
+    metadata: { ...(refCode ? { ref_code: refCode } : {}), installments, total_amount: totalAmount, enrollment_mode: enrollmentMode },
   }).select().single()
+
+  // Si 3x : créer les échéances
+  if (installments === 3 && payment) {
+    const now = new Date()
+    await supabase.from('payment_installments').insert([1, 2, 3].map(n => ({
+      user_id: user.id,
+      course_id: courseId,
+      installment_number: n,
+      total_amount: totalAmount,
+      installment_amount: n === 3 ? totalAmount - (Math.ceil(totalAmount / 3) * 2) : Math.ceil(totalAmount / 3),
+      currency,
+      due_date: new Date(now.getFullYear(), now.getMonth() + (n - 1), now.getDate()).toISOString(),
+      status: 'pending',
+      payment_id: n === 1 ? payment.id : null,
+    })))
+  }
 
   // Appel CinetPay
   const appUrl = process.env.NEXT_PUBLIC_APP_URL

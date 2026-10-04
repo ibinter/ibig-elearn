@@ -67,12 +67,18 @@ export async function PUT(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
-  const { lessonId, passingScore, questions } = await req.json()
+  const { lessonId, passingScore, questions, isFinalExam, examDurationMinutes, examMaxAttempts } = await req.json()
   if (!lessonId || !Array.isArray(questions)) return NextResponse.json({ error: 'Données manquantes' }, { status: 400 })
   if (!await checkLessonOwner(supabase, lessonId, user.id)) return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
 
-  // Mettre à jour le score de passage
-  await supabase.from('lessons').update({ quiz_passing_score: passingScore }).eq('id', lessonId)
+  // Mettre à jour le score de passage + settings examen
+  const lessonPatch: any = { quiz_passing_score: passingScore }
+  if (isFinalExam) {
+    lessonPatch.exam_passing_score = passingScore
+    if (examDurationMinutes) lessonPatch.exam_duration_minutes = examDurationMinutes
+    if (examMaxAttempts) lessonPatch.exam_max_attempts = examMaxAttempts
+  }
+  await supabase.from('lessons').update(lessonPatch).eq('id', lessonId)
 
   // Supprimer toutes les questions existantes
   await supabase.from('quiz_questions').delete().eq('lesson_id', lessonId)

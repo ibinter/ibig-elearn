@@ -3,8 +3,9 @@ import { redirect } from 'next/navigation'
 import { notFound } from 'next/navigation'
 import PaymentForm from './PaymentForm'
 
-export default async function PaiementPage({ params }: { params: Promise<{ courseId: string }> }) {
+export default async function PaiementPage({ params, searchParams }: { params: Promise<{ courseId: string }>; searchParams: Promise<{ mode?: string }> }) {
   const { courseId } = await params
+  const { mode: enrollmentMode } = await searchParams
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -29,6 +30,22 @@ export default async function PaiementPage({ params }: { params: Promise<{ cours
     .single()
 
   if (existing) redirect(`/apprendre/${courseId}/intro`)
+
+  const userCountry = profile?.country ?? 'CI'
+
+  // Charger les providers actifs depuis la DB, filtrés pour ce pays
+  const { data: allProviders } = await supabase
+    .from('payment_providers')
+    .select('id,name,label,description,is_default,api_route,currencies,methods,region,countries')
+    .eq('is_active', true)
+    .order('position')
+
+  // Garder les providers qui couvrent ce pays (ou tous pays si tableau vide)
+  const providers = (allProviders ?? []).filter(p =>
+    p.countries.length === 0 || p.countries.includes(userCountry) ||
+    // Stripe disponible pour tous si aucun provider africain ne correspond
+    p.id === 'stripe'
+  )
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -68,12 +85,16 @@ export default async function PaiementPage({ params }: { params: Promise<{ cours
               <h1 className="text-xl font-bold text-gray-900 mb-6">Finaliser le paiement</h1>
               <PaymentForm
                 courseId={courseId}
-                amount={course.price_xof}
-                currency="XOF"
+                priceXof={course.price_xof}
+                priceEur={course.price_eur ?? Math.round(course.price_xof / 655)}
+                priceUsd={course.price_usd ?? Math.round(course.price_xof / 600)}
                 courseName={course.title}
                 userEmail={user.email!}
                 userPhone={profile?.phone || ''}
                 userName={profile?.full_name || ''}
+                userCountry={userCountry}
+                providers={providers}
+                enrollmentMode={(enrollmentMode as any) ?? 'guide'}
               />
             </div>
           </div>

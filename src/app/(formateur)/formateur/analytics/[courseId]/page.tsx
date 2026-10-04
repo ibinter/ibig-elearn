@@ -41,7 +41,7 @@ export default async function CourseAnalyticsPage({ params }: PageProps) {
     .from('lesson_progress')
     .select('lesson_id')
     .eq('course_id', courseId)
-    .eq('is_completed', true)
+    .eq('completed', true)
 
   const completionByLesson: Record<string, number> = {}
   progressData?.forEach(p => {

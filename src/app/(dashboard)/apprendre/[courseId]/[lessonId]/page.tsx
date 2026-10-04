@@ -13,6 +13,11 @@ import BookmarkButton from '@/components/apprendre/BookmarkButton'
 import MarkCompleteButton from '@/components/apprendre/MarkCompleteButton'
 import LessonNavigation from '@/components/apprendre/LessonNavigation'
 import LessonQA from '@/components/apprendre/LessonQA'
+import MarkdownContent from '@/components/apprendre/MarkdownContent'
+import AssignmentSection from '@/components/apprendre/AssignmentSection'
+import FinalExamSection from './FinalExamSection'
+import AudioPlayer from '@/components/lesson/AudioPlayer'
+import CodeSandbox from '@/components/lesson/CodeSandbox'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -34,12 +39,14 @@ export default async function ApprendrePage({ params }: PageProps) {
 
   if (!enrollment) redirect(`/formation/${courseId}`)
 
+  const enrollmentMode = (enrollment.mode ?? 'autonome') as 'autonome' | 'guide' | 'certifiant'
+
   const { data: course } = await supabase.from('courses').select('id, title, slug').eq('id', courseId).single()
   if (!course) notFound()
 
   const { data: modules } = await supabase
     .from('modules')
-    .select('*, lessons(id, title, type, video_url, video_duration_seconds, content, position, is_free_preview)')
+    .select('*, lessons(id, title, type, video_url, video_duration_seconds, content, position, is_free_preview, audio_url, audio_cover_url, audio_transcript, audio_duration_s, code_language, code_starter, code_solution, code_tests, code_instructions)')
     .eq('course_id', courseId)
     .order('position')
 
@@ -56,6 +63,48 @@ export default async function ApprendrePage({ params }: PageProps) {
 
   if (!currentLesson) notFound()
 
+  // Gate : vérifier si le module de la leçon courante est débloqué
+  if (enrollmentMode !== 'autonome') {
+    const currentModuleId = currentLesson.module_id
+    const sortedModules = [...(modules ?? [])].sort((a, b) => a.position - b.position)
+    const moduleIdx = sortedModules.findIndex(m => m.id === currentModuleId)
+
+    if (moduleIdx > 0) {
+      const prevModule = sortedModules[moduleIdx - 1]
+      const prevLessons: any[] = (prevModule.lessons ?? []).slice().sort((a: any, b: any) => a.position - b.position)
+      const quizLesson = prevLessons.slice().reverse().find((l: any) => l.type === 'quiz')
+
+      let isUnlocked = false
+      if (quizLesson) {
+        const { data: attempt } = await supabase
+          .from('quiz_attempts')
+          .select('score')
+          .eq('user_id', user.id)
+          .eq('lesson_id', quizLesson.id)
+          .gte('score', 70)
+          .limit(1)
+          .single()
+        isUnlocked = !!attempt
+      } else {
+        const allIds = prevLessons.map((l: any) => l.id)
+        const { data: doneProgress } = await supabase
+          .from('lesson_progress')
+          .select('lesson_id')
+          .eq('user_id', user.id)
+          .eq('is_completed', true)
+          .in('lesson_id', allIds)
+        isUnlocked = (doneProgress?.length ?? 0) === allIds.length
+      }
+
+      if (!isUnlocked) {
+        // Rediriger vers la dernière leçon débloquée du module précédent
+        const lastPrevLesson = (prevModule.lessons ?? []).slice().sort((a: any, b: any) => a.position - b.position).at(-1)
+        if (lastPrevLesson) redirect(`/apprendre/${courseId}/${lastPrevLesson.id}`)
+        else redirect(`/apprendre/${courseId}/intro`)
+      }
+    }
+  }
+
   // Progression de la leçon
   const { data: progress } = await supabase
     .from('lesson_progress')
@@ -70,14 +119,52 @@ export default async function ApprendrePage({ params }: PageProps) {
   const prevLesson = currentIdx > 0 ? allLessons[currentIdx - 1] : null
   const nextLesson = currentIdx < allLessons.length - 1 ? allLessons[currentIdx + 1] : null
 
+  // Examen final si applicable
+  let examQuestions: any[] = []
+  let examPastAttempts: any[] = []
+  let examAttemptsLeft = 0
+  let examAvailable = false
+  if (currentLesson.type === 'final_exam') {
+    const [{ data: eQuestions }, { data: eAttempts }, { data: eLeft }, { data: eAvailable }] = await Promise.all([
+      supabase.from('quiz_questions').select('id,question,type,options,position').eq('lesson_id', currentLesson.id).order('position'),
+      supabase.from('final_exam_attempts').select('score,passed,submitted_at,attempt_number').eq('user_id', user.id).eq('lesson_id', currentLesson.id).order('attempt_number'),
+      supabase.rpc('exam_attempts_left', { p_user_id: user.id, p_lesson_id: currentLesson.id }),
+      supabase.rpc('is_final_exam_available', { p_user_id: user.id, p_course_id: courseId, p_lesson_id: currentLesson.id }),
+    ])
+    examQuestions = eQuestions ?? []
+    examPastAttempts = (eAttempts ?? []).filter((a: any) => a.submitted_at !== null)
+    examAttemptsLeft = eLeft ?? 0
+    examAvailable = eAvailable ?? false
+  }
+
+  // Assignment si applicable
+  let assignmentData: any = null
+  let existingSubmission: any = null
+  if (currentLesson.type === 'assignment') {
+    const [{ data: assignment }, { data: submission }] = await Promise.all([
+      supabase.from('assignments').select('*').eq('lesson_id', currentLesson.id).single(),
+      supabase.from('assignment_submissions').select('*').eq('lesson_id', currentLesson.id).eq('user_id', user.id).single(),
+    ])
+    assignmentData = assignment
+    existingSubmission = submission
+  }
+
   // Quiz si applicable
   let quizQuestions = null
   let bestPreviousScore: number | null = null
+  let isLastModuleQuiz = false
   if (currentLesson.type === 'quiz') {
     const [{ data: questions }, { data: attempts }] = await Promise.all([
       supabase.from('quiz_questions').select('*').eq('lesson_id', currentLesson.id).order('position'),
       supabase.from('quiz_attempts').select('score').eq('lesson_id', currentLesson.id).eq('user_id', user.id).order('score', { ascending: false }).limit(1),
     ])
+    // Vérifier si c'est le dernier quiz du module (pour afficher "module suivant débloqué")
+    const currentModule = (modules ?? []).find(m => m.id === currentLesson.module_id)
+    if (currentModule) {
+      const moduleLessons: any[] = (currentModule.lessons ?? []).slice().sort((a: any, b: any) => b.position - a.position)
+      const lastQuiz = moduleLessons.find((l: any) => l.type === 'quiz')
+      isLastModuleQuiz = lastQuiz?.id === currentLesson.id
+    }
     quizQuestions = questions
     bestPreviousScore = attempts?.[0]?.score ?? null
   }
@@ -107,6 +194,7 @@ export default async function ApprendrePage({ params }: PageProps) {
           courseId={courseId}
           currentLessonId={currentLesson.id}
           userId={user.id}
+          enrollmentMode={enrollmentMode}
         />
 
         {/* Contenu principal */}
@@ -122,15 +210,39 @@ export default async function ApprendrePage({ params }: PageProps) {
             />
           )}
 
+          {currentLesson.type === 'audio' && currentLesson.audio_url && (
+            <div className="max-w-lg mx-auto p-6">
+              <AudioPlayer
+                audioUrl={currentLesson.audio_url}
+                title={currentLesson.title}
+                coverUrl={currentLesson.audio_cover_url}
+                transcriptText={currentLesson.audio_transcript}
+              />
+            </div>
+          )}
+
+          {currentLesson.type === 'code' && currentLesson.code_language && (
+            <CodeSandbox
+              lessonId={currentLesson.id}
+              courseId={courseId}
+              language={currentLesson.code_language}
+              starterCode={currentLesson.code_starter ?? ''}
+              solutionCode={currentLesson.code_solution}
+              tests={currentLesson.code_tests as any ?? []}
+              instructions={currentLesson.code_instructions}
+            />
+          )}
+
           <div className="max-w-4xl mx-auto p-6">
             <div className="flex items-start justify-between mb-6">
               <h2 className="text-xl font-bold text-white">{currentLesson.title}</h2>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <BookmarkButton lessonId={currentLesson.id} courseId={courseId} />
-                {currentLesson.type !== 'video' && currentLesson.type !== 'quiz' && (
+                {currentLesson.type !== 'video' && currentLesson.type !== 'audio' && currentLesson.type !== 'quiz' && currentLesson.type !== 'code' && (
                   <MarkCompleteButton
                     lessonId={currentLesson.id}
                     courseId={courseId}
+                    courseTitle={course.title}
                     isCompleted={progress?.is_completed ?? false}
                   />
                 )}
@@ -142,10 +254,36 @@ export default async function ApprendrePage({ params }: PageProps) {
               </div>
             </div>
 
-            {currentLesson.content && (
-              <div className="prose prose-invert prose-sm max-w-none mb-8">
-                <div dangerouslySetInnerHTML={{ __html: currentLesson.content }} />
-              </div>
+            {currentLesson.content && currentLesson.type !== 'quiz' && (
+              <MarkdownContent
+                content={currentLesson.content}
+                className="mb-8"
+              />
+            )}
+
+            {currentLesson.type === 'assignment' && assignmentData && (
+              <AssignmentSection
+                assignment={assignmentData}
+                lessonId={currentLesson.id}
+                courseId={courseId}
+                userId={user.id}
+                existingSubmission={existingSubmission}
+              />
+            )}
+
+            {currentLesson.type === 'final_exam' && (
+              <FinalExamSection
+                lessonId={currentLesson.id}
+                courseId={courseId}
+                questions={examQuestions}
+                durationMinutes={currentLesson.exam_duration_minutes ?? 60}
+                passingScore={currentLesson.exam_passing_score ?? 80}
+                maxAttempts={currentLesson.exam_max_attempts ?? 3}
+                attemptsLeft={examAttemptsLeft}
+                isAvailable={examAvailable}
+                pastAttempts={examPastAttempts}
+                courseSlug={course.slug}
+              />
             )}
 
             {currentLesson.type === 'quiz' && quizQuestions && (
@@ -156,12 +294,22 @@ export default async function ApprendrePage({ params }: PageProps) {
                 userId={user.id}
                 passingScore={currentLesson.quiz_passing_score ?? 70}
                 bestPreviousScore={bestPreviousScore}
+                nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
+                isLastModuleQuiz={isLastModuleQuiz}
               />
             )}
 
             {/* Notes de cours */}
             <div className="mb-8 bg-gray-800 rounded-2xl overflow-hidden">
               <LessonNotes lessonId={currentLesson.id} courseId={courseId} />
+              <div className="px-4 pb-3">
+                <Link href={`/apprendre/${courseId}/notes`}
+                  className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#FFA500] transition-colors"
+                  target="_blank">
+                  <ArrowLeft className="w-3 h-3 rotate-180" />
+                  Exporter toutes mes notes en PDF
+                </Link>
+              </div>
             </div>
 
             {/* Q&A par leçon */}

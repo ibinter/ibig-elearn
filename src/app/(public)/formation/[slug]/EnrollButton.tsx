@@ -1,9 +1,4 @@
-'use client'
-
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Loader2, ShoppingCart, Play, LogIn } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
+import { ShoppingCart, Play, LogIn } from 'lucide-react'
 
 interface Props {
   courseId: string
@@ -14,10 +9,6 @@ interface Props {
 }
 
 export default function EnrollButton({ courseId, courseSlug, isEnrolled, isFree, isLoggedIn }: Props) {
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const supabase = createClient()
-
   if (isEnrolled) {
     return (
       <a href={`/apprendre/${courseId}/intro`}
@@ -36,36 +27,15 @@ export default function EnrollButton({ courseId, courseSlug, isEnrolled, isFree,
     )
   }
 
-  const handleFreeEnroll = async () => {
-    setLoading(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { router.push('/connexion'); return }
-
-    await supabase.from('enrollments').insert({
-      user_id: user.id,
-      course_id: courseId,
-      status: 'active',
-      paid_amount: 0,
-      paid_currency: 'XOF',
-      payment_method: 'free',
-    })
-    router.push(`/apprendre/${courseId}/intro`)
-  }
-
-  if (isFree) {
-    return (
-      <button onClick={handleFreeEnroll} disabled={loading}
-        className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl transition-colors disabled:opacity-60">
-        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Play className="w-5 h-5" />}
-        {loading ? 'Inscription...' : 'S\'inscrire gratuitement'}
-      </button>
-    )
-  }
-
+  // Toutes les inscriptions passent par le sélecteur de mode
   return (
-    <a href={`/paiement/${courseId}`}
-      className="flex items-center justify-center gap-2 w-full bg-[#FFA500] hover:bg-orange-500 text-black font-bold py-4 rounded-xl transition-colors">
-      <ShoppingCart className="w-5 h-5" /> S&apos;inscrire maintenant
+    <a href={`/choisir-mode/${courseId}`}
+      className={`flex items-center justify-center gap-2 w-full font-bold py-4 rounded-xl transition-colors ${
+        isFree
+          ? 'bg-green-600 hover:bg-green-700 text-white'
+          : 'bg-[#FFA500] hover:bg-orange-500 text-black'
+      }`}>
+      {isFree ? <><Play className="w-5 h-5" /> S&apos;inscrire gratuitement</> : <><ShoppingCart className="w-5 h-5" /> S&apos;inscrire maintenant</>}
     </a>
   )
 }

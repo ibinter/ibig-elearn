@@ -7,6 +7,8 @@
   "background_color": "#0B3D91",
   "theme_color": "#0B3D91",
   "orientation": "portrait-primary",
+  "lang": "fr",
+  "categories": ["education"],
   "icons": [
     {
       "src": "/logo-icon.webp",
@@ -27,6 +29,29 @@
       "purpose": "maskable"
     }
   ],
-  "categories": ["education"],
-  "lang": "fr"
+  "shortcuts": [
+    {
+      "name": "Mes formations",
+      "short_name": "Formations",
+      "description": "Reprendre mes formations en cours",
+      "url": "/mes-formations",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Sessions live",
+      "short_name": "Live",
+      "description": "Rejoindre une session en direct",
+      "url": "/sessions-live",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mes certificats",
+      "short_name": "Certificats",
+      "description": "Voir mes certificats obtenus",
+      "url": "/certificats",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
 }

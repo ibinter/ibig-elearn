@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, LogOut, Menu, X, LayoutDashboard, GraduationCap, Award, User, Share2, BarChart2, MessageCircle, Trophy, Video, Target, Bell, FileText, HelpCircle } from 'lucide-react'
+import { BookOpen, LogOut, Menu, X, LayoutDashboard, GraduationCap, Award, User, Share2, BarChart2, MessageCircle, Trophy, Video, Target, Bell, FileText, HelpCircle, Gift } from 'lucide-react'
 import NotificationBell from '@/components/ui/NotificationBell'
 
 type Props = {
@@ -22,15 +22,17 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
     { href: '/tableau-de-bord', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
     { href: '/mes-formations', label: 'Mes formations', icon: GraduationCap },
     { href: '/mes-parcours', label: 'Mes parcours', icon: Target },
-    { href: '/mes-certificats', label: 'Mes certificats', icon: Award },
+    { href: '/certificats', label: 'Mes certificats', icon: Award },
     { href: '/mes-factures', label: 'Mes factures', icon: FileText },
     { href: '/profil', label: 'Mon profil', icon: User },
     { href: `/apprenant/${userId}`, label: 'Profil public', icon: Share2 },
     { href: '/messages', label: 'Messages', icon: MessageCircle },
     { href: '/mes-badges', label: 'Mes badges', icon: Award },
+    { href: '/ligues', label: 'Ligues hebdo', icon: Trophy },
     { href: '/fidelite', label: 'Programme fidélité', icon: Trophy },
     { href: '/sessions-live', label: 'Sessions live', icon: Video },
     { href: '/notifications', label: 'Notifications', icon: Bell },
+    { href: '/parrainage', label: 'Parrainage', icon: Gift },
     ...(isFormateur ? [{ href: '/formateur', label: 'Espace Formateur', icon: BarChart2, exact: false }] : []),
     { href: '/aide/apprenant', label: 'Guide & Aide', icon: HelpCircle },
   ]

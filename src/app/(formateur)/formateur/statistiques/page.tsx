@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { TrendingUp, Users, Star, BookOpen, Award } from 'lucide-react'
+import { TrendingUp, Users, Star, BookOpen, Award, DollarSign, BarChart2 } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
+import Link from 'next/link'
 
 export default async function FormateurStatistiquesPage() {
   const supabase = await createClient()
@@ -18,18 +19,40 @@ export default async function FormateurStatistiquesPage() {
     .eq('instructor_id', user.id)
     .order('enrollment_count', { ascending: false })
 
+  const courseIds = (courses ?? []).map((c: any) => c.id)
+
+  // Certificats émis pour les cours de ce formateur
+  const { count: certCount } = courseIds.length
+    ? await supabase.from('certificates').select('id', { count: 'exact', head: true }).in('course_id', courseIds)
+    : { count: 0 }
+
+  // Revenus réels (paiements complétés)
+  const { data: paymentsSum } = courseIds.length
+    ? await supabase.from('payments').select('amount, currency').in('course_id', courseIds).eq('status', 'completed')
+    : { data: [] }
+
+  const realRevenue = (paymentsSum ?? []).reduce((sum: number, p: any) => {
+    const amt = (p.currency === 'XOF' || p.currency === 'XAF') ? p.amount : p.amount * 655
+    return sum + amt
+  }, 0)
+
   const totalEnrollments = courses?.reduce((sum, c) => sum + ((c.enrollments as any)?.[0]?.count ?? 0), 0) ?? 0
-  const totalRevenue = courses?.reduce((sum, c) => sum + (c.price_xof * ((c.enrollments as any)?.[0]?.count ?? 0)), 0) ?? 0
   const avgRating = courses?.length
-    ? (courses.reduce((sum, c) => sum + (c.rating_average ?? 0), 0) / courses.filter(c => c.rating_average > 0).length || 0).toFixed(1)
+    ? (courses.reduce((sum, c) => sum + (c.rating_average ?? 0), 0) / (courses.filter(c => (c.rating_average ?? 0) > 0).length || 1)).toFixed(1)
     : '—'
   const publishedCourses = courses?.filter(c => c.is_published).length ?? 0
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Statistiques</h1>
-        <p className="text-gray-500 text-sm mt-1">Vue d'ensemble de vos performances</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Statistiques</h1>
+          <p className="text-gray-500 text-sm mt-1">Vue d'ensemble de vos performances</p>
+        </div>
+        <Link href="/formateur/revenus"
+          className="flex items-center gap-2 bg-[#0B3D91] text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-[#0a3480] transition-colors">
+          <DollarSign className="w-4 h-4" /> Voir les revenus
+        </Link>
       </div>
 
       {/* KPIs */}
@@ -38,16 +61,29 @@ export default async function FormateurStatistiquesPage() {
           { label: 'Formations publiées', value: publishedCourses, icon: BookOpen, color: 'text-blue-600 bg-blue-50' },
           { label: 'Total apprenants', value: totalEnrollments.toLocaleString('fr-FR'), icon: Users, color: 'text-green-600 bg-green-50' },
           { label: 'Note moyenne', value: avgRating, icon: Star, color: 'text-yellow-600 bg-yellow-50' },
-          { label: 'Revenus estimés', value: formatPrice(totalRevenue), icon: TrendingUp, color: 'text-purple-600 bg-purple-50', small: true },
+          { label: 'Certificats émis', value: (certCount ?? 0).toString(), icon: Award, color: 'text-purple-600 bg-purple-50' },
         ].map(s => (
           <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-5">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${s.color} mb-3`}>
               <s.icon className="w-5 h-5" />
             </div>
-            <p className={`font-bold text-gray-900 ${(s as any).small ? 'text-base' : 'text-2xl'}`}>{s.value}</p>
+            <p className="font-bold text-gray-900 text-2xl">{s.value}</p>
             <p className="text-sm text-gray-500 mt-0.5">{s.label}</p>
           </div>
         ))}
+      </div>
+
+      {/* Revenus réels */}
+      <div className="bg-gradient-to-r from-[#0B3D91] to-[#1a5cbf] rounded-2xl p-6 text-white flex items-center justify-between">
+        <div>
+          <p className="text-blue-200 text-sm mb-1">Revenus réels (paiements confirmés)</p>
+          <p className="text-3xl font-bold">{realRevenue.toLocaleString('fr-FR')} XOF</p>
+          <p className="text-blue-300 text-xs mt-1">Basé sur les transactions complétées</p>
+        </div>
+        <Link href="/formateur/revenus"
+          className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors">
+          <BarChart2 className="w-4 h-4" /> Détail
+        </Link>
       </div>
 
       {/* Performance par formation */}

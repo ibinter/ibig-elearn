@@ -37,6 +37,18 @@ export async function GET(request: NextRequest) {
           method: 'POST',
           headers: { 'Cookie': cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ') },
         }).catch(() => null)
+
+        // Appliquer le code de parrainage si présent dans les métadonnées
+        const refCode = data.user.user_metadata?.referral_code
+        if (refCode) {
+          supabase.rpc('apply_referral_code', {
+            p_referred_id: data.user.id,
+            p_code: refCode,
+          }).catch(() => null)
+        }
+
+        // Rediriger vers l'onboarding pour les nouveaux inscrits
+        return NextResponse.redirect(`${origin}/onboarding`)
       }
     }
   }

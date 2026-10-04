@@ -7,7 +7,7 @@ import { Plus, ChevronDown, ChevronRight, Grip, Video, FileText, HelpCircle, Eye
 type Lesson = {
   id: string
   title: string
-  type: 'video' | 'text' | 'quiz'
+  type: 'video' | 'text' | 'quiz' | 'assignment' | 'final_exam' | 'audio' | 'code'
   video_url: string | null
   content: string | null
   duration_minutes: number | null
@@ -23,8 +23,8 @@ type Module = {
   lessons: Lesson[]
 }
 
-const lessonTypeIcon = { video: Video, text: FileText, quiz: HelpCircle }
-const lessonTypeLabel = { video: 'Vidéo', text: 'Texte', quiz: 'Quiz' }
+const lessonTypeIcon = { video: Video, text: FileText, quiz: HelpCircle, assignment: FileText, final_exam: HelpCircle, audio: FileText, code: FileText }
+const lessonTypeLabel = { video: 'Vidéo', text: 'Texte', quiz: 'Quiz', assignment: 'Devoir', final_exam: 'Examen final 🏆', audio: 'Audio 🎧', code: 'Code 💻' }
 
 function LessonRow({ lesson, onUpdate, onDelete }: {
   lesson: Lesson
@@ -228,6 +228,10 @@ export default function LessonsEditor({ courseId, initialModules }: { courseId: 
                     <option value="video">Vidéo</option>
                     <option value="text">Texte</option>
                     <option value="quiz">Quiz</option>
+                    <option value="assignment">Devoir</option>
+                    <option value="audio">Audio 🎧</option>
+                    <option value="code">Code 💻</option>
+                    <option value="final_exam">Examen final 🏆</option>
                   </select>
                   <button onClick={() => addLesson(module.id)} className="text-green-600 hover:text-green-700 p-1">
                     <Check className="w-4 h-4" />

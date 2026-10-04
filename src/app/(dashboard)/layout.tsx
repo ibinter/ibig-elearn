@@ -2,6 +2,8 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import MobileNav from '@/components/layout/MobileNav'
 import DashboardSidebar from '@/components/layout/DashboardSidebar'
+import InstallPrompt from '@/components/pwa/InstallPrompt'
+import OfflineBanner from '@/components/pwa/OfflineBanner'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -28,6 +30,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <main className="flex-1 p-6 pb-20 lg:pb-6">{children}</main>
       </div>
       <MobileNav />
+      <OfflineBanner />
+      <InstallPrompt />
     </div>
   )
 }

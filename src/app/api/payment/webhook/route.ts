@@ -48,7 +48,18 @@ export async function POST(request: NextRequest) {
       paid_currency: payment.currency,
       payment_method: payment.method,
       payment_reference: payment.provider_reference,
+      mode: (payment.metadata as any)?.enrollment_mode ?? 'guide',
     }, { onConflict: 'user_id,course_id' })
+
+    // Si 3x : marquer la 1ère échéance payée
+    const installments = (payment.metadata as any)?.installments
+    if (installments === 3) {
+      await supabase.from('payment_installments')
+        .update({ status: 'paid', paid_at: new Date().toISOString() })
+        .eq('user_id', payment.user_id)
+        .eq('course_id', payment.course_id)
+        .eq('installment_number', 1)
+    }
 
     await supabase.rpc('increment_enrollment_count', { course_id_arg: payment.course_id })
 

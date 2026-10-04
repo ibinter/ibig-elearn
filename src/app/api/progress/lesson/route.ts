@@ -55,8 +55,27 @@ export async function POST(req: NextRequest) {
     .eq('user_id', user.id)
     .eq('course_id', courseId)
 
+  // XP pour la leçon complétée
+  const { data: lesson } = await supabase
+    .from('lessons').select('title').eq('id', lessonId).single()
+  await supabase.rpc('award_xp', {
+    p_user_id:    user.id,
+    p_event_type: 'lesson_completed',
+    p_xp:         10,
+    p_ref_id:     lessonId,
+    p_ref_label:  lesson?.title ?? null,
+  }).catch(() => {})
+
   // Émettre certificat automatiquement si 100%
   if (progressPercent >= 100) {
+    await supabase.rpc('award_xp', {
+      p_user_id:    user.id,
+      p_event_type: 'course_completed',
+      p_xp:         100,
+      p_ref_id:     courseId,
+      p_ref_label:  null,
+    }).catch(() => {})
+
     await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/certificates/auto-issue`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

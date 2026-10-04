@@ -13,13 +13,14 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
   const [open, setOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({
-    course_id: '',
+    courseId: '',
     title: '',
     description: '',
-    scheduled_at: '',
-    duration_minutes: 60,
-    meeting_url: '',
-    platform: 'zoom' as 'zoom' | 'meet' | 'other',
+    scheduledAt: '',
+    durationMinutes: 60,
+    joinUrl: '',
+    platform: 'jitsi' as 'jitsi' | 'zoom' | 'google_meet' | 'custom',
+    isPublic: false,
   })
   const router = useRouter()
 
@@ -27,14 +28,14 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
     e.preventDefault()
     setSaving(true)
     try {
-      const res = await fetch('/api/live-sessions', {
+      const res = await fetch('/api/live/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, instructor_id: instructorId }),
+        body: JSON.stringify(form),
       })
       if (res.ok) {
         setOpen(false)
-        setForm({ course_id: '', title: '', description: '', scheduled_at: '', duration_minutes: 60, meeting_url: '', platform: 'zoom' })
+        setForm({ courseId: '', title: '', description: '', scheduledAt: '', durationMinutes: 60, joinUrl: '', platform: 'jitsi', isPublic: false })
         router.refresh()
       }
     } finally {
@@ -42,7 +43,7 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
     }
   }
 
-  const platformIcons = { zoom: '📹', meet: '📞', other: '🔗' }
+  const platformIcons = { jitsi: '🎥', zoom: '📹', google_meet: '📞', custom: '🔗' }
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -53,7 +54,7 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
           </div>
           <div>
             <p className="font-semibold text-gray-900">Planifier une session live</p>
-            <p className="text-sm text-gray-500">Zoom, Google Meet ou autre lien de réunion</p>
+            <p className="text-sm text-gray-500">Jitsi Meet intégré, Zoom, Google Meet ou lien personnalisé</p>
           </div>
         </button>
       ) : (
@@ -65,8 +66,8 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
               <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Formation</label>
               <select
                 required
-                value={form.course_id}
-                onChange={e => setForm(p => ({ ...p, course_id: e.target.value }))}
+                value={form.courseId}
+                onChange={e => setForm(p => ({ ...p, courseId: e.target.value }))}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#0B3D91]"
               >
                 <option value="">Sélectionner une formation</option>
@@ -87,8 +88,8 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
             <div>
               <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Date et heure</label>
               <input
-                type="datetime-local" required value={form.scheduled_at}
-                onChange={e => setForm(p => ({ ...p, scheduled_at: e.target.value }))}
+                type="datetime-local" required value={form.scheduledAt}
+                onChange={e => setForm(p => ({ ...p, scheduledAt: e.target.value }))}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#0B3D91]"
               />
             </div>
@@ -96,8 +97,8 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
             <div>
               <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Durée (minutes)</label>
               <input
-                type="number" min={15} max={480} value={form.duration_minutes}
-                onChange={e => setForm(p => ({ ...p, duration_minutes: Number(e.target.value) }))}
+                type="number" min={15} max={480} value={form.durationMinutes}
+                onChange={e => setForm(p => ({ ...p, durationMinutes: Number(e.target.value) }))}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#0B3D91]"
               />
             </div>
@@ -109,22 +110,28 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
                 onChange={e => setForm(p => ({ ...p, platform: e.target.value as any }))}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#0B3D91]"
               >
+                <option value="jitsi">🎥 Jitsi Meet (intégré)</option>
                 <option value="zoom">📹 Zoom</option>
-                <option value="meet">📞 Google Meet</option>
-                <option value="other">🔗 Autre</option>
+                <option value="google_meet">📞 Google Meet</option>
+                <option value="custom">🔗 Lien personnalisé</option>
               </select>
+              {form.platform === 'jitsi' && (
+                <p className="text-xs text-green-600 mt-1">✓ Salle créée automatiquement, intégrée dans la plateforme</p>
+              )}
             </div>
 
-            <div>
-              <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Lien de réunion</label>
-              <input
-                required value={form.meeting_url}
-                onChange={e => setForm(p => ({ ...p, meeting_url: e.target.value }))}
-                placeholder="https://zoom.us/j/..."
-                type="url"
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#0B3D91]"
-              />
-            </div>
+            {form.platform !== 'jitsi' && (
+              <div>
+                <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Lien de la session</label>
+                <input
+                  required value={form.joinUrl}
+                  onChange={e => setForm(p => ({ ...p, joinUrl: e.target.value }))}
+                  placeholder="https://zoom.us/j/..."
+                  type="url"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#0B3D91]"
+                />
+              </div>
+            )}
 
             <div className="col-span-2">
               <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Description (optionnel)</label>

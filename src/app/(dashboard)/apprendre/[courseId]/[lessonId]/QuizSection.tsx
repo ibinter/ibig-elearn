@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { CheckCircle, XCircle, RotateCcw, Trophy, Clock } from 'lucide-react'
+import { CheckCircle, XCircle, RotateCcw, Trophy, Clock, ArrowRight, Unlock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Question {
@@ -21,9 +22,11 @@ interface Props {
   userId: string
   passingScore?: number
   bestPreviousScore?: number | null
+  nextLesson?: { id: string; title: string } | null
+  isLastModuleQuiz?: boolean
 }
 
-export default function QuizSection({ questions, lessonId, courseId, userId, passingScore = 70, bestPreviousScore }: Props) {
+export default function QuizSection({ questions, lessonId, courseId, userId, passingScore = 70, bestPreviousScore, nextLesson, isLastModuleQuiz }: Props) {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState(false)
   const [score, setScore] = useState(0)
@@ -83,6 +86,17 @@ export default function QuizSection({ questions, lessonId, courseId, userId, pas
         completed_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }, { onConflict: 'user_id,lesson_id' })
+
+      // XP pour quiz réussi
+      await fetch('/api/xp/award', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_type: 'quiz_passed',
+          ref_id: lessonId,
+          ref_label: `Quiz — ${scorePercent}%`,
+        }),
+      }).catch(() => {})
     }
   }
 
@@ -124,27 +138,56 @@ export default function QuizSection({ questions, lessonId, courseId, userId, pas
         </div>
       </div>
 
-      {submitted && (
-        <div className={cn('rounded-2xl p-5 flex items-center justify-between', score >= passingScore ? 'bg-green-900/30 border border-green-700' : 'bg-red-900/30 border border-red-700')}>
-          <div>
-            {score >= passingScore ? (
-              <div className="flex items-center gap-2 text-green-400 font-bold text-lg">
-                <CheckCircle className="w-6 h-6" /> Quiz réussi ! {score}%
+      {submitted && score >= passingScore && (
+        <div className="rounded-2xl overflow-hidden">
+          {/* Bannière succès */}
+          <div className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 border border-green-600 p-5">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-green-400" />
               </div>
-            ) : (
-              <div className="flex items-center gap-2 text-red-400 font-bold text-lg">
-                <XCircle className="w-6 h-6" /> {score}% — Score minimum requis : {passingScore}%
+              <div>
+                <div className="text-green-400 font-bold text-lg">Quiz réussi ! {score}%</div>
+                <p className="text-gray-400 text-sm">
+                  {questions.filter((q, i) => answers[i] === q.correct_option).length} / {questions.length} bonnes réponses
+                </p>
+              </div>
+            </div>
+            {isLastModuleQuiz && (
+              <div className="mt-3 flex items-center gap-2 text-sm text-emerald-300 bg-emerald-900/30 rounded-lg px-3 py-2 border border-emerald-700/50">
+                <Unlock className="w-4 h-4" />
+                <span className="font-semibold">Module suivant débloqué !</span>
               </div>
             )}
+          </div>
+          {nextLesson && (
+            <Link
+              href={`/apprendre/${courseId}/${nextLesson.id}`}
+              className="flex items-center justify-between px-5 py-4 bg-[#0B3D91]/30 border-x border-b border-[#0B3D91]/50 hover:bg-[#0B3D91]/50 transition-colors group"
+            >
+              <div>
+                <p className="text-xs text-gray-400">Leçon suivante</p>
+                <p className="text-white font-semibold">{nextLesson.title}</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-[#FFA500] group-hover:translate-x-1 transition-transform" />
+            </Link>
+          )}
+        </div>
+      )}
+
+      {submitted && score < passingScore && (
+        <div className="rounded-2xl p-5 bg-red-900/30 border border-red-700 flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-red-400 font-bold text-lg">
+              <XCircle className="w-6 h-6" /> {score}% — Score minimum requis : {passingScore}%
+            </div>
             <p className="text-gray-400 text-sm mt-1">
-              {questions.filter((q, i) => answers[i] === q.correct_option).length} / {questions.length} bonnes réponses
+              {questions.filter((q, i) => answers[i] === q.correct_option).length} / {questions.length} bonnes réponses — Révisez les explications ci-dessous
             </p>
           </div>
-          {score < passingScore && (
-            <button onClick={handleReset} className="flex items-center gap-2 text-sm text-gray-300 hover:text-white border border-gray-600 px-4 py-2 rounded-lg transition-colors">
-              <RotateCcw className="w-4 h-4" /> Réessayer
-            </button>
-          )}
+          <button onClick={handleReset} className="flex items-center gap-2 text-sm text-gray-300 hover:text-white border border-gray-600 px-4 py-2 rounded-lg transition-colors">
+            <RotateCcw className="w-4 h-4" /> Réessayer
+          </button>
         </div>
       )}
 

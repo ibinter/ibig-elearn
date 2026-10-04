@@ -19,7 +19,7 @@ export default async function QuizEditorPage({ params }: PageProps) {
 
   const { data: lesson } = await supabase
     .from('lessons')
-    .select('id, title, quiz_passing_score, modules(course_id, courses(id, title, instructor_id))')
+    .select('id, title, type, quiz_passing_score, exam_passing_score, exam_duration_minutes, exam_max_attempts, modules(course_id, courses(id, title, instructor_id))')
     .eq('id', lessonId)
     .single()
 
@@ -47,7 +47,9 @@ export default async function QuizEditorPage({ params }: PageProps) {
             <BookOpen className="w-5 h-5 text-[#0B3D91]" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Éditeur de quiz</h1>
+            <h1 className="text-xl font-bold text-gray-900">
+            {(lesson as any).type === 'final_exam' ? '🏆 Examen Final' : 'Éditeur de quiz'}
+          </h1>
             <p className="text-gray-500 text-sm">{lesson.title} · {course.title}</p>
           </div>
         </div>
@@ -57,7 +59,14 @@ export default async function QuizEditorPage({ params }: PageProps) {
         lessonId={lessonId}
         courseId={course.id}
         initialQuestions={(questions ?? []) as any[]}
-        initialPassingScore={lesson.quiz_passing_score ?? 70}
+        initialPassingScore={
+          (lesson as any).type === 'final_exam'
+            ? ((lesson as any).exam_passing_score ?? 80)
+            : (lesson.quiz_passing_score ?? 70)
+        }
+        isFinalExam={(lesson as any).type === 'final_exam'}
+        examDurationMinutes={(lesson as any).exam_duration_minutes ?? 60}
+        examMaxAttempts={(lesson as any).exam_max_attempts ?? 3}
       />
     </div>
   )
