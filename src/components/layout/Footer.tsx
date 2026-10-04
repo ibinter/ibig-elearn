@@ -12,7 +12,7 @@ export default async function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-4">
-              <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={160} height={48} className="h-12 w-auto brightness-0 invert" />
+              <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={160} height={48} className="h-12 w-auto" />
             </div>
             <p className="text-blue-200 text-sm leading-relaxed mb-4">
               {t.footer.tagline}
