@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import BunnyUpload from '@/components/formateur/BunnyUpload'
+import DocumentUpload from '@/components/formateur/DocumentUpload'
 
 const supabase = createClient()
 
@@ -381,14 +382,28 @@ export default function ModifierFormationPage() {
                                 </div>
                               )}
                               {lesson.type === 'document' && (
-                                <div className="w-full">
-                                  <input
-                                    placeholder="URL du document (PDF, Google Drive, etc.)"
-                                    value={lesson.video_url ?? ''}
-                                    onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
-                                    className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40"
-                                  />
-                                  <p className="text-[10px] text-gray-400 mt-1">Ex : https://drive.google.com/... ou URL directe vers un PDF</p>
+                                <div className="w-full space-y-2">
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <input
+                                      placeholder="URL du document (PDF, Google Drive…)"
+                                      value={lesson.video_url ?? ''}
+                                      onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
+                                      className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 flex-1 min-w-32 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40"
+                                    />
+                                    <button type="button"
+                                      onClick={() => updateLesson(mod.id, lesson.id, { _showUpload: !lesson._showUpload })}
+                                      className={`flex items-center gap-1 text-xs px-2 py-1 rounded-lg border transition-colors ${lesson._showUpload ? 'bg-blue-50 border-[#0B3D91]/40 text-[#0B3D91]' : 'border-gray-200 text-gray-500 hover:border-[#0B3D91]/40 hover:text-[#0B3D91]'}`}>
+                                      <Upload className="w-3 h-3" /> Uploader
+                                    </button>
+                                  </div>
+                                  {lesson._showUpload && (
+                                    <DocumentUpload
+                                      lessonTitle={lesson.title}
+                                      onSuccess={(url) => {
+                                        updateLesson(mod.id, lesson.id, { video_url: url, _showUpload: false })
+                                      }}
+                                    />
+                                  )}
                                 </div>
                               )}
                               <label className="flex items-center gap-1.5 text-xs text-gray-500 cursor-pointer">
