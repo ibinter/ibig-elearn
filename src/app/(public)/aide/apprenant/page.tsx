@@ -78,6 +78,41 @@ const tips = [
   { icon: Heart, text: 'Parrainez vos amis et gagnez des réductions sur vos prochaines formations' },
 ]
 
+const faqApprenant = [
+  {
+    q: 'Comment rejoindre une session live ?',
+    a: 'Dans "Sessions live" sur votre tableau de bord, cliquez "Rejoindre" à l\'heure prévue. Un lien de visioconférence s\'ouvre automatiquement.',
+  },
+  {
+    q: 'Puis-je changer de devise ou de pays ?',
+    a: 'Oui — cliquez sur le sélecteur de devise en haut de page (ex: XOF, EUR, USD). Votre pays peut être modifié dans Mon profil → Paramètres.',
+  },
+  {
+    q: 'Comment accéder à la plateforme sur mobile ?',
+    a: 'Téléchargez l\'application IBIG E-LEARNING (bientôt sur Play Store et App Store). En attendant, le site est entièrement responsive sur votre navigateur mobile.',
+  },
+  {
+    q: 'Je veux un remboursement — que faire ?',
+    a: 'Contactez le support à contact@ibig-elearning.com dans les 7 jours suivant l\'achat si vous n\'avez pas regardé plus de 20% du contenu. Notre équipe traite la demande sous 48h.',
+  },
+  {
+    q: 'Mon paiement Mobile Money a été débité mais je n\'ai pas accès à la formation ?',
+    a: 'Vérifiez votre email de confirmation. Si rien n\'est reçu après 15 minutes, contactez le support avec votre numéro de transaction Mobile Money.',
+  },
+  {
+    q: 'Comment fonctionne le programme de parrainage ?',
+    a: 'Dans "Parrainage" sur votre tableau de bord, copiez votre lien unique. Pour chaque ami inscrit via votre lien, vous recevez des crédits IBIG utilisables sur vos prochaines formations.',
+  },
+  {
+    q: 'Puis-je suivre plusieurs formations en même temps ?',
+    a: 'Oui, sans limite. Chaque formation a sa propre progression indépendante. Gérez tout depuis "Mes formations" sur votre tableau de bord.',
+  },
+  {
+    q: 'Mon certificat ne se génère pas — que faire ?',
+    a: 'Vérifiez que toutes les leçons sont marquées "terminées" et que vous avez validé le quiz final. Si le problème persiste, contactez le support avec le nom de la formation.',
+  },
+]
+
 export default function GuideApprenantPage() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -142,6 +177,35 @@ export default function GuideApprenantPage() {
                 <p className="text-sm text-gray-700">{t.text}</p>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div className="mt-10">
+          <h3 className="text-xl font-bold text-gray-900 mb-6">Questions fréquentes</h3>
+          <div className="space-y-4">
+            {faqApprenant.map((item, i) => (
+              <div key={i} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+                <p className="font-semibold text-gray-900 mb-2">❓ {item.q}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Contact support */}
+        <div className="mt-8 bg-gradient-to-r from-[#0B3D91] to-blue-700 rounded-2xl p-6 text-white">
+          <h3 className="font-bold text-lg mb-2">Besoin d'aide supplémentaire ?</h3>
+          <p className="text-blue-200 text-sm mb-4">Notre équipe support répond sous 24h en semaine.</p>
+          <div className="flex flex-wrap gap-3">
+            <a href="mailto:contact@ibig-elearning.com"
+              className="bg-white text-[#0B3D91] font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-50 transition-colors">
+              ✉️ Envoyer un email
+            </a>
+            <Link href="/contact"
+              className="border border-white/40 text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-white/10 transition-colors">
+              📝 Formulaire de contact
+            </Link>
           </div>
         </div>
 
