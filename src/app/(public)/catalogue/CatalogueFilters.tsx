@@ -8,7 +8,6 @@ import type { Category } from '@/types'
 interface Props {
   categories: Category[]
   params: Record<string, string | undefined>
-  buildUrl: (overrides: Record<string, string | undefined>) => string
 }
 
 function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
@@ -25,7 +24,14 @@ function FilterSection({ title, children }: { title: string; children: React.Rea
   )
 }
 
-export default function CatalogueFilters({ categories, params, buildUrl }: Props) {
+function buildUrl(params: Record<string, string | undefined>, overrides: Record<string, string | undefined>) {
+  const p = { ...params, page: undefined, ...overrides }
+  const entries = Object.entries(p).filter(([, v]) => v !== undefined && v !== '')
+  return '/catalogue' + (entries.length ? '?' + entries.map(([k, v]) => `${k}=${encodeURIComponent(v!)}`).join('&') : '')
+}
+
+export default function CatalogueFilters({ categories, params }: Props) {
+  const url = (overrides: Record<string, string | undefined>) => buildUrl(params, overrides)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   const filterContent = (
@@ -48,12 +54,12 @@ export default function CatalogueFilters({ categories, params, buildUrl }: Props
       {/* Catégories */}
       <FilterSection title="Domaine">
         <div className="space-y-1">
-          <Link href={buildUrl({ categorie: undefined })}
+          <Link href={url({ categorie: undefined })}
             className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${!params.categorie ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
             Tous les domaines
           </Link>
           {categories?.map(cat => (
-            <Link key={cat.id} href={buildUrl({ categorie: cat.slug })}
+            <Link key={cat.id} href={url({ categorie: cat.slug })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.categorie === cat.slug ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {cat.name}
             </Link>
@@ -70,7 +76,7 @@ export default function CatalogueFilters({ categories, params, buildUrl }: Props
             { value: 'intermediaire', label: 'Intermédiaire' },
             { value: 'avance', label: 'Avancé' },
           ].map(item => (
-            <Link key={item.label} href={buildUrl({ niveau: item.value })}
+            <Link key={item.label} href={url({ niveau: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.niveau === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -88,7 +94,7 @@ export default function CatalogueFilters({ categories, params, buildUrl }: Props
             { value: '20000-50000', label: '20 000 – 50 000 FCFA' },
             { value: '50000+', label: 'Plus de 50 000 FCFA' },
           ].map(item => (
-            <Link key={item.label} href={buildUrl({ prix: item.value })}
+            <Link key={item.label} href={url({ prix: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.prix === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -105,7 +111,7 @@ export default function CatalogueFilters({ categories, params, buildUrl }: Props
             { value: '5-20', label: '5 à 20 heures' },
             { value: '20+', label: 'Plus de 20 heures' },
           ].map(item => (
-            <Link key={item.label} href={buildUrl({ duree: item.value })}
+            <Link key={item.label} href={url({ duree: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.duree === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -122,7 +128,7 @@ export default function CatalogueFilters({ categories, params, buildUrl }: Props
             { value: 'en', label: 'Anglais' },
             { value: 'ar', label: 'Arabe' },
           ].map(item => (
-            <Link key={item.label} href={buildUrl({ langue: item.value })}
+            <Link key={item.label} href={url({ langue: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.langue === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -132,7 +138,7 @@ export default function CatalogueFilters({ categories, params, buildUrl }: Props
 
       {/* À la une */}
       <div className="mt-2">
-        <Link href={buildUrl({ featured: params.featured === 'true' ? undefined : 'true' })}
+        <Link href={url({ featured: params.featured === 'true' ? undefined : 'true' })}
           className={`w-full flex items-center justify-center gap-2 text-sm font-medium px-4 py-2.5 rounded-xl border transition-colors ${params.featured === 'true' ? 'bg-[#FFA500] text-black border-[#FFA500]' : 'border-gray-200 text-gray-600 hover:border-[#FFA500] hover:text-[#FFA500]'}`}>
           ⭐ Formations à la une
         </Link>

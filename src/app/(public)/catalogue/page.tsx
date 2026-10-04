@@ -126,7 +126,6 @@ export default async function CataloguePage({ searchParams }: PageProps) {
           <CatalogueFilters
             categories={categories as Category[]}
             params={params}
-            buildUrl={buildUrl}
           />
 
           {/* Grille */}
