@@ -42,8 +42,9 @@ export default async function TableauDeBordPage() {
       .from('lesson_progress')
       .select('lesson:lessons(id, title)')
       .eq('user_id', user!.id)
+      .eq('course_id', (nextCourse.course as any)?.id)
       .eq('is_completed', false)
-      .order('created_at', { ascending: true })
+      .order('updated_at', { ascending: false })
       .limit(1)
       .single()
     if (lesson?.lesson) nextLesson = lesson.lesson as any
@@ -186,7 +187,9 @@ export default async function TableauDeBordPage() {
               <span className="text-xs text-blue-200">{nextCourse.progress_percent ?? 0}% complété</span>
             </div>
           </div>
-          <Link href={`/apprendre/${(nextCourse.course as any)?.id}/intro`}
+          <Link href={nextLesson
+              ? `/apprendre/${(nextCourse.course as any)?.id}/${nextLesson.id}`
+              : `/apprendre/${(nextCourse.course as any)?.id}`}
             className="flex items-center gap-2 bg-[#FFA500] text-black font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-orange-400 transition-colors whitespace-nowrap flex-shrink-0">
             <Play className="w-4 h-4" /> Continuer
           </Link>
@@ -228,7 +231,7 @@ export default async function TableauDeBordPage() {
                       <span className="text-xs text-gray-500 whitespace-nowrap font-medium">{pct}%</span>
                     </div>
                   </div>
-                  <Link href={`/apprendre/${e.course?.id}/intro`}
+                  <Link href={`/apprendre/${e.course?.id}`}
                     className={`flex items-center gap-1 text-xs font-semibold px-3 py-2 rounded-lg flex-shrink-0 transition-colors ${
                       isComplete ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'ibig-gradient text-white hover:opacity-90'
                     }`}>
@@ -302,7 +305,7 @@ export default async function TableauDeBordPage() {
         </div>
       </div>
       {/* Formations recommandées */}
-      {recommended.length > 0 && (
+      {(recommended?.length ?? 0) > 0 && (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <div>
