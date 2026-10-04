@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, Award, TrendingUp, ArrowRight, Play, Flame, Star, Zap, Target, Trophy, ChevronRight, BarChart2 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
@@ -8,9 +9,12 @@ export default async function TableauDeBordPage() {
   const { data: { user } } = await supabase.auth.getUser()
   const { data: profile } = await supabase
     .from('profiles')
-    .select('*, total_points, streak_days, level')
+    .select('*, xp_points, xp_level, streak_days, longest_streak, last_activity_date, onboarding_completed')
     .eq('id', user!.id)
     .single()
+
+  // Rediriger vers l'onboarding si pas encore complété
+  if (profile && profile.onboarding_completed === false) redirect('/onboarding')
 
   const { data: enrollments } = await supabase
     .from('enrollments')
@@ -45,32 +49,9 @@ export default async function TableauDeBordPage() {
     if (lesson?.lesson) nextLesson = lesson.lesson as any
   }
 
-  // Formations recommandées : même catégories que les inscriptions, exclure déjà inscrites
-  const enrolledCourseIds = enrollments?.map((e: any) => e.course?.id).filter(Boolean) ?? []
-  const enrolledCategories = [...new Set(enrollments?.map((e: any) => e.course?.category).filter(Boolean))]
-
-  let recommended: any[] = []
-  if (enrolledCategories.length > 0) {
-    const { data: recs } = await supabase
-      .from('courses')
-      .select('id, title, slug, thumbnail_url, duration_hours, category, price_xof, level, instructor:profiles(full_name)')
-      .in('category', enrolledCategories as string[])
-      .eq('is_published', true)
-      .not('id', 'in', `(${enrolledCourseIds.join(',') || '00000000-0000-0000-0000-000000000000'})`)
-      .order('total_enrollments', { ascending: false })
-      .limit(4)
-    recommended = recs ?? []
-  }
-  if (recommended.length < 4) {
-    const { data: popular } = await supabase
-      .from('courses')
-      .select('id, title, slug, thumbnail_url, duration_hours, category, price_xof, level, instructor:profiles(full_name)')
-      .eq('is_published', true)
-      .not('id', 'in', `(${[...enrolledCourseIds, ...recommended.map(r => r.id)].join(',') || '00000000-0000-0000-0000-000000000000'})`)
-      .order('total_enrollments', { ascending: false })
-      .limit(4 - recommended.length)
-    recommended = [...recommended, ...(popular ?? [])]
-  }
+  // Formations recommandées via RPC (utilise données onboarding : intérêts, niveau, objectifs)
+  const { data: recommended } = await supabase
+    .rpc('get_recommended_courses', { p_user_id: user!.id, p_limit: 4 })
 
   const stats = {
     total: enrollments?.length ?? 0,
@@ -79,25 +60,35 @@ export default async function TableauDeBordPage() {
     certs: certificates?.length ?? 0,
   }
 
-  const totalPoints = (profile as any)?.total_points ?? 0
+  const totalPoints = (profile as any)?.xp_points ?? 0
   const streakDays = (profile as any)?.streak_days ?? 0
-  const level = (profile as any)?.level ?? 'débutant'
+  const level = (profile as any)?.xp_level ?? 'Explorateur'
 
-  // Calcul niveau suivant
-  const levels = ['débutant', 'intermédiaire', 'avancé', 'expert', 'maître']
-  const lvlIdx = levels.indexOf(level)
-  const nextLevel = levels[Math.min(lvlIdx + 1, levels.length - 1)]
-  const pointsPerLevel = 500
-  const progressToNext = Math.min(100, ((totalPoints % pointsPerLevel) / pointsPerLevel) * 100)
+  // Niveaux IBIG avec seuils XP
+  const LEVELS = [
+    { name: 'Explorateur', min: 0,     max: 499,   emoji: '🌱' },
+    { name: 'Apprenti',    min: 500,   max: 1499,  emoji: '📚' },
+    { name: 'Pratiquant',  min: 1500,  max: 3999,  emoji: '⚡' },
+    { name: 'Expert',      min: 4000,  max: 9999,  emoji: '🏆' },
+    { name: 'Maître IBIG', min: 10000, max: 99999, emoji: '👑' },
+  ]
+  const lvlIdx = LEVELS.findIndex(l => l.name === level)
+  const currentLvl = LEVELS[lvlIdx] ?? LEVELS[0]
+  const nextLvl = LEVELS[Math.min(lvlIdx + 1, LEVELS.length - 1)]
+  const nextLevel = nextLvl.name
+  const range = currentLvl.max - currentLvl.min + 1
+  const progressToNext = lvlIdx >= LEVELS.length - 1
+    ? 100
+    : Math.min(100, Math.round(((totalPoints - currentLvl.min) / range) * 100))
 
   const levelColors: Record<string, string> = {
-    'débutant': 'from-green-400 to-emerald-500',
-    'intermédiaire': 'from-blue-400 to-[#0B3D91]',
-    'avancé': 'from-purple-500 to-violet-600',
-    'expert': 'from-orange-400 to-[#FFA500]',
-    'maître': 'from-yellow-400 to-amber-500',
+    'Explorateur': 'from-green-400 to-emerald-500',
+    'Apprenti':    'from-blue-400 to-[#0B3D91]',
+    'Pratiquant':  'from-purple-500 to-violet-600',
+    'Expert':      'from-orange-400 to-[#FFA500]',
+    'Maître IBIG': 'from-yellow-400 to-amber-500',
   }
-  const levelGrad = levelColors[level] ?? levelColors['débutant']
+  const levelGrad = levelColors[level] ?? levelColors['Explorateur']
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -287,13 +278,14 @@ export default async function TableauDeBordPage() {
 
           {/* Badges niveau */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <h3 className="font-bold text-gray-900 text-sm mb-3 flex items-center gap-2"><Star className="w-4 h-4 text-[#FFA500]" /> Progression</h3>
+            <h3 className="font-bold text-gray-900 text-sm mb-3 flex items-center gap-2"><Star className="w-4 h-4 text-[#FFA500]" /> Niveaux IBIG</h3>
             <div className="space-y-2">
-              {levels.map((l, i) => (
-                <div key={l} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs ${l === level ? 'bg-[#0B3D91] text-white font-semibold' : i < lvlIdx ? 'bg-green-50 text-green-700' : 'bg-gray-50 text-gray-400'}`}>
-                  <span>{i < lvlIdx ? '✅' : l === level ? '⭐' : '🔒'}</span>
-                  <span className="capitalize">{l}</span>
-                  {l === level && <span className="ml-auto text-blue-200 text-[10px]">ACTUEL</span>}
+              {LEVELS.map((l, i) => (
+                <div key={l.name} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs ${l.name === level ? 'bg-[#0B3D91] text-white font-semibold' : i < lvlIdx ? 'bg-green-50 text-green-700' : 'bg-gray-50 text-gray-400'}`}>
+                  <span>{i < lvlIdx ? '✅' : l.name === level ? l.emoji : '🔒'}</span>
+                  <span>{l.name}</span>
+                  {l.name === level && <span className="ml-auto text-blue-200 text-[10px]">ACTUEL</span>}
+                  {i > lvlIdx && l.name !== level && <span className="ml-auto text-[10px]">{l.min.toLocaleString()} XP</span>}
                 </div>
               ))}
             </div>
@@ -313,7 +305,10 @@ export default async function TableauDeBordPage() {
       {recommended.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900">Recommandé pour vous</h2>
+            <div>
+                <h2 className="font-bold text-gray-900">Recommandé pour vous</h2>
+                <p className="text-xs text-gray-400 mt-0.5">Sélectionné selon vos intérêts et objectifs</p>
+              </div>
             <Link href="/catalogue" className="text-sm text-[#0B3D91] hover:underline flex items-center gap-1">
               Voir tout <ArrowRight className="w-4 h-4" />
             </Link>
@@ -327,9 +322,9 @@ export default async function TableauDeBordPage() {
                     ? <img src={course.thumbnail_url} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     : <div className="w-full h-full ibig-gradient flex items-center justify-center"><BookOpen className="w-8 h-8 text-white/50" /></div>}
                 </div>
-                <p className="text-xs text-[#FFA500] font-semibold uppercase tracking-wide mb-1">{course.category}</p>
+                <p className="text-xs text-[#FFA500] font-semibold uppercase tracking-wide mb-1">{course.level}</p>
                 <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-[#0B3D91] transition-colors">{course.title}</h3>
-                <p className="text-xs text-gray-400">{(course.instructor as any)?.full_name}</p>
+                <p className="text-xs text-gray-400">{course.instructor_name}</p>
                 <p className="text-xs font-bold text-[#0B3D91] mt-2">
                   {course.price_xof === 0 ? 'Gratuit' : `${course.price_xof?.toLocaleString()} XOF`}
                 </p>

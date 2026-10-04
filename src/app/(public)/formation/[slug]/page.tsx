@@ -1,6 +1,6 @@
 ﻿import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
-import { Star, Users, Clock, BookOpen, CheckCircle, Play, Award, ChevronDown } from 'lucide-react'
+import { Star, Users, Clock, BookOpen, CheckCircle, Play, Award, ChevronDown, Lock } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import Link from 'next/link'
 import type { Course } from '@/types'
@@ -198,18 +198,31 @@ export default async function FormationPage({ params }: PageProps) {
                         </div>
                       </summary>
                       <div className="divide-y divide-gray-50">
-                        {(mod.lessons ?? []).map((lesson: any) => (
-                          <div key={lesson.id} className="flex items-center gap-3 px-4 py-3">
-                            <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                              {lesson.type === 'video' ? <Play className="w-3.5 h-3.5 text-gray-500" /> : <BookOpen className="w-3.5 h-3.5 text-gray-500" />}
+                        {(mod.lessons ?? []).map((lesson: any, idx: number) => {
+                          const isLocked = !lesson.is_free_preview && idx > 0
+                          return (
+                          <div key={lesson.id} className={`flex items-center gap-3 px-4 py-3 ${isLocked ? 'opacity-50' : ''}`}>
+                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${isLocked ? 'bg-gray-100' : 'bg-gray-100'}`}>
+                              {isLocked
+                                ? <Lock className="w-3.5 h-3.5 text-gray-400" />
+                                : lesson.type === 'video'
+                                  ? <Play className="w-3.5 h-3.5 text-gray-500" />
+                                  : <BookOpen className="w-3.5 h-3.5 text-gray-500" />
+                              }
                             </div>
-                            <span className="text-sm text-gray-700 flex-1">{lesson.title}</span>
-                            {lesson.is_free_preview && <span className="text-xs text-green-600 font-medium">Aperçu gratuit</span>}
-                            {lesson.video_duration_seconds && (
+                            <span className={`text-sm flex-1 ${isLocked ? 'text-gray-400' : 'text-gray-700'}`}>{lesson.title}</span>
+                            {lesson.is_free_preview && idx === 0 && (
+                              <span className="text-xs text-green-600 font-medium">Aperçu gratuit</span>
+                            )}
+                            {isLocked && (
+                              <span className="text-xs text-gray-300">Accès après inscription</span>
+                            )}
+                            {lesson.video_duration_seconds && !isLocked && (
                               <span className="text-xs text-gray-400">{Math.ceil(lesson.video_duration_seconds / 60)} min</span>
                             )}
                           </div>
-                        ))}
+                          )
+                        })}
                       </div>
                     </details>
                   ))}

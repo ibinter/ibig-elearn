@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Plus, Trash2, GripVertical, Save, CheckCircle, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react'
+import { Plus, Trash2, GripVertical, Save, CheckCircle, AlertCircle, ChevronDown, ChevronUp, Sparkles, Loader2 } from 'lucide-react'
 
 interface Question {
   id?: string
@@ -18,21 +18,52 @@ interface Props {
   courseId: string
   initialQuestions: Question[]
   initialPassingScore: number
+  isFinalExam?: boolean
+  examDurationMinutes?: number
+  examMaxAttempts?: number
 }
 
 function newQuestion(position: number): Question {
   return { question: '', type: 'mcq', options: ['', '', '', ''], correct_option: 0, explanation: '', position }
 }
 
-export default function QuizEditor({ lessonId, courseId, initialQuestions, initialPassingScore }: Props) {
+export default function QuizEditor({ lessonId, courseId, initialQuestions, initialPassingScore, isFinalExam, examDurationMinutes, examMaxAttempts }: Props) {
   const [questions, setQuestions] = useState<Question[]>(
     initialQuestions.length ? initialQuestions : [newQuestion(0)]
   )
   const [passingScore, setPassingScore] = useState(initialPassingScore)
+  const [duration, setDuration] = useState(examDurationMinutes ?? 60)
+  const [maxAttempts, setMaxAttempts] = useState(examMaxAttempts ?? 3)
   const [expanded, setExpanded] = useState<number>(0)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
   const [isPending, startTransition] = useTransition()
+  const [generating, setGenerating] = useState(false)
+  const [genCount, setGenCount] = useState(5)
+
+  async function generateWithSara() {
+    setGenerating(true)
+    setError('')
+    try {
+      const res = await fetch('/api/sara/generate-quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lessonId, count: genCount }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setError(data.error ?? 'Erreur de génération'); return }
+      const generated = (data.questions as Question[]).map((q, i) => ({
+        ...q,
+        position: questions.length + i,
+      }))
+      setQuestions(prev => [...prev.filter(q => q.question.trim() !== ''), ...generated])
+      setExpanded(questions.filter(q => q.question.trim() !== '').length)
+    } catch {
+      setError('Erreur réseau lors de la génération.')
+    } finally {
+      setGenerating(false)
+    }
+  }
 
   function addQuestion() {
     const next = newQuestion(questions.length)
@@ -98,7 +129,7 @@ export default function QuizEditor({ lessonId, courseId, initialQuestions, initi
         const res = await fetch('/api/formateur/quiz', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ lessonId, passingScore, questions }),
+          body: JSON.stringify({ lessonId, passingScore, questions, isFinalExam, examDurationMinutes: duration, examMaxAttempts: maxAttempts }),
         })
         if (!res.ok) { const d = await res.json(); setError(d.error ?? 'Erreur de sauvegarde'); return }
         setSaved(true)
@@ -112,17 +143,49 @@ export default function QuizEditor({ lessonId, courseId, initialQuestions, initi
   return (
     <div className="space-y-5">
       {/* Score de réussite */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-        <label className="block text-sm font-semibold text-gray-700 mb-2">Score minimum de réussite</label>
-        <div className="flex items-center gap-4">
-          <input
-            type="range" min={10} max={100} step={5} value={passingScore}
-            onChange={e => setPassingScore(Number(e.target.value))}
-            className="flex-1 accent-[#0B3D91]"
-          />
-          <span className="w-16 text-center font-bold text-[#0B3D91] text-lg">{passingScore}%</span>
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Score minimum de réussite</label>
+          <div className="flex items-center gap-4">
+            <input
+              type="range" min={10} max={100} step={5} value={passingScore}
+              onChange={e => setPassingScore(Number(e.target.value))}
+              className="flex-1 accent-[#0B3D91]"
+            />
+            <span className="w-16 text-center font-bold text-[#0B3D91] text-lg">{passingScore}%</span>
+          </div>
+          <p className="text-xs text-gray-400 mt-1">
+            {isFinalExam ? 'Score minimum pour obtenir le certificat.' : `Les apprenants doivent obtenir au moins ${passingScore}% pour valider ce quiz.`}
+          </p>
         </div>
-        <p className="text-xs text-gray-400 mt-1">Les apprenants doivent obtenir au moins {passingScore}% pour valider ce quiz.</p>
+
+        {isFinalExam && (
+          <>
+            <div className="border-t border-gray-100 pt-4 grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Durée (minutes)</label>
+                <div className="flex items-center gap-3">
+                  <input type="range" min={15} max={180} step={15} value={duration}
+                    onChange={e => setDuration(Number(e.target.value))}
+                    className="flex-1 accent-[#FFA500]" />
+                  <span className="w-16 text-center font-bold text-[#FFA500]">{duration} min</span>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Tentatives max</label>
+                <div className="flex items-center gap-3">
+                  <input type="range" min={1} max={5} step={1} value={maxAttempts}
+                    onChange={e => setMaxAttempts(Number(e.target.value))}
+                    className="flex-1 accent-[#FFA500]" />
+                  <span className="w-10 text-center font-bold text-[#FFA500]">{maxAttempts}</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-orange-50 rounded-xl px-4 py-2 text-xs text-orange-700">
+              🏆 Examen final : {questions.length} questions · {duration} min · ≥{passingScore}% requis · {maxAttempts} tentative{maxAttempts > 1 ? 's' : ''} max
+            </div>
+          </>
+        )}
       </div>
 
       {/* Questions */}
@@ -245,6 +308,38 @@ export default function QuizEditor({ lessonId, courseId, initialQuestions, initi
       >
         <Plus className="w-4 h-4" /> Ajouter une question
       </button>
+
+      {/* Générer avec SARA */}
+      <div className="bg-gradient-to-r from-[#0B3D91]/5 to-[#FFA500]/5 border border-[#0B3D91]/15 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <Sparkles className="w-4 h-4 text-[#0B3D91]" />
+          <h3 className="text-sm font-bold text-gray-800">Générer avec SARA</h3>
+          <span className="text-xs bg-[#FFA500]/20 text-[#FFA500] px-2 py-0.5 rounded-full font-semibold">IA</span>
+        </div>
+        <p className="text-xs text-gray-500 mb-3">SARA analyse le contenu de la leçon et génère des questions automatiquement. Vous pourrez les modifier ensuite.</p>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-gray-600 font-medium">Nombre :</label>
+            <select
+              value={genCount}
+              onChange={e => setGenCount(Number(e.target.value))}
+              className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-[#0B3D91]"
+            >
+              {[3, 5, 8, 10].map(n => <option key={n} value={n}>{n} questions</option>)}
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={generateWithSara}
+            disabled={generating}
+            className="flex items-center gap-1.5 bg-[#0B3D91] text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-[#0a3480] disabled:opacity-60 transition-colors"
+          >
+            {generating
+              ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Génération…</>
+              : <><Sparkles className="w-3.5 h-3.5" /> Générer</>}
+          </button>
+        </div>
+      </div>
 
       {/* Erreur */}
       {error && (
