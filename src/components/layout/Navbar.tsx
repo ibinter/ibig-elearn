@@ -112,8 +112,8 @@ export default function Navbar({ user }: NavbarProps) {
 
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
-            <Image src="/logo-icon.webp" alt="IBIG E-LEARNING" width={40} height={40} className="block sm:hidden rounded-xl" priority />
-            <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={160} height={48} className="hidden sm:block h-12 w-auto" priority />
+            <Image src="/logo-icon.webp" alt="IBIG E-LEARNING" width={48} height={48} className="block sm:hidden rounded-xl" priority />
+            <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={200} height={56} className="hidden sm:block h-14 w-auto" priority />
           </Link>
 
           {/* Desktop nav links */}
