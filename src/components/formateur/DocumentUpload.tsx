@@ -10,9 +10,11 @@ const MAX_MB = 50
 interface Props {
   lessonTitle: string
   onSuccess: (url: string) => void
+  acceptOverride?: string
+  labelOverride?: string
 }
 
-export default function DocumentUpload({ lessonTitle, onSuccess }: Props) {
+export default function DocumentUpload({ lessonTitle, onSuccess, acceptOverride, labelOverride }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [state, setState] = useState<'idle' | 'uploading' | 'done' | 'error'>('idle')
   const [progress, setProgress] = useState(0)
@@ -63,7 +65,7 @@ export default function DocumentUpload({ lessonTitle, onSuccess }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept={ACCEPTED}
+        accept={acceptOverride ?? ACCEPTED}
         className="hidden"
         onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])}
       />
@@ -75,8 +77,8 @@ export default function DocumentUpload({ lessonTitle, onSuccess }: Props) {
           className="w-full border-2 border-dashed border-gray-300 rounded-xl p-5 flex flex-col items-center gap-2 hover:border-[#0B3D91] hover:bg-blue-50 transition-colors cursor-pointer text-gray-500 hover:text-[#0B3D91]"
         >
           <FileText className="w-6 h-6" />
-          <span className="text-sm font-medium">Cliquer pour uploader un document</span>
-          <span className="text-xs text-gray-400">PDF, Word, PowerPoint, Excel — max {MAX_MB} Mo</span>
+          <span className="text-sm font-medium">{labelOverride ?? 'Cliquer pour uploader un document'}</span>
+          <span className="text-xs text-gray-400">{acceptOverride ? 'MP3, WAV, OGG, M4A' : 'PDF, Word, PowerPoint, Excel'} — max {MAX_MB} Mo</span>
         </button>
       )}
 

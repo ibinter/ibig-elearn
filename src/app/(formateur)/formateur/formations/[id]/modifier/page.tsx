@@ -21,14 +21,18 @@ const LEVELS = [
   { value: 'tous_niveaux', label: 'Tous niveaux' },
 ]
 const LESSON_TYPES = [
-  { value: 'video', label: 'Vidéo', icon: Play },
-  { value: 'document', label: 'Document', icon: FileText },
-  { value: 'quiz', label: 'Quiz', icon: HelpCircle },
-  { value: 'assignment', label: 'Devoir', icon: BookOpen },
+  { value: 'video', label: '🎬 Vidéo' },
+  { value: 'audio', label: '🎧 Audio' },
+  { value: 'document', label: '📄 Document' },
+  { value: 'text', label: '📝 Texte' },
+  { value: 'quiz', label: '❓ Quiz' },
+  { value: 'assignment', label: '📋 Devoir' },
+  { value: 'code', label: '💻 Code' },
+  { value: 'final_exam', label: '🏆 Examen final' },
 ]
-const typeIcon = (t: string) => ({ video: Play, document: FileText, quiz: HelpCircle, assignment: BookOpen }[t] ?? BookOpen)
+const typeIcon = (t: string) => ({ video: Play, document: FileText, quiz: HelpCircle, assignment: BookOpen, audio: FileText, text: FileText, code: FileText, final_exam: HelpCircle }[t] ?? BookOpen)
 
-interface Lesson { id: string; title: string; type: string; position: number; is_free_preview: boolean; video_duration_seconds: number | null; video_url: string | null; _showUpload?: boolean }
+interface Lesson { id: string; title: string; type: string; position: number; is_free_preview: boolean; video_duration_seconds: number | null; video_url: string | null; content: string | null; _showUpload?: boolean }
 interface Module { id: string; title: string; position: number; lessons: Lesson[]; open?: boolean }
 interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[] }
 
@@ -140,6 +144,7 @@ export default function ModifierFormationPage() {
       is_free_preview: lesson.is_free_preview,
       video_url: lesson.video_url,
       video_duration_seconds: lesson.video_duration_seconds,
+      content: lesson.content,
     }).eq('id', lesson.id)
     showFlash('ok', 'Leçon enregistrée')
   }
@@ -384,12 +389,10 @@ export default function ModifierFormationPage() {
                               {lesson.type === 'document' && (
                                 <div className="w-full space-y-2">
                                   <div className="flex flex-wrap items-center gap-2">
-                                    <input
-                                      placeholder="URL du document (PDF, Google Drive…)"
+                                    <input placeholder="URL du document (PDF, Google Drive…)"
                                       value={lesson.video_url ?? ''}
                                       onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
-                                      className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 flex-1 min-w-32 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40"
-                                    />
+                                      className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 flex-1 min-w-32 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40" />
                                     <button type="button"
                                       onClick={() => updateLesson(mod.id, lesson.id, { _showUpload: !lesson._showUpload })}
                                       className={`flex items-center gap-1 text-xs px-2 py-1 rounded-lg border transition-colors ${lesson._showUpload ? 'bg-blue-50 border-[#0B3D91]/40 text-[#0B3D91]' : 'border-gray-200 text-gray-500 hover:border-[#0B3D91]/40 hover:text-[#0B3D91]'}`}>
@@ -397,13 +400,90 @@ export default function ModifierFormationPage() {
                                     </button>
                                   </div>
                                   {lesson._showUpload && (
-                                    <DocumentUpload
-                                      lessonTitle={lesson.title}
-                                      onSuccess={(url) => {
-                                        updateLesson(mod.id, lesson.id, { video_url: url, _showUpload: false })
-                                      }}
-                                    />
+                                    <DocumentUpload lessonTitle={lesson.title}
+                                      onSuccess={(url) => updateLesson(mod.id, lesson.id, { video_url: url, _showUpload: false })} />
                                   )}
+                                </div>
+                              )}
+                              {lesson.type === 'audio' && (
+                                <div className="w-full space-y-2">
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <input placeholder="URL audio (MP3, SoundCloud…)"
+                                      value={lesson.video_url ?? ''}
+                                      onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
+                                      className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 flex-1 min-w-32 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40" />
+                                    <input type="number" min="0" placeholder="Durée (sec)"
+                                      value={lesson.video_duration_seconds ?? ''}
+                                      onChange={e => updateLesson(mod.id, lesson.id, { video_duration_seconds: parseInt(e.target.value) || null })}
+                                      className="text-xs border border-gray-200 rounded-lg px-2 py-1 w-24 focus:outline-none" />
+                                    <button type="button"
+                                      onClick={() => updateLesson(mod.id, lesson.id, { _showUpload: !lesson._showUpload })}
+                                      className={`flex items-center gap-1 text-xs px-2 py-1 rounded-lg border transition-colors ${lesson._showUpload ? 'bg-blue-50 border-[#0B3D91]/40 text-[#0B3D91]' : 'border-gray-200 text-gray-500 hover:border-[#0B3D91]/40 hover:text-[#0B3D91]'}`}>
+                                      <Upload className="w-3 h-3" /> Uploader
+                                    </button>
+                                  </div>
+                                  {lesson._showUpload && (
+                                    <DocumentUpload lessonTitle={lesson.title}
+                                      onSuccess={(url) => updateLesson(mod.id, lesson.id, { video_url: url, _showUpload: false })}
+                                      acceptOverride=".mp3,.wav,.ogg,.m4a,.aac"
+                                      labelOverride="Uploader un fichier audio (MP3, WAV, OGG…)" />
+                                  )}
+                                </div>
+                              )}
+                              {(lesson.type === 'text') && (
+                                <div className="w-full">
+                                  <textarea placeholder="Contenu de la leçon (texte, HTML ou Markdown)…"
+                                    value={lesson.content ?? ''}
+                                    onChange={e => updateLesson(mod.id, lesson.id, { content: e.target.value || null })}
+                                    rows={6}
+                                    className="w-full text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40 resize-y font-mono" />
+                                </div>
+                              )}
+                              {(lesson.type === 'quiz' || lesson.type === 'final_exam') && (
+                                <div className="w-full space-y-2">
+                                  <textarea placeholder="Instructions du quiz (objectifs, consignes, nombre de tentatives…)"
+                                    value={lesson.content ?? ''}
+                                    onChange={e => updateLesson(mod.id, lesson.id, { content: e.target.value || null })}
+                                    rows={3}
+                                    className="w-full text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40 resize-none" />
+                                  <p className="text-[10px] text-gray-400">Les questions s&apos;ajoutent depuis l&apos;onglet <strong>Leçons → Éditeur de quiz</strong> (prochainement).</p>
+                                </div>
+                              )}
+                              {lesson.type === 'assignment' && (
+                                <div className="w-full space-y-2">
+                                  <textarea placeholder="Consigne du devoir : objectifs, critères d'évaluation, délai de rendu…"
+                                    value={lesson.content ?? ''}
+                                    onChange={e => updateLesson(mod.id, lesson.id, { content: e.target.value || null })}
+                                    rows={4}
+                                    className="w-full text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40 resize-y" />
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <input placeholder="URL de ressource jointe (optionnel)"
+                                      value={lesson.video_url ?? ''}
+                                      onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
+                                      className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 flex-1 min-w-32 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40" />
+                                    <button type="button"
+                                      onClick={() => updateLesson(mod.id, lesson.id, { _showUpload: !lesson._showUpload })}
+                                      className={`flex items-center gap-1 text-xs px-2 py-1 rounded-lg border transition-colors ${lesson._showUpload ? 'bg-blue-50 border-[#0B3D91]/40 text-[#0B3D91]' : 'border-gray-200 text-gray-500 hover:border-[#0B3D91]/40 hover:text-[#0B3D91]'}`}>
+                                      <Upload className="w-3 h-3" /> Joindre un fichier
+                                    </button>
+                                  </div>
+                                  {lesson._showUpload && (
+                                    <DocumentUpload lessonTitle={lesson.title}
+                                      onSuccess={(url) => updateLesson(mod.id, lesson.id, { video_url: url, _showUpload: false })} />
+                                  )}
+                                </div>
+                              )}
+                              {lesson.type === 'code' && (
+                                <div className="w-full space-y-2">
+                                  <textarea placeholder="Instructions de l'exercice de code…"
+                                    value={lesson.content ?? ''}
+                                    onChange={e => updateLesson(mod.id, lesson.id, { content: e.target.value || null })}
+                                    rows={3}
+                                    className="w-full text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40 resize-none" />
+                                  <input placeholder="URL sandbox (CodePen, StackBlitz, Replit…)"
+                                    value={lesson.video_url ?? ''}
+                                    onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
+                                    className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40" />
                                 </div>
                               )}
                               <label className="flex items-center gap-1.5 text-xs text-gray-500 cursor-pointer">
