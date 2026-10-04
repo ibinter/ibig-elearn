@@ -64,8 +64,11 @@ export default async function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-4">Contact</h3>
             <ul className="space-y-2 text-sm text-blue-200">
-              <li>📍 Abidjan Cocody Riviera Palmeraie</li>
-              <li>📞 +225 XX XX XX XX XX</li>
+              <li>📍 Abidjan, Cocody Riviera Palmeraie</li>
+              <li>📞 +225 27 22 27 60 14</li>
+              <li>📞 +225 07 78 88 25 92</li>
+              <li>📞 +225 05 65 90 47 79</li>
+              <li>📞 +225 01 53 59 55 44</li>
               <li>✉️ contact@ibig-elearning.com</li>
               <li className="pt-2">
                 <span className="text-white font-medium">{t.locale === 'en' ? 'Accepted payments' : 'Paiements acceptés'}</span>
