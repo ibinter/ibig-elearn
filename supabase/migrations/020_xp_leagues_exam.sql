@@ -394,8 +394,8 @@ BEGIN
   IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_cron') THEN
     PERFORM cron.schedule(
       'process-league-week',
-      '0 2 * * 1',  -- chaque lundi à 02:00 UTC
-      $$SELECT public.process_league_week(date_trunc('week', current_date - interval '7 days')::date)$$
+      '0 2 * * 1',
+      'SELECT public.process_league_week(date_trunc(''week'', current_date - interval ''7 days'')::date)'
     );
   END IF;
 EXCEPTION WHEN others THEN NULL;
