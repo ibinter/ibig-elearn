@@ -38,13 +38,13 @@ export default function CatalogueFilters({ categories, params }: Props) {
     <div className="space-y-0">
       {/* Recherche */}
       <FilterSection title="Rechercher">
-        <form action="/catalogue" method="get" className="flex gap-2">
+        <form action="/catalogue" method="get" className="flex gap-2 w-full overflow-hidden">
           {Object.entries(params).filter(([k]) => k !== 'q' && k !== 'page').map(([k, v]) =>
             v ? <input key={k} type="hidden" name={k} value={v} /> : null
           )}
           <input name="q" type="text" defaultValue={params.q ?? ''}
             placeholder="Mot-clé…"
-            className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]" />
+            className="flex-1 min-w-0 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]" />
           <button type="submit" className="flex-shrink-0 bg-[#0B3D91] text-white rounded-xl px-3 py-2 hover:bg-[#0B3D91]/90 transition-colors">
             <Search className="w-4 h-4" />
           </button>
