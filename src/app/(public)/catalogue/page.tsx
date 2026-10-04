@@ -33,7 +33,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   // ── Requête principale ──────────────────────────────────────
   let query = supabase
     .from('courses')
-    .select('*, instructor:profiles(full_name), category:categories(name, slug)', { count: 'exact' })
+    .select('id, title, slug, short_description, thumbnail_url, level, price_xof, price_eur, price_usd, rating_average, enrollment_count, duration_hours, is_featured, instructor:profiles(full_name), category:categories(name, slug)', { count: 'exact' })
     .eq('is_published', true)
 
   if (params.categorie) {
@@ -165,8 +165,8 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                         <h3 className="font-bold text-gray-900 text-sm leading-snug mb-1 line-clamp-2 group-hover:text-[#0B3D91] transition-colors">{course.title}</h3>
                         <p className="text-gray-400 text-xs mb-3">par {(course.instructor as any)?.full_name}</p>
                         <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 flex-1">
-                          <span className="flex items-center gap-1"><Star className="w-3 h-3 text-[#FFA500] fill-[#FFA500]" /> {course.rating_average.toFixed(1)}</span>
-                          <span className="flex items-center gap-1"><Users className="w-3 h-3" /> {course.enrollment_count.toLocaleString('fr-FR')}</span>
+                          <span className="flex items-center gap-1"><Star className="w-3 h-3 text-[#FFA500] fill-[#FFA500]" /> {(course.rating_average ?? 0).toFixed(1)}</span>
+                          <span className="flex items-center gap-1"><Users className="w-3 h-3" /> {(course.enrollment_count ?? 0).toLocaleString('fr-FR')}</span>
                           <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {course.duration_hours}h</span>
                         </div>
                         <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
