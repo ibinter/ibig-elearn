@@ -33,9 +33,7 @@ Email : contact@ibig-elearning.com`,
   },
   {
     num: '3', title: 'Prix',
-    content: `Les prix sont affichés en francs CFA (XOF), en euros (EUR) ou en dollars (USD) selon la sélection de l'utilisateur. Les prix s'entendent toutes taxes comprises applicables en Côte d'Ivoire. IBIG SARL se réserve le droit de modifier ses prix à tout moment, étant entendu que le prix applicable est celui en vigueur au moment de la commande.
-
-Des codes promotionnels peuvent être appliqués au moment du paiement pour bénéficier de réductions. Un seul code promo par commande.`,
+    content: `Les prix sont affichés en francs CFA (XOF), en euros (EUR) ou en dollars (USD) selon la sélection de l'utilisateur. Les prix s'entendent toutes taxes comprises applicables en Côte d'Ivoire. IBIG SARL se réserve le droit de modifier ses prix à tout moment, étant entendu que le prix applicable est celui en vigueur au moment de la commande.`,
   },
   {
     num: '4', title: 'Modalités de paiement',
@@ -60,7 +58,7 @@ Des codes promotionnels peuvent être appliqués au moment du paiement pour bén
       { label: 'Condition de contenu', desc: 'Moins de 20% du contenu de la formation doit avoir été visionné ou consulté.' },
       { label: 'Procédure', desc: 'Envoyez un email à contact@ibig-elearning.com avec votre numéro de commande et la raison de la demande.' },
       { label: 'Délai de traitement', desc: 'Le remboursement est traité sous 48h ouvrables. Le délai de réception varie selon l\'opérateur (3 à 7 jours ouvrables).' },
-      { label: 'Exceptions', desc: 'Aucun remboursement pour les formations dont plus de 20% a été visionné, les formations gratuites ou les achats effectués avec un code promotionnel de plus de 50%.' },
+      { label: 'Exceptions', desc: 'Aucun remboursement pour les formations dont plus de 20% a été visionné ou les formations gratuites.' },
     ],
   },
   {
