@@ -1,4 +1,13 @@
-﻿export default function CGVPage() {
+﻿import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Conditions Générales de Vente — IBIG E-LEARNING',
+  description: 'Consultez les Conditions Générales de Vente de la plateforme IBIG E-LEARNING.',
+  alternates: { canonical: 'https://ibig-elearning.com/cgv' },
+  robots: { index: true, follow: false },
+}
+
+export default function CGVPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Conditions générales de vente</h1>

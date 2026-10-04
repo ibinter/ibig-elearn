@@ -3,6 +3,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle } from 'lucide-react'
 import CourseCard from '@/components/ui/CourseCard'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique',
+  description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Plus de 179 formations certifiantes dans 12 pays. Formez-vous en marketing, finance, tech, gestion et bien plus.',
+  keywords: ['formation en ligne Afrique', 'e-learning Afrique francophone', 'formation professionnelle Côte d\'Ivoire', 'certification en ligne', 'IBIG E-LEARNING', 'cours en ligne', 'formation à distance'],
+  alternates: { canonical: 'https://ibig-elearning.com' },
+  openGraph: {
+    title: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique',
+    description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Plus de 179 formations certifiantes.',
+    url: 'https://ibig-elearning.com',
+    images: [{ url: '/logo-full.webp', width: 1200, height: 630, alt: 'IBIG E-LEARNING' }],
+  },
+}
 
 export default async function AccueilPage() {
   const supabase = await createClient()
@@ -69,8 +83,38 @@ export default async function AccueilPage() {
     { nom: 'Fatoumata Bah', pays: 'Guinée', role: 'Comptable', text: 'Le paiement en Mobile Money facilite l\'accès aux formations. Je recommande à tous mes collègues.', note: 5 },
   ]
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://ibig-elearning.com/#organization',
+        name: 'IBIG E-LEARNING',
+        url: 'https://ibig-elearning.com',
+        logo: { '@type': 'ImageObject', url: 'https://ibig-elearning.com/logo-full.webp' },
+        description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone.',
+        address: { '@type': 'PostalAddress', addressLocality: 'Abidjan', addressRegion: 'Cocody Riviera Palmeraie', addressCountry: 'CI' },
+        contactPoint: { '@type': 'ContactPoint', email: 'contact@ibig-elearning.com', contactType: 'customer service' },
+        sameAs: ['https://www.facebook.com/ibig', 'https://www.linkedin.com/company/ibig'],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://ibig-elearning.com/#website',
+        url: 'https://ibig-elearning.com',
+        name: 'IBIG E-LEARNING',
+        publisher: { '@id': 'https://ibig-elearning.com/#organization' },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: 'https://ibig-elearning.com/recherche?q={search_term_string}' },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+    ],
+  }
+
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#0B3D91] text-white">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91] via-[#0B3D91] to-blue-800" />

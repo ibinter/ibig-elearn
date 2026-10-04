@@ -1,4 +1,12 @@
-﻿export default function ConfidentialitePage() {
+﻿import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Politique de confidentialité — IBIG E-LEARNING',
+  description: 'Consultez notre politique de confidentialité et protection des données personnelles (RGPD) sur IBIG E-LEARNING.',
+  alternates: { canonical: 'https://ibig-elearning.com/confidentialite' },
+}
+
+export default function ConfidentialitePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Politique de confidentialité</h1>

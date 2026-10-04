@@ -1,4 +1,13 @@
-﻿export default function CGUPage() {
+﻿import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Conditions Générales d\'Utilisation — IBIG E-LEARNING',
+  description: 'Consultez les Conditions Générales d\'Utilisation de la plateforme IBIG E-LEARNING.',
+  alternates: { canonical: 'https://ibig-elearning.com/cgu' },
+  robots: { index: true, follow: false },
+}
+
+export default function CGUPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Conditions générales d&apos;utilisation</h1>

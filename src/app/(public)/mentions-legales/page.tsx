@@ -1,4 +1,12 @@
-﻿export default function MentionsLegalesPage() {
+﻿import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Mentions légales — IBIG E-LEARNING',
+  description: 'Mentions légales de la plateforme IBIG E-LEARNING — IBIG SARL, Abidjan Cocody Riviera Palmeraie.',
+  alternates: { canonical: 'https://ibig-elearning.com/mentions-legales' },
+}
+
+export default function MentionsLegalesPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Mentions légales</h1>
