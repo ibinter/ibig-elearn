@@ -167,7 +167,8 @@ export default async function FormationPage({ params }: PageProps) {
             <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4" /> <strong className="text-white">{totalLessons}</strong> leçons</span>
           </div>
           {lessonTypes.length > 0 && (
-            <div className="flex flex-wrap gap-2 justify-center mt-5">
+            <div className="flex flex-wrap gap-2 justify-center items-center mt-5">
+              <span className="text-sm text-blue-200 font-medium">Format :</span>
               {lessonTypes.map((type: any) => {
                 const fmt = formatLabels[type] ?? { label: type, icon: '📁' }
                 return (
