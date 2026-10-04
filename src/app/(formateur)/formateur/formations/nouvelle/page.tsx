@@ -12,7 +12,6 @@ const LEVELS = [
   { value: 'tous_niveaux', label: 'Tous niveaux' },
 ]
 
-const CURRENCIES = ['XOF', 'XAF', 'EUR', 'USD', 'CAD', 'GNF', 'CDF', 'MAD']
 const LANGUAGES = ['Français', 'Anglais', 'Arabe', 'Portugais', 'Wolof', 'Dioula']
 
 export default function NouvelleFormationPage() {
@@ -27,8 +26,7 @@ export default function NouvelleFormationPage() {
     category_id: '',
     level: 'debutant',
     language: 'Français',
-    price: '0',
-    currency: 'XOF',
+    price_xof: '0',
     duration_hours: '0',
     thumbnail_url: '',
     is_published: false,
@@ -69,8 +67,7 @@ export default function NouvelleFormationPage() {
       category_id: form.category_id || null,
       level: form.level,
       language: form.language,
-      price: parseFloat(form.price) || 0,
-      currency: form.currency,
+      price_xof: parseInt(form.price_xof) || 0,
       duration_hours: parseInt(form.duration_hours) || 0,
       thumbnail_url: form.thumbnail_url || null,
       instructor_id: user.id,
@@ -185,25 +182,19 @@ export default function NouvelleFormationPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Prix (0 = gratuit)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Prix en FCFA (0 = gratuit)</label>
               <input
                 type="number"
-                value={form.price}
-                onChange={e => set('price', e.target.value)}
+                value={form.price_xof}
+                onChange={e => set('price_xof', e.target.value)}
                 min="0"
-                step="100"
+                step="500"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ex: 25000"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Devise</label>
-              <select
-                value={form.currency}
-                onChange={e => set('currency', e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              >
-                {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+            <div className="flex items-end pb-1">
+              <span className="text-sm text-gray-500 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 w-full text-center font-medium">XOF (FCFA)</span>
             </div>
           </div>
 
