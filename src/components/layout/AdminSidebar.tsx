@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -52,13 +52,35 @@ const EXPANDED_W = 'w-60'
 export default function AdminSidebar({ userName, userInitial, userRole, collapsed = false, onCollapse }: Props) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const desktopNavRef = useRef<HTMLElement>(null)
+  const mobileNavRef = useRef<HTMLElement>(null)
+  const desktopScrollRef = useRef(0)
+  const mobileScrollRef = useRef(0)
+
   const setCollapsed = (v: boolean | ((prev: boolean) => boolean)) => {
     const next = typeof v === 'function' ? v(collapsed) : v
     onCollapse?.(next)
   }
 
-  // ferme le menu mobile si on change de route
-  useEffect(() => { setMobileOpen(false) }, [pathname])
+  // Sauvegarde le scroll avant le changement de route
+  useEffect(() => {
+    const desktopNav = desktopNavRef.current
+    const mobileNav = mobileNavRef.current
+    const saveDesktop = () => { desktopScrollRef.current = desktopNav?.scrollTop ?? 0 }
+    const saveMobile = () => { mobileScrollRef.current = mobileNav?.scrollTop ?? 0 }
+    desktopNav?.addEventListener('scroll', saveDesktop, { passive: true })
+    mobileNav?.addEventListener('scroll', saveMobile, { passive: true })
+    return () => {
+      desktopNav?.removeEventListener('scroll', saveDesktop)
+      mobileNav?.removeEventListener('scroll', saveMobile)
+    }
+  }, [])
+
+  // Restaure le scroll après le changement de route (sans fermer le mobile)
+  useEffect(() => {
+    if (desktopNavRef.current) desktopNavRef.current.scrollTop = desktopScrollRef.current
+    if (mobileNavRef.current) mobileNavRef.current.scrollTop = mobileScrollRef.current
+  }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -126,7 +148,7 @@ export default function AdminSidebar({ userName, userInitial, userRole, collapse
       </div>
 
       {/* Nav */}
-      <nav className={`flex-1 overflow-y-auto overflow-x-hidden py-2 ${collapsed ? 'px-2 space-y-1' : 'px-2 space-y-0.5'}`}>
+      <nav ref={desktopNavRef} className={`flex-1 overflow-y-auto overflow-x-hidden py-2 ${collapsed ? 'px-2 space-y-1' : 'px-2 space-y-0.5'}`}>
         {NAV.map(item => {
           const active = isActive(item.href, item.exact)
           return (
@@ -222,7 +244,7 @@ export default function AdminSidebar({ userName, userInitial, userRole, collapse
         </div>
 
         {/* Nav — statique au clic (pas de fermeture auto) */}
-        <nav className="flex-1 px-2 py-2 space-y-0.5 overflow-y-auto">
+        <nav ref={mobileNavRef} className="flex-1 px-2 py-2 space-y-0.5 overflow-y-auto">
           {NAV.map(item => {
             const active = isActive(item.href, item.exact)
             return (
