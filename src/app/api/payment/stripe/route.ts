@@ -3,9 +3,11 @@ import { createClient } from '@/lib/supabase/server'
 import Stripe from 'stripe'
 import { cookies } from 'next/headers'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-
 export async function POST(request: NextRequest) {
+  const stripeKey = process.env.STRIPE_SECRET_KEY
+  if (!stripeKey) return NextResponse.json({ error: 'Stripe non configuré' }, { status: 500 })
+  const stripe = new Stripe(stripeKey)
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
