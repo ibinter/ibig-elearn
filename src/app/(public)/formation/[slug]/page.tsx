@@ -182,6 +182,16 @@ export default async function FormationPage({ params }: PageProps) {
               </div>
             )}
 
+            {/* Description complète */}
+            {c.description && (
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                <h2 className="font-bold text-gray-900 text-lg mb-4">Description de la formation</h2>
+                <div className="prose prose-sm prose-gray max-w-none text-gray-700 whitespace-pre-line">
+                  {c.description}
+                </div>
+              </div>
+            )}
+
             {/* Programme */}
             {modules && modules.length > 0 && (
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
@@ -198,11 +208,11 @@ export default async function FormationPage({ params }: PageProps) {
                         </div>
                       </summary>
                       <div className="divide-y divide-gray-50">
-                        {(mod.lessons ?? []).map((lesson: any, idx: number) => {
-                          const isLocked = !lesson.is_free_preview && idx > 0
+                        {(mod.lessons ?? []).slice().sort((a: any, b: any) => a.position - b.position).map((lesson: any) => {
+                          const isLocked = !isEnrolled && !lesson.is_free_preview
                           return (
                           <div key={lesson.id} className={`flex items-center gap-3 px-4 py-3 ${isLocked ? 'opacity-50' : ''}`}>
-                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${isLocked ? 'bg-gray-100' : 'bg-gray-100'}`}>
+                            <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100">
                               {isLocked
                                 ? <Lock className="w-3.5 h-3.5 text-gray-400" />
                                 : lesson.type === 'video'
@@ -211,11 +221,8 @@ export default async function FormationPage({ params }: PageProps) {
                               }
                             </div>
                             <span className={`text-sm flex-1 ${isLocked ? 'text-gray-400' : 'text-gray-700'}`}>{lesson.title}</span>
-                            {lesson.is_free_preview && idx === 0 && (
+                            {lesson.is_free_preview && !isEnrolled && (
                               <span className="text-xs text-green-600 font-medium">Aperçu gratuit</span>
-                            )}
-                            {isLocked && (
-                              <span className="text-xs text-gray-300">Accès après inscription</span>
                             )}
                             {lesson.video_duration_seconds && !isLocked && (
                               <span className="text-xs text-gray-400">{Math.ceil(lesson.video_duration_seconds / 60)} min</span>
@@ -234,8 +241,11 @@ export default async function FormationPage({ params }: PageProps) {
             <div id="formateur" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <h2 className="font-bold text-gray-900 text-lg mb-4">Votre formateur</h2>
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-full bg-[#0B3D91] flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
-                  {(c.instructor as any)?.full_name?.charAt(0)}
+                <div className="w-14 h-14 rounded-full bg-[#0B3D91] flex items-center justify-center text-white text-xl font-bold flex-shrink-0 overflow-hidden">
+                  {(c.instructor as any)?.avatar_url
+                    ? <img src={(c.instructor as any).avatar_url} alt="" className="w-full h-full object-cover" />
+                    : (c.instructor as any)?.full_name?.charAt(0)
+                  }
                 </div>
                 <div>
                   <Link href={`/formateur/${(c.instructor as any)?.id}`} className="font-bold text-gray-900 hover:text-[#0B3D91] transition-colors">{(c.instructor as any)?.full_name}</Link>
