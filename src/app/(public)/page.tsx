@@ -9,16 +9,24 @@ import { LiveTicker, HeroCTA } from '@/components/home/HeroAnimated'
 import CountriesMarquee from '@/components/home/CountriesMarquee'
 import TestimonialsCarousel from '@/components/home/TestimonialsCarousel'
 
-async function getFeaturedCourses(): Promise<Course[]> {
+async function getFeaturedCourses(): Promise<{ courses: Course[]; isFeatured: boolean }> {
   const supabase = await createClient()
-  const { data } = await supabase
+  const { data: featured } = await supabase
     .from('courses')
     .select('*, instructor:profiles(full_name, avatar_url), category:categories(name, slug), price_eur, price_usd')
     .eq('is_published', true)
     .eq('is_featured', true)
     .order('enrollment_count', { ascending: false })
     .limit(6)
-  return (data as Course[]) ?? []
+  if (featured && featured.length > 0) return { courses: featured as Course[], isFeatured: true }
+  // Fallback : les plus populaires
+  const { data: popular } = await supabase
+    .from('courses')
+    .select('*, instructor:profiles(full_name, avatar_url), category:categories(name, slug), price_eur, price_usd')
+    .eq('is_published', true)
+    .order('enrollment_count', { ascending: false })
+    .limit(6)
+  return { courses: (popular as Course[]) ?? [], isFeatured: false }
 }
 
 async function getTopCategories(): Promise<Category[]> {
@@ -86,7 +94,7 @@ const FALLBACK_TESTIMONIALS = [
 ]
 
 export default async function HomePage() {
-  const [featuredCourses, categories, stats, instructors, testimonials] = await Promise.all([
+  const [{ courses: featuredCourses, isFeatured }, categories, stats, instructors, testimonials] = await Promise.all([
     getFeaturedCourses(), getTopCategories(), getStats(), getTopInstructors(), getPublishedTestimonials(),
   ])
 
@@ -356,27 +364,46 @@ export default async function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════
-          FORMATIONS VEDETTES
+          FORMATIONS À LA UNE
       ═══════════════════════════════════════════════ */}
       {featuredCourses.length > 0 && (
         <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-12">
+            <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
               <div>
                 <span className="inline-flex items-center gap-2 text-orange-600 text-xs font-bold uppercase tracking-widest mb-3 bg-orange-50 px-4 py-1.5 rounded-full">
-                  <Flame className="w-3.5 h-3.5" /> Top formations
+                  <Flame className="w-3.5 h-3.5" /> {isFeatured ? 'Formations à la une' : 'Top formations'}
                 </span>
-                <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-2">Les plus populaires</h2>
-                <p className="text-gray-500">Plébiscitées par nos apprenants à travers toute l&apos;Afrique</p>
+                <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-2">
+                  {isFeatured ? 'Sélectionnées par nos experts' : 'Les plus populaires'}
+                </h2>
+                <p className="text-gray-500">
+                  {isFeatured
+                    ? 'Les meilleures formations recommandées par IBIG pour booster votre carrière'
+                    : 'Plébiscitées par nos apprenants à travers toute l\'Afrique'}
+                </p>
               </div>
-              <Link href="/catalogue?featured=true" className="hidden sm:flex items-center gap-1.5 text-[#0B3D91] font-bold hover:underline text-sm flex-shrink-0 bg-blue-50 px-4 py-2 rounded-xl hover:bg-blue-100 transition-colors">
-                Voir tout <ArrowRight className="w-4 h-4" />
+              <Link href={isFeatured ? '/catalogue?featured=true' : '/catalogue'}
+                className="inline-flex items-center gap-1.5 text-[#0B3D91] font-bold text-sm bg-blue-50 px-5 py-2.5 rounded-xl hover:bg-blue-100 transition-colors flex-shrink-0">
+                Voir tout le catalogue <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
+
+            {/* Grille avec carte mise en avant */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredCourses.map(course => (
-                <CourseCard key={course.id} course={course} />
+              {featuredCourses.map((course, i) => (
+                <div key={course.id} className={i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}>
+                  <CourseCard course={course} />
+                </div>
               ))}
+            </div>
+
+            {/* CTA mobile */}
+            <div className="sm:hidden text-center mt-8">
+              <Link href={isFeatured ? '/catalogue?featured=true' : '/catalogue'}
+                className="inline-flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] font-bold px-6 py-3 rounded-xl hover:bg-[#0B3D91] hover:text-white transition-all">
+                Voir toutes les formations <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>
