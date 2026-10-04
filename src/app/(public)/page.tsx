@@ -1,5 +1,21 @@
 ﻿import Link from 'next/link'
-import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCircle, TrendingUp, Star, Zap, Target, BarChart3, Clock, BadgeCheck, Flame, Play, ChevronRight, MapPin, Sparkles, Trophy, Rocket } from 'lucide-react'
+import type { Metadata } from 'next'
+import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCircle, TrendingUp, Star, Zap, Target, BarChart3, Clock, BadgeCheck, Flame, Play, ChevronRight, MapPin, Sparkles, Trophy, Rocket, MessageCircle, Brain, Lock, ShieldCheck } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'IBIG E-LEARNING — La plateforme eLearning #1 en Afrique francophone',
+  description: 'Formations certifiantes et professionnelles adaptées au marché africain. Payez en Mobile Money (Orange Money, Wave, MTN), obtenez un certificat vérifiable dans 12 pays. Assistante IA SARA disponible 24h/24.',
+  keywords: ['formation en ligne Afrique', 'e-learning Afrique francophone', 'certification professionnelle', 'Orange Money', 'formation certifiante', 'IBIG elearning'],
+  openGraph: {
+    title: 'IBIG E-LEARNING — La plateforme qui forme l\'Afrique de demain',
+    description: 'Formations certifiantes, paiement Mobile Money, certificats vérifiables dans 12 pays africains.',
+    url: 'https://ibig-elearning.com',
+    siteName: 'IBIG E-LEARNING',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://ibig-elearning.com' },
+}
 import { createClient } from '@/lib/supabase/server'
 import type { Course, Category } from '@/types'
 import CourseCard from '@/components/ui/CourseCard'
@@ -586,6 +602,158 @@ export default async function HomePage() {
             </div>
           </div>
           <TestimonialsCarousel testimonials={allTestimonials} />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          SARA — ASSISTANTE IA PÉDAGOGIQUE
+      ═══════════════════════════════════════════════ */}
+      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #f0f4ff 100%)' }}>
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] opacity-20 blur-[80px] rounded-full" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Texte */}
+            <div>
+              <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-5 bg-blue-100 px-4 py-1.5 rounded-full">
+                <Brain className="w-3.5 h-3.5" /> Intelligence Artificielle
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-5 leading-tight">
+                SARA, votre assistante<br />
+                <span style={{ background: 'linear-gradient(90deg, #0B3D91, #1a6cc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                  pédagogique 24h/24
+                </span>
+              </h2>
+              <p className="text-gray-500 text-lg leading-relaxed mb-8">
+                SARA est l&apos;IA intégrée à chaque cours. Elle répond à vos questions sur le contenu,
+                vous guide dans vos exercices et vous aide à progresser — sans faire le travail à votre place.
+              </p>
+
+              <div className="space-y-4 mb-8">
+                {[
+                  { icon: MessageCircle, title: 'Disponible dans chaque leçon', desc: 'Posez vos questions directement depuis la page de cours, à n\'importe quelle heure.' },
+                  { icon: Brain, title: 'Pédagogique, pas substitutive', desc: 'SARA guide et explique — elle ne fait pas les exercices à votre place pour maximiser votre apprentissage.' },
+                  { icon: Globe, title: 'Multilingue', desc: 'Répondez en français, en anglais ou dans votre langue régionale selon votre préférence.' },
+                ].map((f, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-[#0B3D91]/10 flex items-center justify-center flex-shrink-0">
+                      <f.icon className="w-5 h-5 text-[#0B3D91]" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900 text-sm">{f.title}</p>
+                      <p className="text-gray-500 text-sm mt-0.5">{f.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Link href="/inscription"
+                className="inline-flex items-center gap-2 bg-[#0B3D91] text-white font-bold px-7 py-3.5 rounded-2xl hover:bg-blue-800 transition-colors">
+                Essayer SARA gratuitement <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Mockup chat SARA */}
+            <div className="relative">
+              <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+                {/* Header */}
+                <div className="bg-[#0B3D91] px-5 py-4 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
+                    <MessageCircle className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-sm">SARA</p>
+                    <p className="text-blue-200 text-xs flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" /> En ligne maintenant
+                    </p>
+                  </div>
+                </div>
+
+                {/* Messages */}
+                <div className="p-5 space-y-4 bg-gray-50 min-h-[280px]">
+                  <div className="flex gap-3">
+                    <div className="w-7 h-7 rounded-full bg-[#0B3D91] flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">S</div>
+                    <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm max-w-[80%]">
+                      <p className="text-sm text-gray-700">Bonjour ! Je suis SARA. Comment puis-je vous aider avec ce cours ?</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 justify-end">
+                    <div className="bg-[#0B3D91] rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
+                      <p className="text-sm text-white">Je ne comprends pas la différence entre le résultat net et l'EBE</p>
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 text-gray-600 text-xs font-bold">K</div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <div className="w-7 h-7 rounded-full bg-[#0B3D91] flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">S</div>
+                    <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm max-w-[85%]">
+                      <p className="text-sm text-gray-700">Bonne question ! L&apos;EBE (Excédent Brut d&apos;Exploitation) mesure la performance opérationnelle <strong>avant</strong> impôts et amortissements. Le résultat net, lui, c&apos;est ce qui reste après tout. Exemple concret : une entreprise peut avoir un EBE positif mais un résultat net négatif si ses charges financières sont élevées.</p>
+                      <p className="text-[10px] text-gray-400 mt-2">SARA — IA pédagogique IBIG</p>
+                    </div>
+                  </div>
+
+                  {/* Typing indicator */}
+                  <div className="flex gap-3">
+                    <div className="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 text-gray-600 text-xs font-bold">K</div>
+                    <div className="bg-[#0B3D91]/10 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Input */}
+                <div className="px-4 py-3 border-t border-gray-100 flex items-center gap-3 bg-white">
+                  <div className="flex-1 bg-gray-100 rounded-xl px-4 py-2.5 text-sm text-gray-400">Posez votre question à SARA…</div>
+                  <button className="w-9 h-9 rounded-xl bg-[#0B3D91] flex items-center justify-center flex-shrink-0">
+                    <ArrowRight className="w-4 h-4 text-white" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Badge flottant */}
+              <div className="absolute -top-4 -right-4 bg-[#FFA500] text-black font-black text-xs px-3 py-1.5 rounded-full shadow-lg">
+                IA Incluse dans chaque cours
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          CERTIFICATIONS ANTI-TRICHE — CRÉDIBILITÉ
+      ═══════════════════════════════════════════════ */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 text-green-700 text-xs font-bold uppercase tracking-widest mb-4 bg-green-50 px-4 py-1.5 rounded-full">
+              <ShieldCheck className="w-3.5 h-3.5" /> Certifications de confiance
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
+              Des certificats qui ont <span style={{ background: 'linear-gradient(90deg, #10b981, #059669)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>de la valeur</span>
+            </h2>
+            <p className="text-gray-500 max-w-lg mx-auto">Notre système d&apos;évaluation garantit que chaque certifié a réellement acquis les compétences</p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: Lock, title: 'Examens surveillés', desc: 'Détection de changements d\'onglet et comportements suspects pendant l\'évaluation.', color: 'bg-blue-50 text-[#0B3D91]' },
+              { icon: Sparkles, title: 'Questions mélangées', desc: 'Chaque tentative présente un ordre de questions unique — impossible de mémoriser l\'ordre.', color: 'bg-purple-50 text-purple-700' },
+              { icon: ShieldCheck, title: 'Score calculé côté serveur', desc: 'Le score est calculé exclusivement sur nos serveurs, sans possibilité de manipulation.', color: 'bg-green-50 text-green-700' },
+              { icon: BadgeCheck, title: 'QR code vérifiable', desc: 'Chaque certificat porte un QR code unique que tout employeur peut scanner pour vérifier.', color: 'bg-orange-50 text-orange-700' },
+            ].map((f, i) => (
+              <div key={i} className="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:shadow-md transition-shadow">
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${f.color}`}>
+                  <f.icon className="w-5 h-5" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2 text-sm">{f.title}</h3>
+                <p className="text-gray-500 text-xs leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
