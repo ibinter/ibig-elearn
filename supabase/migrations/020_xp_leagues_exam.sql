@@ -376,30 +376,9 @@ AS $$
 $$;
 
 -- ────────────────────────────────────────────────────────────
--- 11. CRON : process_league_week chaque lundi à 2h UTC
---     (Supabase pg_cron — activer l'extension si pas encore fait)
+-- 11. CRON : géré par Vercel (vercel.json) via /api/leagues/process-week
+--     Le cron pg_cron n'est pas nécessaire ici.
 -- ────────────────────────────────────────────────────────────
-
--- Désactiver le cron existant s'il existe déjà
-DO $$
-BEGIN
-  IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_cron') THEN
-    PERFORM cron.unschedule('process-league-week');
-  END IF;
-EXCEPTION WHEN others THEN NULL;
-END $$;
-
-DO $$
-BEGIN
-  IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_cron') THEN
-    PERFORM cron.schedule(
-      'process-league-week',
-      '0 2 * * 1',
-      'SELECT public.process_league_week(date_trunc(''week'', current_date - interval ''7 days'')::date)'
-    );
-  END IF;
-EXCEPTION WHEN others THEN NULL;
-END $$;
 
 -- ────────────────────────────────────────────────────────────
 -- FIN migration 020
