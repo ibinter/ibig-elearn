@@ -43,7 +43,7 @@ const NAV = [
   { href: '/admin/antitricherie', label: 'Anti-triche', icon: AlertTriangle },
   { href: '/admin/superadmin', label: 'Accès admin', icon: Shield },
   { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
-  { href: '/aide/admin', label: 'Guide admin', icon: HelpCircle },
+  { href: '/admin/guide', label: 'Guide admin', icon: HelpCircle },
 ]
 
 const COLLAPSED_W = 'w-[68px]'

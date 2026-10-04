@@ -49,11 +49,11 @@ const steps = [
     title: 'Suivre vos cours',
     color: 'bg-purple-100 text-purple-700',
     content: [
-      { label: 'Tableau de bord', desc: 'Retrouvez toutes vos formations en cours dans "Mes formations" sur votre tableau de bord.' },
-      { label: 'Progression', desc: 'Chaque leçon terminée met à jour votre barre de progression. Vous pouvez reprendre où vous en étiez.' },
-      { label: 'Quiz et exercices', desc: 'Répondez aux quiz à la fin de chaque module pour valider vos acquis.' },
-      { label: 'Notes personnelles', desc: 'Prenez des notes pendant les cours, accessibles dans "Mes notes" depuis le menu profil.' },
-      { label: 'SARA — IA pédagogique', desc: 'Posez vos questions pédagogiques à SARA, l\'assistante IA disponible 24h/24 dans l\'onglet SARA.' },
+      { label: 'Mes formations', desc: 'Retrouvez toutes vos formations dans "Mes formations" → cliquez "Voir le programme" pour voir tous les modules et votre avancement.' },
+      { label: 'Progression', desc: 'Chaque leçon terminée met à jour votre barre de progression. Le bouton "Continuer" vous reprend exactement où vous en étiez.' },
+      { label: 'Quiz et examens', desc: 'Les questions sont mélangées à chaque tentative. Répondez honnêtement : le système détecte les comportements suspects (changements d\'onglet, temps anormalement rapide).' },
+      { label: 'Règles anti-triche', desc: 'Pendant un quiz ou examen : restez sur l\'onglet, ne copiez pas le texte. 3 changements d\'onglet entraînent une soumission automatique.' },
+      { label: 'SARA — IA pédagogique', desc: 'Posez vos questions pédagogiques à SARA, l\'assistante IA disponible 24h/24 dans l\'onglet SARA de chaque leçon.' },
     ],
   },
   {
@@ -62,11 +62,11 @@ const steps = [
     title: 'Obtenir votre certificat',
     color: 'bg-yellow-100 text-yellow-700',
     content: [
-      { label: 'Conditions', desc: 'Terminez 100% des leçons et validez le quiz final avec au moins 70% de bonnes réponses.' },
-      { label: 'Génération automatique', desc: 'Votre certificat est généré automatiquement avec un code unique de vérification.' },
+      { label: 'Conditions', desc: 'Terminez 100% des leçons et réussissez l\'examen final avec le score minimum requis (affiché sur la page de l\'examen).' },
+      { label: 'Génération automatique', desc: 'Votre certificat est généré automatiquement dès la réussite avec un QR code unique de vérification.' },
       { label: 'Téléchargement', desc: 'Téléchargez votre certificat PDF depuis "Mes certificats" dans votre tableau de bord.' },
       { label: 'Vérification', desc: 'Tout employeur peut vérifier l\'authenticité de votre certificat sur ibig-elearning.com/verify.' },
-      { label: 'Badges et points', desc: 'Cumulez des points XP et débloquez des badges à chaque formation terminée. Consultez le classement !' },
+      { label: 'Badges et points XP', desc: 'Cumulez des points XP et débloquez des badges à chaque formation terminée. Consultez le classement !' },
     ],
   },
 ]

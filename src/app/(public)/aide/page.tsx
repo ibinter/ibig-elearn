@@ -31,17 +31,6 @@ const guides = [
     steps: ['Créer votre profil formateur', 'Créer une formation', 'Ajouter des leçons', 'Publier et promouvoir', 'Gérer vos revenus'],
     href: '/aide/formateur',
   },
-  {
-    role: 'admin',
-    icon: Shield,
-    color: 'bg-green-50 text-green-700 border-green-100',
-    btnColor: 'bg-green-700 hover:bg-green-800',
-    title: 'Guide Administrateur',
-    subtitle: 'Je gère la plateforme',
-    desc: 'Maîtrisez la console d\'administration : gérer les utilisateurs, valider les formations, configurer les paiements, générer les rapports.',
-    steps: ['Accéder à la console', 'Gérer les utilisateurs', 'Valider les formations', 'Configurer les paiements', 'Analyser les rapports'],
-    href: '/aide/admin',
-  },
 ]
 
 const faqs = [
@@ -68,7 +57,6 @@ export default function AidePage() {
             {[
               { label: 'Guide Apprenant', href: '/aide/apprenant' },
               { label: 'Guide Formateur', href: '/aide/formateur' },
-              { label: 'Guide Administrateur', href: '/aide/admin' },
               { label: 'Contact', href: '/contact' },
             ].map(l => (
               <Link key={l.href} href={l.href}
