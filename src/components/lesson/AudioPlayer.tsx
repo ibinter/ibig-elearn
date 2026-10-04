@@ -36,6 +36,12 @@ export default function AudioPlayer({ audioUrl, title, coverUrl, transcriptText,
     audio.playbackRate = speed
   }, [speed])
 
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.volume = muted ? 0 : volume
+  }, [volume, muted])
+
   const handleTimeUpdate = useCallback(() => {
     const audio = audioRef.current
     if (!audio || !audio.duration) return
@@ -109,7 +115,6 @@ export default function AudioPlayer({ audioUrl, title, coverUrl, transcriptText,
         onEnded={handleEnded}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
-        volume={muted ? 0 : volume}
       />
 
       <div className="p-4 space-y-4">

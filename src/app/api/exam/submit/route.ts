@@ -85,13 +85,13 @@ export async function POST(req: NextRequest) {
     }, { onConflict: 'user_id,lesson_id' })
 
     // XP examen final = 150 XP
-    await supabase.rpc('award_xp', {
+    void supabase.rpc('award_xp', {
       p_user_id:    user.id,
       p_event_type: 'course_completed',
       p_xp:         150,
       p_ref_id:     courseId,
       p_ref_label:  `Examen final — ${score}%`,
-    }).catch(() => {})
+    })
 
     // Déclencher émission du certificat
     await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/certificates/auto-issue`, {

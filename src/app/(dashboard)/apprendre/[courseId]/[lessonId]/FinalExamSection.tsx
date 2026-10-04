@@ -316,7 +316,7 @@ export default function FinalExamSection({
               <XCircle className="w-10 h-10 text-red-400" />
             </div>
             <h2 className="text-xl font-bold text-white mb-1">Examen non validé</h2>
-            <p className="text-red-400 text-sm mb-4">Score minimum requis : {result.passingScore ?? passingScore}%</p>
+            <p className="text-red-400 text-sm mb-4">Score minimum requis : {passingScore}%</p>
             <div className="inline-flex items-center gap-2 bg-red-900/40 rounded-xl px-6 py-3 mb-4">
               <span className="text-white font-bold text-2xl">{result.score}%</span>
               <span className="text-red-400 text-sm">{result.correct}/{result.total} bonnes réponses</span>

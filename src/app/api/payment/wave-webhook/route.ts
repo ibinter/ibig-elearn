@@ -83,24 +83,23 @@ export async function POST(request: NextRequest) {
       supabase.from('courses').select('title, slug').eq('id', payment.course_id).single(),
     ])
     if (profile?.email && course) {
-      await sendEmail(inscriptionEmail({
-        to: profile.email,
-        userName: profile.full_name ?? 'Apprenant',
+      const emailContent = inscriptionEmail({
+        name: profile.full_name ?? 'Apprenant',
         courseTitle: course.title,
-        courseUrl: `${process.env.NEXT_PUBLIC_APP_URL}/apprendre/${payment.course_id}/intro`,
-        amount: payment.amount,
-        currency: payment.currency,
-      }))
+        courseSlug: course.slug,
+      })
+      await sendEmail({ to: profile.email, ...emailContent })
     }
     // Notifier IBIG Partners si code affilié
     const refCode = (payment.metadata as any)?.ref_code
     if (refCode && profile && course) {
       await reportSaleToPartners({
-        refCode,
-        userId: payment.user_id,
-        courseId: payment.course_id,
+        partnerCode: refCode,
+        externalRef: payment.id ?? payment.course_id,
         amount: payment.amount,
         currency: payment.currency,
+        customerName: profile.full_name ?? undefined,
+        customerEmail: profile.email ?? undefined,
       })
     }
   } catch (e) {
