@@ -136,29 +136,25 @@ export default async function FormationPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Header bleu */}
       <div className="ibig-gradient text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
-              <div className="flex flex-wrap gap-2 mb-4">
-                <Link href={`/catalogue?categorie=${(c.category as any)?.slug}`}
-                  className="text-xs bg-white/20 px-3 py-1 rounded-full hover:bg-white/30 transition-colors">
-                  {(c.category as any)?.name}
-                </Link>
-                <span className="text-xs bg-white/20 px-3 py-1 rounded-full">{levelLabel[c.level]}</span>
-              </div>
-              <h1 className="text-3xl font-bold mb-3">{c.title}</h1>
-              <p className="text-blue-100 text-base leading-relaxed mb-5">{c.short_description}</p>
-              <div className="flex flex-wrap gap-5 text-sm text-blue-100">
-                <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-[#FFA500] fill-[#FFA500]" /> <strong className="text-white">{c.rating_average.toFixed(1)}</strong> ({c.rating_count} avis)</span>
-                <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> <strong className="text-white">{c.enrollment_count.toLocaleString('fr-FR')}</strong> apprenants</span>
-                <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> <strong className="text-white">{c.duration_hours}h</strong> de contenu</span>
-                <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4" /> <strong className="text-white">{totalLessons}</strong> leçons</span>
-              </div>
-              <div className="mt-4 text-sm text-blue-200">
-                Formateur : <Link href={`/formateur/${(c.instructor as any)?.id}`} className="text-white underline">{(c.instructor as any)?.full_name}</Link>
-                {' · '} Mis à jour le {formatDate(c.updated_at)}
-              </div>
-            </div>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+          <div className="flex flex-wrap gap-2 mb-4 justify-center">
+            <Link href={`/catalogue?categorie=${(c.category as any)?.slug}`}
+              className="text-xs bg-white/20 px-3 py-1 rounded-full hover:bg-white/30 transition-colors">
+              {(c.category as any)?.name}
+            </Link>
+            <span className="text-xs bg-white/20 px-3 py-1 rounded-full">{levelLabel[c.level]}</span>
+          </div>
+          <h1 className="text-3xl font-bold mb-3">{c.title}</h1>
+          <p className="text-blue-100 text-base leading-relaxed mb-5">{c.short_description}</p>
+          <div className="flex flex-wrap gap-5 text-sm text-blue-100 justify-center">
+            <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-[#FFA500] fill-[#FFA500]" /> <strong className="text-white">{c.rating_average.toFixed(1)}</strong> ({c.rating_count} avis)</span>
+            <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> <strong className="text-white">{c.enrollment_count.toLocaleString('fr-FR')}</strong> apprenants</span>
+            <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> <strong className="text-white">{c.duration_hours}h</strong> de contenu</span>
+            <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4" /> <strong className="text-white">{totalLessons}</strong> leçons</span>
+          </div>
+          <div className="mt-4 text-sm text-blue-200">
+            Formateur : <Link href={`/formateur/${(c.instructor as any)?.id}`} className="text-white underline">{(c.instructor as any)?.full_name}</Link>
+            {' · '} Mis à jour le {formatDate(c.updated_at)}
           </div>
         </div>
       </div>
