@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BookOpen } from 'lucide-react'
+import Image from 'next/image'
 import { getT } from '@/i18n'
 
 export default async function Footer() {
@@ -11,14 +11,8 @@ export default async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <span className="font-bold text-white text-lg">IBIG</span>
-                <span className="font-bold text-[#FFA500] text-lg ml-1">E-LEARNING</span>
-              </div>
+            <div className="mb-4">
+              <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={160} height={48} className="h-12 w-auto brightness-0 invert" />
             </div>
             <p className="text-blue-200 text-sm leading-relaxed mb-4">
               {t.footer.tagline}

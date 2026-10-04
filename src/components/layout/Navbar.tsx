@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
+import { Menu, X, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Profile } from '@/types'
@@ -110,14 +111,9 @@ export default function Navbar({ user }: NavbarProps) {
         <div className="flex items-center gap-6 h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-9 h-9 rounded-lg ibig-gradient flex items-center justify-center shadow-sm">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
-            <div className="hidden sm:flex flex-col leading-none">
-              <span className="font-black text-[#0B3D91] text-base tracking-tight">IBIG</span>
-              <span className="font-black text-[#FFA500] text-base tracking-tight -mt-1">E-LEARNING</span>
-            </div>
+          <Link href="/" className="flex items-center flex-shrink-0">
+            <Image src="/logo-icon.webp" alt="IBIG E-LEARNING" width={40} height={40} className="block sm:hidden rounded-xl" priority />
+            <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={160} height={48} className="hidden sm:block h-12 w-auto" priority />
           </Link>
 
           {/* Desktop nav links */}
