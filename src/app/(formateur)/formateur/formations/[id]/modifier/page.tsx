@@ -380,6 +380,17 @@ export default function ModifierFormationPage() {
                                   )}
                                 </div>
                               )}
+                              {lesson.type === 'document' && (
+                                <div className="w-full">
+                                  <input
+                                    placeholder="URL du document (PDF, Google Drive, etc.)"
+                                    value={lesson.video_url ?? ''}
+                                    onChange={e => updateLesson(mod.id, lesson.id, { video_url: e.target.value || null })}
+                                    className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0B3D91]/40"
+                                  />
+                                  <p className="text-[10px] text-gray-400 mt-1">Ex : https://drive.google.com/... ou URL directe vers un PDF</p>
+                                </div>
+                              )}
                               <label className="flex items-center gap-1.5 text-xs text-gray-500 cursor-pointer">
                                 <input type="checkbox" checked={lesson.is_free_preview}
                                   onChange={e => updateLesson(mod.id, lesson.id, { is_free_preview: e.target.checked })}
