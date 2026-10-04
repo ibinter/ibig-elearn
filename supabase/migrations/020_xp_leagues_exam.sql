@@ -37,11 +37,12 @@ CREATE INDEX IF NOT EXISTS xp_events_created_at_idx ON public.xp_events(created_
 
 ALTER TABLE public.xp_events ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "xp_events_select_own"     ON public.xp_events;
+DROP POLICY IF EXISTS "xp_events_insert_service" ON public.xp_events;
 CREATE POLICY "xp_events_select_own" ON public.xp_events
   FOR SELECT USING (auth.uid() = user_id);
-
 CREATE POLICY "xp_events_insert_service" ON public.xp_events
-  FOR INSERT WITH CHECK (true);  -- contrôlé côté RPC/service role
+  FOR INSERT WITH CHECK (true);
 
 -- ────────────────────────────────────────────────────────────
 -- 3. FONCTION award_xp
@@ -124,11 +125,12 @@ CREATE INDEX IF NOT EXISTS league_participants_user_id_idx   ON public.league_pa
 ALTER TABLE public.leagues              ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.league_participants  ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "leagues_select_all"              ON public.leagues;
+DROP POLICY IF EXISTS "league_participants_select_all"  ON public.league_participants;
+DROP POLICY IF EXISTS "league_participants_update_own"  ON public.league_participants;
 CREATE POLICY "leagues_select_all" ON public.leagues FOR SELECT USING (true);
-
 CREATE POLICY "league_participants_select_all" ON public.league_participants
   FOR SELECT USING (true);
-
 CREATE POLICY "league_participants_update_own" ON public.league_participants
   FOR UPDATE USING (auth.uid() = user_id);
 
@@ -349,9 +351,10 @@ CREATE INDEX IF NOT EXISTS final_exam_attempts_user_course_idx
 
 ALTER TABLE public.final_exam_attempts ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "exam_attempts_select_own" ON public.final_exam_attempts;
+DROP POLICY IF EXISTS "exam_attempts_insert_own" ON public.final_exam_attempts;
 CREATE POLICY "exam_attempts_select_own" ON public.final_exam_attempts
   FOR SELECT USING (auth.uid() = user_id);
-
 CREATE POLICY "exam_attempts_insert_own" ON public.final_exam_attempts
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
