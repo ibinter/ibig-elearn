@@ -21,9 +21,9 @@ import type { Course, Category } from '@/types'
 import CourseCard from '@/components/ui/CourseCard'
 import RecommendedCourses from '@/components/ui/RecommendedCourses'
 import CountUp from '@/components/ui/CountUp'
-import { LiveTicker, HeroCTA } from '@/components/home/HeroAnimated'
 import CountriesMarquee from '@/components/home/CountriesMarquee'
 import TestimonialsCarousel from '@/components/home/TestimonialsCarousel'
+import HeroSlider from '@/components/home/HeroSlider'
 
 async function getFeaturedCourses(): Promise<{ courses: Course[]; isFeatured: boolean }> {
   const supabase = await createClient()
@@ -120,8 +120,11 @@ export default async function HomePage() {
     <div className="overflow-x-hidden">
 
       {/* ═══════════════════════════════════════════════
-          HERO — CINÉMATIQUE
+          HERO SLIDER DYNAMIQUE
       ═══════════════════════════════════════════════ */}
+      <HeroSlider featuredCourses={featuredCourses} totalEnrollments={stats.enrollments} />
+
+      {/* ═══════════════════════════════════════════════ ANCIEN HERO REMPLACÉ
       <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #051530 30%, #071e45 60%, #020b1a 100%)' }}>
 
         {/* Orbs animés */}
@@ -305,7 +308,7 @@ export default async function HomePage() {
             <div className="w-1 h-1.5 bg-current rounded-full animate-bounce" />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ═══════════════════════════════════════════════
           STATS BAND — CHIFFRES CLÉS
