@@ -39,9 +39,9 @@ const STATIC_SLIDES: SlideData[] = [
   {
     id: 'brand',
     badge: '#1 Plateforme eLearning en Afrique francophone',
-    title: 'La plateforme qui',
-    titleHighlight: 'forme l\'Afrique',
-    subtitle: 'de demain.',
+    title: 'Bienvenue sur',
+    titleHighlight: 'IBIG E-LEARNING',
+    subtitle: '',
     description: 'Formations certifiantes adaptées au marché africain — payez en Mobile Money, apprenez à votre rythme, obtenez un certificat reconnu dans 12 pays.',
     cta1Label: 'Explorer les formations',
     cta1Href: '/catalogue',
@@ -132,7 +132,8 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
 
   return (
     <section
-      className="relative min-h-screen overflow-hidden"
+      className="relative overflow-hidden"
+      style={{ minHeight: '580px' }}
       style={{ background: slide.gradient, transition: 'background 0.8s ease' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -148,8 +149,8 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
         style={{ backgroundImage: 'linear-gradient(#ffffff 1px,transparent 1px),linear-gradient(90deg,#ffffff 1px,transparent 1px)', backgroundSize: '80px 80px' }} />
 
       {/* ── Content ── */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center min-h-screen">
-        <div className={`grid w-full gap-12 lg:gap-16 items-center py-24 lg:py-0 ${isBrand ? 'lg:grid-cols-2' : 'lg:grid-cols-2'}`}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center" style={{ minHeight: '580px' }}>
+        <div className={`grid w-full gap-8 lg:gap-12 items-center py-12 lg:py-8 ${isBrand ? 'lg:grid-cols-2' : 'lg:grid-cols-2'}`}>
 
           {/* ══ COLONNE GAUCHE ══ */}
           <div className={`transition-all duration-500 ${transitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
@@ -174,15 +175,14 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
 
             {/* Titre */}
             {isBrand ? (
-              <h1 className="text-[2.8rem] sm:text-[3.8rem] lg:text-[4.5rem] xl:text-[5rem] font-black leading-[1.0] text-white mb-6 tracking-tight">
+              <h1 className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] font-black leading-[1.1] text-white mb-5 tracking-tight">
                 {slide.title}<br />
                 <span style={{ background: `linear-gradient(90deg, ${slide.accentColor}, #FFD700, ${slide.accentColor})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                   {slide.titleHighlight}
-                </span>{' '}
-                <span className="text-white/90">{slide.subtitle}</span>
+                </span>
               </h1>
             ) : (
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight mb-5 tracking-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-4 tracking-tight">
                 {slide.title}
               </h2>
             )}
