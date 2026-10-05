@@ -8,12 +8,11 @@ export default async function ChoisirModePage({ params }: { params: Promise<{ co
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect(`/connexion?redirectTo=/choisir-mode/${courseId}`)
 
-  const { data: course, error: courseError } = await supabase
+  const { data: course } = await supabase
     .from('courses')
-    .select('id, title, slug, thumbnail_url, price_xof, has_certificate')
+    .select('id, title, slug, thumbnail_url, price_xof')
     .eq('id', courseId)
     .single()
-  console.error('[choisir-mode] courseId:', courseId, '| user:', user?.id ?? 'null', '| course:', course?.id ?? 'null', '| error:', courseError?.code, courseError?.message)
   if (!course) notFound()
 
   // Vérifier si déjà inscrit
@@ -42,7 +41,7 @@ export default async function ChoisirModePage({ params }: { params: Promise<{ co
           courseSlug={course.slug}
           priceXof={course.price_xof}
           isFree={course.price_xof === 0}
-          hasCertificate={course.has_certificate ?? true}
+          hasCertificate={true}
           isAlreadyEnrolled={isAlreadyEnrolled}
           currentMode={currentMode}
         />
