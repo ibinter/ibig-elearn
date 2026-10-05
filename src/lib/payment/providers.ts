@@ -19,6 +19,18 @@ export interface PaymentProvider {
 
 export const PAYMENT_PROVIDERS: PaymentProvider[] = [
   {
+    id: 'geniuspay',
+    name: 'GeniusPay',
+    label: 'Mobile Money & Cartes — Tous opérateurs (Défaut)',
+    description: 'Wave, Orange Money, MTN, Moov, Carte Visa/Mastercard — Page checkout unifiée',
+    countries: ['CI','SN','ML','BF','BJ','TG','CM','CG','CD','RW','KE','UG','GH','NG','GA','NE','SL','ZM'],
+    currencies: ['XOF','XAF','USD','EUR'],
+    methods: ['Wave','Orange Money','MTN MoMo','Moov Money','Carte Visa/MC'],
+    apiRoute: '/api/payment/geniuspay',
+    available: true,
+    logo: '/logos/geniuspay.svg',
+  },
+  {
     id: 'cinetpay',
     name: 'CinetPay',
     label: 'Mobile Money & Cartes (Afrique)',
@@ -112,8 +124,8 @@ export function getProvidersForCountry(country: string, currency?: string): Paym
 // Retourne le provider recommandé pour un pays
 export function getRecommendedProvider(country: string): PaymentProvider {
   const available = getProvidersForCountry(country)
-  // Priorité : Wave (1% comm) > CinetPay > Stripe > premier dispo
-  const priority = ['wave', 'cinetpay', 'stripe', 'flutterwave', 'paystack', 'paydunya', 'kkiapay']
+  // Priorité : GeniusPay (défaut) > CinetPay > Stripe > autres
+  const priority = ['geniuspay', 'wave', 'cinetpay', 'stripe', 'flutterwave', 'paystack', 'paydunya', 'kkiapay']
   for (const id of priority) {
     const p = available.find(x => x.id === id)
     if (p) return p
