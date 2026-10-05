@@ -40,12 +40,8 @@ export default async function PaiementPage({ params, searchParams }: { params: P
     .eq('is_active', true)
     .order('position')
 
-  // Garder les providers qui couvrent ce pays (ou tous pays si tableau vide)
-  const providers = (allProviders ?? []).filter(p =>
-    p.countries.length === 0 || p.countries.includes(userCountry) ||
-    // Stripe disponible pour tous si aucun provider africain ne correspond
-    p.id === 'stripe'
-  )
+  // Uniquement GeniusPay (provider par défaut — checkout unifié tous opérateurs)
+  const providers = (allProviders ?? []).filter(p => p.id === 'geniuspay')
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
