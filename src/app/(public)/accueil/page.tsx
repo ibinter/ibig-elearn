@@ -116,76 +116,46 @@ export default async function AccueilPage() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      {/* HERO — Slider dynamique pour visiteurs / Personnalisé pour connectés */}
-      {user ? (
-        <section className="relative overflow-hidden bg-[#0B3D91] text-white">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0B3D91] via-[#0B3D91] to-blue-800" />
-          <div className="absolute inset-0 opacity-10"
-            style={{ backgroundImage: 'radial-gradient(circle at 20% 80%, #FFA500 0%, transparent 50%), radial-gradient(circle at 80% 20%, #00A86B 0%, transparent 50%)' }} />
-          <div className="relative max-w-6xl mx-auto px-4 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm mb-6">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Bienvenue, {userProfile?.full_name?.split(' ')[0] ?? 'Apprenant'} 👋
-              </div>
-              <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
-                Continuez votre <span className="text-[#FFA500]">apprentissage</span> là où vous en étiez
-              </h1>
-              <p className="text-blue-100 text-lg mb-8 leading-relaxed">
-                Vous avez {userEnrollments.length} formation{userEnrollments.length > 1 ? 's' : ''} en cours.{' '}
-                {(userProfile as any)?.streak_days > 0 ? `🔥 ${(userProfile as any).streak_days} jours de suite !` : 'Continuez sur votre lancée !'}
-              </p>
-              <div className="flex flex-wrap gap-3 mb-8">
-                <Link href="/tableau-de-bord"
-                  className="flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-white font-bold px-6 py-3.5 rounded-2xl transition-colors text-sm">
-                  Mon tableau de bord <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/catalogue"
-                  className="flex items-center gap-2 border-2 border-white/30 hover:border-white text-white font-semibold px-6 py-3.5 rounded-2xl transition-colors text-sm">
-                  Nouvelles formations
-                </Link>
-              </div>
-              {userEnrollments.length > 0 && (
-                <div className="space-y-2">
-                  {userEnrollments.map((e: any) => (
-                    <Link key={(e.course as any)?.id} href={`/formation/${(e.course as any)?.slug}`}
-                      className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-white/20 overflow-hidden flex-shrink-0">
-                        {(e.course as any)?.thumbnail_url
-                          ? <img src={(e.course as any).thumbnail_url} alt="" className="w-full h-full object-cover" />
-                          : <BookOpen className="w-4 h-4 text-white/50 m-auto mt-2" />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold truncate">{(e.course as any)?.title}</p>
-                        <div className="h-1 bg-white/20 rounded-full mt-1 overflow-hidden">
-                          <div className="h-full bg-[#FFA500] rounded-full" style={{ width: `${e.progress_percent ?? 0}%` }} />
-                        </div>
-                      </div>
-                      <span className="text-xs text-blue-200 flex-shrink-0">{e.progress_percent ?? 0}%</span>
-                    </Link>
-                  ))}
-                </div>
+      {/* HERO — Slider dynamique pour tous */}
+      <HeroSlider featuredCourses={featuredCourses ?? []} totalEnrollments={totalUsers ?? 0} />
+
+      {/* Bandeau de reprise pour utilisateurs connectés */}
+      {user && (
+        <div className="bg-[#0B3D91] text-white">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="font-semibold text-sm">Bienvenue, {userProfile?.full_name?.split(' ')[0] ?? 'Apprenant'} 👋</span>
+              {(userProfile as any)?.streak_days > 0 && (
+                <span className="text-xs bg-orange-500/20 border border-orange-400/30 rounded-full px-2 py-0.5 text-orange-300">
+                  🔥 {(userProfile as any).streak_days} jours de suite
+                </span>
               )}
             </div>
-            <div className="hidden lg:grid grid-cols-2 gap-4">
-              {(featuredCourses ?? []).slice(0, 4).map((c: any) => (
-                <Link key={c.id} href={`/formation/${c.slug}`}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 hover:bg-white/20 transition-colors">
-                  <div className="w-full aspect-video rounded-xl bg-white/10 overflow-hidden mb-3">
-                    {c.thumbnail_url
-                      ? <img src={c.thumbnail_url} alt={c.title} className="w-full h-full object-cover" />
-                      : <div className="w-full h-full flex items-center justify-center"><BookOpen className="w-8 h-8 text-white/30" /></div>}
-                  </div>
-                  <p className="text-sm font-semibold line-clamp-2 leading-snug">{c.title}</p>
-                  <p className="text-xs text-blue-200 mt-1">{c.instructor?.full_name}</p>
-                </Link>
-              ))}
-            </div>
+            {userEnrollments.length > 0 ? (
+              <div className="flex flex-wrap gap-2 flex-1">
+                {userEnrollments.slice(0, 3).map((e: any) => (
+                  <Link key={(e.course as any)?.id} href={`/formation/${(e.course as any)?.slug}`}
+                    className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-3 py-1.5 transition-colors text-xs">
+                    <div className="w-5 h-5 rounded bg-white/20 overflow-hidden flex-shrink-0">
+                      {(e.course as any)?.thumbnail_url
+                        ? <img src={(e.course as any).thumbnail_url} alt="" className="w-full h-full object-cover" />
+                        : <BookOpen className="w-3 h-3 text-white/50 m-auto" />}
+                    </div>
+                    <span className="truncate max-w-[120px]">{(e.course as any)?.title}</span>
+                    <span className="text-[#FFA500] font-bold flex-shrink-0">{e.progress_percent ?? 0}%</span>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-blue-200 text-sm">Vous n&apos;avez pas encore de formation en cours.</p>
+            )}
+            <Link href="/tableau-de-bord"
+              className="flex-shrink-0 flex items-center gap-1.5 bg-[#FFA500] hover:bg-orange-400 text-white font-bold px-4 py-2 rounded-xl transition-colors text-xs">
+              Mon espace <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gray-50" style={{ clipPath: 'ellipse(55% 100% at 50% 100%)' }} />
-        </section>
-      ) : (
-        <HeroSlider featuredCourses={featuredCourses ?? []} totalEnrollments={totalUsers ?? 0} />
+        </div>
       )}
 
       {/* CATÉGORIES */}
