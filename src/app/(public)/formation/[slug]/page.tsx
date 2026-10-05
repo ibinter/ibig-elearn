@@ -281,11 +281,11 @@ export default async function FormationPage({ params }: PageProps) {
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-bold text-gray-900 text-lg">Avis des apprenants</h2>
-                {(c as any).rating_avg > 0 && (
+                {c.rating_average > 0 && (
                   <div className="flex items-center gap-2">
-                    <StarRating value={Math.round((c as any).rating_avg)} readonly size="sm" />
-                    <span className="text-sm font-bold text-gray-900">{Number((c as any).rating_avg).toFixed(1)}</span>
-                    <span className="text-sm text-gray-400">({(c as any).review_count ?? 0} avis)</span>
+                    <StarRating value={Math.round(c.rating_average)} readonly size="sm" />
+                    <span className="text-sm font-bold text-gray-900">{Number(c.rating_average).toFixed(1)}</span>
+                    <span className="text-sm text-gray-400">({c.rating_count ?? 0} avis)</span>
                   </div>
                 )}
               </div>
@@ -300,7 +300,7 @@ export default async function FormationPage({ params }: PageProps) {
                 </div>
               )}
 
-              <ReviewsList courseId={course.id} ratingAvg={(c as any).rating_avg ?? 0} reviewCount={(c as any).review_count ?? 0} />
+              <ReviewsList courseId={course.id} ratingAvg={c.rating_average ?? 0} reviewCount={c.rating_count ?? 0} />
             </div>
           </div>
 
