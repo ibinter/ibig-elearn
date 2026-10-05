@@ -7,7 +7,7 @@ import { X, Zap } from 'lucide-react'
 const MESSAGES = [
   { text: '🎓 Nouvelle formation disponible : Intelligence Artificielle & Automatisation des PME africaines', link: '/catalogue' },
 { text: '🌍 IBIG E-LEARNING est maintenant disponible dans 12 pays d\'Afrique francophone', link: '/a-propos' },
-  { text: '🏆 Plus de 1 200 certificats délivrés — rejoignez la communauté des professionnels certifiés !', link: '/inscription' },
+  { text: '🏆 Rejoignez la communauté des professionnels certifiés IBIG E-LEARNING !', link: '/inscription' },
   { text: '📱 Mobile Money accepté : Orange Money, MTN, Wave, Moov — payez dans votre monnaie locale', link: '/catalogue' },
 ]
 
