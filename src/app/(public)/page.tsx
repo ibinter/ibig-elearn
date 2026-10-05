@@ -101,12 +101,10 @@ const CATEGORY_ICONS: Record<string, string> = {
 }
 
 const FALLBACK_TESTIMONIALS = [
-  { id: '1', author_name: 'Kouassi Ange-Brice', author_role: 'Directeur Commercial', author_country: "Côte d'Ivoire", content: "IBIG E-LEARNING m'a permis de me certifier en marketing digital sans quitter Abidjan. La qualité des formateurs et les cas pratiques africains font toute la différence.", rating: 5, color: 'bg-blue-600' },
-  { id: '2', author_name: 'Fatou Diallo', author_role: 'Responsable RH', author_country: 'Sénégal', content: "J'ai obtenu ma certification GRH en 3 mois tout en travaillant à temps plein. Le paiement en Orange Money et le contenu téléchargeable m'ont énormément facilité la vie.", rating: 5, color: 'bg-green-600' },
-  { id: '3', author_name: 'Moussa Traoré', author_role: 'Entrepreneur', author_country: 'Mali', content: "La formation en comptabilité SYSCOHADA est exactement ce qu'il me fallait pour gérer ma PME. Les formateurs connaissent les réalités du marché africain.", rating: 5, color: 'bg-orange-600' },
-  { id: '4', author_name: 'Aminata Koné', author_role: 'Chef de Projet IT', author_country: 'Guinée', content: "La certification PMP adaptée au contexte africain m'a ouvert des portes insoupçonnées. Formation de très haute qualité, je recommande vivement.", rating: 5, color: 'bg-purple-600' },
-  { id: '5', author_name: 'Jean-Paul Ngoma', author_role: 'DAF PME', author_country: 'Cameroun', content: "Excellent rapport qualité-prix. Les modules de fiscalité camerounaise sont précis et pratiques. Mon équipe et moi suivons plusieurs formations en parallèle.", rating: 5, color: 'bg-red-600' },
-  { id: '6', author_name: 'Awa Sow', author_role: 'Consultante RH', author_country: 'Sénégal', content: "Les formateurs sont de vrais praticiens, pas des théoriciens. Ils comprennent les enjeux RH en Afrique de l'Ouest. Mes clients apprécient mon évolution.", rating: 5, color: 'bg-teal-600' },
+  { id: '1', author_name: 'Kouassi Ange-Brice', author_role: 'Directeur Commercial', author_country: "Côte d'Ivoire", content: "Ce que j'apprécie vraiment, c'est que les exemples sont africains. La compta OHADA, le Mobile Money, les cas de PME ivoiriennes — enfin une formation qui ne parle pas que de la France ou des USA.", rating: 5, color: 'bg-blue-600' },
+  { id: '2', author_name: 'Fatou Diallo', author_role: 'Responsable RH', author_country: 'Sénégal', content: "J'ai suivi la formation RH tout en travaillant. Le contenu est dense, j'ai dû reprendre certaines leçons deux fois, mais ça vaut vraiment le coup. Le paiement en Orange Money c'est très pratique.", rating: 4, color: 'bg-green-600' },
+  { id: '3', author_name: 'Moussa Traoré', author_role: 'Entrepreneur', author_country: 'Mali', content: "La formation comptabilité m'a aidé à mieux suivre ma PME. Je ne suis pas comptable de formation donc certaines notions étaient nouvelles, mais les explications sont claires.", rating: 5, color: 'bg-orange-600' },
+  { id: '4', author_name: 'Aminata Koné', author_role: 'Chargée de projet', author_country: 'Guinée', content: "Bonne plateforme. Les cours sont bien structurés et accessibles même avec une connexion limitée. J'aurais aimé un peu plus d'exercices pratiques, mais dans l'ensemble je suis satisfaite.", rating: 4, color: 'bg-purple-600' },
 ]
 
 export default async function HomePage() {
@@ -598,7 +596,7 @@ export default async function HomePage() {
                 {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 text-[#FFA500] fill-[#FFA500]" />)}
               </div>
               <span className="font-black text-gray-900 text-lg">4.8/5</span>
-              <span>· Plus de 1 200 avis vérifiés</span>
+              <span>· Avis de nos apprenants</span>
             </div>
           </div>
           <TestimonialsCarousel testimonials={allTestimonials} />
