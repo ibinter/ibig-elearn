@@ -23,28 +23,29 @@ export default function EnrichLessonsButton({ courseId, label }: Props) {
 
     let totalUpdated = 0
     let totalSkipped = 0
+    const processedIds: string[] = []
 
     try {
-      // Appels en boucle par vagues de 20 leçons jusqu'à ce qu'il n'y ait plus rien à traiter
       while (true) {
         const res = await fetch('/api/admin/enrich-lessons', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ courseId: courseId ?? null, forceAll, limit: 4 }),
+          body: JSON.stringify({ courseId: courseId ?? null, forceAll, limit: 4, excludeIds: processedIds }),
         })
         const data = await res.json()
         if (!res.ok) throw new Error(data.error ?? 'Erreur serveur')
 
+        // Accumuler les IDs traités pour ne pas les retraiter au prochain appel
+        for (const r of data.results ?? []) {
+          if (r.id) processedIds.push(r.id)
+        }
+
         totalUpdated += data.updated
         totalSkipped += data.skipped
 
-        // Mettre à jour l'affichage en temps réel
         setResult({ updated: totalUpdated, skipped: totalSkipped, total: totalUpdated + totalSkipped })
 
-        // Si rien n'a été enrichi ET rien n'a bougé → terminé (évite boucle infinie)
-        if (data.updated === 0 && data.skipped === 0) break
-        // Si uniquement des erreurs sans progression réelle → stop
-        if (data.updated === 0 && !forceAll) break
+        if (data.updated === 0) break
       }
 
       setStatus('done')

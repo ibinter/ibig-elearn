@@ -65,6 +65,7 @@ export async function POST(req: NextRequest) {
   const courseId: string | null = body.courseId ?? null
   const forceAll: boolean = body.forceAll ?? false
   const limit: number = body.limit ?? 20 // max leçons à traiter par appel
+  const excludeIds: string[] = body.excludeIds ?? [] // IDs déjà traités dans cette session
 
   // Récupérer les cours concernés via service-role (bypass RLS)
   let coursesQuery = db.from('courses').select('id, title').eq('is_published', true)
@@ -96,6 +97,12 @@ export async function POST(req: NextRequest) {
           continue
         }
 
+        // Sauter les leçons déjà traitées dans cette session (pagination)
+        if (excludeIds.includes(lesson.id)) {
+          skipped++
+          continue
+        }
+
         // Sauter les leçons déjà riches sauf si forceAll
         if (!forceAll && lesson.content && lesson.content.length >= 400) {
           skipped++
@@ -122,13 +129,13 @@ export async function POST(req: NextRequest) {
 
           if (updateErr) throw new Error(`DB update failed: ${updateErr.message}`)
 
-          results.push({ lesson: lesson.title, status: 'enrichi' })
+          results.push({ lesson: lesson.title, status: 'enrichi', id: lesson.id })
           updated++
           console.log(`[enrich] ✓ "${lesson.title}" (${updated}/${limit})`)
         } catch (err: any) {
           skipped++ // compter les erreurs comme traitées pour ne pas bloquer la boucle
           console.error(`[enrich] ✗ "${lesson.title}": ${err.message}`)
-          results.push({ lesson: lesson.title, status: `erreur: ${err.message}` })
+          results.push({ lesson: lesson.title, status: `erreur: ${err.message}`, id: lesson.id })
         }
       }
       if (updated >= limit) break
