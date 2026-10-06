@@ -48,7 +48,11 @@ Ce contenu sera vu par des visiteurs non-inscrits : il doit leur donner ENVIE d'
   return (message.content[0] as any).text ?? ''
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
+  return NextResponse.json({ error: 'Enrichissement IA désactivé — crédits épuisés.' }, { status: 403 })
+}
+
+export async function POST_disabled(req: NextRequest) {
   const supabase = await createClient()
 
   // Vérifier que l'utilisateur est admin (via client cookie)
