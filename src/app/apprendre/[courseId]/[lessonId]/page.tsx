@@ -4,7 +4,7 @@ import VideoPlayer from './VideoPlayer'
 import LessonSidebar from './LessonSidebar'
 import QuizSection from './QuizSection'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, CheckCircle, BookOpen, MessageSquare, FileText, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import CertificateButton from '@/components/ui/CertificateButton'
 import SaraChat from '@/components/sara/SaraChat'
 import DiscussionPanel from '@/components/forum/DiscussionPanel'
@@ -167,6 +167,18 @@ export default async function ApprendrePage({ params }: PageProps) {
     final_exam: 'Examen final', assignment: 'Devoir', lesson: 'Cours',
   }
 
+  // Breadcrumb : trouver module de la leçon courante + position
+  const currentModule = (modules ?? []).find(m =>
+    (m.lessons ?? []).some((l: any) => l.id === currentLesson.id)
+  )
+  const lessonIndex = currentModule
+    ? [...(currentModule.lessons ?? [])].sort((a: any, b: any) => a.position - b.position).findIndex((l: any) => l.id === currentLesson.id) + 1
+    : null
+
+  // Temps de lecture estimé (200 mots/min)
+  const wordCount = currentLesson.content ? currentLesson.content.split(/\s+/).length : 0
+  const readingMinutes = wordCount > 0 ? Math.max(1, Math.round(wordCount / 200)) : null
+
   const isMedia = ['video', 'audio', 'code'].includes(currentLesson.type)
 
   return (
@@ -317,16 +329,37 @@ export default async function ApprendrePage({ params }: PageProps) {
 
               {/* En-tête leçon */}
               <div className="mb-8 pb-6 border-b border-gray-100">
-                <div className="flex items-center gap-2 mb-3">
+                {/* Breadcrumb */}
+                {currentModule && (
+                  <p className="text-xs text-gray-400 font-medium mb-3 flex items-center gap-1.5">
+                    <span>{currentModule.title}</span>
+                    {lessonIndex && (
+                      <>
+                        <ChevronRight className="w-3 h-3" />
+                        <span>Leçon {lessonIndex}</span>
+                      </>
+                    )}
+                  </p>
+                )}
+
+                {/* Type + état */}
+                <div className="flex items-center gap-2 mb-4">
                   <span className="text-[11px] font-bold uppercase tracking-widest text-[#0B3D91] bg-[#0B3D91]/8 px-3 py-1 rounded-full">
                     {lessonTypeLabel[currentLesson.type] ?? 'Leçon'}
                   </span>
+                  {readingMinutes && (
+                    <span className="text-[11px] text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
+                      ⏱ {readingMinutes} min de lecture
+                    </span>
+                  )}
                   {progress?.is_completed && (
                     <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
                       <CheckCircle className="w-3 h-3" /> Complétée
                     </span>
                   )}
                 </div>
+
+                {/* Titre + marque-page */}
                 <div className="flex items-start justify-between gap-4">
                   <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 leading-tight">
                     {currentLesson.title}

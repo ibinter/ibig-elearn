@@ -14,11 +14,7 @@ export default function MarkdownContent({ content, className }: Props) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          h1: ({ children }) => (
-            <h1 className="text-3xl font-bold text-gray-900 mb-6 mt-10 first:mt-0 pb-3 border-b-2 border-[#0B3D91]/20 leading-tight">
-              {children}
-            </h1>
-          ),
+          h1: () => null,
           h2: ({ children }) => (
             <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8 flex items-center gap-2 leading-snug">
               <span className="w-1 h-6 bg-[#FFA500] rounded-full flex-shrink-0 inline-block" />
