@@ -37,9 +37,7 @@ export default async function ApprendrePage({ params }: PageProps) {
     .eq('course_id', courseId)
     .single()
 
-  if (!enrollment) redirect(`/formation/${courseId}`)
-
-  const enrollmentMode = (enrollment.mode ?? 'autonome') as 'autonome' | 'guide' | 'certifiant'
+  const enrollmentMode = (enrollment?.mode ?? 'autonome') as 'autonome' | 'guide' | 'certifiant'
 
   const { data: course } = await supabase.from('courses').select('id, title, slug').eq('id', courseId).single()
   if (!course) notFound()
@@ -62,6 +60,11 @@ export default async function ApprendrePage({ params }: PageProps) {
   }
 
   if (!currentLesson) notFound()
+
+  // Si pas inscrit : seulement les leçons free_preview sont accessibles
+  if (!enrollment && !currentLesson.is_free_preview) {
+    redirect(`/formation/${courseId}`)
+  }
 
   // Gate : vérifier si le module de la leçon courante est débloqué
   if (enrollmentMode !== 'autonome') {

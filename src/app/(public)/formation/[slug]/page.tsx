@@ -358,21 +358,28 @@ export default async function FormationPage({ params }: PageProps) {
                       <div className="bg-gray-50/40 border-t border-gray-100">
                         {(mod.lessons ?? []).slice().sort((a: any, b: any) => (a.position ?? 0) - (b.position ?? 0)).map((lesson: any, li: number) => {
                           const isLocked = !isEnrolled && !lesson.is_free_preview
+                          const isFreePreview = lesson.is_free_preview && !isEnrolled
+                          const href = isEnrolled
+                            ? `/apprendre/${course.id}/${lesson.id}`
+                            : isFreePreview ? `/apprendre/${course.id}/${lesson.id}` : null
+                          const Wrapper = href ? Link : 'div' as any
                           return (
-                            <div key={lesson.id} className={`flex items-center gap-3 px-6 py-3 border-b border-gray-100/70 last:border-0 ${isLocked ? 'opacity-60' : 'hover:bg-white/60'} transition-colors`}>
+                            <Wrapper key={lesson.id} href={href ?? undefined} className={`flex items-center gap-3 px-6 py-3 border-b border-gray-100/70 last:border-0 ${isLocked ? 'opacity-60 cursor-default' : 'hover:bg-white/60 cursor-pointer'} transition-colors`}>
                               <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${isLocked ? 'bg-gray-100 text-gray-400' : lessonIconColor(lesson.type)}`}>
                                 {isLocked ? <Lock className="w-3.5 h-3.5" /> : lessonIcon(lesson.type)}
                               </div>
                               <span className={`text-sm flex-1 ${isLocked ? 'text-gray-400' : 'text-gray-700'}`}>{lesson.title}</span>
                               <div className="flex items-center gap-2 flex-shrink-0">
-                                {lesson.is_free_preview && !isEnrolled && (
-                                  <span className="text-xs text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">Aperçu</span>
+                                {isFreePreview && (
+                                  <span className="text-xs text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 flex items-center gap-1">
+                                    <Play className="w-2.5 h-2.5" /> Aperçu gratuit
+                                  </span>
                                 )}
                                 {lesson.video_duration_seconds && !isLocked && (
                                   <span className="text-xs text-gray-400">{Math.ceil(lesson.video_duration_seconds / 60)} min</span>
                                 )}
                               </div>
-                            </div>
+                            </Wrapper>
                           )
                         })}
                       </div>
