@@ -133,8 +133,7 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
   return (
     <section
       className="relative overflow-hidden"
-      style={{ minHeight: '580px' }}
-      style={{ background: slide.gradient, transition: 'background 0.8s ease' }}
+      style={{ minHeight: '580px', background: slide.gradient, transition: 'background 0.8s ease' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
