@@ -43,22 +43,13 @@ export default async function CourseOverviewPage({ params }: PageProps) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/connexion')
 
-  const { data: enrollment } = await supabase
-    .from('enrollments')
-    .select('*')
-    .eq('user_id', user.id)
-    .eq('course_id', courseId)
-    .single()
-
-  if (!enrollment) redirect(`/formation/${courseId}`)
-
-  const { data: course } = await supabase
-    .from('courses')
-    .select('id, title, short_description, thumbnail_url, duration_hours, level')
-    .eq('id', courseId)
-    .single()
+  const [{ data: enrollment }, { data: course }] = await Promise.all([
+    supabase.from('enrollments').select('*').eq('user_id', user.id).eq('course_id', courseId).single(),
+    supabase.from('courses').select('id, title, short_description, thumbnail_url, duration_hours, level, slug').eq('id', courseId).single(),
+  ])
 
   if (!course) notFound()
+  if (!enrollment) redirect(`/formation/${course.slug}`)
 
   const { data: modules } = await supabase
     .from('modules')

@@ -63,7 +63,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
   // Si pas inscrit : seulement les leçons free_preview sont accessibles
   if (!enrollment && !currentLesson.is_free_preview) {
-    redirect(`/formation/${courseId}`)
+    redirect(`/formation/${course.slug}`)
   }
 
   // Gate : vérifier si le module de la leçon courante est débloqué
