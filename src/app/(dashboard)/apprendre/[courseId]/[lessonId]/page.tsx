@@ -183,9 +183,9 @@ export default async function ApprendrePage({ params }: PageProps) {
           <h1 className="text-white font-semibold text-sm truncate">{course.title}</h1>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-400">
-          <span>{enrollment.progress_percent}% terminé</span>
+          <span>{enrollment?.progress_percent ?? 0}% terminé</span>
           <div className="w-24 bg-gray-700 rounded-full h-1.5">
-            <div className="h-1.5 rounded-full bg-[#FFA500]" style={{ width: `${enrollment.progress_percent}%` }} />
+            <div className="h-1.5 rounded-full bg-[#FFA500]" style={{ width: `${enrollment?.progress_percent ?? 0}%` }} />
           </div>
         </div>
       </header>
@@ -334,7 +334,7 @@ export default async function ApprendrePage({ params }: PageProps) {
               nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
             />
 
-            {enrollment.progress_percent >= 100 && (
+            {(enrollment?.progress_percent ?? 0) >= 100 && (
               <div className="mt-8 p-6 bg-gradient-to-r from-[#FFA500]/10 to-[#0B3D91]/10 border border-[#FFA500]/30 rounded-2xl">
                 <p className="text-white text-center font-semibold mb-4">🎉 Félicitations ! Vous avez terminé cette formation.</p>
                 <CertificateButton courseId={courseId} />
