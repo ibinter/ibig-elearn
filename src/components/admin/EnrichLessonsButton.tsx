@@ -30,7 +30,7 @@ export default function EnrichLessonsButton({ courseId, label }: Props) {
         const res = await fetch('/api/admin/enrich-lessons', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ courseId: courseId ?? null, forceAll, limit: 20 }),
+          body: JSON.stringify({ courseId: courseId ?? null, forceAll, limit: 4 }),
         })
         const data = await res.json()
         if (!res.ok) throw new Error(data.error ?? 'Erreur serveur')
