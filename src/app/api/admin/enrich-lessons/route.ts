@@ -77,18 +77,16 @@ export async function POST(req: NextRequest) {
         .order('position')
 
       for (const lesson of lessons ?? []) {
-        // Sauter les leçons qui ont déjà du contenu riche (sauf forceAll)
-        if (!forceAll && lesson.content && lesson.content.length >= 400) {
+        // Toujours sauter les types purement média (pas de texte à générer)
+        if (['video', 'audio', 'code'].includes(lesson.type)) {
           skipped++
           continue
         }
 
-        // Sauter les types qui n'ont pas besoin de contenu texte
-        if (['video', 'audio', 'code', 'final_exam'].includes(lesson.type)) {
-          if (!forceAll || !(!lesson.content)) {
-            skipped++
-            continue
-          }
+        // Sauter les leçons déjà riches sauf si forceAll
+        if (!forceAll && lesson.content && lesson.content.length >= 400) {
+          skipped++
+          continue
         }
 
         try {
