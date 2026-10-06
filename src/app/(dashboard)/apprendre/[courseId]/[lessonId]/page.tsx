@@ -172,22 +172,49 @@ export default async function ApprendrePage({ params }: PageProps) {
     bestPreviousScore = attempts?.[0]?.score ?? null
   }
 
+  const progressPct = enrollment?.progress_percent ?? 0
+  const lessonTypeLabel: Record<string, string> = {
+    video: 'Vidéo', audio: 'Audio', code: 'Code', quiz: 'Quiz',
+    final_exam: 'Examen final', assignment: 'Devoir', lesson: 'Cours',
+  }
+
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col">
-      {/* Top bar */}
-      <header className="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center gap-4">
-        <Link href={`/formation/${course.slug}`} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
-          <ArrowLeft className="w-4 h-4" /> Retour
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Top bar — blanc élégant */}
+      <header className="bg-white border-b border-gray-200 shadow-sm px-4 py-0 flex items-center gap-4 h-14 flex-shrink-0 z-20">
+        <Link
+          href={`/formation/${course.slug}`}
+          className="flex items-center gap-1.5 text-gray-500 hover:text-[#0B3D91] transition-colors text-sm font-medium flex-shrink-0"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="hidden sm:inline">Retour</span>
         </Link>
+
+        <div className="w-px h-6 bg-gray-200 flex-shrink-0" />
+
         <div className="flex-1 min-w-0">
-          <h1 className="text-white font-semibold text-sm truncate">{course.title}</h1>
+          <p className="text-xs text-gray-400 truncate leading-none mb-0.5">{course.title}</p>
+          <p className="text-sm font-semibold text-gray-800 truncate leading-none">{currentLesson.title}</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <span>{enrollment?.progress_percent ?? 0}% terminé</span>
-          <div className="w-24 bg-gray-700 rounded-full h-1.5">
-            <div className="h-1.5 rounded-full bg-[#FFA500]" style={{ width: `${enrollment?.progress_percent ?? 0}%` }} />
+
+        {enrollment && (
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="hidden sm:flex flex-col items-end gap-1">
+              <span className="text-xs font-semibold text-[#0B3D91]">{progressPct}% terminé</span>
+              <div className="w-28 bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[#0B3D91] to-[#FFA500] transition-all duration-700"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+            </div>
+            {progress?.is_completed && (
+              <span className="flex items-center gap-1 text-emerald-600 text-xs font-semibold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                <CheckCircle className="w-3.5 h-3.5" /> Terminé
+              </span>
+            )}
           </div>
-        </div>
+        )}
       </header>
 
       <div className="flex flex-1 overflow-hidden">
@@ -201,26 +228,32 @@ export default async function ApprendrePage({ params }: PageProps) {
         />
 
         {/* Contenu principal */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto bg-gray-50">
+
+          {/* Bloc média (vidéo / audio / code) — fond sombre uniquement pour ces éléments */}
           {currentLesson.type === 'video' && currentLesson.video_url && (
-            <VideoPlayer
-              videoUrl={currentLesson.video_url}
-              lessonId={currentLesson.id}
-              courseId={courseId}
-              userId={user.id}
-              lastPosition={progress?.last_position_seconds ?? 0}
-              isCompleted={progress?.is_completed ?? false}
-            />
+            <div className="bg-gray-900">
+              <VideoPlayer
+                videoUrl={currentLesson.video_url}
+                lessonId={currentLesson.id}
+                courseId={courseId}
+                userId={user.id}
+                lastPosition={progress?.last_position_seconds ?? 0}
+                isCompleted={progress?.is_completed ?? false}
+              />
+            </div>
           )}
 
           {currentLesson.type === 'audio' && currentLesson.audio_url && (
-            <div className="max-w-lg mx-auto p-6">
-              <AudioPlayer
-                audioUrl={currentLesson.audio_url}
-                title={currentLesson.title}
-                coverUrl={currentLesson.audio_cover_url}
-                transcriptText={currentLesson.audio_transcript}
-              />
+            <div className="bg-gradient-to-br from-[#0B3D91] to-[#1a56cc] py-10 px-4">
+              <div className="max-w-lg mx-auto">
+                <AudioPlayer
+                  audioUrl={currentLesson.audio_url}
+                  title={currentLesson.title}
+                  coverUrl={currentLesson.audio_cover_url}
+                  transcriptText={currentLesson.audio_transcript}
+                />
+              </div>
             </div>
           )}
 
@@ -236,79 +269,101 @@ export default async function ApprendrePage({ params }: PageProps) {
             />
           )}
 
-          <div className="max-w-4xl mx-auto p-6">
-            <div className="flex items-start justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">{currentLesson.title}</h2>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <BookmarkButton lessonId={currentLesson.id} courseId={courseId} />
-                {currentLesson.type !== 'video' && currentLesson.type !== 'audio' && currentLesson.type !== 'quiz' && currentLesson.type !== 'code' && (
-                  <MarkCompleteButton
-                    lessonId={currentLesson.id}
-                    courseId={courseId}
-                    courseTitle={course.title}
-                    isCompleted={progress?.is_completed ?? false}
-                  />
-                )}
-                {currentLesson.type === 'video' && progress?.is_completed && (
-                  <span className="flex items-center gap-1.5 text-green-400 text-sm font-medium">
-                    <CheckCircle className="w-5 h-5" /> Terminé
+          {/* Zone de contenu — fond blanc, max-width lisible */}
+          <div className="max-w-3xl mx-auto px-6 py-8">
+
+            {/* En-tête de la leçon */}
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B3D91] bg-[#0B3D91]/10 px-3 py-1 rounded-full">
+                  {lessonTypeLabel[currentLesson.type] ?? 'Leçon'}
+                </span>
+                {progress?.is_completed && (
+                  <span className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" /> Complétée
                   </span>
                 )}
               </div>
+              <div className="flex items-start justify-between gap-4">
+                <h1 className="text-2xl font-bold text-gray-900 leading-tight">{currentLesson.title}</h1>
+                <div className="flex items-center gap-2 flex-shrink-0 pt-0.5">
+                  <BookmarkButton lessonId={currentLesson.id} courseId={courseId} />
+                  {currentLesson.type !== 'video' && currentLesson.type !== 'audio' && currentLesson.type !== 'quiz' && currentLesson.type !== 'code' && (
+                    <MarkCompleteButton
+                      lessonId={currentLesson.id}
+                      courseId={courseId}
+                      courseTitle={course.title}
+                      isCompleted={progress?.is_completed ?? false}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
 
+            {/* Contenu Markdown */}
             {currentLesson.content && currentLesson.type !== 'quiz' && (
-              <MarkdownContent
-                content={currentLesson.content}
-                className="mb-8"
-              />
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8">
+                <MarkdownContent content={currentLesson.content} />
+              </div>
             )}
 
+            {/* Sections spéciales */}
             {currentLesson.type === 'assignment' && assignmentData && (
-              <AssignmentSection
-                assignment={assignmentData}
-                lessonId={currentLesson.id}
-                courseId={courseId}
-                userId={user.id}
-                existingSubmission={existingSubmission}
-              />
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8">
+                <AssignmentSection
+                  assignment={assignmentData}
+                  lessonId={currentLesson.id}
+                  courseId={courseId}
+                  userId={user.id}
+                  existingSubmission={existingSubmission}
+                />
+              </div>
             )}
 
             {currentLesson.type === 'final_exam' && (
-              <FinalExamSection
-                lessonId={currentLesson.id}
-                courseId={courseId}
-                questions={examQuestions}
-                durationMinutes={currentLesson.exam_duration_minutes ?? 60}
-                passingScore={currentLesson.exam_passing_score ?? 80}
-                maxAttempts={currentLesson.exam_max_attempts ?? 3}
-                attemptsLeft={examAttemptsLeft}
-                isAvailable={examAvailable}
-                pastAttempts={examPastAttempts}
-                courseSlug={course.slug}
-              />
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8">
+                <FinalExamSection
+                  lessonId={currentLesson.id}
+                  courseId={courseId}
+                  questions={examQuestions}
+                  durationMinutes={currentLesson.exam_duration_minutes ?? 60}
+                  passingScore={currentLesson.exam_passing_score ?? 80}
+                  maxAttempts={currentLesson.exam_max_attempts ?? 3}
+                  attemptsLeft={examAttemptsLeft}
+                  isAvailable={examAvailable}
+                  pastAttempts={examPastAttempts}
+                  courseSlug={course.slug}
+                />
+              </div>
             )}
 
             {currentLesson.type === 'quiz' && quizQuestions && (
-              <QuizSection
-                questions={quizQuestions}
-                lessonId={currentLesson.id}
-                courseId={courseId}
-                userId={user.id}
-                passingScore={currentLesson.quiz_passing_score ?? 70}
-                bestPreviousScore={bestPreviousScore}
-                nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
-                isLastModuleQuiz={isLastModuleQuiz}
-              />
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8">
+                <QuizSection
+                  questions={quizQuestions}
+                  lessonId={currentLesson.id}
+                  courseId={courseId}
+                  userId={user.id}
+                  passingScore={currentLesson.quiz_passing_score ?? 70}
+                  bestPreviousScore={bestPreviousScore}
+                  nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
+                  isLastModuleQuiz={isLastModuleQuiz}
+                />
+              </div>
             )}
 
             {/* Notes de cours */}
-            <div className="mb-8 bg-gray-800 rounded-2xl overflow-hidden">
+            <div className="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+              <div className="px-6 pt-5 pb-1 border-b border-gray-100 flex items-center gap-2">
+                <span className="text-base font-semibold text-gray-800">📝 Mes notes</span>
+              </div>
               <LessonNotes lessonId={currentLesson.id} courseId={courseId} />
-              <div className="px-4 pb-3">
-                <Link href={`/apprendre/${courseId}/notes`}
-                  className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#FFA500] transition-colors"
-                  target="_blank">
+              <div className="px-6 pb-4">
+                <Link
+                  href={`/apprendre/${courseId}/notes`}
+                  className="inline-flex items-center gap-1.5 text-xs text-[#0B3D91] hover:text-[#FFA500] transition-colors font-medium"
+                  target="_blank"
+                >
                   <ArrowLeft className="w-3 h-3 rotate-180" />
                   Exporter toutes mes notes en PDF
                 </Link>
@@ -316,16 +371,18 @@ export default async function ApprendrePage({ params }: PageProps) {
             </div>
 
             {/* Q&A par leçon */}
-            <div className="mb-8 bg-gray-800 rounded-2xl p-6">
+            <div className="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <LessonQA lessonId={currentLesson.id} courseId={courseId} userId={user.id} />
             </div>
 
             {/* Forum de discussion */}
-            <DiscussionPanel
-              lessonId={currentLesson.id}
-              courseId={courseId}
-              currentUserId={user.id}
-            />
+            <div className="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <DiscussionPanel
+                lessonId={currentLesson.id}
+                courseId={courseId}
+                currentUserId={user.id}
+              />
+            </div>
 
             {/* Navigation leçon suivante / précédente */}
             <LessonNavigation
@@ -334,12 +391,17 @@ export default async function ApprendrePage({ params }: PageProps) {
               nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
             />
 
+            {/* Félicitations formation terminée */}
             {(enrollment?.progress_percent ?? 0) >= 100 && (
-              <div className="mt-8 p-6 bg-gradient-to-r from-[#FFA500]/10 to-[#0B3D91]/10 border border-[#FFA500]/30 rounded-2xl">
-                <p className="text-white text-center font-semibold mb-4">🎉 Félicitations ! Vous avez terminé cette formation.</p>
+              <div className="mt-8 p-8 bg-gradient-to-br from-[#0B3D91] to-[#1a56cc] rounded-2xl shadow-lg text-center">
+                <div className="text-5xl mb-4">🎉</div>
+                <h3 className="text-white text-xl font-bold mb-2">Félicitations !</h3>
+                <p className="text-blue-100 mb-6">Vous avez terminé cette formation avec succès.</p>
                 <CertificateButton courseId={courseId} />
               </div>
             )}
+
+            <div className="h-12" />
           </div>
         </main>
       </div>
