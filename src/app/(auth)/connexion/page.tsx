@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { useLocale } from '@/i18n/client'
 import { Eye, EyeOff, Loader2, LogIn, Shield } from 'lucide-react'
 
 interface SSOProvider {
@@ -23,6 +24,7 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 export default function ConnexionPage() {
+  const { t } = useLocale()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -60,7 +62,7 @@ export default function ConnexionPage() {
     const supabase = createClient()
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
-      setError('Email ou mot de passe incorrect.')
+      setError(t.auth.incorrectCredentials)
       setLoading(false)
       return
     }
@@ -113,8 +115,8 @@ export default function ConnexionPage() {
     <div className="w-full max-w-md">
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Bon retour !</h1>
-          <p className="text-gray-500 text-sm">Connectez-vous à votre espace IBIG E-LEARNING</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t.auth.loginTitle}</h1>
+          <p className="text-gray-500 text-sm">{t.auth.loginSubtitle}</p>
         </div>
 
         {/* Google OAuth */}
@@ -128,7 +130,7 @@ export default function ConnexionPage() {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
           )}
-          {googleLoading ? 'Redirection...' : 'Continuer avec Google'}
+          {googleLoading ? t.auth.redirecting : t.auth.continueWithGoogle}
         </button>
 
         {/* Bouton SSO — apparaît dynamiquement */}
@@ -140,13 +142,13 @@ export default function ConnexionPage() {
                 ? <img src={ssoProvider.button_logo_url} alt="" className="w-5 h-5 object-contain" onError={e => (e.currentTarget.style.display = 'none')} />
                 : <Shield className="w-5 h-5" />
             )}
-            {ssoLoading ? 'Connexion SSO...' : ssoProvider.button_label}
+            {ssoLoading ? t.auth.connectingSSO : ssoProvider.button_label}
           </button>
         )}
 
         <div className="relative mb-4">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100" /></div>
-          <div className="relative flex justify-center"><span className="bg-white px-3 text-xs text-gray-400">ou avec votre email</span></div>
+          <div className="relative flex justify-center"><span className="bg-white px-3 text-xs text-gray-400">{t.auth.orWithEmail}</span></div>
         </div>
 
         {error && (
@@ -155,10 +157,10 @@ export default function ConnexionPage() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Adresse email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.email}</label>
             <div className="relative">
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                placeholder="vous@exemple.com"
+                placeholder={t.auth.emailPlaceholder}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] focus:border-transparent text-sm" />
               {detectingSSO && (
                 <Loader2 className="w-4 h-4 animate-spin text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" />
@@ -166,14 +168,14 @@ export default function ConnexionPage() {
             </div>
             {ssoProvider && (
               <p className="text-xs text-[#0B3D91] mt-1.5 flex items-center gap-1">
-                <Shield className="w-3 h-3" /> SSO disponible pour ce domaine
+                <Shield className="w-3 h-3" /> {t.auth.ssoAvailable}
               </p>
             )}
           </div>
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
-              <Link href="/mot-de-passe-oublie" className="text-xs text-[#0B3D91] hover:underline">Mot de passe oublié ?</Link>
+              <label className="block text-sm font-medium text-gray-700">{t.auth.password}</label>
+              <Link href="/mot-de-passe-oublie" className="text-xs text-[#0B3D91] hover:underline">{t.auth.forgotPassword}</Link>
             </div>
             <div className="relative">
               <input type={showPassword ? 'text' : 'password'} value={password}
@@ -189,13 +191,13 @@ export default function ConnexionPage() {
           <button type="submit" disabled={loading}
             className="w-full flex items-center justify-center gap-2 ibig-gradient text-white font-semibold py-3.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <LogIn className="w-5 h-5" />}
-            {loading ? 'Connexion...' : 'Se connecter'}
+            {loading ? t.auth.connecting : t.auth.loginBtn}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Pas encore de compte ?{' '}
-          <Link href="/inscription" className="text-[#0B3D91] font-semibold hover:underline">S&apos;inscrire gratuitement</Link>
+          {t.auth.noAccount}{' '}
+          <Link href="/inscription" className="text-[#0B3D91] font-semibold hover:underline">{t.auth.registerLink}</Link>
         </p>
       </div>
     </div>

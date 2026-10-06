@@ -4,6 +4,7 @@ import { BookOpen, Star, Users, Clock, X } from 'lucide-react'
 import PriceDisplay from '@/components/ui/PriceDisplay'
 import type { Course, Category } from '@/types'
 import CatalogueFilters from './CatalogueFilters'
+import { getT } from '@/i18n'
 
 export const metadata = {
   title: 'Catalogue des formations professionnelles',
@@ -25,6 +26,7 @@ interface PageProps {
 }
 
 export default async function CataloguePage({ searchParams }: PageProps) {
+  const t = await getT()
   const params = await searchParams
   const supabase = await createClient()
   const page = Math.max(1, parseInt(params.page ?? '1'))
@@ -97,9 +99,9 @@ export default async function CataloguePage({ searchParams }: PageProps) {
       {/* Bannière hero */}
       <div className="ibig-gradient text-white py-10 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2">Catalogue des formations</h1>
+          <h1 className="text-3xl font-bold mb-2">{t.catalog.heroBanner}</h1>
           <p className="text-blue-200 text-sm">
-            {count ?? 0} formation{(count ?? 0) > 1 ? 's' : ''} disponible{(count ?? 0) > 1 ? 's' : ''} · 12 pays africains · Certifiantes · Paiement Mobile Money
+            {count ?? 0} {t.catalog.heroSub}
           </p>
         </div>
       </div>
@@ -116,7 +118,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
               </Link>
             ))}
             <Link href="/catalogue" className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-red-500 px-2 py-1.5 transition-colors">
-              Tout effacer
+              {t.catalog.clearAll}
             </Link>
           </div>
         )}
@@ -156,7 +158,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                           <span className="absolute top-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full bg-green-500 text-white">GRATUIT</span>
                         )}
                         {(course as any).is_featured && (
-                          <span className="absolute bottom-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full bg-[#FFA500] text-black">⭐ À la une</span>
+                          <span className="absolute bottom-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full bg-[#FFA500] text-black">{t.catalog.featured}</span>
                         )}
                       </div>
                       <div className="p-4 flex flex-col flex-1">
@@ -183,7 +185,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                     {page > 1 && (
                       <Link href={pageUrl(page - 1)}
                         className="px-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-600 hover:border-[#0B3D91] hover:text-[#0B3D91] transition-colors">
-                        ← Précédent
+                        {t.catalog.previous}
                       </Link>
                     )}
                     {Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -204,7 +206,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                     {page < totalPages && (
                       <Link href={pageUrl(page + 1)}
                         className="px-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-600 hover:border-[#0B3D91] hover:text-[#0B3D91] transition-colors">
-                        Suivant →
+                        {t.catalog.next}
                       </Link>
                     )}
                   </div>
@@ -213,9 +215,9 @@ export default async function CataloguePage({ searchParams }: PageProps) {
             ) : (
               <div className="text-center py-20">
                 <BookOpen className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-1">Aucune formation trouvée</h3>
-                <p className="text-gray-400 text-sm mb-4">Essayez d&apos;autres filtres ou revenez bientôt.</p>
-                <Link href="/catalogue" className="text-[#0B3D91] font-semibold hover:underline">Voir tout le catalogue</Link>
+                <h3 className="font-semibold text-gray-900 mb-1">{t.catalog.noFound}</h3>
+                <p className="text-gray-400 text-sm mb-4">{t.catalog.noFoundSub}</p>
+                <Link href="/catalogue" className="text-[#0B3D91] font-semibold hover:underline">{t.catalog.seeCatalog}</Link>
               </div>
             )}
           </div>

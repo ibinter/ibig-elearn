@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle, ChevronRight, Flame, Clock, BadgeCheck, Smartphone, Lock, BarChart3, MessageSquare, Sparkles } from 'lucide-react'
 import CourseCard from '@/components/ui/CourseCard'
 import HeroSlider from '@/components/home/HeroSlider'
+import { getT } from '@/i18n'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -69,6 +70,7 @@ const DOMAINES_PHARES = [
 const PAYS = ['🇨🇮 Côte d\'Ivoire', '🇸🇳 Sénégal', '🇨🇲 Cameroun', '🇲🇱 Mali', '🇧🇫 Burkina Faso', '🇬🇳 Guinée', '🇹🇬 Togo', '🇧🇯 Bénin', '🇨🇩 RD Congo', '🇲🇦 Maroc', '🇬🇦 Gabon', '🇳🇪 Niger']
 
 export default async function AccueilPage() {
+  const t = await getT()
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -138,7 +140,7 @@ export default async function AccueilPage() {
           <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <div className="flex items-center gap-2 flex-shrink-0">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="font-semibold text-sm">Bonjour, {userProfile?.full_name?.split(' ')[0] ?? 'Apprenant'} 👋</span>
+              <span className="font-semibold text-sm">{t.home.hello}, {userProfile?.full_name?.split(' ')[0] ?? 'Apprenant'} 👋</span>
               {(userProfile as any)?.streak_days > 0 && (
                 <span className="text-xs bg-orange-500/20 border border-orange-400/30 rounded-full px-2 py-0.5 text-orange-300 flex items-center gap-1">
                   <Flame className="w-3 h-3" />{(userProfile as any).streak_days} jours
@@ -156,11 +158,11 @@ export default async function AccueilPage() {
                 ))}
               </div>
             ) : (
-              <p className="text-blue-200 text-sm flex-1">Vous n&apos;avez pas encore de formation en cours.</p>
+              <p className="text-blue-200 text-sm flex-1">{t.home.noFormationInProgress}</p>
             )}
             <Link href="/tableau-de-bord"
               className="flex-shrink-0 flex items-center gap-1.5 bg-[#FFA500] hover:bg-orange-400 text-black font-bold px-4 py-2 rounded-lg transition-colors text-xs">
-              Mon espace <ArrowRight className="w-3.5 h-3.5" />
+              {t.home.mySpace} <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
@@ -170,10 +172,10 @@ export default async function AccueilPage() {
       <div className="bg-[#0B3D91] text-white">
         <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { value: `${totalCourses ?? 10}+`, label: 'Formations disponibles', icon: BookOpen, sub: 'dans 8 domaines' },
-            { value: `${totalUsers ?? 200}+`, label: 'Apprenants actifs', icon: Users, sub: 'dans 12 pays' },
-            { value: totalCerts && totalCerts > 0 ? `${totalCerts}+` : 'QR certifié', label: 'Certificats délivrés', icon: Award, sub: 'vérifiables en ligne' },
-            { value: '12', label: 'Pays couverts', icon: Globe2, sub: 'Afrique francophone' },
+            { value: `${totalCourses ?? 10}+`, label: t.home.statsAvailable, icon: BookOpen, sub: t.home.statsIn8 },
+            { value: `${totalUsers ?? 200}+`, label: t.home.statsActive, icon: Users, sub: t.home.statsIn12 },
+            { value: totalCerts && totalCerts > 0 ? `${totalCerts}+` : 'QR certifié', label: t.home.statsCertsDelivered, icon: Award, sub: t.home.statsVerifiable },
+            { value: '12', label: t.home.statsCountriesCovered, icon: Globe2, sub: t.home.statsFrancophone },
           ].map(s => (
             <div key={s.label} className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -194,12 +196,12 @@ export default async function AccueilPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">Nos domaines</p>
-              <h2 className="text-2xl lg:text-3xl font-black text-gray-900">Explorez par domaine de formation</h2>
-              <p className="text-gray-500 mt-1">Des compétences directement applicables dans votre métier</p>
+              <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">{t.home.categoriesTitle}</p>
+              <h2 className="text-2xl lg:text-3xl font-black text-gray-900">{t.home.domainsTitle}</h2>
+              <p className="text-gray-500 mt-1">{t.home.domainsSubtitle}</p>
             </div>
             <Link href="/catalogue" className="hidden sm:flex items-center gap-1.5 text-[#0B3D91] font-semibold text-sm hover:underline">
-              Tout voir <ArrowRight className="w-4 h-4" />
+              {t.home.seeAll} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-4">
@@ -225,12 +227,12 @@ export default async function AccueilPage() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex items-end justify-between mb-8">
               <div>
-                <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">Le meilleur d'IBIG</p>
-                <h2 className="text-2xl lg:text-3xl font-black text-gray-900">Formations les plus populaires</h2>
-                <p className="text-gray-500 mt-1">Choisies par des milliers d&apos;apprenants à travers l&apos;Afrique</p>
+                <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">{t.home.whyTitle}</p>
+                <h2 className="text-2xl lg:text-3xl font-black text-gray-900">{t.home.popularTitle}</h2>
+                <p className="text-gray-500 mt-1">{t.home.popularSubtitle}</p>
               </div>
               <Link href="/catalogue" className="hidden sm:flex items-center gap-1.5 text-[#0B3D91] font-semibold text-sm hover:underline">
-                Voir tout le catalogue <ArrowRight className="w-4 h-4" />
+                {t.home.seeCatalog} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
@@ -241,7 +243,7 @@ export default async function AccueilPage() {
                   {i === 0 && (
                     <div className="absolute -top-2.5 left-3 z-10">
                       <span className="inline-flex items-center gap-1 bg-[#FFA500] text-black text-[10px] font-black px-2.5 py-1 rounded-full shadow-md">
-                        <Flame className="w-3 h-3" /> TENDANCE
+                        <Flame className="w-3 h-3" /> {t.home.trend}
                       </span>
                     </div>
                   )}
@@ -253,9 +255,9 @@ export default async function AccueilPage() {
             <div className="text-center mt-10">
               <Link href="/catalogue"
                 className="inline-flex items-center gap-2 bg-[#0B3D91] hover:bg-blue-800 text-white font-bold px-8 py-4 rounded-2xl transition-colors">
-                Voir toutes les formations <ArrowRight className="w-5 h-5" />
+                {t.home.allCourses} <ArrowRight className="w-5 h-5" />
               </Link>
-              <p className="text-xs text-gray-400 mt-3">Sans engagement · Accès immédiat · Paiement sécurisé</p>
+              <p className="text-xs text-gray-400 mt-3">{t.home.noEngagement} · {t.home.immediateAccess} · {t.home.mobileMoney}</p>
             </div>
           </div>
         </section>
@@ -267,8 +269,8 @@ export default async function AccueilPage() {
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Simple & rapide</p>
-            <h2 className="text-2xl lg:text-3xl font-black mb-3">Commencez à apprendre en 4 étapes</h2>
-            <p className="text-blue-200 max-w-xl mx-auto">De l&apos;inscription à votre certificat, tout est pensé pour être simple, rapide et accessible depuis votre téléphone.</p>
+            <h2 className="text-2xl lg:text-3xl font-black mb-3">{t.home.howTitle}</h2>
+            <p className="text-blue-200 max-w-xl mx-auto">{t.home.howSubtitle}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {ETAPES.map((e, i) => (
@@ -293,7 +295,7 @@ export default async function AccueilPage() {
             <Link href="/inscription"
               className="inline-flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-8 py-4 rounded-full transition-colors text-sm shadow-lg hover:shadow-xl">
               <Sparkles className="w-4 h-4" />
-              Commencer maintenant — c&apos;est gratuit
+              {t.home.startNow}
             </Link>
           </div>
         </div>
@@ -304,8 +306,8 @@ export default async function AccueilPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Notre différence</p>
-            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">Pourquoi choisir IBIG E-LEARNING ?</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">La seule plateforme eLearning conçue spécifiquement pour les professionnels et entrepreneurs africains.</p>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.whyTitle}</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">{t.home.whySub}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {AVANTAGES.map(a => (
@@ -323,7 +325,7 @@ export default async function AccueilPage() {
           <div className="mt-12 bg-white rounded-2xl border border-gray-200 p-6">
             <div className="flex items-center gap-3 mb-4">
               <Globe2 className="w-5 h-5 text-[#0B3D91]" />
-              <h3 className="font-bold text-gray-900">Disponible dans 12 pays d&apos;Afrique</h3>
+              <h3 className="font-bold text-gray-900">{t.home.countriesTitle}</h3>
             </div>
             <div className="flex flex-wrap gap-2">
               {PAYS.map(p => (
@@ -339,7 +341,7 @@ export default async function AccueilPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Ils ont transformé leur carrière</p>
-            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">Ce que disent nos apprenants</h2>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.testimonialsTitle}</h2>
             <div className="flex items-center justify-center gap-2">
               <div className="flex gap-0.5">
                 {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-[#FFA500] text-[#FFA500]" />)}
@@ -382,7 +384,7 @@ export default async function AccueilPage() {
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Valorisez votre expertise</p>
-            <h2 className="text-2xl lg:text-3xl font-black mb-5">Un certificat qui ouvre des portes</h2>
+            <h2 className="text-2xl lg:text-3xl font-black mb-5">{t.home.certTitle}</h2>
             <div className="space-y-4 mb-8">
               {[
                 { icon: BadgeCheck, text: 'QR code unique — vérifiable instantanément par tout employeur', color: 'text-green-400' },
@@ -398,7 +400,7 @@ export default async function AccueilPage() {
             </div>
             <Link href="/certifications"
               className="inline-flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-6 py-3 rounded-xl transition-colors text-sm">
-              En savoir sur nos certifications <ArrowRight className="w-4 h-4" />
+              {t.home.certCta} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -507,8 +509,8 @@ export default async function AccueilPage() {
 
           <div className="order-1 lg:order-2">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Votre tuteur personnel</p>
-            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4">SARA, l&apos;IA qui vous accompagne 24h/24</h2>
-            <p className="text-gray-600 mb-6 leading-relaxed">Vous bloquez sur un concept à 23h ? SARA est là. Notre assistante pédagogique alimentée par l&apos;IA comprend vos questions en français et vous répond avec des explications adaptées à votre niveau, en tenant compte du contexte africain.</p>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4">{t.home.saraTitle}</h2>
+            <p className="text-gray-600 mb-6 leading-relaxed">{t.home.saraSub}</p>
             <div className="space-y-3 mb-8">
               {[
                 'Explications claires en français à toute heure',
@@ -524,7 +526,7 @@ export default async function AccueilPage() {
             </div>
             <Link href="/inscription"
               className="inline-flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] hover:bg-[#0B3D91] hover:text-white font-bold px-6 py-3 rounded-xl transition-colors text-sm">
-              Essayer SARA gratuitement <ArrowRight className="w-4 h-4" />
+              {t.home.saraCta} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -538,23 +540,23 @@ export default async function AccueilPage() {
         <div className="relative max-w-3xl mx-auto px-4 text-center text-white">
           <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-4">Rejoignez-nous maintenant</p>
           <h2 className="text-3xl lg:text-4xl font-black mb-5 leading-tight">
-            Investissez dans vos compétences.<br />
+            {t.home.finalCtaTitle}<br />
             <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              Décuplez votre valeur professionnelle.
+              {t.home.finalCtaAccent}
             </span>
           </h2>
           <p className="text-blue-100 mb-8 text-base max-w-xl mx-auto leading-relaxed">
-            Vos concurrents se forment en ce moment même. Rejoignez les professionnels africains qui font confiance à IBIG E-LEARNING pour progresser.
+            {t.home.finalCtaSub}
           </p>
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <Link href="/inscription"
               className="flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-8 py-4 rounded-full transition-all hover:scale-105 shadow-lg text-base">
               <Sparkles className="w-5 h-5" />
-              Commencer gratuitement
+              {t.home.ctaStart}
             </Link>
             <Link href="/catalogue"
               className="flex items-center gap-2 border-2 border-white/30 hover:border-white text-white font-bold px-8 py-4 rounded-full transition-colors text-base">
-              Voir le catalogue
+              {t.home.ctaExplore}
             </Link>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-blue-200">

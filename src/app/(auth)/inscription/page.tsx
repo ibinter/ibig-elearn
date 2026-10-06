@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { useLocale } from '@/i18n/client'
 import { Eye, EyeOff, Loader2, UserPlus } from 'lucide-react'
 
 const COUNTRIES = [
@@ -29,6 +30,7 @@ export default function InscriptionPage() {
 }
 
 function InscriptionForm() {
+  const { t } = useLocale()
   const [form, setForm] = useState({ full_name: '', email: '', password: '', country: 'CI', phone: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -62,7 +64,7 @@ function InscriptionForm() {
     const supabase = createClient()
 
     if (form.password.length < 8) {
-      setError('Le mot de passe doit contenir au moins 8 caractères.')
+      setError(t.auth.passwordMin8)
       setLoading(false)
       return
     }
@@ -77,7 +79,7 @@ function InscriptionForm() {
     })
 
     if (error) {
-      setError(error.message === 'User already registered' ? 'Un compte existe déjà avec cet email.' : error.message)
+      setError(error.message === 'User already registered' ? t.auth.emailExists : error.message)
       setLoading(false)
       return
     }
@@ -93,10 +95,10 @@ function InscriptionForm() {
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-3xl">✅</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Compte créé !</h2>
-          <p className="text-gray-500 mb-6">Un email de confirmation a été envoyé à <strong>{form.email}</strong>. Cliquez sur le lien pour activer votre compte.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.auth.accountCreated}</h2>
+          <p className="text-gray-500 mb-6">{t.auth.confirmEmailMsg} <strong>{form.email}</strong>. {t.auth.confirmEmailAction}</p>
           <Link href="/connexion" className="inline-block ibig-gradient text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity">
-            Aller à la connexion
+            {t.auth.goToLogin}
           </Link>
         </div>
       </div>
@@ -107,8 +109,8 @@ function InscriptionForm() {
     <div className="w-full max-w-md">
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Créer mon compte</h1>
-          <p className="text-gray-500 text-sm">Inscription gratuite — commencez à apprendre aujourd&apos;hui</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t.auth.registerTitle}</h1>
+          <p className="text-gray-500 text-sm">{t.auth.registerSubtitle}</p>
         </div>
 
         {/* Google OAuth */}
@@ -126,7 +128,7 @@ function InscriptionForm() {
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
           )}
-          {googleLoading ? 'Redirection...' : "S'inscrire avec Google"}
+          {googleLoading ? t.auth.redirecting : t.auth.signupWithGoogle}
         </button>
 
         <div className="relative mb-4">
@@ -140,30 +142,30 @@ function InscriptionForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Nom complet</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.fullName}</label>
             <input
               type="text"
               value={form.full_name}
               onChange={e => setForm(f => ({ ...f, full_name: e.target.value }))}
               required
-              placeholder="Prénom Nom"
+              placeholder={t.auth.fullNamePlaceholder}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Adresse email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.email}</label>
             <input
               type="email"
               value={form.email}
               onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
               required
-              placeholder="vous@exemple.com"
+              placeholder={t.auth.emailPlaceholder}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] text-sm"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Pays</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.country}</label>
               <select
                 value={form.country}
                 onChange={e => setForm(f => ({ ...f, country: e.target.value }))}
@@ -173,7 +175,7 @@ function InscriptionForm() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Téléphone</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.phone}</label>
               <input
                 type="tel"
                 value={form.phone}
@@ -184,14 +186,14 @@ function InscriptionForm() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Mot de passe</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.password}</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={form.password}
                 onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                 required
-                placeholder="Minimum 8 caractères"
+                placeholder={t.auth.passwordPlaceholder}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] text-sm pr-12"
               />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -201,9 +203,9 @@ function InscriptionForm() {
           </div>
 
           <p className="text-xs text-gray-400">
-            En créant un compte, j&apos;accepte les{' '}
-            <Link href="/cgu" className="text-[#0B3D91] hover:underline">CGU</Link> et la{' '}
-            <Link href="/confidentialite" className="text-[#0B3D91] hover:underline">politique de confidentialité</Link>.
+            {t.auth.termsAccept}{' '}
+            <Link href="/cgu" className="text-[#0B3D91] hover:underline">{t.auth.termsLink}</Link> {t.auth.andThe}{' '}
+            <Link href="/confidentialite" className="text-[#0B3D91] hover:underline">{t.auth.privacyLink}</Link>.
           </p>
 
           <button
@@ -212,13 +214,13 @@ function InscriptionForm() {
             className="w-full flex items-center justify-center gap-2 ibig-gradient text-white font-semibold py-3.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5" />}
-            {loading ? 'Création...' : 'Créer mon compte'}
+            {loading ? t.auth.creating : t.auth.registerBtn}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Déjà un compte ?{' '}
-          <Link href="/connexion" className="text-[#0B3D91] font-semibold hover:underline">Se connecter</Link>
+          {t.auth.hasAccount}{' '}
+          <Link href="/connexion" className="text-[#0B3D91] font-semibold hover:underline">{t.auth.loginLink}</Link>
         </p>
       </div>
     </div>

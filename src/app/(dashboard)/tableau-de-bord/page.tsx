@@ -3,8 +3,10 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, Award, TrendingUp, ArrowRight, Play, Flame, Star, Zap, Target, Trophy, ChevronRight, BarChart2 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
+import { getT } from '@/i18n'
 
 export default async function TableauDeBordPage() {
+  const t = await getT()
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   const { data: profile } = await supabase
@@ -96,13 +98,13 @@ export default async function TableauDeBordPage() {
       {/* Bienvenue + streak */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Bonjour, {profile?.full_name?.split(' ')[0]} 👋</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Continuez votre parcours de formation</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t.dashboard.welcome}, {profile?.full_name?.split(' ')[0]} 👋</h1>
+          <p className="text-gray-500 text-sm mt-0.5">{t.dashboard.continueJourney}</p>
         </div>
         {streakDays > 0 && (
           <div className="flex items-center gap-2 bg-orange-50 border border-orange-100 px-4 py-2.5 rounded-2xl">
             <Flame className="w-5 h-5 text-[#FFA500]" />
-            <span className="font-bold text-orange-700">{streakDays} jour{streakDays > 1 ? 's' : ''} d'affilée !</span>
+            <span className="font-bold text-orange-700">{streakDays} {t.dashboard.streak}</span>
           </div>
         )}
       </div>
@@ -115,7 +117,7 @@ export default async function TableauDeBordPage() {
               <Trophy className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-xs text-white/70 uppercase tracking-wider">Niveau</p>
+              <p className="text-xs text-white/70 uppercase tracking-wider">{t.dashboard.level}</p>
               <p className="font-bold text-lg capitalize">{level}</p>
             </div>
           </div>
@@ -124,7 +126,7 @@ export default async function TableauDeBordPage() {
               <Zap className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-xs text-white/70 uppercase tracking-wider">Points</p>
+              <p className="text-xs text-white/70 uppercase tracking-wider">{t.dashboard.points}</p>
               <p className="font-bold text-lg">{totalPoints.toLocaleString()}</p>
             </div>
           </div>
@@ -133,13 +135,13 @@ export default async function TableauDeBordPage() {
               <Flame className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-xs text-white/70 uppercase tracking-wider">Streak</p>
+              <p className="text-xs text-white/70 uppercase tracking-wider">Streak 🔥</p>
               <p className="font-bold text-lg">{streakDays}j</p>
             </div>
           </div>
           <div className="flex-1 min-w-[160px]">
             <div className="flex items-center justify-between text-xs text-white/70 mb-1.5">
-              <span>Vers {nextLevel}</span>
+              <span>{t.dashboard.towards} {nextLevel}</span>
               <span>{Math.round(progressToNext)}%</span>
             </div>
             <div className="h-2 bg-white/20 rounded-full overflow-hidden">
@@ -152,11 +154,11 @@ export default async function TableauDeBordPage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {[
-          { label: 'Formations', value: stats.total, sub: 'inscrites', icon: BookOpen, color: 'text-[#0B3D91] bg-blue-50', href: '/mes-formations' },
-          { label: 'En cours', value: stats.inProgress, sub: 'actives', icon: TrendingUp, color: 'text-orange-600 bg-orange-50', href: '/mes-formations' },
-          { label: 'Terminées', value: stats.completed, sub: 'complétées', icon: Target, color: 'text-green-600 bg-green-50', href: '/mes-formations' },
-          { label: 'Certificats', value: stats.certs, sub: 'obtenus', icon: Award, color: 'text-purple-600 bg-purple-50', href: '/mes-certificats' },
-          { label: 'Statistiques', value: '→', sub: 'mes stats', icon: BarChart2, color: 'text-pink-600 bg-pink-50', href: '/mes-stats' },
+          { label: t.dashboard.formations, value: stats.total, sub: t.dashboard.enrolled, icon: BookOpen, color: 'text-[#0B3D91] bg-blue-50', href: '/mes-formations' },
+          { label: t.dashboard.inProgress, value: stats.inProgress, sub: t.dashboard.active, icon: TrendingUp, color: 'text-orange-600 bg-orange-50', href: '/mes-formations' },
+          { label: t.dashboard.completed, value: stats.completed, sub: t.dashboard.completedSub, icon: Target, color: 'text-green-600 bg-green-50', href: '/mes-formations' },
+          { label: t.dashboard.certificates, value: stats.certs, sub: t.dashboard.obtained, icon: Award, color: 'text-purple-600 bg-purple-50', href: '/mes-certificats' },
+          { label: t.dashboard.stats, value: '→', sub: t.dashboard.myStats, icon: BarChart2, color: 'text-pink-600 bg-pink-50', href: '/mes-stats' },
         ].map(s => (
           <Link key={s.label} href={s.href}
             className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-[#0B3D91]/20 transition-all group">
@@ -178,20 +180,20 @@ export default async function TableauDeBordPage() {
               : <div className="w-full h-full flex items-center justify-center"><BookOpen className="w-7 h-7 text-white/50" /></div>}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-blue-300 mb-0.5">Reprendre là où vous en étiez</p>
+            <p className="text-xs text-blue-300 mb-0.5">{t.dashboard.resumeWhere}</p>
             <p className="font-bold truncate">{(nextCourse.course as any)?.title}</p>
             <div className="flex items-center gap-3 mt-2">
               <div className="flex-1 max-w-[160px] h-1.5 bg-white/20 rounded-full overflow-hidden">
                 <div className="h-full bg-[#FFA500] rounded-full" style={{ width: `${nextCourse.progress_percent ?? 0}%` }} />
               </div>
-              <span className="text-xs text-blue-200">{nextCourse.progress_percent ?? 0}% complété</span>
+              <span className="text-xs text-blue-200">{nextCourse.progress_percent ?? 0}{t.dashboard.percentCompleted}</span>
             </div>
           </div>
           <Link href={nextLesson
               ? `/apprendre/${(nextCourse.course as any)?.id}/${nextLesson.id}`
               : `/apprendre/${(nextCourse.course as any)?.id}`}
             className="flex items-center gap-2 bg-[#FFA500] text-black font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-orange-400 transition-colors whitespace-nowrap flex-shrink-0">
-            <Play className="w-4 h-4" /> Continuer
+            <Play className="w-4 h-4" /> {t.dashboard.continue}
           </Link>
         </div>
       )}
@@ -200,9 +202,9 @@ export default async function TableauDeBordPage() {
         {/* Liste formations */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900">Mes formations</h2>
+            <h2 className="font-bold text-gray-900">{t.dashboard.myFormations}</h2>
             <Link href="/mes-formations" className="text-sm text-[#0B3D91] hover:underline flex items-center gap-1">
-              Voir tout <ArrowRight className="w-4 h-4" />
+              {t.dashboard.seeAll} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="divide-y divide-gray-50">
@@ -235,15 +237,15 @@ export default async function TableauDeBordPage() {
                     className={`flex items-center gap-1 text-xs font-semibold px-3 py-2 rounded-lg flex-shrink-0 transition-colors ${
                       isComplete ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'ibig-gradient text-white hover:opacity-90'
                     }`}>
-                    {isComplete ? <><Award className="w-3 h-3" /> Revoir</> : <><Play className="w-3 h-3" /> Reprendre</>}
+                    {isComplete ? <><Award className="w-3 h-3" /> {t.dashboard.review}</> : <><Play className="w-3 h-3" /> {t.dashboard.resume}</>}
                   </Link>
                 </div>
               )
             }) : (
               <div className="p-8 text-center">
                 <BookOpen className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-                <p className="text-gray-500 text-sm mb-3">Aucune formation en cours</p>
-                <Link href="/catalogue" className="text-[#0B3D91] font-semibold text-sm hover:underline">Explorer le catalogue →</Link>
+                <p className="text-gray-500 text-sm mb-3">{t.dashboard.noFormations}</p>
+                <Link href="/catalogue" className="text-[#0B3D91] font-semibold text-sm hover:underline">{t.dashboard.exploreCatalog}</Link>
               </div>
             )}
           </div>
@@ -254,8 +256,8 @@ export default async function TableauDeBordPage() {
           {/* Certificats */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
             <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-              <h2 className="font-bold text-gray-900 text-sm">Certificats</h2>
-              <Link href="/mes-certificats" className="text-xs text-[#0B3D91] hover:underline">Voir tout</Link>
+              <h2 className="font-bold text-gray-900 text-sm">{t.dashboard.certTitle}</h2>
+              <Link href="/mes-certificats" className="text-xs text-[#0B3D91] hover:underline">{t.dashboard.seeAllCerts}</Link>
             </div>
             <div className="p-4 space-y-2.5">
               {certificates && certificates.length > 0 ? certificates.map((c: any) => (
@@ -273,7 +275,7 @@ export default async function TableauDeBordPage() {
               )) : (
                 <div className="text-center py-4">
                   <Award className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-                  <p className="text-xs text-gray-400">Terminez une formation pour obtenir votre premier certificat</p>
+                  <p className="text-xs text-gray-400">{t.dashboard.noCerts}</p>
                 </div>
               )}
             </div>
@@ -287,7 +289,7 @@ export default async function TableauDeBordPage() {
                 <div key={l.name} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs ${l.name === level ? 'bg-[#0B3D91] text-white font-semibold' : i < lvlIdx ? 'bg-green-50 text-green-700' : 'bg-gray-50 text-gray-400'}`}>
                   <span>{i < lvlIdx ? '✅' : l.name === level ? l.emoji : '🔒'}</span>
                   <span>{l.name}</span>
-                  {l.name === level && <span className="ml-auto text-blue-200 text-[10px]">ACTUEL</span>}
+                  {l.name === level && <span className="ml-auto text-blue-200 text-[10px]">{t.dashboard.currentLevel}</span>}
                   {i > lvlIdx && l.name !== level && <span className="ml-auto text-[10px]">{l.min.toLocaleString()} XP</span>}
                 </div>
               ))}
@@ -296,10 +298,10 @@ export default async function TableauDeBordPage() {
 
           {/* CTA catalogue */}
           <div className="ibig-gradient rounded-2xl p-4 text-white">
-            <h3 className="font-bold text-sm mb-1">Découvrir de nouvelles formations</h3>
-            <p className="text-blue-200 text-xs mb-3">+{200} formations disponibles</p>
+            <h3 className="font-bold text-sm mb-1">{t.dashboard.discoverTitle}</h3>
+            <p className="text-blue-200 text-xs mb-3">+{200} {t.dashboard.discoverSub}</p>
             <Link href="/catalogue" className="flex items-center gap-1 text-sm font-semibold text-[#FFA500] hover:text-orange-300 transition-colors">
-              Explorer <ArrowRight className="w-4 h-4" />
+              {t.dashboard.explore} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -309,8 +311,8 @@ export default async function TableauDeBordPage() {
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <div>
-                <h2 className="font-bold text-gray-900">Recommandé pour vous</h2>
-                <p className="text-xs text-gray-400 mt-0.5">Sélectionné selon vos intérêts et objectifs</p>
+                <h2 className="font-bold text-gray-900">{t.dashboard.recommended}</h2>
+                <p className="text-xs text-gray-400 mt-0.5">{t.dashboard.recommendedSub}</p>
               </div>
             <Link href="/catalogue" className="text-sm text-[#0B3D91] hover:underline flex items-center gap-1">
               Voir tout <ArrowRight className="w-4 h-4" />

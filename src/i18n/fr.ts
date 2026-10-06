@@ -36,10 +36,46 @@ const fr = {
     ctaTitle: 'Prêt à développer vos compétences ?',
     ctaSubtitle: 'Rejoignez des milliers d\'apprenants à travers l\'Afrique',
     ctaButton: 'Démarrer maintenant',
+    domainsTitle: 'Explorez par domaine de formation',
+    domainsSubtitle: 'Des compétences directement applicables dans votre métier',
+    seeAll: 'Tout voir',
+    popularTitle: 'Formations les plus populaires',
+    popularSubtitle: 'Choisies par des milliers d\'apprenants à travers l\'Afrique',
+    seeCatalog: 'Voir tout le catalogue',
+    howTitle: 'Commencez à apprendre en 4 étapes',
+    howSubtitle: 'De l\'inscription à votre certificat, tout est pensé pour être simple, rapide et accessible depuis votre téléphone.',
+    startNow: 'Commencer maintenant — c\'est gratuit',
+    whyDiff: 'Notre différence',
+    whySub: 'La seule plateforme eLearning conçue spécifiquement pour les professionnels et entrepreneurs africains.',
+    countriesTitle: 'Disponible dans 12 pays d\'Afrique',
+    certTitle: 'Un certificat qui ouvre des portes',
+    certCta: 'En savoir sur nos certifications',
+    saraTitle: 'SARA, l\'IA qui vous accompagne 24h/24',
+    saraSub: 'Vous bloquez sur un concept à 23h ? SARA est là. Notre assistante pédagogique alimentée par l\'IA comprend vos questions en français et vous répond avec des explications adaptées à votre niveau, en tenant compte du contexte africain.',
+    saraCta: 'Essayer SARA gratuitement',
+    finalCtaTitle: 'Investissez dans vos compétences.',
+    finalCtaAccent: 'Décuplez votre valeur professionnelle.',
+    finalCtaSub: 'Vos concurrents se forment en ce moment même. Rejoignez les professionnels africains qui font confiance à IBIG E-LEARNING pour progresser.',
+    noEngagement: 'Sans engagement',
+    mobileMoney: 'Paiement Mobile Money',
+    certIncluded: 'Certificat inclus',
+    immediateAccess: 'Accès immédiat',
+    hello: 'Bonjour',
+    noFormationInProgress: 'Vous n\'avez pas encore de formation en cours.',
+    mySpace: 'Mon espace',
+    trend: 'TENDANCE',
+    statsAvailable: 'Formations disponibles',
+    statsIn8: 'dans 8 domaines',
+    statsActive: 'Apprenants actifs',
+    statsIn12: 'dans 12 pays',
+    statsCertsDelivered: 'Certificats délivrés',
+    statsVerifiable: 'vérifiables en ligne',
+    statsCountriesCovered: 'Pays couverts',
+    statsFrancophone: 'Afrique francophone',
   },
   // Catalogue
   catalog: {
-    title: 'Catalogue de formations',
+    title: 'Catalogue des formations',
     subtitle: 'Trouvez la formation qui correspond à vos objectifs',
     search: 'Rechercher une formation...',
     allCategories: 'Toutes les catégories',
@@ -55,6 +91,21 @@ const fr = {
     enroll: "S'inscrire",
     freeBadge: 'Gratuit',
     xof: 'XOF',
+    clearAll: 'Tout effacer',
+    previous: '← Précédent',
+    next: 'Suivant →',
+    sortBy: 'Trier par :',
+    mostPopular: 'Les plus populaires',
+    mostRecent: 'Les plus récentes',
+    bestRated: 'Meilleures notes',
+    priceAsc: 'Prix croissant',
+    priceDesc: 'Prix décroissant',
+    noFound: 'Aucune formation trouvée',
+    noFoundSub: 'Essayez d\'autres filtres ou revenez bientôt.',
+    seeCatalog: 'Voir tout le catalogue',
+    heroBanner: 'Catalogue des formations',
+    heroSub: 'formation(s) disponible(s) · 12 pays africains · Certifiantes · Paiement Mobile Money',
+    featured: '⭐ À la une',
   },
   // Formation detail
   course: {
@@ -75,6 +126,8 @@ const fr = {
     beginner: 'Débutant',
     intermediate: 'Intermédiaire',
     advanced: 'Avancé',
+    backToCatalog: 'Retour au catalogue',
+    noReviews: 'Aucun avis pour le moment',
   },
   // Footer
   footer: {
@@ -98,24 +151,51 @@ const fr = {
     mentions: 'Mentions légales',
     rights: 'Tous droits réservés.',
     countries: '12 pays · Afrique francophone',
+    verifyCert: 'Vérifier un certificat',
+    acceptedPayments: 'Paiements acceptés',
   },
   // Auth
   auth: {
     loginTitle: 'Bon retour !',
-    loginSubtitle: 'Connectez-vous à votre compte',
+    loginSubtitle: 'Connectez-vous à votre espace IBIG E-LEARNING',
     email: 'Adresse email',
     password: 'Mot de passe',
     forgotPassword: 'Mot de passe oublié ?',
     loginBtn: 'Se connecter',
     noAccount: 'Pas encore de compte ?',
-    registerLink: "Créer un compte",
-    registerTitle: 'Créez votre compte',
-    registerSubtitle: 'Rejoignez la communauté IBIG E-LEARNING',
+    registerLink: "S'inscrire gratuitement",
+    registerTitle: 'Créer mon compte',
+    registerSubtitle: 'Inscription gratuite — commencez à apprendre aujourd\'hui',
     fullName: 'Nom complet',
     country: 'Pays',
-    registerBtn: "S'inscrire",
+    phone: 'Téléphone',
+    registerBtn: 'Créer mon compte',
     hasAccount: 'Déjà un compte ?',
     loginLink: 'Se connecter',
+    continueWithGoogle: 'Continuer avec Google',
+    signupWithGoogle: 'S\'inscrire avec Google',
+    orWithEmail: 'ou avec votre email',
+    or: 'ou',
+    redirecting: 'Redirection...',
+    creating: 'Création...',
+    connecting: 'Connexion...',
+    sending: 'Envoi...',
+    accountCreated: 'Compte créé !',
+    confirmEmailMsg: 'Un email de confirmation a été envoyé à',
+    confirmEmailAction: 'Cliquez sur le lien pour activer votre compte.',
+    goToLogin: 'Aller à la connexion',
+    passwordMin8: 'Le mot de passe doit contenir au moins 8 caractères.',
+    emailExists: 'Un compte existe déjà avec cet email.',
+    incorrectCredentials: 'Email ou mot de passe incorrect.',
+    ssoAvailable: 'SSO disponible pour ce domaine',
+    connectingSSO: 'Connexion SSO...',
+    termsAccept: 'En créant un compte, j\'accepte les',
+    termsLink: 'CGU',
+    andThe: 'et la',
+    privacyLink: 'politique de confidentialité',
+    passwordPlaceholder: 'Minimum 8 caractères',
+    fullNamePlaceholder: 'Prénom Nom',
+    emailPlaceholder: 'vous@exemple.com',
   },
   // Common
   common: {
@@ -157,19 +237,136 @@ const fr = {
     subtitle: 'Partagez votre expertise avec des milliers d\'apprenants',
     applyBtn: 'Soumettre ma candidature',
   },
+  // Dashboard
+  dashboard: {
+    title: 'Mon espace',
+    welcome: 'Bonjour',
+    continueJourney: 'Continuez votre parcours de formation',
+    streak: 'jour(s) d\'affilée !',
+    level: 'Niveau',
+    points: 'Points',
+    myFormations: 'Mes formations',
+    seeAll: 'Voir tout',
+    inProgress: 'En cours',
+    active: 'actives',
+    completed: 'Terminées',
+    completedSub: 'complétées',
+    certificates: 'Certificats',
+    obtained: 'obtenus',
+    stats: 'Statistiques',
+    myStats: 'mes stats',
+    enrolled: 'inscrites',
+    resumeWhere: 'Reprendre là où vous en étiez',
+    percentCompleted: '% complété',
+    continue: 'Continuer',
+    noFormations: 'Aucune formation en cours',
+    exploreCatalog: 'Explorer le catalogue →',
+    certTitle: 'Certificats',
+    seeAllCerts: 'Voir tout',
+    noCerts: 'Terminez une formation pour obtenir votre premier certificat',
+    levelsTitle: 'Niveaux IBIG',
+    currentLevel: 'ACTUEL',
+    discoverTitle: 'Découvrir de nouvelles formations',
+    discoverSub: 'formations disponibles',
+    explore: 'Explorer',
+    recommended: 'Recommandé pour vous',
+    recommendedSub: 'Sélectionné selon vos intérêts et objectifs',
+    towards: 'Vers',
+    resume: 'Reprendre',
+    review: 'Revoir',
+    formations: 'Formations',
+  },
+  // Contact
+  contact: {
+    title: 'Contactez-nous',
+    subtitle: 'Notre équipe est disponible pour répondre à toutes vos questions. Nous vous répondons sous 24h ouvrées.',
+    coordinatesTitle: 'Nos coordonnées',
+    emailLabel: 'Email',
+    phoneLabel: 'Téléphone / WhatsApp',
+    addressLabel: 'Adresse',
+    hoursTitle: 'Horaires d\'assistance',
+    mondayFriday: 'Lundi – Vendredi',
+    saturday: 'Samedi',
+    sunday: 'Dimanche',
+    closed: 'Fermé',
+    instructorCta: 'Vous êtes formateur ?',
+    instructorCtaSub: 'Rejoignez notre réseau de formateurs et partagez vos expertises avec des milliers d\'apprenants africains.',
+    sendMessage: 'Envoyer un message',
+    name: 'Nom complet',
+    namePlaceholder: 'Votre nom',
+    emailField: 'Adresse email',
+    subject: 'Sujet',
+    subjectPlaceholder: 'Sélectionner un sujet...',
+    message: 'Message',
+    messagePlaceholder: 'Décrivez votre demande en détail...',
+    send: 'Envoyer le message',
+    sending: 'Envoi en cours...',
+    success: 'Message envoyé !',
+    successText: 'Merci pour votre message. Notre équipe vous répondra dans les 24 heures ouvrées.',
+    sendAnother: 'Envoyer un autre message',
+    errorFallback: 'Une erreur est survenue. Veuillez réessayer ou nous écrire directement à contact@ibig-elearning.com',
+  },
+  // About
+  about: {
+    title: 'À propos',
+    mission: 'Notre mission',
+    team: 'Notre équipe',
+    values: 'Nos valeurs',
+    subtitle: 'La plateforme de formation professionnelle conçue pour l\'Afrique',
+  },
+  // Blog
+  blog: {
+    title: 'Blog',
+    subtitle: 'Actualités, conseils et ressources pour votre développement professionnel',
+    readMore: 'Lire l\'article',
+    publishedOn: 'Publié le',
+    noArticles: 'Aucun article disponible pour le moment.',
+    by: 'Par',
+  },
+  // Certifications
+  certifications: {
+    title: 'Certifications IBIG',
+    subtitle: 'Des certifications reconnues dans 12 pays d\'Afrique francophone',
+    download: 'Télécharger',
+    verify: 'Vérifier',
+    verifyTitle: 'Vérifier un certificat',
+    verifySubtitle: 'Entrez l\'identifiant du certificat pour vérifier son authenticité',
+  },
+  // FAQ
+  faq: {
+    title: 'Questions fréquentes',
+    subtitle: 'Retrouvez les réponses aux questions les plus posées',
+    noAnswer: 'Vous n\'avez pas trouvé votre réponse ?',
+    contactUs: 'Contactez-nous',
+  },
+  // Errors
+  errors: {
+    notFound: 'Page non trouvée',
+    notFoundSub: 'La page que vous cherchez n\'existe pas ou a été déplacée.',
+    unauthorized: 'Accès non autorisé',
+    serverError: 'Erreur serveur',
+    backHome: 'Retour à l\'accueil',
+  },
 }
 
 export type Translations = {
   locale: string
   nav: { courses: string; catalog: string; catalogDesc: string; featured: string; featuredDesc: string; paths: string; pathsDesc: string; enterprise: string; blog: string; login: string; register: string; dashboard: string; logout: string }
-  home: { heroTitle: string; heroTitleAccent: string; heroSubtitle: string; ctaStart: string; ctaExplore: string; statsLearners: string; statsCourses: string; statsCountries: string; statsCerts: string; featuredTitle: string; featuredSubtitle: string; allCourses: string; categoriesTitle: string; whyTitle: string; testimonialsTitle: string; ctaTitle: string; ctaSubtitle: string; ctaButton: string }
-  catalog: { title: string; subtitle: string; search: string; allCategories: string; allLevels: string; allPrices: string; free: string; paid: string; beginner: string; intermediate: string; advanced: string; results: string; noResults: string; enroll: string; freeBadge: string; xof: string }
-  course: { enroll: string; enrollFree: string; alreadyEnrolled: string; price: string; free: string; instructor: string; duration: string; level: string; students: string; certificate: string; whatYouLearn: string; curriculum: string; aboutInstructor: string; reviews: string; beginner: string; intermediate: string; advanced: string }
-  footer: { tagline: string; learn: string; catalog: string; paths: string; certifications: string; teach: string; becomeInstructor: string; enterprise: string; company: string; about: string; blog: string; faq: string; contact: string; legal: string; cgu: string; cgv: string; privacy: string; mentions: string; rights: string; countries: string }
-  auth: { loginTitle: string; loginSubtitle: string; email: string; password: string; forgotPassword: string; loginBtn: string; noAccount: string; registerLink: string; registerTitle: string; registerSubtitle: string; fullName: string; country: string; registerBtn: string; hasAccount: string; loginLink: string }
+  home: { heroTitle: string; heroTitleAccent: string; heroSubtitle: string; ctaStart: string; ctaExplore: string; statsLearners: string; statsCourses: string; statsCountries: string; statsCerts: string; featuredTitle: string; featuredSubtitle: string; allCourses: string; categoriesTitle: string; whyTitle: string; testimonialsTitle: string; ctaTitle: string; ctaSubtitle: string; ctaButton: string; domainsTitle: string; domainsSubtitle: string; seeAll: string; popularTitle: string; popularSubtitle: string; seeCatalog: string; howTitle: string; howSubtitle: string; startNow: string; whyDiff: string; whySub: string; countriesTitle: string; certTitle: string; certCta: string; saraTitle: string; saraSub: string; saraCta: string; finalCtaTitle: string; finalCtaAccent: string; finalCtaSub: string; noEngagement: string; mobileMoney: string; certIncluded: string; immediateAccess: string; hello: string; noFormationInProgress: string; mySpace: string; trend: string; statsAvailable: string; statsIn8: string; statsActive: string; statsIn12: string; statsCertsDelivered: string; statsVerifiable: string; statsCountriesCovered: string; statsFrancophone: string }
+  catalog: { title: string; subtitle: string; search: string; allCategories: string; allLevels: string; allPrices: string; free: string; paid: string; beginner: string; intermediate: string; advanced: string; results: string; noResults: string; enroll: string; freeBadge: string; xof: string; clearAll: string; previous: string; next: string; sortBy: string; mostPopular: string; mostRecent: string; bestRated: string; priceAsc: string; priceDesc: string; noFound: string; noFoundSub: string; seeCatalog: string; heroBanner: string; heroSub: string; featured: string }
+  course: { enroll: string; enrollFree: string; alreadyEnrolled: string; price: string; free: string; instructor: string; duration: string; level: string; students: string; certificate: string; whatYouLearn: string; curriculum: string; aboutInstructor: string; reviews: string; beginner: string; intermediate: string; advanced: string; backToCatalog: string; noReviews: string }
+  footer: { tagline: string; learn: string; catalog: string; paths: string; certifications: string; teach: string; becomeInstructor: string; enterprise: string; company: string; about: string; blog: string; faq: string; contact: string; legal: string; cgu: string; cgv: string; privacy: string; mentions: string; rights: string; countries: string; verifyCert: string; acceptedPayments: string }
+  auth: { loginTitle: string; loginSubtitle: string; email: string; password: string; forgotPassword: string; loginBtn: string; noAccount: string; registerLink: string; registerTitle: string; registerSubtitle: string; fullName: string; country: string; phone: string; registerBtn: string; hasAccount: string; loginLink: string; continueWithGoogle: string; signupWithGoogle: string; orWithEmail: string; or: string; redirecting: string; creating: string; connecting: string; sending: string; accountCreated: string; confirmEmailMsg: string; confirmEmailAction: string; goToLogin: string; passwordMin8: string; emailExists: string; incorrectCredentials: string; ssoAvailable: string; connectingSSO: string; termsAccept: string; termsLink: string; andThe: string; privacyLink: string; passwordPlaceholder: string; fullNamePlaceholder: string; emailPlaceholder: string }
   common: { loading: string; error: string; save: string; cancel: string; confirm: string; delete: string; edit: string; close: string; back: string; next: string; previous: string; search: string; filter: string; all: string; yes: string; no: string; seeAll: string; learnMore: string; by: string; hours: string; minutes: string; lessons: string; modules: string }
   enterprise: { title: string; subtitle: string; hero: string; contactBtn: string; discoverBtn: string }
   instructor: { title: string; subtitle: string; applyBtn: string }
+  dashboard: { title: string; welcome: string; continueJourney: string; streak: string; level: string; points: string; myFormations: string; seeAll: string; inProgress: string; active: string; completed: string; completedSub: string; certificates: string; obtained: string; stats: string; myStats: string; enrolled: string; resumeWhere: string; percentCompleted: string; continue: string; noFormations: string; exploreCatalog: string; certTitle: string; seeAllCerts: string; noCerts: string; levelsTitle: string; currentLevel: string; discoverTitle: string; discoverSub: string; explore: string; recommended: string; recommendedSub: string; towards: string; resume: string; review: string; formations: string }
+  contact: { title: string; subtitle: string; coordinatesTitle: string; emailLabel: string; phoneLabel: string; addressLabel: string; hoursTitle: string; mondayFriday: string; saturday: string; sunday: string; closed: string; instructorCta: string; instructorCtaSub: string; sendMessage: string; name: string; namePlaceholder: string; emailField: string; subject: string; subjectPlaceholder: string; message: string; messagePlaceholder: string; send: string; sending: string; success: string; successText: string; sendAnother: string; errorFallback: string }
+  about: { title: string; mission: string; team: string; values: string; subtitle: string }
+  blog: { title: string; subtitle: string; readMore: string; publishedOn: string; noArticles: string; by: string }
+  certifications: { title: string; subtitle: string; download: string; verify: string; verifyTitle: string; verifySubtitle: string }
+  faq: { title: string; subtitle: string; noAnswer: string; contactUs: string }
+  errors: { notFound: string; notFoundSub: string; unauthorized: string; serverError: string; backHome: string }
 }
 
 const typed: Translations = fr

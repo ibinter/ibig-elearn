@@ -51,7 +51,7 @@ export default async function Footer() {
                 { label: t.footer.blog, href: '/blog' },
 { label: t.footer.faq, href: '/faq' },
                 { label: t.footer.contact, href: '/contact' },
-                { label: t.locale === 'en' ? 'Verify certificate' : 'Vérifier un certificat', href: '/verify' },
+                { label: t.footer.verifyCert, href: '/verify' },
               ].map(link => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-blue-200 hover:text-white text-sm transition-colors">{link.label}</Link>
@@ -71,7 +71,7 @@ export default async function Footer() {
               <li>📞 +225 01 53 59 55 44</li>
               <li>✉️ contact@ibig-elearning.com</li>
               <li className="pt-2">
-                <span className="text-white font-medium">{t.locale === 'en' ? 'Accepted payments' : 'Paiements acceptés'}</span>
+                <span className="text-white font-medium">{t.footer.acceptedPayments}</span>
                 <div className="flex gap-2 mt-2 flex-wrap">
                   {['Orange Money', 'MTN Money', 'Wave', 'Visa / Mastercard'].map(p => (
                     <span key={p} className="text-xs bg-white/10 px-2 py-1 rounded">{p}</span>
