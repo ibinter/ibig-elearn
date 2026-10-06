@@ -1,0 +1,126 @@
+import { createClient } from '@/lib/supabase/server'
+import { NextRequest, NextResponse } from 'next/server'
+import Anthropic from '@anthropic-ai/sdk'
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+async function generateLessonContent(
+  lessonTitle: string,
+  lessonType: string,
+  moduleTitle: string,
+  courseTitle: string
+): Promise<string> {
+  const prompt = `Tu es un expert formateur africain. Génère un contenu de leçon TRÈS RICHE et PROFESSIONNEL en Markdown pour :
+
+**Cours :** ${courseTitle}
+**Module :** ${moduleTitle}
+**Leçon :** ${lessonTitle}
+**Type :** ${lessonType}
+
+Le contenu doit :
+- Être entre 600 et 1200 mots
+- Utiliser des titres H2 et H3
+- Inclure des exemples concrets (contexte africain/PME quand pertinent)
+- Inclure des blocs de code ou formules si applicable
+- Inclure des listes à puces pour les points clés
+- Inclure au moins une blockquote (conseil pro)
+- Se terminer par un résumé "Ce qu'il faut retenir" et un "Exercice pratique"
+- Être directement utile et actionnable
+- Écrire uniquement le contenu Markdown, sans intro ni meta-commentaire
+
+Écris un contenu de haute qualité qui donne envie de s'inscrire à la formation.`
+
+  const message = await anthropic.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1500,
+    messages: [{ role: 'user', content: prompt }],
+  })
+
+  return (message.content[0] as any).text ?? ''
+}
+
+export async function POST(req: NextRequest) {
+  const supabase = await createClient()
+
+  // Vérifier que l'utilisateur est admin
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+
+  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+  if (profile?.role !== 'admin') return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
+
+  const body = await req.json().catch(() => ({}))
+  const courseId: string | null = body.courseId ?? null
+  const forceAll: boolean = body.forceAll ?? false // si true, regénère même si contenu existe
+
+  // Récupérer les cours concernés
+  let coursesQuery = supabase.from('courses').select('id, title').eq('is_published', true)
+  if (courseId) coursesQuery = coursesQuery.eq('id', courseId)
+  const { data: courses } = await coursesQuery
+
+  const results: { lesson: string; status: string }[] = []
+  let updated = 0
+  let skipped = 0
+
+  for (const course of courses ?? []) {
+    const { data: modules } = await supabase
+      .from('modules')
+      .select('id, title')
+      .eq('course_id', course.id)
+      .order('position')
+
+    for (const module of modules ?? []) {
+      const { data: lessons } = await supabase
+        .from('lessons')
+        .select('id, title, type, content')
+        .eq('module_id', module.id)
+        .order('position')
+
+      for (const lesson of lessons ?? []) {
+        // Sauter les leçons qui ont déjà du contenu riche (sauf forceAll)
+        if (!forceAll && lesson.content && lesson.content.length >= 400) {
+          skipped++
+          continue
+        }
+
+        // Sauter les types qui n'ont pas besoin de contenu texte
+        if (['video', 'audio', 'code', 'final_exam'].includes(lesson.type)) {
+          if (!forceAll || !(!lesson.content)) {
+            skipped++
+            continue
+          }
+        }
+
+        try {
+          const content = await generateLessonContent(
+            lesson.title,
+            lesson.type,
+            module.title,
+            course.title
+          )
+
+          await supabase
+            .from('lessons')
+            .update({ content })
+            .eq('id', lesson.id)
+
+          results.push({ lesson: lesson.title, status: 'enrichi' })
+          updated++
+
+          // Pause pour ne pas surcharger l'API
+          await new Promise(r => setTimeout(r, 300))
+        } catch (err: any) {
+          results.push({ lesson: lesson.title, status: `erreur: ${err.message}` })
+        }
+      }
+    }
+  }
+
+  return NextResponse.json({
+    success: true,
+    updated,
+    skipped,
+    total: updated + skipped,
+    results,
+  })
+}

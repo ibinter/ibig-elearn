@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { BookOpen, Eye, Users } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import CourseToggle from '@/components/admin/CourseToggle'
+import EnrichLessonsButton from '@/components/admin/EnrichLessonsButton'
 
 export default async function AdminFormationsPage() {
   const supabase = await createClient()
@@ -21,6 +22,7 @@ export default async function AdminFormationsPage() {
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Formations</h1>
           <p className="text-gray-500">{courses?.length ?? 0} formation(s) au total</p>
         </div>
+        <EnrichLessonsButton label="Enrichir toutes les leçons (IA)" />
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -82,10 +84,13 @@ export default async function AdminFormationsPage() {
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <Link href={`/formation/${course.slug}`} target="_blank"
-                    className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-[#0B3D91] transition-colors inline-block" title="Voir">
-                    <Eye className="w-4 h-4" />
-                  </Link>
+                  <div className="flex items-center gap-1">
+                    <Link href={`/formation/${course.slug}`} target="_blank"
+                      className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-[#0B3D91] transition-colors inline-block" title="Voir">
+                      <Eye className="w-4 h-4" />
+                    </Link>
+                    <EnrichLessonsButton courseId={course.id} label="✨" />
+                  </div>
                 </td>
               </tr>
             ))}
