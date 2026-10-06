@@ -1,8 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 
+export const maxDuration = 300 // 5 minutes (Vercel Pro / hobby max)
+
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+const BATCH_SIZE = 10 // leçons par appel (paramètre ?limit= pour traiter par vague)
 
 async function generateLessonContent(
   lessonTitle: string,
@@ -42,19 +47,23 @@ Le contenu doit :
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
 
-  // Vérifier que l'utilisateur est admin
+  // Vérifier que l'utilisateur est admin (via client cookie)
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
   if (profile?.role !== 'admin') return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
 
+  // Client service-role pour bypasser RLS sur les données
+  const db = createAdminClient()
+
   const body = await req.json().catch(() => ({}))
   const courseId: string | null = body.courseId ?? null
-  const forceAll: boolean = body.forceAll ?? false // si true, regénère même si contenu existe
+  const forceAll: boolean = body.forceAll ?? false
+  const limit: number = body.limit ?? 20 // max leçons à traiter par appel
 
-  // Récupérer les cours concernés
-  let coursesQuery = supabase.from('courses').select('id, title').eq('is_published', true)
+  // Récupérer les cours concernés via service-role (bypass RLS)
+  let coursesQuery = db.from('courses').select('id, title').eq('is_published', true)
   if (courseId) coursesQuery = coursesQuery.eq('id', courseId)
   const { data: courses } = await coursesQuery
 
@@ -63,14 +72,14 @@ export async function POST(req: NextRequest) {
   let skipped = 0
 
   for (const course of courses ?? []) {
-    const { data: modules } = await supabase
+    const { data: modules } = await db
       .from('modules')
       .select('id, title')
       .eq('course_id', course.id)
       .order('position')
 
     for (const module of modules ?? []) {
-      const { data: lessons } = await supabase
+      const { data: lessons } = await db
         .from('lessons')
         .select('id, title, type, content')
         .eq('module_id', module.id)
@@ -89,6 +98,11 @@ export async function POST(req: NextRequest) {
           continue
         }
 
+        if (updated >= limit) {
+          // On a atteint la limite pour cet appel — stopper et signaler qu'il reste du travail
+          break
+        }
+
         try {
           const content = await generateLessonContent(
             lesson.title,
@@ -97,21 +111,20 @@ export async function POST(req: NextRequest) {
             course.title
           )
 
-          await supabase
+          await db
             .from('lessons')
             .update({ content })
             .eq('id', lesson.id)
 
           results.push({ lesson: lesson.title, status: 'enrichi' })
           updated++
-
-          // Pause pour ne pas surcharger l'API
-          await new Promise(r => setTimeout(r, 300))
         } catch (err: any) {
           results.push({ lesson: lesson.title, status: `erreur: ${err.message}` })
         }
       }
+      if (updated >= limit) break
     }
+    if (updated >= limit) break
   }
 
   return NextResponse.json({

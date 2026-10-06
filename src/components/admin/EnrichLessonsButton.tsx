@@ -14,22 +14,37 @@ export default function EnrichLessonsButton({ courseId, label }: Props) {
 
   async function handleEnrich(forceAll: boolean) {
     const msg = forceAll
-      ? `⚠️ RÉGÉNÉRER TOUT le contenu ${courseId ? 'de cette formation' : 'de TOUTES les formations'} ?\nCela remplace le contenu existant. Peut prendre 5-15 minutes.`
-      : `Enrichir uniquement les leçons sans contenu riche ${courseId ? 'de cette formation' : '(toutes formations)'} ?`
+      ? `⚠️ RÉGÉNÉRER TOUT le contenu ${courseId ? 'de cette formation' : 'de TOUTES les formations'} ?\nCela remplace le contenu existant et peut prendre 5-15 minutes (traitement par vagues de 20 leçons).`
+      : `Enrichir les leçons sans contenu riche ${courseId ? 'de cette formation' : '(toutes formations)'} ?`
     if (!confirm(msg)) return
 
     setStatus('loading')
     setResult(null)
 
+    let totalUpdated = 0
+    let totalSkipped = 0
+
     try {
-      const res = await fetch('/api/admin/enrich-lessons', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ courseId: courseId ?? null, forceAll }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'Erreur serveur')
-      setResult({ updated: data.updated, skipped: data.skipped, total: data.total })
+      // Appels en boucle par vagues de 20 leçons jusqu'à ce qu'il n'y ait plus rien à traiter
+      while (true) {
+        const res = await fetch('/api/admin/enrich-lessons', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ courseId: courseId ?? null, forceAll, limit: 20 }),
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error ?? 'Erreur serveur')
+
+        totalUpdated += data.updated
+        totalSkipped += data.skipped
+
+        // Mettre à jour l'affichage en temps réel
+        setResult({ updated: totalUpdated, skipped: totalSkipped, total: totalUpdated + totalSkipped })
+
+        // Si aucune leçon traitée dans cette vague → terminé
+        if (data.updated === 0) break
+      }
+
       setStatus('done')
     } catch (err: any) {
       setStatus('error')
