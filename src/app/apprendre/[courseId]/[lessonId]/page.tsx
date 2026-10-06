@@ -258,6 +258,15 @@ export default async function ApprendrePage({ params }: PageProps) {
       {/* ── Corps principal (sous header fixe) ── */}
       <div className="flex pt-14 min-h-screen items-start">
 
+        {/* ── Sidebar cours — gauche ── */}
+        <LessonSidebar
+          modules={modules ?? []}
+          courseId={courseId}
+          currentLessonId={currentLesson.id}
+          userId={user.id}
+          enrollmentMode={enrollmentMode}
+        />
+
         {/* ── Zone de contenu ── */}
         <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
 
@@ -427,14 +436,6 @@ export default async function ApprendrePage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* ── Sidebar cours — droite, fixe ── */}
-        <LessonSidebar
-          modules={modules ?? []}
-          courseId={courseId}
-          currentLessonId={currentLesson.id}
-          userId={user.id}
-          enrollmentMode={enrollmentMode}
-        />
       </div>
 
       <SaraChat

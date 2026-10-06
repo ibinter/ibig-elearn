@@ -103,9 +103,9 @@ export default function LessonSidebar({ modules, courseId, currentLessonId, user
 
   return (
     <aside className={cn(
-      'bg-[#1c1d1f] border-l border-white/8 flex-col transition-all duration-300 flex-shrink-0 hidden lg:flex',
+      'bg-[#1c1d1f] border-r border-white/8 flex-col transition-all duration-300 flex-shrink-0 hidden lg:flex',
       'sticky top-14 self-start overflow-y-auto',
-      open ? 'w-80' : 'w-0 overflow-hidden'
+      open ? 'w-80' : 'w-10 overflow-hidden'
     )} style={{ height: 'calc(100vh - 3.5rem)', minHeight: 0 }}>
       {/* Header sidebar */}
       <div className="px-4 py-3.5 border-b border-white/10 flex items-center justify-between bg-[#2d2f31] flex-shrink-0 sticky top-0 z-10">
@@ -122,10 +122,10 @@ export default function LessonSidebar({ modules, courseId, currentLessonId, user
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#0B3D91] border border-white/10 rounded-l-lg px-1.5 py-3 text-white hover:bg-[#1a56cc] z-50 shadow-lg"
+          className="absolute left-full top-1/2 -translate-y-1/2 bg-[#0B3D91] border border-white/10 rounded-r-lg px-1.5 py-3 text-white hover:bg-[#1a56cc] z-50 shadow-lg"
           title="Afficher le menu"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronRight className="w-4 h-4" />
         </button>
       )}
 
