@@ -111,14 +111,19 @@ export async function POST(req: NextRequest) {
             course.title
           )
 
-          await db
+          const { error: updateErr } = await db
             .from('lessons')
             .update({ content })
             .eq('id', lesson.id)
 
+          if (updateErr) throw new Error(`DB update failed: ${updateErr.message}`)
+
           results.push({ lesson: lesson.title, status: 'enrichi' })
           updated++
+          console.log(`[enrich] ✓ "${lesson.title}" (${updated}/${limit})`)
         } catch (err: any) {
+          skipped++ // compter les erreurs comme traitées pour ne pas bloquer la boucle
+          console.error(`[enrich] ✗ "${lesson.title}": ${err.message}`)
           results.push({ lesson: lesson.title, status: `erreur: ${err.message}` })
         }
       }

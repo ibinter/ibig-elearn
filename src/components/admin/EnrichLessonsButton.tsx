@@ -41,8 +41,10 @@ export default function EnrichLessonsButton({ courseId, label }: Props) {
         // Mettre à jour l'affichage en temps réel
         setResult({ updated: totalUpdated, skipped: totalSkipped, total: totalUpdated + totalSkipped })
 
-        // Si aucune leçon traitée dans cette vague → terminé
-        if (data.updated === 0) break
+        // Si rien n'a été enrichi ET rien n'a bougé → terminé (évite boucle infinie)
+        if (data.updated === 0 && data.skipped === 0) break
+        // Si uniquement des erreurs sans progression réelle → stop
+        if (data.updated === 0 && !forceAll) break
       }
 
       setStatus('done')
