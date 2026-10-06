@@ -19,6 +19,7 @@ import FinalExamSection from './FinalExamSection'
 import AudioPlayer from '@/components/lesson/AudioPlayer'
 import CodeSandbox from '@/components/lesson/CodeSandbox'
 import LessonTabs from './LessonTabs'
+import LessonPaywall from './LessonPaywall'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -39,7 +40,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
   const enrollmentMode = (enrollment?.mode ?? 'autonome') as 'autonome' | 'guide' | 'certifiant'
 
-  const { data: course } = await supabase.from('courses').select('id, title, slug').eq('id', courseId).single()
+  const { data: course } = await supabase.from('courses').select('id, title, slug, price_xof').eq('id', courseId).single()
   if (!course) notFound()
 
   const { data: modules } = await supabase
@@ -59,9 +60,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
   if (!currentLesson) notFound()
 
-  if (!enrollment && !currentLesson.is_free_preview) {
-    redirect(`/formation/${course.slug}`)
-  }
+  const isLocked = !enrollment && !currentLesson.is_free_preview
 
   if (enrollmentMode !== 'autonome') {
     const currentModuleId = currentLesson.module_id
@@ -368,6 +367,18 @@ export default async function ApprendrePage({ params }: PageProps) {
                 </div>
               </div>
 
+              {/* Paywall pour visiteurs non-inscrits */}
+              {isLocked ? (
+                <LessonPaywall
+                  courseSlug={course.slug}
+                  courseTitle={course.title}
+                  lessonTitle={currentLesson.title}
+                  coursePrice={(course as any).price_xof}
+                  modulesCount={modules?.length}
+                  lessonsCount={modules?.flatMap((m: any) => m.lessons ?? []).length}
+                />
+              ) : (
+                <>
               {/* Contenu Markdown */}
               {currentLesson.content && currentLesson.type !== 'quiz' && (
                 <div className="mb-10">
@@ -465,6 +476,8 @@ export default async function ApprendrePage({ params }: PageProps) {
               </div>
 
               <div className="h-16" />
+                </>
+              )}
             </div>
           </div>
         </div>

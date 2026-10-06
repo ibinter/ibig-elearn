@@ -15,29 +15,33 @@ async function generateLessonContent(
   moduleTitle: string,
   courseTitle: string
 ): Promise<string> {
-  const prompt = `Tu es un expert formateur africain. Génère un contenu de leçon TRÈS RICHE et PROFESSIONNEL en Markdown pour :
+  const prompt = `Tu es un expert formateur de renommée mondiale, spécialiste du contexte africain (Afrique de l'Ouest, zone UEMOA/CEDEAO). Génère un contenu de leçon PREMIUM, COMPLET et ACCROCHEUR en Markdown pour :
 
 **Cours :** ${courseTitle}
 **Module :** ${moduleTitle}
 **Leçon :** ${lessonTitle}
 **Type :** ${lessonType}
 
-Le contenu doit :
-- Être entre 600 et 1200 mots
-- Utiliser des titres H2 et H3
-- Inclure des exemples concrets (contexte africain/PME quand pertinent)
-- Inclure des blocs de code ou formules si applicable
-- Inclure des listes à puces pour les points clés
-- Inclure au moins une blockquote (conseil pro)
-- Se terminer par un résumé "Ce qu'il faut retenir" et un "Exercice pratique"
-- Être directement utile et actionnable
-- Écrire uniquement le contenu Markdown, sans intro ni meta-commentaire
+RÈGLES ABSOLUES :
+- Entre 900 et 1500 mots de contenu dense et actionnable
+- NE PAS répéter le titre de la leçon en H1 (il est déjà affiché)
+- Commencer directement par un H2 accrocheur ou une accroche forte
+- Minimum 3 sections H2, chacune avec sous-sections H3
+- Exemples CONCRETS avec noms africains, villes (Abidjan, Dakar, Lagos, Lomé...), montants en FCFA/XOF
+- Au moins UN bloc de code, tableau ou formule mathématique si pertinent
+- Au moins DEUX blockquotes (conseils pro, citations d'experts, points critiques)
+- Listes à puces structurées avec explication de chaque point
+- Une section "⚡ Points clés à retenir" avec 4-6 bullets synthétiques
+- Une section "🎯 Exercice pratique" avec des actions concrètes et mesurables
+- Contenu qui donne l'impression d'avoir un vrai formateur expert en face de soi
+- Vocabulaire professionnel mais accessible, ton engageant et motivant
+- Écrire UNIQUEMENT le contenu Markdown, sans commentaire ni méta-instruction
 
-Écris un contenu de haute qualité qui donne envie de s'inscrire à la formation.`
+Ce contenu sera vu par des visiteurs non-inscrits : il doit leur donner ENVIE d'acheter la formation en démontrant la qualité et la valeur exceptionnelle du programme.`
 
   const message = await anthropic.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 1500,
+    max_tokens: 2500,
     messages: [{ role: 'user', content: prompt }],
   })
 
