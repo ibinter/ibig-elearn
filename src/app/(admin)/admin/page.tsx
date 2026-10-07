@@ -1,213 +1,268 @@
-﻿import { createClient } from '@/lib/supabase/server'
-import { Users, BookOpen, Award, DollarSign, TrendingUp, Activity, ArrowRight, MapPin, BarChart3, Download } from 'lucide-react'
-import { formatPrice, formatDate } from '@/lib/utils'
+import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import {
+  Users, BookOpen, Award, TrendingUp, Activity, ArrowRight, MapPin, BarChart3, Download,
+  ClipboardCheck, UserPlus, Wallet, Building2, Clock, HeartHandshake, Inbox, CheckCircle2,
+} from 'lucide-react'
+import { formatPrice, formatDate } from '@/lib/utils'
 import RealtimeActivityFeed from '@/components/admin/RealtimeActivityFeed'
+
+// Même barème que la fonction SQL public.to_xof
+const RATE: Record<string, number> = { XOF: 1, XAF: 1, EUR: 655.957, USD: 600 }
+const toXof = (amount: number, currency: string | null) => Math.round(amount * (RATE[(currency ?? 'XOF').toUpperCase()] ?? 1))
+const fcfa = (n: number) => `${Math.round(n).toLocaleString('fr-FR')} FCFA`
+
+const COUNTRY: Record<string, string> = {
+  CI: "Côte d'Ivoire", SN: 'Sénégal', CM: 'Cameroun', BF: 'Burkina Faso', ML: 'Mali', GN: 'Guinée', TG: 'Togo',
+  BJ: 'Bénin', NE: 'Niger', GA: 'Gabon', CD: 'RD Congo', CG: 'Congo-Brazzaville', TD: 'Tchad', MA: 'Maroc',
+  FR: 'France', BE: 'Belgique',
+}
+const ROLE: Record<string, { label: string; cls: string }> = {
+  admin: { label: 'Admin', cls: 'bg-red-50 text-red-700' },
+  coordinateur: { label: 'Coordinateur', cls: 'bg-purple-50 text-purple-700' },
+  formateur: { label: 'Formateur', cls: 'bg-blue-50 text-blue-700' },
+  entreprise: { label: 'Entreprise', cls: 'bg-amber-50 text-amber-700' },
+}
 
 export default async function AdminPage() {
   const supabase = await createClient()
+  const now = new Date()
+  const since12m = new Date(now.getFullYear(), now.getMonth() - 11, 1).toISOString()
+  const since30d = new Date(now.getTime() - 30 * 86400_000).toISOString()
+  const stalePending = new Date(now.getTime() - 3600_000).toISOString()
+  const head = { count: 'exact' as const, head: true }
 
   const [
-    { count: totalUsers },
-    { count: totalCourses },
-    { count: totalEnrollments },
-    { count: totalCerts },
-    { data: recentPayments },
-    { data: recentUsers },
-    { data: topCourses },
-    { data: revenueData },
-    { data: countryData },
-    { data: allUsersCreated },
-    { data: allEnrollments },
+    { count: totalUsers }, { count: newUsers30 }, { count: totalCourses }, { count: totalEnrollments }, { count: totalCerts },
+    { count: pendingCourses }, { count: pendingApplications }, { count: newB2b }, { count: stalePayments }, { count: upcomingCoaching },
+    { data: payoutQueue }, { data: payments }, { data: earnings }, { data: partnerBalances },
+    { data: recentUsers }, { data: topCourses }, { data: countryRows }, { data: usersCreated }, { data: enrollmentsDates },
   ] = await Promise.all([
-    supabase.from('profiles').select('*', { count: 'exact', head: true }),
-    supabase.from('courses').select('*', { count: 'exact', head: true }).eq('is_published', true),
-    supabase.from('enrollments').select('*', { count: 'exact', head: true }),
-    supabase.from('certificates').select('*', { count: 'exact', head: true }),
-    supabase.from('payments').select('*, user:profiles(full_name), course:courses(title)').eq('status', 'completed').order('created_at', { ascending: false }).limit(8),
-    supabase.from('profiles').select('id, full_name, email, country, created_at, role').order('created_at', { ascending: false }).limit(6),
-    supabase.from('courses').select('id, title, slug, enrollment_count, price_xof, is_featured').eq('is_published', true).order('enrollment_count', { ascending: false }).limit(5),
-    supabase.from('payments').select('amount, currency, created_at').eq('status', 'completed'),
+    supabase.from('profiles').select('*', head),
+    supabase.from('profiles').select('*', head).gte('created_at', since30d),
+    supabase.from('courses').select('*', head).eq('is_published', true),
+    supabase.from('enrollments').select('*', head),
+    supabase.from('certificates').select('*', head),
+    supabase.from('courses').select('*', head).eq('approval_status', 'pending'),
+    supabase.from('instructor_applications').select('*', head).eq('status', 'submitted'),
+    supabase.from('b2b_requests').select('*', head).eq('status', 'new'),
+    supabase.from('payments').select('*', head).eq('status', 'pending').lt('created_at', stalePending),
+    supabase.from('coaching_bookings').select('*', head).eq('status', 'confirmed').gt('starts_at', now.toISOString()),
+    supabase.from('payout_requests').select('amount').eq('status', 'pending'),
+    supabase.from('payments')
+      .select('id, amount, currency, created_at, user:profiles(full_name), course:courses(title)')
+      .eq('status', 'completed').gte('created_at', since12m).order('created_at', { ascending: false }),
+    supabase.from('instructor_earnings').select('instructor_amount_xof, created_at').eq('status', 'credited').gte('created_at', since12m),
+    supabase.from('profiles').select('payout_balance_xof').gt('payout_balance_xof', 0),
+    supabase.from('profiles').select('id, full_name, country, created_at, role').order('created_at', { ascending: false }).limit(6),
+    supabase.from('courses').select('id, title, slug, enrollment_count, is_featured').eq('is_published', true).order('enrollment_count', { ascending: false }).limit(5),
     supabase.from('profiles').select('country').not('country', 'is', null),
-    supabase.from('profiles').select('created_at').order('created_at'),
-    supabase.from('enrollments').select('enrolled_at').order('enrolled_at'),
+    supabase.from('profiles').select('created_at').gte('created_at', since12m),
+    supabase.from('enrollments').select('enrolled_at').gte('enrolled_at', since12m),
   ])
 
-  const totalRevenue = revenueData?.filter(p => p.currency === 'XOF').reduce((s, p) => s + p.amount, 0) ?? 0
-  const totalRevenueEur = revenueData?.filter(p => p.currency === 'EUR').reduce((s, p) => s + p.amount, 0) ?? 0
-  const completionRate = totalEnrollments ? Math.round(((totalCerts ?? 0) / totalEnrollments) * 100) : 0
+  type Pay = { id: string; amount: number; currency: string; created_at: string; user: { full_name: string } | null; course: { title: string } | null }
+  const pays = (payments ?? []) as unknown as Pay[]
 
-  // Revenus 12 derniers mois
+  // ── Chiffre d'affaires (converti en FCFA) ──
+  const monthKey = (iso: string) => iso.slice(0, 7)
+  const thisMonth = monthKey(now.toISOString())
+  const gross12 = pays.reduce((s, p) => s + toXof(p.amount, p.currency), 0)
+  const grossMonth = pays.filter(p => monthKey(p.created_at) === thisMonth).reduce((s, p) => s + toXof(p.amount, p.currency), 0)
+  const gross30 = pays.filter(p => p.created_at >= since30d).reduce((s, p) => s + toXof(p.amount, p.currency), 0)
+  const instructorMonth = (earnings ?? []).filter(e => monthKey(e.created_at) === thisMonth).reduce((s, e) => s + e.instructor_amount_xof, 0)
+  const ibigMonth = grossMonth - instructorMonth
+  const owedToPartners = (partnerBalances ?? []).reduce((s, p) => s + (p.payout_balance_xof ?? 0), 0)
+  const payoutPending = (payoutQueue ?? []).reduce((s, p) => s + (p.amount ?? 0), 0)
+
   const months = Array.from({ length: 12 }, (_, i) => {
-    const d = new Date()
-    d.setMonth(d.getMonth() - (11 - i))
-    return { key: d.toISOString().slice(0, 7), label: d.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' }) }
+    const d = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1)
+    return { key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`, label: d.toLocaleDateString('fr-FR', { month: 'short' }) }
   })
-  const revenueByMonth = months.map(m => ({
+  const revByMonth = months.map(m => {
+    const list = pays.filter(p => monthKey(p.created_at) === m.key)
+    return { ...m, total: list.reduce((s, p) => s + toXof(p.amount, p.currency), 0), count: list.length }
+  })
+  const maxRev = Math.max(...revByMonth.map(m => m.total), 1)
+
+  const growth = months.map(m => ({
     ...m,
-    xof: revenueData?.filter(p => p.currency === 'XOF' && p.created_at.slice(0, 7) === m.key).reduce((s, p) => s + p.amount, 0) ?? 0,
-    eur: revenueData?.filter(p => p.currency === 'EUR' && p.created_at.slice(0, 7) === m.key).reduce((s, p) => s + p.amount, 0) ?? 0,
-    count: revenueData?.filter(p => p.created_at.slice(0, 7) === m.key).length ?? 0,
+    users: (usersCreated ?? []).filter(u => monthKey(u.created_at) === m.key).length,
+    enrollments: (enrollmentsDates ?? []).filter(e => e.enrolled_at && monthKey(e.enrolled_at) === m.key).length,
   }))
-  const maxRevenue = Math.max(...revenueByMonth.map(m => m.xof + m.eur * 655), 1)
+  const maxGrowth = Math.max(...growth.map(m => Math.max(m.users, m.enrollments)), 1)
 
-  // Croissance utilisateurs & inscriptions (12 mois)
-  const growthMonths = Array.from({ length: 12 }, (_, i) => {
-    const d = new Date()
-    d.setMonth(d.getMonth() - (11 - i))
-    return { key: d.toISOString().slice(0, 7), label: d.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' }), users: 0, enrollments: 0 }
-  })
-  allUsersCreated?.forEach(u => {
-    const key = u.created_at.slice(0, 7)
-    const m = growthMonths.find(m => m.key === key)
-    if (m) m.users++
-  })
-  allEnrollments?.forEach(e => {
-    const key = (e.enrolled_at ?? '').slice(0, 7)
-    const m = growthMonths.find(m => m.key === key)
-    if (m) m.enrollments++
-  })
-  const maxGrowth = Math.max(...growthMonths.map(m => Math.max(m.users, m.enrollments)), 1)
-
-  // Pays top
   const countryCount: Record<string, number> = {}
-  countryData?.forEach(u => { if (u.country) countryCount[u.country] = (countryCount[u.country] ?? 0) + 1 })
+  for (const u of countryRows ?? []) if (u.country) countryCount[u.country] = (countryCount[u.country] ?? 0) + 1
   const topCountries = Object.entries(countryCount).sort((a, b) => b[1] - a[1]).slice(0, 8)
   const maxCountry = Math.max(...topCountries.map(c => c[1]), 1)
 
-  const countryNames: Record<string, string> = {
-    CI: 'Côte d\'Ivoire', SN: 'Sénégal', CM: 'Cameroun', BF: 'Burkina Faso',
-    ML: 'Mali', GN: 'Guinée', TG: 'Togo', BJ: 'Bénin', MA: 'Maroc',
-    FR: 'France', BE: 'Belgique', NG: 'Nigéria', GH: 'Ghana', CD: 'RD Congo', CG: 'Congo-Brazzaville', TD: 'Tchad',
-  }
+  const completionRate = totalEnrollments ? Math.round(((totalCerts ?? 0) / totalEnrollments) * 100) : 0
+
+  // ── À traiter ──
+  const inbox = [
+    { n: pendingCourses ?? 0, label: 'Formations à valider', href: '/admin/approbations', icon: ClipboardCheck, cls: 'text-[#0B3D91] bg-blue-50' },
+    { n: pendingApplications ?? 0, label: 'Candidatures partenaires', href: '/admin/partenaires', icon: UserPlus, cls: 'text-purple-600 bg-purple-50' },
+    { n: (payoutQueue ?? []).length, label: 'Virements à effectuer', sub: payoutPending ? fcfa(payoutPending) : undefined, href: '/admin/virements', icon: Wallet, cls: 'text-emerald-600 bg-emerald-50' },
+    { n: newB2b ?? 0, label: 'Demandes entreprise', href: '/admin/entreprise', icon: Building2, cls: 'text-amber-600 bg-amber-50' },
+    { n: stalePayments ?? 0, label: 'Paiements bloqués (> 1 h)', href: '/admin/paiements', icon: Clock, cls: 'text-red-600 bg-red-50' },
+  ]
+  const todo = inbox.filter(i => i.n > 0)
+
+  const activities = [
+    ...pays.slice(0, 5).map(p => ({
+      id: p.id, type: 'payment' as const, time: p.created_at, amount: p.amount,
+      label: `Paiement de ${formatPrice(p.amount, p.currency)}${p.user?.full_name ? ` — ${p.user.full_name}` : ''}`,
+    })),
+    ...((recentUsers ?? []) as { id: string; full_name: string | null; created_at: string }[]).slice(0, 5).map(u => ({
+      id: u.id, type: 'user' as const, time: u.created_at, label: `${u.full_name ?? 'Nouvel utilisateur'} vient de s'inscrire`,
+    })),
+  ].sort((a, b) => b.time.localeCompare(a.time)).slice(0, 10)
 
   return (
-    <div>
-      <div className="flex items-start justify-between mb-8 flex-wrap gap-3">
+    <div className="space-y-5 sm:space-y-6">
+      {/* ── En-tête ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Tableau de bord Admin</h1>
-          <p className="text-gray-500">Vue d&apos;ensemble de la plateforme IBIG E-LEARNING</p>
+          <h1 className="text-[22px] sm:text-2xl font-bold text-gray-900">Tableau de bord</h1>
+          <p className="text-gray-500 text-sm">Vue d&apos;ensemble d&apos;IBIG E-LEARNING · {now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
         </div>
-        <div className="flex gap-2">
-          <Link href="/admin/rapports" className="flex items-center gap-1.5 border border-gray-200 text-gray-700 text-sm font-medium px-3 py-1.5 rounded-xl hover:bg-gray-50 transition-colors">
+        <div className="grid grid-cols-2 sm:flex gap-2">
+          <Link href="/admin/rapports" className="flex items-center justify-center gap-1.5 border border-gray-200 bg-white text-gray-700 text-sm font-medium px-3 py-2 rounded-xl hover:bg-gray-50">
             <BarChart3 className="w-4 h-4" /> Rapports
           </Link>
-          <Link href="/admin/exports" className="flex items-center gap-1.5 border border-gray-200 text-gray-700 text-sm font-medium px-3 py-1.5 rounded-xl hover:bg-gray-50 transition-colors">
+          <Link href="/admin/exports" className="flex items-center justify-center gap-1.5 border border-gray-200 bg-white text-gray-700 text-sm font-medium px-3 py-2 rounded-xl hover:bg-gray-50">
             <Download className="w-4 h-4" /> Exports
           </Link>
         </div>
       </div>
 
-      {/* Stats KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
-        {[
-          { label: 'Utilisateurs', value: totalUsers ?? 0, icon: Users, color: 'bg-blue-50 text-blue-600' },
-          { label: 'Formations', value: totalCourses ?? 0, icon: BookOpen, color: 'bg-purple-50 text-purple-600' },
-          { label: 'Inscriptions', value: totalEnrollments ?? 0, icon: TrendingUp, color: 'bg-green-50 text-green-600' },
-          { label: 'Certificats', value: totalCerts ?? 0, icon: Award, color: 'bg-yellow-50 text-yellow-600' },
-          { label: 'Revenus XOF', value: formatPrice(totalRevenue), icon: DollarSign, color: 'bg-emerald-50 text-emerald-600', text: true },
-          { label: 'Taux complétion', value: `${completionRate}%`, icon: Activity, color: 'bg-orange-50 text-orange-600', text: true },
-        ].map(s => (
-          <div key={s.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${s.color} mb-3`}>
-              <s.icon className="w-5 h-5" />
-            </div>
-            <div className={`font-bold text-gray-900 ${(s as any).text ? 'text-sm' : 'text-2xl'}`}>{s.value}</div>
-            <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
+      {/* ── À traiter ── */}
+      <section className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div className="px-4 sm:px-5 py-3.5 border-b border-gray-100 flex items-center gap-2">
+          <Inbox className="w-5 h-5 text-[#0B3D91]" />
+          <h2 className="font-bold text-gray-900">À traiter</h2>
+          {todo.length > 0 && <span className="ml-1 text-xs font-bold bg-[#FFA500] text-black rounded-full px-2 py-0.5">{todo.reduce((s, i) => s + i.n, 0)}</span>}
+        </div>
+        {todo.length === 0 ? (
+          <p className="px-5 py-5 text-sm text-gray-500 flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-500" /> Rien en attente, tout est à jour.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3">
+            {todo.map(i => (
+              <Link key={i.href} href={i.href} className="flex items-center gap-3 rounded-xl border border-gray-100 px-3.5 py-3 hover:bg-gray-50 transition-colors">
+                <span className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${i.cls}`}><i.icon className="w-5 h-5" /></span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-semibold text-gray-900">{i.label}</span>
+                  {i.sub && <span className="block text-xs text-gray-500">{i.sub}</span>}
+                </span>
+                <span className="text-xl font-extrabold text-gray-900">{i.n}</span>
+              </Link>
+            ))}
           </div>
+        )}
+      </section>
+
+      {/* ── Chiffre d'affaires ── */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B1E4B] via-[#0B3D91] to-[#1a56cc] text-white p-5 sm:p-6">
+        <div className="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-white/10" aria-hidden="true" />
+        <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="col-span-2 lg:col-span-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#FFA500]">Ventes du mois</p>
+            <p className="mt-1 text-3xl font-extrabold">{fcfa(grossMonth)}</p>
+            <p className="text-xs text-blue-200 mt-0.5">30 derniers jours : {fcfa(gross30)}</p>
+          </div>
+          <div>
+            <p className="text-xs text-blue-200">Part IBIG du mois</p>
+            <p className="mt-1 text-lg sm:text-xl font-bold">{fcfa(ibigMonth)}</p>
+          </div>
+          <div>
+            <p className="text-xs text-blue-200">Dû aux partenaires</p>
+            <p className="mt-1 text-lg sm:text-xl font-bold">{fcfa(owedToPartners)}</p>
+          </div>
+          <div className="col-span-2 lg:col-span-1">
+            <p className="text-xs text-blue-200">Ventes sur 12 mois</p>
+            <p className="mt-1 text-lg sm:text-xl font-bold">{fcfa(gross12)}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Compteurs ── */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5 sm:gap-4">
+        {[
+          { label: 'Utilisateurs', value: (totalUsers ?? 0).toLocaleString('fr-FR'), sub: `+${newUsers30 ?? 0} en 30 j`, icon: Users, color: 'bg-blue-50 text-blue-600', href: '/admin/utilisateurs' },
+          { label: 'Formations en ligne', value: totalCourses ?? 0, icon: BookOpen, color: 'bg-purple-50 text-purple-600', href: '/admin/formations' },
+          { label: 'Inscriptions', value: (totalEnrollments ?? 0).toLocaleString('fr-FR'), icon: TrendingUp, color: 'bg-green-50 text-green-600', href: '/admin/inscriptions' },
+          { label: 'Certificats', value: totalCerts ?? 0, icon: Award, color: 'bg-yellow-50 text-yellow-600', href: '/admin/certificats' },
+          { label: 'Taux de complétion', value: `${completionRate} %`, icon: Activity, color: 'bg-orange-50 text-orange-600', href: '/admin/rapports' },
+          { label: 'Coaching à venir', value: upcomingCoaching ?? 0, icon: HeartHandshake, color: 'bg-rose-50 text-rose-600', href: '/admin/coaching' },
+        ].map(s => (
+          <Link key={s.label} href={s.href} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 hover:shadow-md transition-shadow">
+            <span className={`w-9 h-9 rounded-lg flex items-center justify-center ${s.color}`}><s.icon className="w-5 h-5" /></span>
+            <p className="mt-3 text-xl sm:text-2xl font-extrabold text-gray-900 leading-none">{s.value}</p>
+            <p className="text-xs text-gray-500 mt-1">{s.label}{s.sub ? <span className="text-emerald-600 font-semibold"> · {s.sub}</span> : null}</p>
+          </Link>
         ))}
       </div>
 
-      {/* Graphique croissance utilisateurs & inscriptions */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="font-bold text-gray-900">Croissance — 12 derniers mois</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Nouveaux utilisateurs et inscriptions par mois</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+        {/* ── Ventes 12 mois ── */}
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <h2 className="font-bold text-gray-900">Ventes — 12 mois</h2>
+              <p className="text-xs text-gray-400 mt-0.5">Toutes devises converties en FCFA</p>
+            </div>
+            <BarChart3 className="w-5 h-5 text-gray-300" />
           </div>
-          <div className="flex items-center gap-4 text-xs text-gray-500">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-[#0B3D91] inline-block" /> Utilisateurs</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-[#FFA500] inline-block" /> Inscriptions</span>
-          </div>
-        </div>
-        <div className="overflow-x-auto">
-          <svg viewBox={`0 0 ${growthMonths.length * 56} 120`} className="w-full" style={{ minWidth: '520px' }}>
-            {growthMonths.map((m, i) => {
-              const x = i * 56 + 4
-              const uH = Math.round((m.users / maxGrowth) * 80)
-              const eH = Math.round((m.enrollments / maxGrowth) * 80)
-              return (
-                <g key={m.key}>
-                  <rect x={x} y={90 - uH} width={22} height={uH || 2} rx={4} fill="#0B3D91" opacity={0.85} />
-                  <rect x={x + 24} y={90 - eH} width={22} height={eH || 2} rx={4} fill="#FFA500" opacity={0.85} />
-                  {m.users > 0 && <text x={x + 11} y={90 - uH - 3} textAnchor="middle" fontSize="8" fill="#374151" fontWeight="600">{m.users}</text>}
-                  {m.enrollments > 0 && <text x={x + 35} y={90 - eH - 3} textAnchor="middle" fontSize="8" fill="#374151" fontWeight="600">{m.enrollments}</text>}
-                  <text x={x + 24} y={108} textAnchor="middle" fontSize="9" fill="#9ca3af">{m.label}</text>
-                </g>
-              )
-            })}
-          </svg>
-        </div>
-      </div>
-
-      {/* Graphique revenus 12 mois */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="font-bold text-gray-900">Revenus — 12 derniers mois</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Total XOF : {formatPrice(totalRevenue)} {totalRevenueEur > 0 && `· EUR : ${formatPrice(totalRevenueEur, 'EUR')}`}
-            </p>
-          </div>
-          <BarChart3 className="w-5 h-5 text-gray-300" />
-        </div>
-        <div className="flex items-end gap-1.5 h-40">
-          {revenueByMonth.map(m => {
-            const combined = m.xof + m.eur * 655
-            const pct = (combined / maxRevenue) * 100
-            return (
-              <div key={m.key} className="flex-1 flex flex-col items-center gap-1 group relative">
-                {m.count > 0 && (
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                    {m.count} paiement{m.count > 1 ? 's' : ''}
-                  </div>
-                )}
+          <div className="flex items-end gap-1 sm:gap-1.5 h-40">
+            {revByMonth.map(m => (
+              <div key={m.key} className="flex-1 flex flex-col items-center gap-1" title={`${m.label} : ${fcfa(m.total)} · ${m.count} paiement${m.count > 1 ? 's' : ''}`}>
                 <div className="w-full rounded-t-md bg-gray-100 relative overflow-hidden" style={{ height: '120px' }}>
-                  <div
-                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0B3D91] to-[#1a5fd4] rounded-t-md transition-all"
-                    style={{ height: `${pct}%` }}
-                  />
-                  {m.eur > 0 && (
-                    <div
-                      className="absolute bottom-0 left-0 right-0 bg-[#FFA500]/70 rounded-t-md transition-all"
-                      style={{ height: `${(m.eur * 655 / maxRevenue) * 100}%` }}
-                    />
-                  )}
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#0B3D91] to-[#1a5fd4] rounded-t-md" style={{ height: `${m.total ? Math.max(3, (m.total / maxRev) * 100) : 0}%` }} />
                 </div>
-                <span className="text-[9px] text-gray-400 text-center leading-tight">{m.label}</span>
+                <span className="text-[9px] sm:text-[10px] text-gray-400">{m.label}</span>
               </div>
-            )
-          })}
-        </div>
-        <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
-          <span className="flex items-center gap-1"><span className="w-3 h-2 rounded bg-[#0B3D91] inline-block" /> XOF / FCFA</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-2 rounded bg-[#FFA500]/70 inline-block" /> EUR</span>
-        </div>
+            ))}
+          </div>
+          {gross12 === 0 && <p className="text-sm text-gray-400 text-center mt-3">Aucune vente confirmée sur la période.</p>}
+        </section>
+
+        {/* ── Croissance ── */}
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6">
+          <div className="flex items-start justify-between mb-5 gap-3">
+            <div>
+              <h2 className="font-bold text-gray-900">Croissance — 12 mois</h2>
+              <p className="text-xs text-gray-400 mt-0.5">Nouveaux comptes et inscriptions</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-1 sm:gap-3 text-[11px] text-gray-500">
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#0B3D91]" /> Comptes</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#FFA500]" /> Inscriptions</span>
+            </div>
+          </div>
+          <div className="flex items-end gap-1 sm:gap-1.5 h-40">
+            {growth.map(m => (
+              <div key={m.key} className="flex-1 flex flex-col items-center gap-1" title={`${m.label} : ${m.users} comptes, ${m.enrollments} inscriptions`}>
+                <div className="w-full flex items-end gap-px" style={{ height: '120px' }}>
+                  <div className="flex-1 bg-[#0B3D91] rounded-t" style={{ height: `${m.users ? Math.max(3, (m.users / maxGrowth) * 100) : 0}%` }} />
+                  <div className="flex-1 bg-[#FFA500] rounded-t" style={{ height: `${m.enrollments ? Math.max(3, (m.enrollments / maxGrowth) * 100) : 0}%` }} />
+                </div>
+                <span className="text-[9px] sm:text-[10px] text-gray-400">{m.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        {/* Distribution pays */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <div className="flex items-center gap-2 mb-5">
-            <MapPin className="w-5 h-5 text-[#0B3D91]" />
-            <h2 className="font-bold text-gray-900">Apprenants par pays</h2>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
+        {/* ── Pays ── */}
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5">
+          <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-[#0B3D91]" /> Utilisateurs par pays</h2>
           <div className="space-y-3">
             {topCountries.length === 0 && <p className="text-sm text-gray-400 text-center py-4">Aucune donnée</p>}
             {topCountries.map(([cc, count]) => (
               <div key={cc}>
                 <div className="flex items-center justify-between text-sm mb-1">
-                  <span className="font-medium text-gray-700">{countryNames[cc] ?? cc}</span>
+                  <span className="font-medium text-gray-700">{COUNTRY[cc] ?? cc}</span>
                   <span className="text-gray-500 text-xs">{count}</span>
                 </div>
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -216,140 +271,74 @@ export default async function AdminPage() {
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Top formations */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
+        {/* ── Top formations ── */}
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="px-4 sm:px-5 py-3.5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-gray-900">Top formations</h2>
-            <Link href="/admin/formations" className="text-xs text-[#0B3D91] hover:underline flex items-center gap-1">
-              Voir tout <ArrowRight className="w-3 h-3" />
-            </Link>
+            <Link href="/admin/formations" className="text-xs text-[#0B3D91] font-semibold flex items-center gap-1">Voir tout <ArrowRight className="w-3 h-3" /></Link>
           </div>
-          <div className="divide-y divide-gray-50">
-            {(topCourses as any[])?.map((c, i) => (
-              <div key={c.id} className="flex items-center gap-3 px-5 py-3">
+          <ul className="divide-y divide-gray-50">
+            {((topCourses ?? []) as { id: string; title: string; enrollment_count: number | null; is_featured: boolean }[]).map((c, i) => (
+              <li key={c.id} className="flex items-center gap-3 px-4 sm:px-5 py-3">
                 <span className={`text-xs font-bold w-5 flex-shrink-0 ${i === 0 ? 'text-[#FFA500]' : 'text-gray-400'}`}>#{i + 1}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 leading-snug line-clamp-2">{c.title}</p>
-                  <p className="text-xs text-gray-400">{c.enrollment_count} inscrits</p>
-                </div>
-                {c.is_featured && <span className="text-[10px] text-[#FFA500]">⭐</span>}
-              </div>
+                <span className="flex-1 min-w-0">
+                  <span className="block text-sm font-medium text-gray-900 leading-snug line-clamp-2">{c.title}</span>
+                  <span className="block text-xs text-gray-400">{c.enrollment_count ?? 0} inscrits{c.is_featured ? ' · ⭐ À la une' : ''}</span>
+                </span>
+              </li>
             ))}
-            {!topCourses?.length && <div className="p-6 text-center text-sm text-gray-400">Aucune donnée</div>}
-          </div>
-        </div>
+            {!topCourses?.length && <li className="p-6 text-center text-sm text-gray-400">Aucune donnée</li>}
+          </ul>
+        </section>
 
-        {/* Taux de complétion */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <h2 className="font-bold text-gray-900 mb-5">KPIs business</h2>
-          <div className="space-y-4">
-            <div>
-              <div className="flex justify-between text-sm mb-1.5">
-                <span className="text-gray-600">Taux de complétion</span>
-                <span className="font-bold text-gray-900">{completionRate}%</span>
-              </div>
-              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-green-500 rounded-full" style={{ width: `${completionRate}%` }} />
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-sm mb-1.5">
-                <span className="text-gray-600">Conversion inscriptions</span>
-                <span className="font-bold text-gray-900">
-                  {totalEnrollments && totalUsers ? Math.round((totalEnrollments / (totalUsers ?? 1)) * 100) : 0}%
-                </span>
-              </div>
-              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-[#0B3D91] rounded-full" style={{ width: `${totalEnrollments && totalUsers ? Math.round((totalEnrollments / (totalUsers ?? 1)) * 100) : 0}%` }} />
-              </div>
-            </div>
-            <div className="pt-3 border-t border-gray-100 grid grid-cols-2 gap-3">
-              <div className="text-center p-3 bg-gray-50 rounded-xl">
-                <div className="text-xl font-bold text-gray-900">{totalCerts}</div>
-                <div className="text-xs text-gray-500">Certificats émis</div>
-              </div>
-              <div className="text-center p-3 bg-gray-50 rounded-xl">
-                <div className="text-xl font-bold text-gray-900">{topCountries.length}</div>
-                <div className="text-xs text-gray-500">Pays représentés</div>
-              </div>
-            </div>
+        {/* ── Nouveaux utilisateurs ── */}
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="px-4 sm:px-5 py-3.5 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="font-bold text-gray-900">Nouveaux comptes</h2>
+            <Link href="/admin/utilisateurs" className="text-xs text-[#0B3D91] font-semibold flex items-center gap-1">Voir tout <ArrowRight className="w-3 h-3" /></Link>
           </div>
-        </div>
+          <ul className="divide-y divide-gray-50">
+            {((recentUsers ?? []) as { id: string; full_name: string | null; country: string | null; created_at: string; role: string }[]).map(u => {
+              const r = ROLE[u.role] ?? { label: 'Apprenant', cls: 'bg-gray-100 text-gray-600' }
+              return (
+                <li key={u.id} className="px-4 sm:px-5 py-3 flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-full bg-[#0B3D91] text-white flex items-center justify-center font-bold text-sm flex-shrink-0">{u.full_name?.charAt(0)?.toUpperCase() ?? '?'}</span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-sm font-semibold text-gray-900 truncate" data-no-translate>{u.full_name ?? '—'}</span>
+                    <span className="block text-xs text-gray-400">{formatDate(u.created_at)}{u.country ? ` · ${COUNTRY[u.country] ?? u.country}` : ''}</span>
+                  </span>
+                  <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold flex-shrink-0 ${r.cls}`}>{r.label}</span>
+                </li>
+              )
+            })}
+            {!recentUsers?.length && <li className="p-6 text-center text-sm text-gray-400">Aucun utilisateur</li>}
+          </ul>
+        </section>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Paiements récents */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900">Paiements récents</h2>
-            <Link href="/admin/paiements" className="text-xs text-[#0B3D91] hover:underline flex items-center gap-1">
-              Voir tout <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="divide-y divide-gray-50">
-            {recentPayments && recentPayments.length > 0 ? (recentPayments as any[]).map(p => (
-              <div key={p.id} className="p-4 flex items-center justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">{p.user?.full_name}</p>
-                  <p className="text-xs text-gray-400 truncate">{p.course?.title}</p>
-                </div>
-                <p className="font-bold text-green-600 text-sm flex-shrink-0">{formatPrice(p.amount, p.currency)}</p>
-              </div>
-            )) : <div className="p-6 text-center text-sm text-gray-400">Aucun paiement</div>}
-          </div>
+      {/* ── Paiements récents ── */}
+      <section className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div className="px-4 sm:px-5 py-3.5 border-b border-gray-100 flex items-center justify-between">
+          <h2 className="font-bold text-gray-900">Paiements confirmés récents</h2>
+          <Link href="/admin/paiements" className="text-xs text-[#0B3D91] font-semibold flex items-center gap-1">Voir tout <ArrowRight className="w-3 h-3" /></Link>
         </div>
+        <ul className="divide-y divide-gray-50">
+          {pays.slice(0, 6).map(p => (
+            <li key={p.id} className="px-4 sm:px-5 py-3 flex items-center justify-between gap-4">
+              <span className="min-w-0">
+                <span className="block text-sm font-semibold text-gray-900 truncate" data-no-translate>{p.user?.full_name ?? '—'}</span>
+                <span className="block text-xs text-gray-400 truncate">{p.course?.title ?? 'Séance de coaching'} · {formatDate(p.created_at)}</span>
+              </span>
+              <span className="font-bold text-emerald-600 text-sm flex-shrink-0">{formatPrice(p.amount, p.currency)}</span>
+            </li>
+          ))}
+          {pays.length === 0 && <li className="p-6 text-center text-sm text-gray-400">Aucun paiement confirmé</li>}
+        </ul>
+      </section>
 
-        {/* Nouveaux utilisateurs */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900">Nouveaux utilisateurs</h2>
-            <Link href="/admin/utilisateurs" className="text-xs text-[#0B3D91] hover:underline flex items-center gap-1">
-              Voir tout <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="divide-y divide-gray-50">
-            {recentUsers && recentUsers.length > 0 ? (recentUsers as any[]).map(u => (
-              <div key={u.id} className="p-4 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#0B3D91] text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
-                  {u.full_name?.charAt(0)?.toUpperCase() ?? '?'}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">{u.full_name}</p>
-                  <p className="text-xs text-gray-400">{formatDate(u.created_at)}</p>
-                </div>
-                <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${
-                  u.role === 'admin' ? 'bg-red-100 text-red-700' :
-                  u.role === 'formateur' ? 'bg-blue-100 text-blue-700' :
-                  'bg-gray-100 text-gray-600'}`}>
-                  {u.role}
-                </span>
-              </div>
-            )) : <div className="p-6 text-center text-sm text-gray-400">Aucun utilisateur</div>}
-          </div>
-        </div>
-      </div>
-
-      {/* Activité en direct */}
-      {(() => {
-        const initialActivities = [
-          ...(recentPayments ?? []).slice(0, 5).map((p: any) => ({
-            id: p.id,
-            type: 'payment' as const,
-            label: `Paiement de ${formatPrice(p.amount, p.currency)}${p.user?.full_name ? ` — ${p.user.full_name}` : ''}`,
-            time: p.created_at,
-            amount: p.amount,
-          })),
-          ...(recentUsers ?? []).slice(0, 5).map((u: any) => ({
-            id: u.id,
-            type: 'user' as const,
-            label: `${u.full_name ?? 'Nouvel utilisateur'} vient de s'inscrire`,
-            time: u.created_at,
-          })),
-        ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 10)
-        return <RealtimeActivityFeed initialActivities={initialActivities} />
-      })()}
+      <RealtimeActivityFeed initialActivities={activities} />
     </div>
   )
 }
