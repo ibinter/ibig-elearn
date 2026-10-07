@@ -103,9 +103,6 @@ export default async function DevenirPartenairePage() {
                   J&apos;ai déjà un compte
                 </Link>
               </div>
-              <p className="text-center text-xs text-gray-500">
-                Consultez le modèle de <Link href="/conditions-partenaires" className="text-[#0B3D91] font-semibold underline">convention de partenariat</Link>.
-              </p>
             </>
           )}
 
