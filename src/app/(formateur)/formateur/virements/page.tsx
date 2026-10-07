@@ -11,10 +11,10 @@ export default async function VirementPage() {
   const [{ data: profile }, { data: requests }, { data: earnings }] = await Promise.all([
     supabase.from('profiles').select('full_name, payout_balance_xof').eq('id', user.id).single(),
     supabase.from('payout_requests').select('*').eq('instructor_id', user.id).order('created_at', { ascending: false }),
-    supabase.from('enrollments').select('amount_paid').eq('instructor_id', user.id),
+    supabase.from('instructor_earnings').select('instructor_amount_xof').eq('instructor_id', user.id).eq('status', 'credited'),
   ])
 
-  const totalEarned = earnings?.reduce((sum: number, e: any) => sum + (e.amount_paid ?? 0), 0) ?? 0
+  const totalEarned = earnings?.reduce((sum: number, e: any) => sum + (e.instructor_amount_xof ?? 0), 0) ?? 0
   const totalPaid = requests?.filter((r: any) => r.status === 'paid').reduce((sum: number, r: any) => sum + r.amount, 0) ?? 0
   const pendingAmount = requests?.filter((r: any) => r.status === 'pending').reduce((sum: number, r: any) => sum + r.amount, 0) ?? 0
   const balance = (profile as any)?.payout_balance_xof ?? 0
