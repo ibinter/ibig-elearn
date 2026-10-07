@@ -78,6 +78,16 @@ export default function DevenirFormateurPage() {
                   </li>
                 ))}
               </ul>
+              <div className="mt-8 relative rounded-3xl overflow-hidden aspect-[16/10] shadow-xl">
+                <picture>
+                  <source media="(max-width: 767px)" srcSet="/images/bg/about-m.webp" />
+                  <img src="/images/bg/about.webp" alt="Une formatrice partage son expertise avec des apprenantes" loading="lazy" className="w-full h-full object-cover" />
+                </picture>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5 text-white">
+                  <p className="font-bold">Partagez votre expertise</p>
+                  <p className="text-sm text-white/80">Et percevez 50 % des revenus de vos formations.</p>
+                </div>
+              </div>
             </div>
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Le processus en 4 étapes</h2>
@@ -98,7 +108,7 @@ export default function DevenirFormateurPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 hero-waves text-white">
+      <section className="py-16 hero-photo bg-partner text-white">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Prêt à transmettre votre savoir ?</h2>
           <p className="text-blue-100 mb-6">Créez votre compte, déposez votre candidature en ligne : IBIG EDUFORM vous répond sous 5 jours ouvrés avec sa proposition de partenariat.</p>
