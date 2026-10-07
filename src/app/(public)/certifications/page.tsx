@@ -7,7 +7,7 @@ export default function CertificationsPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="hero-network text-white py-16">
+      <section className="hero-photo bg-graduates text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="w-16 h-16 rounded-full bg-[#FFA500]/20 flex items-center justify-center mx-auto mb-5">
             <Award className="w-8 h-8 text-[#FFA500]" />
@@ -119,10 +119,10 @@ export default function CertificationsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-16 hero-photo bg-learner text-white">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Commencez à vous certifier</h2>
-          <Link href="/catalogue" className="ibig-gradient text-white font-semibold px-8 py-3 rounded-xl hover:opacity-90 transition-opacity inline-block">
+          <h2 className="text-2xl font-bold mb-5">Commencez à vous certifier</h2>
+          <Link href="/catalogue" className="bg-[#FFA500] text-black font-bold px-8 py-3 rounded-xl hover:opacity-90 transition-opacity inline-block">
             Explorer les formations certifiantes
           </Link>
         </div>
