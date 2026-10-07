@@ -20,7 +20,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <Suspense><RefCapture /></Suspense>
       <AnnouncementBar />
       <Navbar user={profile} />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 overflow-x-hidden">{children}</main>
       <Footer />
     </div>
   )
