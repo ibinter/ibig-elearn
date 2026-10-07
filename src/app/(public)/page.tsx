@@ -278,7 +278,7 @@ export default async function AccueilPage() {
       )}
 
       {/* ══ COMMENT ÇA MARCHE ══ */}
-      <section className="py-10 md:py-20 hero-waves text-white relative overflow-hidden">
+      <section className="py-10 md:py-20 hero-photo bg-learner text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -394,7 +394,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ CERTIFICAT SHOWCASE ══ */}
-      <section className="py-10 md:py-20 hero-network">
+      <section className="py-10 md:py-20 hero-photo bg-about">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Valorisez votre expertise</p>
@@ -547,7 +547,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ CTA FINAL ══ */}
-      <section className="py-10 md:py-20 hero-photo">
+      <section className="py-10 md:py-20 hero-photo bg-students">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
         <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-10" style={{ background: '#FFA500' }} />
 

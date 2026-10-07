@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight, ChevronLeft, ChevronRight, Star, Users, Clock, Award, BookOpen, BadgeCheck, Smartphone, Globe, Zap, Sparkles, TrendingUp } from 'lucide-react'
 
+const HERO_PHOTOS = ['students', 'learner', 'about', 'team']
+
 interface SlideData {
   id: string
   badge?: string
@@ -137,6 +139,17 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* ── Photos de fond (fondu enchaîné) ── */}
+      {HERO_PHOTOS.map((p, i) => (
+        <picture key={p} aria-hidden="true">
+          <source media="(max-width: 767px)" srcSet={`/images/bg/${p}-m.webp`} />
+          <img src={`/images/bg/${p}.webp`} alt="" loading={i === 0 ? 'eager' : 'lazy'}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none mix-blend-luminosity"
+            style={{ opacity: current % HERO_PHOTOS.length === i ? 0.3 : 0, transition: 'opacity 1s ease' }} />
+        </picture>
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#020b1a]/70 via-transparent to-transparent pointer-events-none" />
+
       {/* ── Orbs décoratifs ── */}
       <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full opacity-20 blur-[120px] pointer-events-none"
         style={{ background: `radial-gradient(circle, ${slide.accentColor}55, transparent)`, transition: 'background 1s ease' }} />
