@@ -67,8 +67,10 @@ export default function ConnexionPage() {
       return
     }
     const params = new URLSearchParams(window.location.search)
-    router.push(params.get('redirectTo') ?? '/tableau-de-bord')
-    router.refresh()
+    const redirectTo = params.get('redirectTo') ?? '/tableau-de-bord'
+    // Use window.location for a full page reload to ensure server-side
+    // session cookies are read correctly on all mobile browsers
+    window.location.href = redirectTo
   }
 
   const handleGoogle = async () => {
