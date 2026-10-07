@@ -76,7 +76,7 @@ export async function POST_disabled(req: NextRequest) {
   if (courseId) coursesQuery = coursesQuery.eq('id', courseId)
   const { data: courses } = await coursesQuery
 
-  const results: { lesson: string; status: string }[] = []
+  const results: { lesson: string; status: string; id?: string }[] = []
   let updated = 0
   let skipped = 0
 
