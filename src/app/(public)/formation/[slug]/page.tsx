@@ -174,8 +174,8 @@ export default async function FormationPage({ params }: PageProps) {
           backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
           backgroundSize: '32px 32px'
         }} />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-600/20 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl" />
+        <div className="hidden sm:block absolute top-0 right-0 w-96 h-96 bg-blue-400/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+        <div className="hidden sm:block absolute bottom-0 left-0 w-64 h-64 bg-indigo-600/20 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <div className="grid lg:grid-cols-3 gap-10 items-center">
@@ -291,7 +291,7 @@ export default async function FormationPage({ params }: PageProps) {
             {/* Ce que vous apprendrez */}
             {c.objectives && c.objectives.length > 0 && (
               <div className="rounded-2xl overflow-hidden border border-emerald-100 shadow-sm">
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-4 border-b border-emerald-100">
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-4 sm:px-6 py-4 border-b border-emerald-100">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center flex-shrink-0">
                       <TrendingUp className="w-4 h-4 text-white" />
@@ -299,8 +299,8 @@ export default async function FormationPage({ params }: PageProps) {
                     <h2 className="font-bold text-gray-900 text-lg">Ce que vous apprendrez</h2>
                   </div>
                 </div>
-                <div className="bg-white px-6 py-5">
-                  <div className="grid sm:grid-cols-2 gap-3">
+                <div className="bg-white px-4 sm:px-6 py-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {c.objectives.map((obj, i) => (
                       <div key={i} className="flex items-start gap-3 p-3 rounded-xl hover:bg-emerald-50/50 transition-colors">
                         <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5">

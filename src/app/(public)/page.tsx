@@ -255,8 +255,8 @@ export default async function HomePage() {
       ═══════════════════════════════════════════════ */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f8faff 0%, #eef3ff 50%, #f8faff 100%)' }}>
         {/* Decorative circles */}
-        <div className="absolute top-20 -left-20 w-64 h-64 rounded-full opacity-30 blur-3xl" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
-        <div className="absolute bottom-20 -right-20 w-64 h-64 rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
+        <div className="hidden sm:block absolute top-20 -left-20 w-64 h-64 rounded-full opacity-30 blur-3xl" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
+        <div className="hidden sm:block absolute bottom-20 -right-20 w-64 h-64 rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
@@ -331,9 +331,9 @@ export default async function HomePage() {
       <section className="py-24 relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #071e45 50%, #020b1a 100%)' }}>
         <div className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-10 blur-[100px] rounded-full"
+        <div className="hidden sm:block absolute top-0 right-0 w-[500px] h-[500px] opacity-10 blur-[100px] rounded-full"
           style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-10 blur-[80px] rounded-full"
+        <div className="hidden sm:block absolute bottom-0 left-0 w-[400px] h-[400px] opacity-10 blur-[80px] rounded-full"
           style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -425,7 +425,7 @@ export default async function HomePage() {
           SARA — ASSISTANTE IA PÉDAGOGIQUE
       ═══════════════════════════════════════════════ */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #f0f4ff 100%)' }}>
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] opacity-20 blur-[80px] rounded-full" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
+        <div className="hidden sm:block absolute top-0 right-0 w-[400px] h-[400px] opacity-20 blur-[80px] rounded-full" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -643,9 +643,9 @@ export default async function HomePage() {
       ═══════════════════════════════════════════════ */}
       <section className="relative py-28 overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #0d2d6e 40%, #020b1a 100%)' }}>
         {/* Animated orbs */}
-        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] animate-float-slow"
+        <div className="hidden sm:block absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] animate-float-slow"
           style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
-        <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] rounded-full opacity-10 blur-[80px] animate-float"
+        <div className="hidden sm:block absolute -bottom-40 -right-40 w-[400px] h-[400px] rounded-full opacity-10 blur-[80px] animate-float"
           style={{ background: 'radial-gradient(circle, #4f8ef7, transparent)' }} />
 
         <div className="absolute inset-0 opacity-[0.03]"

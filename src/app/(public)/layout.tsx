@@ -16,7 +16,7 @@ export default async function PublicLayout({ children }: { children: React.React
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Suspense><RefCapture /></Suspense>
       <AnnouncementBar />
       <Navbar user={profile} />

@@ -32,7 +32,7 @@ export default async function ReviewsList({ courseId, ratingAvg, reviewCount }: 
   return (
     <div>
       {/* Résumé global */}
-      <div className="flex items-start gap-8 mb-8 p-6 bg-gray-50 rounded-2xl">
+      <div className="flex items-start gap-4 mb-8 p-4 sm:p-6 bg-gray-50 rounded-2xl">
         <div className="text-center flex-shrink-0">
           <div className="text-3xl sm:text-5xl font-black text-gray-900">{Number(ratingAvg).toFixed(1)}</div>
           <StarRating value={Math.round(ratingAvg)} readonly size="sm" />
