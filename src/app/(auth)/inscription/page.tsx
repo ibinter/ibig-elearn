@@ -66,6 +66,9 @@ function InscriptionForm() {
   useEffect(() => {
     const ref = searchParams.get('ref')
     if (ref) setRefCode(ref)
+    // Invitation entreprise : adresse pré-remplie
+    const email = searchParams.get('email')
+    if (email) setForm(f => (f.email ? f : { ...f, email }))
   }, [searchParams])
 
   const handleGoogle = async () => {

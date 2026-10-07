@@ -7,7 +7,7 @@ import {
   BookOpen, Menu, X, ChevronLeft, ChevronRight,
   LayoutDashboard, Users, BookMarked, CreditCard, Award, Settings,
   Building2, Tag, Target, Bell, FileText, Mail, Star, BarChart3,
-  Download, Zap, Video, Palette, Shield, HelpCircle, AlertTriangle, Handshake, HeartHandshake } from 'lucide-react'
+  Download, Zap, Video, Palette, Shield, HelpCircle, AlertTriangle, Handshake, HeartHandshake , Briefcase } from 'lucide-react'
 
 type Props = {
   userName: string
@@ -24,6 +24,7 @@ const NAV = [
   { href: '/admin/paiements', label: 'Paiements', icon: CreditCard },
   { href: '/admin/certificats', label: 'Certificats', icon: Award },
   { href: '/admin/entreprise', label: 'Entreprise B2B', icon: Building2 },
+  { href: '/admin/organisations', label: 'Espaces entreprise', icon: Briefcase },
   { href: '/admin/parcours', label: 'Parcours', icon: Target },
   { href: '/admin/coupons', label: 'Coupons & Promos', icon: Tag },
   { href: '/admin/partenaires', label: 'Formateurs partenaires', icon: Handshake },

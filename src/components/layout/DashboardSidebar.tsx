@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, LogOut, Menu, X, LayoutDashboard, GraduationCap, Award, User, Share2, BarChart2, MessageCircle, Trophy, Video, Target, Bell, FileText, HelpCircle, Gift, HeartHandshake } from 'lucide-react'
+import { BookOpen, LogOut, Menu, X, LayoutDashboard, GraduationCap, Award, User, Share2, BarChart2, MessageCircle, Trophy, Video, Target, Bell, FileText, HelpCircle, Gift, HeartHandshake, Building2 } from 'lucide-react'
 import NotificationBell from '@/components/ui/NotificationBell'
 
 type Props = {
@@ -12,9 +12,10 @@ type Props = {
   userRole: string
   userId: string
   isFormateur: boolean
+  orgHref?: string | null
 }
 
-export default function DashboardSidebar({ userName, userInitial, userRole, userId, isFormateur }: Props) {
+export default function DashboardSidebar({ userName, userInitial, userRole, userId, isFormateur, orgHref }: Props) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
@@ -34,6 +35,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
     { href: '/mes-seances', label: 'Mes séances de coaching', icon: HeartHandshake },
     { href: '/notifications', label: 'Notifications', icon: Bell },
     { href: '/parrainage', label: 'Parrainage', icon: Gift },
+    ...(orgHref ? [{ href: orgHref, label: 'Espace entreprise', icon: Building2, exact: false }] : []),
     ...(isFormateur ? [{ href: '/formateur', label: 'Espace Formateur', icon: BarChart2, exact: false }] : []),
     { href: '/aide/apprenant', label: 'Guide & Aide', icon: HelpCircle },
   ]

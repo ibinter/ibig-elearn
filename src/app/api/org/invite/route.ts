@@ -1,115 +1,83 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { sendEmail } from '@/lib/email'
+import { addMember, addToCohort, seatsUsed } from '@/lib/org'
+import { SITE_URL } from '@/lib/site'
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
-  const { orgId, emails, role = 'learner', cohortId } = await request.json()
-  if (!orgId || !Array.isArray(emails) || emails.length === 0) {
-    return NextResponse.json({ error: 'orgId et emails requis' }, { status: 400 })
+  const body = await request.json().catch(() => ({}))
+  const orgId = String(body.orgId ?? '')
+  const role = ['learner', 'manager'].includes(body.role) ? body.role : 'learner'
+  const cohortId = body.cohortId ? String(body.cohortId) : null
+  const emails = [...new Set(((body.emails ?? []) as unknown[]).map(e => String(e).trim().toLowerCase()).filter(e => EMAIL_RE.test(e)))]
+  if (!orgId || emails.length === 0) return NextResponse.json({ error: 'Indiquez au moins une adresse email valide.' }, { status: 400 })
+  if (emails.length > 100) return NextResponse.json({ error: '100 invitations maximum à la fois.' }, { status: 400 })
+
+  const admin = createAdminClient()
+  const { data: me } = await admin.from('organization_members').select('role')
+    .eq('org_id', orgId).eq('user_id', user.id).eq('is_active', true).maybeSingle()
+  if (!me || !['owner', 'admin', 'manager'].includes(me.role)) return NextResponse.json({ error: 'Non autorisé' }, { status: 403 })
+
+  const { data: org } = await admin.from('organizations').select('id, name, max_seats, is_active').eq('id', orgId).single()
+  if (!org?.is_active) return NextResponse.json({ error: 'Organisation inactive' }, { status: 404 })
+  if (cohortId) {
+    const { data: c } = await admin.from('cohorts').select('id').eq('id', cohortId).eq('org_id', orgId).maybeSingle()
+    if (!c) return NextResponse.json({ error: 'Parcours introuvable' }, { status: 404 })
   }
 
-  // Vérifier que l'utilisateur est admin/owner de l'org
-  const { data: membership } = await supabase
-    .from('organization_members')
-    .select('role')
-    .eq('org_id', orgId)
-    .eq('user_id', user.id)
-    .eq('is_active', true)
-    .single()
-
-  if (!membership || !['owner','admin','manager'].includes(membership.role)) {
-    return NextResponse.json({ error: 'Non autorisé' }, { status: 403 })
+  const free = org.max_seats - await seatsUsed(admin, orgId)
+  const { data: profiles } = await admin.from('profiles').select('id, email').in('email', emails)
+  const byEmail = new Map((profiles ?? []).map(p => [String(p.email).toLowerCase(), p.id as string]))
+  const { data: memberRows } = byEmail.size
+    ? await admin.from('organization_members').select('user_id').eq('org_id', orgId).eq('is_active', true).in('user_id', [...byEmail.values()])
+    : { data: [] }
+  const already = new Set((memberRows ?? []).map(m => m.user_id))
+  const needSeat = emails.filter(e => !(byEmail.has(e) && already.has(byEmail.get(e)!)))
+  if (needSeat.length > free) {
+    return NextResponse.json({ error: `Sièges insuffisants : ${Math.max(0, free)} disponible(s) pour ${needSeat.length} invitation(s).` }, { status: 400 })
   }
 
-  const { data: org } = await supabase
-    .from('organizations')
-    .select('name, max_seats, used_seats')
-    .eq('id', orgId)
-    .single()
-
-  if (!org) return NextResponse.json({ error: 'Organisation introuvable' }, { status: 404 })
-
-  // Vérifier les sièges disponibles
-  if (org.used_seats + emails.length > org.max_seats) {
-    return NextResponse.json({
-      error: `Quota dépassé : ${org.max_seats - org.used_seats} siège(s) disponible(s), ${emails.length} invitation(s) demandée(s)`
-    }, { status: 400 })
-  }
-
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL!
-  const results: { email: string; status: 'sent' | 'already_member' | 'error' }[] = []
+  const results: { email: string; status: 'added' | 'invited' | 'already_member' }[] = []
+  const addedIds: string[] = []
 
   for (const email of emails) {
-    // Vérifier si l'utilisateur existe déjà
-    const { data: existingProfile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('email', email)
-      .single()
-
-    if (existingProfile) {
-      // Déjà membre ?
-      const { data: existingMember } = await supabase
-        .from('organization_members')
-        .select('id')
-        .eq('org_id', orgId)
-        .eq('user_id', existingProfile.id)
-        .single()
-
-      if (existingMember) {
-        results.push({ email, status: 'already_member' })
-        continue
-      }
-
-      // Ajouter directement
-      await supabase.from('organization_members').insert({
-        org_id: orgId, user_id: existingProfile.id, role, invited_by: user.id,
-        invited_at: new Date().toISOString(),
-      })
-    } else {
-      // Créer une invitation
-      const { data: inv } = await supabase.from('org_invitations').insert({
-        org_id: orgId, email, role, cohort_id: cohortId ?? null, invited_by: user.id,
-      }).select().single()
-
-      if (inv) {
-        // Envoyer l'email d'invitation
-        try {
-          await sendEmail({
-            to: email,
-            subject: `Invitation à rejoindre ${org.name} sur IBIG E-LEARN`,
-            html: `
-              <div style="font-family:sans-serif;max-width:480px;margin:auto">
-                <h2 style="color:#0B3D91">Vous êtes invité(e) !</h2>
-                <p>${org.name} vous invite à rejoindre sa plateforme de formation sur IBIG E-LEARN.</p>
-                <a href="${appUrl}/rejoindre/${inv.token}"
-                   style="display:inline-block;background:#FFA500;color:#000;font-weight:700;padding:12px 24px;border-radius:8px;text-decoration:none;margin:16px 0">
-                  Accepter l'invitation
-                </a>
-                <p style="color:#666;font-size:12px">Ce lien expire dans 7 jours.</p>
-              </div>
-            `,
-          })
-        } catch (e) {
-          console.error('[org/invite] email error:', e)
-        }
-      }
+    const uid = byEmail.get(email)
+    if (uid) {
+      const r = await addMember(admin, orgId, uid, role, user.id)
+      results.push({ email, status: r })
+      addedIds.push(uid)
+      continue
     }
-
-    results.push({ email, status: 'sent' })
+    // Pas encore de compte : invitation par email (une seule active par adresse)
+    await admin.from('org_invitations').delete().eq('org_id', orgId).eq('email', email).is('accepted_at', null)
+    const { data: inv } = await admin.from('org_invitations')
+      .insert({ org_id: orgId, email, role, cohort_id: cohortId, invited_by: user.id })
+      .select('token').single()
+    if (inv) {
+      try {
+        await sendEmail({
+          to: email,
+          subject: `${org.name} vous invite à vous former sur IBIG E-LEARNING`,
+          html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;color:#111">
+            <h2 style="color:#0B3D91">Vous êtes invité(e) !</h2>
+            <p><strong>${org.name}</strong> vous offre l'accès à ses formations sur IBIG E-LEARNING.</p>
+            <p><a href="${SITE_URL}/rejoindre/${inv.token}" style="display:inline-block;background:#FFA500;color:#000;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none">Rejoindre l'espace de formation</a></p>
+            <p style="color:#666;font-size:12px">Ce lien est valable 7 jours.</p></div>`,
+        })
+      } catch (e) { console.error('[org/invite] email', e) }
+    }
+    results.push({ email, status: 'invited' })
   }
 
-  // Mettre à jour used_seats
-  const added = results.filter(r => r.status === 'sent').length
-  if (added > 0) {
-    await supabase.from('organizations')
-      .update({ used_seats: org.used_seats + added })
-      .eq('id', orgId)
-  }
+  if (cohortId) await addToCohort(admin, orgId, cohortId, addedIds)
+  await admin.from('organizations').update({ used_seats: await seatsUsed(admin, orgId) }).eq('id', orgId)
 
   return NextResponse.json({ results })
 }

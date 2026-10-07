@@ -3,10 +3,12 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import {
   BookOpen, Award, TrendingUp, ArrowRight, Play, Flame, Zap, Target, ChevronRight,
-  CalendarClock, Video, HeartHandshake, Compass, GraduationCap, CheckCircle2,
+  CalendarClock, Video, HeartHandshake, Compass, GraduationCap, CheckCircle2, Building2,
 } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { getT } from '@/i18n'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { getManagedOrgs } from '@/lib/org'
 
 // Niveaux IBIG (calculés à partir des XP)
 const LEVELS = [
@@ -35,6 +37,7 @@ export default async function TableauDeBordPage() {
     .single()
   if (profile && profile.onboarding_completed === false) redirect('/onboarding')
 
+  const managedOrgs = await getManagedOrgs(createAdminClient(), user.id)
   const nowIso = new Date().toISOString()
   const [{ data: enrollmentsRaw }, { data: certificates, count: certCount }, { data: activity }, { data: coaching }, { data: recommended }] = await Promise.all([
     supabase.from('enrollments')
@@ -138,6 +141,18 @@ export default async function TableauDeBordPage() {
           </Link>
         )}
       </div>
+
+      {managedOrgs.length > 0 && (
+        <Link href={managedOrgs.length === 1 ? `/organisation/${managedOrgs[0].slug}` : '/organisation'}
+          className="flex items-center gap-3 rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-3.5 hover:shadow-md transition-shadow">
+          <span className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"><Building2 className="w-5 h-5" /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-semibold text-gray-900 text-sm">Espace entreprise</span>
+            <span className="block text-xs text-gray-500 truncate">Suivez la formation de vos équipes · <span data-no-translate>{managedOrgs.map(o => o.name).join(', ')}</span></span>
+          </span>
+          <ChevronRight className="w-5 h-5 text-gray-300" />
+        </Link>
+      )}
 
       {/* ── Action principale ── */}
       {resume?.course ? (

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { getManagedOrgs } from '@/lib/org'
 import MobileNav from '@/components/layout/MobileNav'
 import DashboardSidebar from '@/components/layout/DashboardSidebar'
 import InstallPrompt from '@/components/pwa/InstallPrompt'
@@ -17,6 +19,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   const { data: profile } = await supabase.from('profiles').select('full_name, role').eq('id', user.id).single()
 
+  const managedOrgs = await getManagedOrgs(createAdminClient(), user.id)
+  const orgHref = managedOrgs.length === 1 ? `/organisation/${managedOrgs[0].slug}` : managedOrgs.length ? '/organisation' : null
+
   const isFormateur = ['formateur', 'admin', 'coordinateur'].includes(profile?.role ?? '')
 
   return (
@@ -27,6 +32,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         userRole={profile?.role ?? ''}
         userId={user.id}
         isFormateur={isFormateur}
+        orgHref={orgHref}
       />
 
       <div className="lg:ml-64 flex-1 min-w-0 flex flex-col min-h-screen">
