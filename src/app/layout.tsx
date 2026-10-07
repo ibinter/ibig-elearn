@@ -12,6 +12,7 @@ export const viewport: Viewport = {
   themeColor: '#0B3D91',
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
 }
 
 export const metadata: Metadata = {
@@ -58,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const tenant = await getTenant()
   return (
     <html lang="fr">
-      <body className={`${inter.className} overflow-x-hidden w-full`}>
+      <body className={`${inter.className} overflow-x-clip w-full`}>
         {tenant && <TenantTheme tenant={tenant} />}
         <CurrencyProvider>{children}</CurrencyProvider>
         <ServiceWorkerRegister />

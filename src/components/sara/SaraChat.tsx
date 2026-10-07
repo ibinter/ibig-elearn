@@ -86,7 +86,7 @@ export default function SaraChat({ courseTitle, lessonTitle, lessonContent }: Pr
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 ibig-gradient rounded-full shadow-lg flex items-center justify-center text-white hover:opacity-90 hover:scale-105 transition-all group"
+          className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6 z-50 w-14 h-14 ibig-gradient rounded-full shadow-lg flex items-center justify-center text-white hover:opacity-90 hover:scale-105 transition-all group"
           title="Assistant SARA"
         >
           <MessageCircle className="w-6 h-6" />
@@ -99,7 +99,7 @@ export default function SaraChat({ courseTitle, lessonTitle, lessonContent }: Pr
 
       {/* Panel chat */}
       {open && (
-        <div className={`fixed bottom-6 right-6 z-50 w-[calc(100vw-2rem)] sm:w-[360px] max-w-[360px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col transition-all ${minimized ? 'h-14' : 'h-[520px]'}`}>
+        <div className={`fixed z-[60] inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-6 sm:right-6 w-full sm:w-[360px] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 flex flex-col transition-all animate-sheet-up sm:animate-none safe-bottom sm:pb-0 ${minimized ? 'h-[calc(3.5rem+env(safe-area-inset-bottom))] sm:h-14' : 'h-[85dvh] sm:h-[520px]'}`}>
           {/* Header */}
           <div className="ibig-gradient rounded-t-2xl px-4 py-3 flex items-center gap-3 flex-shrink-0">
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">

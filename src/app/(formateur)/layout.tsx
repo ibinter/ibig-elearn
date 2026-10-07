@@ -19,8 +19,8 @@ export default async function FormateurLayout({ children }: { children: React.Re
         userInitial={profile.full_name?.charAt(0) ?? 'F'}
       />
       <div className="lg:ml-64 flex-1 min-w-0 flex flex-col">
-        <div className="h-14 lg:hidden" />
-        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">{children}</main>
+        <div className="h-[calc(3.5rem+env(safe-area-inset-top))] lg:hidden" />
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 pb-[calc(1.5rem+env(safe-area-inset-bottom))] animate-page-in">{children}</main>
       </div>
     </div>
   )

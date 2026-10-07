@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import type { Profile } from '@/types'
 import CurrencySelector from '@/components/ui/CurrencySelector'
 import GlobalSearch from '@/components/search/GlobalSearch'
@@ -83,6 +83,14 @@ export default function Navbar({ user }: NavbarProps) {
   const router = useRouter()
   const supabase = createClient()
   const { t } = useLocale()
+  const pathname = usePathname()
+
+  useEffect(() => { setMenuOpen(false) }, [pathname])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
 
   useEffect(() => {
     function handler(e: MouseEvent) {
@@ -106,13 +114,13 @@ export default function Navbar({ user }: NavbarProps) {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm safe-top">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-6 h-16">
+        <div className="flex items-center gap-3 md:gap-6 h-14 md:h-16">
 
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
-            <Image src="/logo-icon.webp" alt="IBIG E-LEARNING" width={48} height={48} className="block sm:hidden rounded-xl" priority />
+            <Image src="/logo-icon.webp" alt="IBIG E-LEARNING" width={40} height={40} className="block sm:hidden rounded-xl" priority />
             <Image src="/logo-full.webp" alt="IBIG E-LEARNING" width={200} height={56} className="hidden sm:block h-14 w-auto" priority />
           </Link>
 
@@ -218,35 +226,46 @@ export default function Navbar({ user }: NavbarProps) {
           </div>
 
           {/* Mobile menu button */}
-          <button className="md:hidden ml-auto p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
+          <span className="sm:hidden -ml-1 font-bold text-[15px] tracking-tight"><span className="text-[#0B3D91]">IBIG</span> <span className="text-[#FFA500]">E-LEARNING</span></span>
+          <div className="md:hidden ml-auto flex items-center gap-1">
+            {user && <NotificationBell />}
+          <button className="p-2.5 rounded-xl text-gray-700 active:bg-gray-100 transition-colors" aria-label="Menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
-          <div className="px-4 py-4 space-y-1">
+        <div className="md:hidden fixed inset-0 z-[70] bg-white flex flex-col animate-page-in" role="dialog" aria-modal="true" aria-label="Menu">
+          <div className="flex items-center gap-3 px-4 h-[calc(3.5rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] border-b border-gray-100 flex-shrink-0">
+            <Image src="/logo-icon.webp" alt="" width={36} height={36} className="rounded-xl" />
+            <span className="font-bold text-[15px] tracking-tight"><span className="text-[#0B3D91]">IBIG</span> <span className="text-[#FFA500]">E-LEARNING</span></span>
+            <button className="ml-auto p-2.5 rounded-xl text-gray-700 active:bg-gray-100" aria-label="Fermer le menu" onClick={() => setMenuOpen(false)}>
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-1 bottom-nav-offset">
             <div className="mb-3">
               <GlobalSearch className="w-full" />
             </div>
-            <Link href="/catalogue" className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+            <Link href="/catalogue" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <Layers className="w-4 h-4 text-[#0B3D91]" /> Catalogue
             </Link>
-            <Link href="/catalogue?featured=true" className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+            <Link href="/catalogue?featured=true" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <Star className="w-4 h-4 text-[#FFA500]" /> Formations vedettes
             </Link>
-            <Link href="/parcours" className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+            <Link href="/parcours" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <TrendingUp className="w-4 h-4 text-green-600" /> Parcours métiers
             </Link>
-            <Link href="/blog" className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+            <Link href="/blog" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <FileText className="w-4 h-4 text-gray-400" /> Blog
             </Link>
-            <Link href="/entreprise" className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+            <Link href="/entreprise" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <Users className="w-4 h-4 text-gray-400" /> Entreprise
             </Link>
-            <Link href="/a-propos" className="flex items-center gap-2 py-2.5 px-3 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+            <Link href="/a-propos" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <BookOpen className="w-4 h-4 text-gray-400" /> À propos
             </Link>
 

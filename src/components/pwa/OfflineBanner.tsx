@@ -39,7 +39,7 @@ export default function OfflineBanner() {
   if (!offline) return null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white text-sm font-semibold px-4 py-2.5 flex items-center justify-center gap-2">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white text-sm font-semibold px-4 pb-2.5 pt-[calc(0.625rem+env(safe-area-inset-top))] flex items-center justify-center gap-2">
       <WifiOff className="w-4 h-4 flex-shrink-0" />
       Mode hors ligne — certaines fonctionnalités sont limitées
     </div>

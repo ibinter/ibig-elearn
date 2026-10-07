@@ -58,7 +58,7 @@ export default function InstallPrompt() {
 
   if (showIOSInstructions) {
     return (
-      <div className="fixed bottom-4 left-4 right-4 z-50 max-w-sm mx-auto bg-white rounded-2xl shadow-2xl border border-gray-100 p-5">
+      <div className="fixed bottom-4 above-bottom-nav left-4 right-4 z-50 max-w-sm mx-auto bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 animate-sheet-up">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-2">
             <Smartphone className="w-5 h-5 text-[#0B3D91]" />
@@ -79,7 +79,7 @@ export default function InstallPrompt() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 max-w-sm mx-auto bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+    <div className="fixed bottom-4 above-bottom-nav left-4 right-4 z-50 max-w-sm mx-auto bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-sheet-up">
       <div className="bg-gradient-to-r from-[#0B3D91] to-[#1a5cbf] p-4 flex items-center gap-3">
         <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
           <Download className="w-5 h-5 text-white" />

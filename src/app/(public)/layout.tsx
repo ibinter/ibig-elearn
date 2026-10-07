@@ -4,6 +4,7 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import { createClient } from '@/lib/supabase/server'
 import { Suspense } from 'react'
 import RefCapture from '@/components/referral/RefCapture'
+import PublicTabBar from '@/components/layout/PublicTabBar'
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -15,13 +16,17 @@ export default async function PublicLayout({ children }: { children: React.React
     profile = data
   }
 
+  const role = profile?.role
+  const dashboardHref = role === 'admin' || role === 'coordinateur' ? '/admin' : role === 'formateur' ? '/formateur' : '/tableau-de-bord'
+
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
+    <div className="min-h-screen flex flex-col overflow-x-clip pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
       <Suspense><RefCapture /></Suspense>
       <AnnouncementBar />
       <Navbar user={profile} />
-      <main className="flex-1 overflow-x-hidden">{children}</main>
+      <main className="flex-1 overflow-x-clip animate-page-in">{children}</main>
       <Footer />
+      <PublicTabBar isLoggedIn={!!user} dashboardHref={dashboardHref} />
     </div>
   )
 }

@@ -189,7 +189,7 @@ export default function AdminSidebar({ userName, userInitial, userRole, collapse
 
   /* ── Header mobile ── */
   const MobileHeader = () => (
-    <header className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-[#0B3D91] px-4 py-3 flex items-center justify-between h-14">
+    <header className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-[#0B3D91] px-4 pb-2 pt-[calc(0.5rem+env(safe-area-inset-top))] flex items-center justify-between h-[calc(3.5rem+env(safe-area-inset-top))]">
       <button
         onClick={() => setMobileOpen(true)}
         className="p-2 rounded-xl text-blue-200 hover:bg-white/10 hover:text-white transition-colors"

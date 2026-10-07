@@ -184,7 +184,7 @@ export default async function ApprendrePage({ params }: PageProps) {
     <div className="min-h-screen bg-[#1c1d1f] flex flex-col" style={{ fontFamily: "'Inter', sans-serif" }}>
 
       {/* ── Header fixe Udemy-style ── */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-14 bg-[#1c1d1f] border-b border-white/10 flex items-center px-3 sm:px-4 gap-2 sm:gap-4">
+      <header className="fixed top-0 left-0 right-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] bg-[#1c1d1f] border-b border-white/10 flex items-center px-3 sm:px-4 gap-2 sm:gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <span className="text-white font-black text-lg tracking-tight">
@@ -269,7 +269,7 @@ export default async function ApprendrePage({ params }: PageProps) {
       </header>
 
       {/* ── Corps principal (sous header fixe) ── */}
-      <div className="flex pt-14 min-h-screen items-start">
+      <div className="flex pt-[calc(3.5rem+env(safe-area-inset-top))] min-h-screen items-start">
 
         {/* ── Sidebar cours — gauche ── */}
         <LessonSidebar

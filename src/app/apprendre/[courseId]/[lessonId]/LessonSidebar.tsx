@@ -279,7 +279,7 @@ export default function LessonSidebar({ modules, courseId, currentLessonId, user
 
       {/* Mobile: drawer */}
       <div className={cn(
-        'fixed top-14 left-0 bottom-0 z-50 w-[85vw] max-w-[320px] bg-[#1c1d1f] flex flex-col transition-transform duration-300 lg:hidden',
+        'fixed top-[calc(3.5rem+env(safe-area-inset-top))] left-0 bottom-0 z-50 pb-[env(safe-area-inset-bottom)] w-[85vw] max-w-[320px] bg-[#1c1d1f] flex flex-col transition-transform duration-300 lg:hidden',
         mobileOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
         {sidebarContent}
@@ -288,7 +288,7 @@ export default function LessonSidebar({ modules, courseId, currentLessonId, user
       {/* Mobile: floating button */}
       <button
         onClick={() => setMobileOpen(o => !o)}
-        className="fixed bottom-5 left-4 z-40 lg:hidden flex items-center gap-2 bg-[#0B3D91] text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg hover:bg-[#0a2f6e] transition-colors"
+        className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] left-4 z-40 lg:hidden flex items-center gap-2 bg-[#0B3D91] text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg hover:bg-[#0a2f6e] transition-colors"
       >
         <Menu className="w-4 h-4" />
         Cours

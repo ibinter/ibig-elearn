@@ -123,7 +123,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
         <SidebarContent />
       </aside>
 
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white border-b border-gray-200 px-4 pb-2 pt-[calc(0.5rem+env(safe-area-inset-top))] h-[calc(3.5rem+env(safe-area-inset-top))] flex items-center justify-between">
         <button onClick={() => setOpen(true)} className="p-2 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors" aria-label="Menu">
           <Menu className="w-5 h-5" />
         </button>
