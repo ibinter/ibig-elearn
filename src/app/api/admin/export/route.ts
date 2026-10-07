@@ -95,7 +95,7 @@ export async function GET(req: NextRequest) {
   if (type === 'payouts') {
     let query = supabase
       .from('payout_requests')
-      .select('id, amount, currency, status, created_at, processed_at, instructor:profiles(full_name, email)')
+      .select('id, amount, currency, status, created_at, processed_at, instructor:profiles!payout_requests_instructor_id_fkey(full_name, email)')
       .order('created_at', { ascending: false })
     if (dateFrom) query = query.gte('created_at', dateFrom)
     if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59')

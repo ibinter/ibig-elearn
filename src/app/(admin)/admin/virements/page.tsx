@@ -6,8 +6,8 @@ export default async function AdminVirementsPage() {
   const supabase = await createClient()
 
   const [{ data: pending }, { data: history }] = await Promise.all([
-    supabase.from('payout_requests').select('*, instructor:profiles(full_name, email)').eq('status', 'pending').order('created_at'),
-    supabase.from('payout_requests').select('*, instructor:profiles(full_name)').in('status', ['paid', 'rejected', 'approved']).order('created_at', { ascending: false }).limit(30),
+    supabase.from('payout_requests').select('*, instructor:profiles!payout_requests_instructor_id_fkey(full_name, email)').eq('status', 'pending').order('created_at'),
+    supabase.from('payout_requests').select('*, instructor:profiles!payout_requests_instructor_id_fkey(full_name)').in('status', ['paid', 'rejected', 'approved']).order('created_at', { ascending: false }).limit(30),
   ])
 
   const totalPending = pending?.reduce((sum: number, r: any) => sum + r.amount, 0) ?? 0
