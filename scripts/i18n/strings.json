@@ -2,7 +2,7 @@
  {
   "s": "Apprenant",
   "f": "src/app/(admin)/admin/antitricherie/page.tsx",
-  "n": 6
+  "n": 8
  },
  {
   "s": "Aucun examen suspect détecté",
@@ -22,7 +22,7 @@
  {
   "s": "Date",
   "f": "src/app/(admin)/admin/antitricherie/page.tsx",
-  "n": 7
+  "n": 8
  },
  {
   "s": "Examen",
@@ -142,7 +142,7 @@
  {
   "s": "Rechercher",
   "f": "src/app/(admin)/admin/apprenants/page.tsx",
-  "n": 4
+  "n": 5
  },
  {
   "s": "Rechercher par nom ou email...",
@@ -177,7 +177,7 @@
  {
   "s": "Annuler",
   "f": "src/app/(admin)/admin/approbations/ApprovalActions.tsx",
-  "n": 11
+  "n": 14
  },
  {
   "s": "Approuver",
@@ -200,6 +200,11 @@
   "n": 2
  },
  {
+  "s": "· Soumis le {0}",
+  "f": "src/app/(admin)/admin/approbations/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Approbation des formations",
   "f": "src/app/(admin)/admin/approbations/page.tsx",
   "n": 1
@@ -210,6 +215,11 @@
   "n": 3
  },
  {
+  "s": "Aucune formation en attente d'approbation.",
+  "f": "src/app/(admin)/admin/approbations/page.tsx",
+  "n": 1
+ },
+ {
   "s": "En attente",
   "f": "src/app/(admin)/admin/approbations/page.tsx",
   "n": 4
@@ -217,7 +227,7 @@
  {
   "s": "Formateur",
   "f": "src/app/(admin)/admin/approbations/page.tsx",
-  "n": 7
+  "n": 6
  },
  {
   "s": "Formation",
@@ -247,7 +257,7 @@
  {
   "s": "Statut",
   "f": "src/app/(admin)/admin/approbations/page.tsx",
-  "n": 8
+  "n": 9
  },
  {
   "s": "Voir la formation →",
@@ -340,6 +350,11 @@
   "n": 1
  },
  {
+  "s": "scale-125 ring-2 ring-offset-2 ring-gray-400",
+  "f": "src/app/(admin)/admin/badges/BadgesManager.tsx",
+  "n": 1
+ },
+ {
   "s": "Score au quiz",
   "f": "src/app/(admin)/admin/badges/BadgesManager.tsx",
   "n": 1
@@ -400,6 +415,11 @@
   "n": 1
  },
  {
+  "s": "Carrière",
+  "f": "src/app/(admin)/admin/blog/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Catégorie",
   "f": "src/app/(admin)/admin/blog/page.tsx",
   "n": 3
@@ -442,7 +462,7 @@
  {
   "s": "min",
   "f": "src/app/(admin)/admin/blog/page.tsx",
-  "n": 7
+  "n": 11
  },
  {
   "s": "Nouvel article",
@@ -533,6 +553,71 @@
   "s": "Vérifier",
   "f": "src/app/(admin)/admin/certificats/page.tsx",
   "n": 3
+ },
+ {
+  "s": "À rembourser",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune séance pour l'instant.",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Coach",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Coaching",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 6
+ },
+ {
+  "s": "Coaching individuel",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 4
+ },
+ {
+  "s": "Offre",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Offres en ligne",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Part IBIG EDUFORM",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Prix",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 3
+ },
+ {
+  "s": "remboursement(s) à traiter",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séances confirmées",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séances payées puis annulées. Remboursez depuis GeniusPay, puis passez le paiement en « Remboursé » dans Paiements : la part du coach est alors retirée automatiquement.",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séances réservées, revenus et remboursements",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
  },
  {
   "s": "Campagne rentrée 2025...",
@@ -627,6 +712,11 @@
  {
   "s": "Valeur *",
   "f": "src/app/(admin)/admin/coupons/CouponForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "· Expire le {0}",
+  "f": "src/app/(admin)/admin/coupons/CouponList.tsx",
   "n": 1
  },
  {
@@ -957,7 +1047,7 @@
  {
   "s": "Compte",
   "f": "src/app/(admin)/admin/entreprise/cohortes/[id]/MembersManager.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "ignoré(s) (déjà présents)",
@@ -1027,7 +1117,7 @@
  {
   "s": "Devise",
   "f": "src/app/(admin)/admin/entreprise/cohortes/NewCohortButton.tsx",
-  "n": 2
+  "n": 3
  },
  {
   "s": "Entreprise (demande B2B gagnée) *",
@@ -1280,6 +1370,11 @@
   "n": 1
  },
  {
+  "s": "Période (pour les exports comptables & B2B)",
+  "f": "src/app/(admin)/admin/exports/ExportPanel.tsx",
+  "n": 1
+ },
+ {
   "s": "Référence, date, client, formation, montant HT, TVA, TTC, moyen de paiement",
   "f": "src/app/(admin)/admin/exports/ExportPanel.tsx",
   "n": 1
@@ -1296,6 +1391,11 @@
  },
  {
   "s": "Encodage",
+  "f": "src/app/(admin)/admin/exports/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Exports & Comptabilité",
   "f": "src/app/(admin)/admin/exports/page.tsx",
   "n": 1
  },
@@ -1320,14 +1420,19 @@
   "n": 1
  },
  {
+  "s": "Aucune formation pour l'instant",
+  "f": "src/app/(admin)/admin/formations/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Avancé",
   "f": "src/app/(admin)/admin/formations/page.tsx",
-  "n": 17
+  "n": 18
  },
  {
   "s": "Débutant",
   "f": "src/app/(admin)/admin/formations/page.tsx",
-  "n": 17
+  "n": 18
  },
  {
   "s": "Enrichir toutes les leçons (IA)",
@@ -1342,7 +1447,7 @@
  {
   "s": "Formations",
   "f": "src/app/(admin)/admin/formations/page.tsx",
-  "n": 8
+  "n": 9
  },
  {
   "s": "Inscrits",
@@ -1352,7 +1457,7 @@
  {
   "s": "Intermédiaire",
   "f": "src/app/(admin)/admin/formations/page.tsx",
-  "n": 17
+  "n": 18
  },
  {
   "s": "Prix XOF",
@@ -1362,7 +1467,7 @@
  {
   "s": "Publication",
   "f": "src/app/(admin)/admin/formations/page.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "Tous niveaux",
@@ -1560,7 +1665,12 @@
   "n": 1
  },
  {
-  "s": "Filtrez tous les rapports par pays pour suivre la performance dans chacun des 12 pays couverts.",
+  "s": "Exportez les rapports financiers chaque fin de mois et archivez-les",
+  "f": "src/app/(admin)/admin/guide/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Filtrez tous les rapports par pays pour suivre la performance dans chacun des 14 pays couverts.",
   "f": "src/app/(admin)/admin/guide/page.tsx",
   "n": 1
  },
@@ -1645,12 +1755,22 @@
   "n": 1
  },
  {
+  "s": "Maintenez toujours au moins 2 comptes admin pour éviter un blocage de la plateforme",
+  "f": "src/app/(admin)/admin/guide/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Marque blanche",
   "f": "src/app/(admin)/admin/guide/page.tsx",
   "n": 4
  },
  {
   "s": "Navigation stable",
+  "f": "src/app/(admin)/admin/guide/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ne partagez jamais vos identifiants admin — créez un compte coordinateur pour les collègues",
   "f": "src/app/(admin)/admin/guide/page.tsx",
   "n": 1
  },
@@ -1775,6 +1895,11 @@
   "n": 1
  },
  {
+  "s": "Révoquez immédiatement les accès des collaborateurs qui quittent l'équipe via /admin/superadmin",
+  "f": "src/app/(admin)/admin/guide/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Rôles d'accès",
   "f": "src/app/(admin)/admin/guide/page.tsx",
   "n": 1
@@ -1850,7 +1975,17 @@
   "n": 5
  },
  {
+  "s": "Validez les formations dans les 48h suivant la soumission d'un formateur",
+  "f": "src/app/(admin)/admin/guide/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Vérifiez le statut dans /admin/virements. Si \"traité\", demandez le numéro de transaction Mobile Money et contactez l'opérateur. Délai max : 7 jours ouvrables.",
+  "f": "src/app/(admin)/admin/guide/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vérifiez les tentatives anti-triche signalées chaque semaine dans /admin/antitricherie",
   "f": "src/app/(admin)/admin/guide/page.tsx",
   "n": 1
  },
@@ -2195,6 +2330,11 @@
   "n": 1
  },
  {
+  "s": "Envoyer à {0} destinataire{1}",
+  "f": "src/app/(admin)/admin/notifications/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Envoyer des notifications",
   "f": "src/app/(admin)/admin/notifications/page.tsx",
   "n": 1
@@ -2252,7 +2392,7 @@
  {
   "s": "Session live",
   "f": "src/app/(admin)/admin/notifications/page.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "specific",
@@ -2280,6 +2420,11 @@
   "n": 1
  },
  {
+  "s": "{0} vient de s'inscrire",
+  "f": "src/app/(admin)/admin/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Apprenants par pays",
   "f": "src/app/(admin)/admin/page.tsx",
   "n": 1
@@ -2302,12 +2447,12 @@
  {
   "s": "Bénin",
   "f": "src/app/(admin)/admin/page.tsx",
-  "n": 5
+  "n": 6
  },
  {
   "s": "Burkina Faso",
   "f": "src/app/(admin)/admin/page.tsx",
-  "n": 5
+  "n": 6
  },
  {
   "s": "Certificats émis",
@@ -2322,7 +2467,7 @@
  {
   "s": "Côte d'Ivoire",
   "f": "src/app/(admin)/admin/page.tsx",
-  "n": 6
+  "n": 7
  },
  {
   "s": "Croissance — 12 derniers mois",
@@ -2337,7 +2482,7 @@
  {
   "s": "Guinée",
   "f": "src/app/(admin)/admin/page.tsx",
-  "n": 5
+  "n": 6
  },
  {
   "s": "inscrits",
@@ -2375,6 +2520,11 @@
   "n": 2
  },
  {
+  "s": "Paiement de {0}{1}",
+  "f": "src/app/(admin)/admin/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Paiements récents",
   "f": "src/app/(admin)/admin/page.tsx",
   "n": 1
@@ -2402,7 +2552,7 @@
  {
   "s": "Sénégal",
   "f": "src/app/(admin)/admin/page.tsx",
-  "n": 5
+  "n": 6
  },
  {
   "s": "Tableau de bord Admin",
@@ -2432,7 +2582,12 @@
  {
   "s": "Voir tout",
   "f": "src/app/(admin)/admin/page.tsx",
-  "n": 4
+  "n": 3
+ },
+ {
+  "s": "Vue d'ensemble de la plateforme IBIG E-LEARNING",
+  "f": "src/app/(admin)/admin/page.tsx",
+  "n": 1
  },
  {
   "s": "XOF / FCFA",
@@ -2600,6 +2755,11 @@
   "n": 1
  },
  {
+  "s": "CinetPay (Mobile Money)",
+  "f": "src/app/(admin)/admin/parametres/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Commission plateforme (%)",
   "f": "src/app/(admin)/admin/parametres/page.tsx",
   "n": 1
@@ -2662,7 +2822,7 @@
  {
   "s": "Français",
   "f": "src/app/(admin)/admin/parametres/page.tsx",
-  "n": 5
+  "n": 4
  },
  {
   "s": "Frontend",
@@ -2715,6 +2875,16 @@
   "n": 1
  },
  {
+  "s": "Moov Money",
+  "f": "src/app/(admin)/admin/parametres/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "MTN MoMo",
+  "f": "src/app/(admin)/admin/parametres/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Newsletter mensuelle",
   "f": "src/app/(admin)/admin/parametres/page.tsx",
   "n": 1
@@ -2728,6 +2898,11 @@
   "s": "Opérationnel",
   "f": "src/app/(admin)/admin/parametres/page.tsx",
   "n": 1
+ },
+ {
+  "s": "Orange Money",
+  "f": "src/app/(admin)/admin/parametres/page.tsx",
+  "n": 4
  },
  {
   "s": "Paiement",
@@ -2847,7 +3022,7 @@
  {
   "s": "Modifier",
   "f": "src/app/(admin)/admin/parcours/page.tsx",
-  "n": 4
+  "n": 5
  },
  {
   "s": "Modifier le parcours",
@@ -2902,7 +3077,182 @@
  {
   "s": "Supprimer",
   "f": "src/app/(admin)/admin/parcours/page.tsx",
-  "n": 4
+  "n": 5
+ },
+ {
+  "s": "Supprimer le parcours \"{0}\" ?",
+  "f": "src/app/(admin)/admin/parcours/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "À examiner",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune candidature dans cette catégorie.",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Candidatures, conventions de partenariat et partage des revenus",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention envoyée",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateurs partenaires",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Modifications demandées",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Partenaires",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Suspendus",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "· déposée le",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "% · IBIG EDUFORM :",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "% formateur",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "ans d'expérience",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Conditions particulières (optionnel) : exclusivité, bonus de lancement, engagement de volume…",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention envoyée le",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Demander des modifications",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Dernier motif de refus",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Dossier complet",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer la convention",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer la demande",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Exemple de contenu",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "FCFA · Solde :",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formations envisagées",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Gains cumulés :",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modifier la convention",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Motif de la suspension (visible par le formateur)…",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Motif et points à corriger (visible par le candidat)…",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom de signature",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "par «",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Part formateur",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Personne physique",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "Retenir et proposer la convention",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signée le",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Site web",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "Suspendre le partenariat",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
  },
  {
   "s": "% fini",
@@ -2946,6 +3296,11 @@
  },
  {
   "s": "inscr. ·",
+  "f": "src/app/(admin)/admin/rapports/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Inscriptions & complétion",
   "f": "src/app/(admin)/admin/rapports/page.tsx",
   "n": 1
  },
@@ -3042,6 +3397,11 @@
  {
   "s": "Seuil :",
   "f": "src/app/(admin)/admin/relances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} apprenant{1} inactif{2} ciblé{3}",
+  "f": "src/app/(admin)/admin/relances/RelancesPanel.tsx",
   "n": 1
  },
  {
@@ -3207,7 +3567,7 @@
  {
   "s": "min ·",
   "f": "src/app/(admin)/admin/sessions-live/page.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "Passées (",
@@ -3260,6 +3620,11 @@
   "n": 1
  },
  {
+  "s": "Bouton login",
+  "f": "src/app/(admin)/admin/sso/SSOManager.tsx",
+  "n": 1
+ },
+ {
   "s": "Client ID OAuth",
   "f": "src/app/(admin)/admin/sso/SSOManager.tsx",
   "n": 1
@@ -3281,6 +3646,11 @@
  },
  {
   "s": "Créer le provider",
+  "f": "src/app/(admin)/admin/sso/SSOManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Domaines email",
   "f": "src/app/(admin)/admin/sso/SSOManager.tsx",
   "n": 1
  },
@@ -3467,7 +3837,7 @@
  {
   "s": "Ajouter",
   "f": "src/app/(admin)/admin/temoignages/page.tsx",
-  "n": 3
+  "n": 4
  },
  {
   "s": "Aucun témoignage. Cliquez sur \"Ajouter\" pour en créer un.",
@@ -3501,6 +3871,11 @@
  },
  {
   "s": "Ordre",
+  "f": "src/app/(admin)/admin/temoignages/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "ring-2 ring-offset-2 ring-[#0B3D91]",
   "f": "src/app/(admin)/admin/temoignages/page.tsx",
   "n": 1
  },
@@ -3542,7 +3917,7 @@
  {
   "s": "Historique",
   "f": "src/app/(admin)/admin/virements/page.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "Payé",
@@ -3620,6 +3995,11 @@
   "n": 1
  },
  {
+  "s": "Accédez au catalogue, suivez vos formations et obtenez des certificats vérifiables.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Autre",
   "f": "src/app/(auth)/inscription/page.tsx",
   "n": 1
@@ -3635,9 +4015,29 @@
   "n": 1
  },
  {
-  "s": "Congo",
+  "s": "Coachs professionnels : rejoignez le programme partenaire IBIG EDUFORM pour proposer vos programmes d'accompagnement et vos sessions live, avec partage des revenus.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Congo-Brazzaville",
   "f": "src/app/(auth)/inscription/page.tsx",
   "n": 2
+ },
+ {
+  "s": "Entreprise",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 3
+ },
+ {
+  "s": "Entreprises, ONG et institutions : créez votre compte, puis décrivez votre besoin pour recevoir une offre sur mesure pour vos équipes.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Former mes équipes",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
  },
  {
   "s": "France",
@@ -3650,12 +4050,37 @@
   "n": 2
  },
  {
+  "s": "J'accompagne",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je m'inscris en tant que",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je veux enseigner",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je veux me former",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Mali",
   "f": "src/app/(auth)/inscription/page.tsx",
   "n": 2
  },
  {
   "s": "Maroc",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Nom de l'entreprise / organisation",
   "f": "src/app/(auth)/inscription/page.tsx",
   "n": 1
  },
@@ -3665,9 +4090,34 @@
   "n": 1
  },
  {
+  "s": "Programme Formateurs Partenaires IBIG EDUFORM : créez votre compte, confirmez votre email, puis déposez votre candidature pour publier vos formations.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Tchad",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 2
+ },
+ {
   "s": "Togo",
   "f": "src/app/(auth)/inscription/page.tsx",
   "n": 2
+ },
+ {
+  "s": "Certificats vérifiables",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 2
+ },
+ {
+  "s": "Certifiez-vous.",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Des formations certifiantes et du coaching conçus pour les professionnels d'Afrique francophone, à suivre depuis votre téléphone.",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
  },
  {
   "s": "E-LEARNING",
@@ -3675,7 +4125,52 @@
   "n": 5
  },
  {
+  "s": "Experts africains",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateurs et coachs partenaires IBIG EDUFORM",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formez-vous.",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formez-vous. Certifiez-vous.",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
   "s": "IBIG SARL · IBIG EDUFORM",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Orange Money, MTN, Wave, Moov ou carte",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Paiement Mobile Money",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 3
+ },
+ {
+  "s": "Plateforme panafricaine de formation",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Progressez.",
+  "f": "src/app/(auth)/layout.tsx",
+  "n": 1
+ },
+ {
+  "s": "Reconnus par les employeurs dans 14 pays",
   "f": "src/app/(auth)/layout.tsx",
   "n": 1
  },
@@ -3727,7 +4222,7 @@
  {
   "s": "Aucun certificat pour l'instant",
   "f": "src/app/(dashboard)/certificats/page.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "certificat",
@@ -3737,7 +4232,7 @@
  {
   "s": "Explorer les formations",
   "f": "src/app/(dashboard)/certificats/page.tsx",
-  "n": 3
+  "n": 4
  },
  {
   "s": "h de formation",
@@ -4010,24 +4505,14 @@
   "n": 2
  },
  {
-  "s": "Direction pédagogique",
-  "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
-  "n": 2
- },
- {
   "s": "heures · Formateur :",
   "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
   "n": 1
  },
  {
-  "s": "IBIG SARL",
-  "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
-  "n": 2
- },
- {
   "s": "LinkedIn",
   "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
-  "n": 2
+  "n": 3
  },
  {
   "s": "Plateforme panafricaine",
@@ -4045,9 +4530,14 @@
   "n": 1
  },
  {
+  "s": "Vérifier l'authenticité",
+  "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
+  "n": 1
+ },
+ {
   "s": "WhatsApp",
   "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
-  "n": 3
+  "n": 4
  },
  {
   "s": "Délivré le :",
@@ -4075,6 +4565,11 @@
   "n": 1
  },
  {
+  "s": "Abidjan, Côte d'Ivoire",
+  "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
+  "n": 2
+ },
+ {
   "s": "Accès à vie · Certificat inclus · Plateforme IBIG E-LEARNING",
   "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
   "n": 1
@@ -4085,12 +4580,27 @@
   "n": 1
  },
  {
+  "s": "Date d'émission",
+  "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Facturé à",
   "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
   "n": 1
  },
  {
   "s": "Formation en ligne",
+  "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG SARL",
+  "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG SARL — Abidjan, Côte d'Ivoire",
   "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
   "n": 1
  },
@@ -4160,6 +4670,11 @@
   "n": 1
  },
  {
+  "s": "Aucune facture pour l'instant",
+  "f": "src/app/(dashboard)/mes-factures/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Découvrir les formations",
   "f": "src/app/(dashboard)/mes-factures/page.tsx",
   "n": 2
@@ -4187,6 +4702,11 @@
  {
   "s": "Vos factures apparaîtront ici après chaque paiement confirmé.",
   "f": "src/app/(dashboard)/mes-factures/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune formation sauvegardée pour l'instant.",
+  "f": "src/app/(dashboard)/mes-favoris/page.tsx",
   "n": 1
  },
  {
@@ -4275,14 +4795,24 @@
   "n": 1
  },
  {
+  "s": "Vous n'êtes inscrit à aucune formation",
+  "f": "src/app/(dashboard)/mes-formations/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Aucun marque-page. Utilisez le bouton 🔖 dans une leçon pour sauvegarder votre position.",
+  "f": "src/app/(dashboard)/mes-notes/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune note. Ouvrez une leçon et utilisez le panneau \"Mes notes\" pour prendre des notes.",
   "f": "src/app/(dashboard)/mes-notes/page.tsx",
   "n": 1
  },
  {
   "s": "leçon",
   "f": "src/app/(dashboard)/mes-notes/page.tsx",
-  "n": 7
+  "n": 8
  },
  {
   "s": "Marque-pages",
@@ -4365,6 +4895,106 @@
   "n": 1
  },
  {
+  "s": "Annuler cette séance ?",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "avec",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Lien de la visio",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Marquer comme réalisée",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Objectif :",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Paiement en cours de confirmation. Le créneau est réservé pendant 20 minutes.",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Rejoindre maintenant",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séance de coaching",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "Vos notes de séance",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre séance",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vous coachez",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "À venir",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 3
+ },
+ {
+  "s": "Aucune séance à venir.",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Découvrir les coachs →",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes séances",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes séances de coaching",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Paiement reçu : votre séance sera confirmée dans quelques instants (actualisez la page si besoin).",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réserver",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 3
+ },
+ {
+  "s": "Séance réservée ! Vous avez reçu une confirmation.",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vos séances de coaching individuel",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
   "s": "✅ Quiz réussi",
   "f": "src/app/(dashboard)/mes-stats/page.tsx",
   "n": 1
@@ -4403,6 +5033,11 @@
   "s": "Apprenti",
   "f": "src/app/(dashboard)/mes-stats/page.tsx",
   "n": 2
+ },
+ {
+  "s": "Calendrier d'activité — 16 semaines",
+  "f": "src/app/(dashboard)/mes-stats/page.tsx",
+  "n": 1
  },
  {
   "s": "Certificats obtenus",
@@ -4486,6 +5121,16 @@
  },
  {
   "s": "Streak actuel :",
+  "f": "src/app/(dashboard)/mes-stats/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Suivez votre progression et vos habitudes d'apprentissage.",
+  "f": "src/app/(dashboard)/mes-stats/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Temps d'apprentissage par semaine",
   "f": "src/app/(dashboard)/mes-stats/page.tsx",
   "n": 1
  },
@@ -4860,6 +5505,11 @@
   "n": 3
  },
  {
+  "s": "Sièges ({0}/{1})",
+  "f": "src/app/(dashboard)/organisation/[slug]/OrgDashboard.tsx",
+  "n": 1
+ },
+ {
   "s": "Top apprenants cette semaine",
   "f": "src/app/(dashboard)/organisation/[slug]/OrgDashboard.tsx",
   "n": 1
@@ -4867,6 +5517,11 @@
  {
   "s": "Vue d'ensemble",
   "f": "src/app/(dashboard)/organisation/[slug]/OrgDashboard.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} t'invite à rejoindre IBIG E-LEARN — la plateforme panafricaine de formation. Utilise mon lien pour t'inscrire et recevoir un bonus !",
+  "f": "src/app/(dashboard)/parrainage/ReferralDashboard.tsx",
   "n": 1
  },
  {
@@ -4987,7 +5642,7 @@
  {
   "s": "Algérie",
   "f": "src/app/(dashboard)/profil/page.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "Avatar",
@@ -5112,7 +5767,7 @@
  {
   "s": "Téléphone",
   "f": "src/app/(dashboard)/profil/page.tsx",
-  "n": 2
+  "n": 4
  },
  {
   "s": "Votre nom",
@@ -5158,11 +5813,6 @@
   "s": "📞 Google Meet",
   "f": "src/app/(dashboard)/sessions-live/page.tsx",
   "n": 3
- },
- {
-  "s": "À venir",
-  "f": "src/app/(dashboard)/sessions-live/page.tsx",
-  "n": 1
  },
  {
   "s": "Ajouter à Google Agenda",
@@ -5215,12 +5865,82 @@
   "n": 1
  },
  {
-  "s": "Niveaux IBIG",
+  "s": "Vos formateurs n'ont pas encore programmé de sessions",
+  "f": "src/app/(dashboard)/sessions-live/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Bienvenue sur IBIG E-LEARNING !",
   "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
   "n": 1
  },
  {
-  "s": "Streak 🔥",
+  "s": "Choisissez une formation dans le catalogue",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Commencez votre formation",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Continuez sur votre lancée avec une nouvelle compétence.",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Encore",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Jours d'affilée",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Niveau maximum atteint",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nouvelle formation",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 6
+ },
+ {
+  "s": "Obtenez votre certificat vérifiable",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Premiers pas",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Prochaine leçon :",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réserver un coach",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "restante",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Suivez vos leçons à votre rythme, même sur téléphone",
+  "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Toutes vos formations sont terminées 🎉",
   "f": "src/app/(dashboard)/tableau-de-bord/page.tsx",
   "n": 1
  },
@@ -5253,6 +5973,11 @@
   "s": "Progression moyenne",
   "f": "src/app/(formateur)/formateur/analytics/[courseId]/page.tsx",
   "n": 2
+ },
+ {
+  "s": "Taux d'abandon par leçon",
+  "f": "src/app/(formateur)/formateur/analytics/[courseId]/page.tsx",
+  "n": 1
  },
  {
   "s": "Vert = fort engagement · Rouge = fort abandon",
@@ -5312,6 +6037,156 @@
  {
   "s": "Titre de la formation...",
   "f": "src/app/(formateur)/formateur/apprenants/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ajoutez au moins une plage : sans disponibilité, vos offres n'affichent aucun créneau.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune offre. Créez votre première offre de coaching.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ce que la séance apporte, pour qui, comment elle se déroule…",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "De",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Durée",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 4
+ },
+ {
+  "s": "En ligne",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Enregistrer",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 2
+ },
+ {
+  "s": "Format",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Fuseau horaire enregistré",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Jour",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "L'heure de fin doit être après l'heure de début.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Langue",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 4
+ },
+ {
+  "s": "Les apprenants réservent dans ces plages (au moins 12 h à l'avance, jusqu'à 3 semaines). Les créneaux déjà réservés sont retirés automatiquement.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Masquée",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes disponibilités hebdomadaires",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes offres de coaching",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nouvelle offre",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Offre enregistrée",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Prix (FCFA)",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Thème (optionnel) — ex : Carrière, Entrepreneuriat, Leadership",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titre — ex : Préparer un entretien d'embauche",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titre (5 caractères min.) et description (30 caractères min.) requis.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Visio",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Voir la page publique",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre fuseau horaire",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre part : selon votre convention de partenariat (50 % par défaut), créditée à chaque séance payée.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "à venir ·",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "réalisées)",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Voir mes séances (",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vos offres, vos disponibilités et vos séances réservées",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
   "n": 1
  },
  {
@@ -5402,6 +6277,11 @@
  {
   "s": "Créez des réductions pour vos formations",
   "f": "src/app/(formateur)/formateur/coupons/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "✓ Validé (min. {0})",
+  "f": "src/app/(formateur)/formateur/devoirs/[courseId]/AssignmentGrader.tsx",
   "n": 1
  },
  {
@@ -5685,17 +6565,17 @@
   "n": 1
  },
  {
-  "s": "Enregistrer",
+  "s": "Enregistrez vos modifications, puis soumettez la formation : IBIG EDUFORM la vérifie et la met en ligne.",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Erreur leçon : {0}",
   "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
   "n": 1
  },
  {
   "s": "Formation enregistrée",
-  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
-  "n": 1
- },
- {
-  "s": "Formation publiée et visible dans le catalogue",
   "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
   "n": 1
  },
@@ -5715,12 +6595,22 @@
   "n": 1
  },
  {
+  "s": "Langue d'enseignement",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Leçon enregistrée",
   "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
   "n": 1
  },
  {
   "s": "Leçons → Éditeur de quiz",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les questions s'ajoutent depuis l'onglet",
   "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
   "n": 1
  },
@@ -5741,6 +6631,11 @@
  },
  {
   "s": "quiz",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Retour d'IBIG EDUFORM :",
   "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
   "n": 1
  },
@@ -5830,6 +6725,11 @@
   "n": 1
  },
  {
+  "s": "Après la création, ajoutez vos modules, leçons et quiz, puis cliquez sur « Soumettre pour validation ». IBIG EDUFORM vérifie la formation et la met en ligne. Vos revenus sont ensuite partagés selon votre convention de partenariat.",
+  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
+  "n": 1
+ },
+ {
   "s": "avance",
   "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
   "n": 3
@@ -5885,11 +6785,6 @@
   "n": 3
  },
  {
-  "s": "Langue",
-  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
-  "n": 2
- },
- {
   "s": "Le titre est requis.",
   "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
   "n": 1
@@ -5898,11 +6793,6 @@
   "s": "Non connecté.",
   "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
   "n": 1
- },
- {
-  "s": "Nouvelle formation",
-  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
-  "n": 5
  },
  {
   "s": "Prix en FCFA (0 = gratuit)",
@@ -5915,7 +6805,7 @@
   "n": 1
  },
  {
-  "s": "Publier immédiatement",
+  "s": "Publication par IBIG EDUFORM",
   "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
   "n": 1
  },
@@ -5995,6 +6885,11 @@
   "n": 1
  },
  {
+  "s": "Envoyer ce message à {0} apprenant(s) ?",
+  "f": "src/app/(formateur)/formateur/messagerie/BulkMessageForm.tsx",
+  "n": 1
+ },
+ {
   "s": "Ex: Nouveaux contenus disponibles !",
   "f": "src/app/(formateur)/formateur/messagerie/BulkMessageForm.tsx",
   "n": 1
@@ -6016,6 +6911,11 @@
  },
  {
   "s": "destinataires",
+  "f": "src/app/(formateur)/formateur/messagerie/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyez un message à tous les apprenants d'une formation",
   "f": "src/app/(formateur)/formateur/messagerie/page.tsx",
   "n": 1
  },
@@ -6061,6 +6961,11 @@
  },
  {
   "s": "· Mis à jour le",
+  "f": "src/app/(formateur)/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} publiée{1}",
   "f": "src/app/(formateur)/formateur/page.tsx",
   "n": 1
  },
@@ -6255,6 +7160,11 @@
   "n": 1
  },
  {
+  "s": "Les apprenants doivent obtenir au moins {0}% pour valider ce quiz.",
+  "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
+  "n": 1
+ },
+ {
   "s": "max",
   "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
   "n": 1
@@ -6283,6 +7193,16 @@
   "s": "question",
   "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
   "n": 4
+ },
+ {
+  "s": "Question {0} : énoncé vide.",
+  "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
+  "n": 1
+ },
+ {
+  "s": "Question {0} : toutes les options doivent être remplies.",
+  "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
+  "n": 1
  },
  {
   "s": "questions",
@@ -6470,6 +7390,11 @@
   "n": 1
  },
  {
+  "s": "Aujourd'hui",
+  "f": "src/app/(formateur)/formateur/sessions-live/LiveSessionList.tsx",
+  "n": 1
+ },
+ {
   "s": "Créez votre première session live ci-dessus",
   "f": "src/app/(formateur)/formateur/sessions-live/LiveSessionList.tsx",
   "n": 1
@@ -6555,6 +7480,11 @@
   "n": 1
  },
  {
+  "s": "Aucune demande de virement pour l'instant.",
+  "f": "src/app/(formateur)/formateur/virements/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Gérez vos retraits de revenus de formation",
   "f": "src/app/(formateur)/formateur/virements/page.tsx",
   "n": 1
@@ -6605,6 +7535,11 @@
   "n": 1
  },
  {
+  "s": "L'admin traitera votre virement sous 2-3 jours ouvrés.",
+  "f": "src/app/(formateur)/formateur/virements/PayoutRequestForm.tsx",
+  "n": 1
+ },
+ {
   "s": "Méthode de virement",
   "f": "src/app/(formateur)/formateur/virements/PayoutRequestForm.tsx",
   "n": 1
@@ -6640,11 +7575,6 @@
   "n": 1
  },
  {
-  "s": "Orange Money",
-  "f": "src/app/(formateur)/formateur/virements/PayoutRequestForm.tsx",
-  "n": 2
- },
- {
   "s": "Solde disponible :",
   "f": "src/app/(formateur)/formateur/virements/PayoutRequestForm.tsx",
   "n": 1
@@ -6670,7 +7600,7 @@
   "n": 1
  },
  {
-  "s": "12 pays africains",
+  "s": "14 pays africains",
   "f": "src/app/(public)/a-propos/page.tsx",
   "n": 1
  },
@@ -6700,7 +7630,7 @@
   "n": 1
  },
  {
-  "s": "Accessibles depuis 12 pays, payables en Mobile Money, pour que personne ne soit laissé de côté.",
+  "s": "Accessibles depuis 14 pays, payables en Mobile Money, pour que personne ne soit laissé de côté.",
   "f": "src/app/(public)/a-propos/page.tsx",
   "n": 1
  },
@@ -6761,6 +7691,11 @@
  },
  {
   "s": "Des professionnels engagés pour votre réussite",
+  "f": "src/app/(public)/a-propos/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Développement & Support de la plateforme",
   "f": "src/app/(public)/a-propos/page.tsx",
   "n": 1
  },
@@ -6840,7 +7775,17 @@
   "n": 1
  },
  {
+  "s": "Pôle formation du groupe IBIG SARL",
+  "f": "src/app/(public)/a-propos/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Pôle IBIG EDUFORM",
+  "f": "src/app/(public)/a-propos/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Praticiens reconnus dans leurs domaines",
   "f": "src/app/(public)/a-propos/page.tsx",
   "n": 1
  },
@@ -6902,7 +7847,7 @@
  {
   "s": "Centre d'aide",
   "f": "src/app/(public)/aide/apprenant/page.tsx",
-  "n": 2
+  "n": 3
  },
  {
   "s": "Chaque leçon terminée met à jour votre barre de progression. Le bouton \"Continuer\" vous reprend exactement où vous en étiez.",
@@ -7225,6 +8170,11 @@
   "n": 1
  },
  {
+  "s": "← Retour au centre d'aide",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "→ vous gagnez",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
@@ -7240,7 +8190,12 @@
   "n": 1
  },
  {
-  "s": "17 500 FCFA",
+  "s": "1–2 leçons en aperçu gratuit",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "12 500 FCFA",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7296,6 +8251,11 @@
  },
  {
   "s": "Après validation, un bouton \"Espace formateur\" apparaît dans votre menu profil → /formateur.",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Au moins 3 modules structurés",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7375,6 +8335,11 @@
   "n": 1
  },
  {
+  "s": "Créez des codes promo à -20% pour le lancement de chaque nouvelle formation",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Créez des leçons en texte enrichi et attachez des fichiers PDF, slides ou exercices téléchargeables.",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
@@ -7411,6 +8376,11 @@
  },
  {
   "s": "Depuis /formateur/notifier, envoyez une notification push à tous vos inscrits lors d'une mise à jour ou d'un live.",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Description complète (objectifs, public, prérequis)",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7460,11 +8430,6 @@
   "n": 2
  },
  {
-  "s": "IBIG retient 30% sur chaque vente. Vous percevez 70% du prix de vente net, hors taxes locales applicables.",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
   "s": "IBIG vous fournit des factures mensuelles dans /formateur/virements. Vous êtes personnellement responsable de déclarer vos revenus selon la loi fiscale de votre pays.",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
@@ -7476,6 +8441,11 @@
  },
  {
   "s": "Image de couverture",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Image de couverture 16:9 (1280×720)",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7505,6 +8475,11 @@
   "n": 1
  },
  {
+  "s": "Le revenu net de chaque vente est partagé à 50 % pour vous et 50 % pour IBIG EDUFORM (part standard, précisée dans votre convention de partenariat).",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Le seuil minimum pour demander un virement est 50 000 FCFA. Les virements sont effectués sous 5 jours ouvrables.",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
@@ -7521,6 +8496,11 @@
  },
  {
   "s": "Les factures mensuelles sont disponibles dans /formateur/virements. Vous êtes responsable de vos obligations fiscales locales.",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les formateurs bénéficient d'un support prioritaire — réponse sous 12h.",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7550,6 +8530,16 @@
   "n": 2
  },
  {
+  "s": "Mettez à jour régulièrement vos formations pour rester dans les recommandations",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Minimum 1h de contenu vidéo total",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Minimum 720p (1280×720), idéalement 1080p (1920×1080). Format MP4 (H.264/AAC), taille max 4 Go par fichier. Bunny Stream adapte automatiquement la qualité selon la connexion de l'apprenant.",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
@@ -7566,6 +8556,11 @@
  },
  {
   "s": "Notifier vos apprenants",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Organisez 1 session live mensuelle gratuite pour fidéliser vos apprenants",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7605,9 +8600,19 @@
   "n": 1
  },
  {
+  "s": "Prix défini ou formation marquée gratuite",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Publier et promouvoir",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 2
+ },
+ {
+  "s": "Publiez au moins 5h de contenu vidéo par formation — les apprenants perçoivent plus de valeur",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
  },
  {
   "s": "Puis-je enseigner dans plusieurs langues ?",
@@ -7645,7 +8650,17 @@
   "n": 1
  },
  {
+  "s": "Rejoignez notre programme d'ambassadeurs pour doubler votre visibilité sur la plateforme",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Répondez aux questions de vos apprenants dans /formateur/messagerie. Délai recommandé : 48h maximum.",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Répondez aux questions en moins de 24h pour obtenir de meilleures notes",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
  },
@@ -7715,6 +8730,11 @@
   "n": 1
  },
  {
+  "s": "Un quiz final (min 5 questions)",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Upload sur Bunny Stream",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
@@ -7740,9 +8760,14 @@
   "n": 1
  },
  {
-  "s": "Votre part sur chaque vente",
+  "s": "Vidéo de présentation (2–3 min) recommandée",
   "f": "src/app/(public)/aide/formateur/page.tsx",
   "n": 1
+ },
+ {
+  "s": "Votre part sur chaque vente",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 2
  },
  {
   "s": "Vous pouvez donner un accès gratuit à un apprenant spécifique depuis /formateur/apprenants → \"Inscrire manuellement\".",
@@ -7950,12 +8975,22 @@
   "n": 1
  },
  {
+  "s": "Des formations certifiantes, conçues pour l'Afrique francophone, payables en Mobile Money.",
+  "f": "src/app/(public)/blog/[slug]/page.tsx",
+  "n": 1
+ },
+ {
   "s": "min de lecture",
   "f": "src/app/(public)/blog/[slug]/page.tsx",
   "n": 2
  },
  {
   "s": "parties",
+  "f": "src/app/(public)/blog/[slug]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Passez de la lecture à l'action",
   "f": "src/app/(public)/blog/[slug]/page.tsx",
   "n": 1
  },
@@ -8055,14 +9090,9 @@
   "n": 1
  },
  {
-  "s": "Durée",
-  "f": "src/app/(public)/catalogue/CatalogueFilters.tsx",
-  "n": 3
- },
- {
   "s": "en",
   "f": "src/app/(public)/catalogue/CatalogueFilters.tsx",
-  "n": 2
+  "n": 3
  },
  {
   "s": "Filtrer les formations",
@@ -8108,11 +9138,6 @@
   "s": "Plus de 50 000 FCFA",
   "f": "src/app/(public)/catalogue/CatalogueFilters.tsx",
   "n": 1
- },
- {
-  "s": "Prix",
-  "f": "src/app/(public)/catalogue/CatalogueFilters.tsx",
-  "n": 2
  },
  {
   "s": "Tous les domaines",
@@ -8210,11 +9235,6 @@
   "n": 1
  },
  {
-  "s": "IBIG E-LEARN",
-  "f": "src/app/(public)/certificat/[number]/CertificateView.tsx",
-  "n": 1
- },
- {
   "s": "IBIG E-LEARN — Plateforme panafricaine de formation",
   "f": "src/app/(public)/certificat/[number]/CertificateView.tsx",
   "n": 1
@@ -8300,7 +9320,7 @@
   "n": 1
  },
  {
-  "s": "Découvrez nos certifications professionnelles vérifiables, reconnues dans 12 pays africains.",
+  "s": "Découvrez nos certifications professionnelles vérifiables, reconnues dans 14 pays africains.",
   "f": "src/app/(public)/certifications/page.tsx",
   "n": 1
  },
@@ -8345,7 +9365,7 @@
   "n": 1
  },
  {
-  "s": "Nos certificats sont reconnus par nos partenaires entreprises dans 12 pays africains.",
+  "s": "Nos certificats sont reconnus par nos partenaires entreprises dans 14 pays africains.",
   "f": "src/app/(public)/certifications/page.tsx",
   "n": 1
  },
@@ -9115,6 +10135,11 @@
   "n": 3
  },
  {
+  "s": "S'inscrire gratuitement — Mode",
+  "f": "src/app/(public)/choisir-mode/[courseId]/ModeSelectorForm.tsx",
+  "n": 1
+ },
+ {
   "s": "Suivez un parcours structuré",
   "f": "src/app/(public)/choisir-mode/[courseId]/ModeSelectorForm.tsx",
   "n": 1
@@ -9220,6 +10245,176 @@
   "n": 1
  },
  {
+  "s": "{0} — coaching avec {1}",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "À propos du coach",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Choisissez votre créneau",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Coaching introuvable",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "En visio",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Paiement sécurisé Mobile Money ou carte. Annulation gratuite jusqu'à 24 h avant la séance. Lien de visio envoyé après confirmation.",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Par téléphone",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "un coach",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "(optionnel)",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 2
+ },
+ {
+  "s": "Aucun créneau disponible pour le moment. Revenez bientôt.",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "C'est votre propre offre : gérez-la depuis votre espace formateur.",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Choisissez un créneau",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ex : préparer un entretien, structurer mon business plan…",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Horaires affichés dans votre fuseau (",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Jours disponibles",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réservation impossible.",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réserver et payer",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Se connecter pour réserver",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre objectif pour cette séance",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Des séances en visio avec des coachs et experts partenaires d'IBIG EDUFORM. Choisissez votre créneau, payez en Mobile Money, recevez votre lien de visio.",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Devenir coach partenaire",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les premiers coachs arrivent bientôt",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Progressez plus vite avec un coach",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réservez une séance de coaching individuel en visio avec un coach partenaire IBIG EDUFORM : carrière, entrepreneuriat, leadership, prise de parole. Paiement Mobile Money.",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vous êtes coach ? Rejoignez le programme partenaire IBIG EDUFORM pour proposer vos séances.",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "). La part de revenus indiquée (",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "[Nom du formateur partenaire]",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "%) est la part standard : la part exacte et d'éventuelles conditions particulières figurent dans la convention personnelle qui vous est proposée après étude de votre candidature.",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention de partenariat",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention de partenariat formateurs",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Devenir formateur partenaire",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modèle de convention entre IBIG EDUFORM et les formateurs partenaires : validation des formations, partage des revenus, propriété intellectuelle, certificats cosignés.",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modèle en vigueur (version",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Programme Formateurs Partenaires",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 2
+ },
+ {
   "s": "1. Responsable du traitement",
   "f": "src/app/(public)/confidentialite/page.tsx",
   "n": 1
@@ -9305,6 +10500,11 @@
   "n": 1
  },
  {
+  "s": "Accès aux données de production restreint aux administrateurs autorisés avec MFA",
+  "f": "src/app/(public)/confidentialite/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Activité de connexion (date, heure, adresse IP)",
   "f": "src/app/(public)/confidentialite/page.tsx",
   "n": 1
@@ -9330,12 +10530,27 @@
   "n": 1
  },
  {
+  "s": "Audits de sécurité réguliers et mises à jour des dépendances",
+  "f": "src/app/(public)/confidentialite/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Authentification sécurisée via Supabase Auth avec hachage bcrypt des mots de passe",
+  "f": "src/app/(public)/confidentialite/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Base de données et authentification. Stockage sécurisé en région Europe (Union européenne). Politique : supabase.com/privacy",
   "f": "src/app/(public)/confidentialite/page.tsx",
   "n": 1
  },
  {
   "s": "Base légale",
+  "f": "src/app/(public)/confidentialite/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chiffrement des données en transit (HTTPS/TLS 1.3) et au repos (AES-256)",
   "f": "src/app/(public)/confidentialite/page.tsx",
   "n": 1
  },
@@ -9705,6 +10920,11 @@
   "n": 1
  },
  {
+  "s": "Politique de Row-Level Security (RLS) sur la base de données — chaque utilisateur n'accède qu'à ses propres données",
+  "f": "src/app/(public)/confidentialite/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Pour exercer vos droits",
   "f": "src/app/(public)/confidentialite/page.tsx",
   "n": 1
@@ -9756,6 +10976,11 @@
  },
  {
   "s": "Retrait du consentement",
+  "f": "src/app/(public)/confidentialite/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Sauvegardes quotidiennes chiffrées conservées 30 jours",
   "f": "src/app/(public)/confidentialite/page.tsx",
   "n": 1
  },
@@ -9895,11 +11120,6 @@
   "n": 1
  },
  {
-  "s": "Abidjan, Côte d'Ivoire",
-  "f": "src/app/(public)/contact/page.tsx",
-  "n": 1
- },
- {
   "s": "Devenir formateur",
   "f": "src/app/(public)/contact/page.tsx",
   "n": 2
@@ -9970,7 +11190,7 @@
   "n": 1
  },
  {
-  "s": "Accédez à une audience de milliers de professionnels dans 12 pays.",
+  "s": "Accédez à une audience de milliers de professionnels dans 14 pays.",
   "f": "src/app/(public)/devenir-formateur/page.tsx",
   "n": 1
  },
@@ -9980,7 +11200,17 @@
   "n": 1
  },
  {
+  "s": "Capacité à créer du contenu vidéo de qualité",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Création",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créez votre compte, déposez votre candidature en ligne : IBIG EDUFORM vous répond sous 5 jours ouvrés avec sa proposition de partenariat.",
   "f": "src/app/(public)/devenir-formateur/page.tsx",
   "n": 1
  },
@@ -9990,17 +11220,22 @@
   "n": 1
  },
  {
+  "s": "Déposer ma candidature",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Disponibilité pour répondre aux questions des apprenants",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Engagement pour la qualité et la mise à jour du contenu",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Envoyez votre candidature avec votre domaine d'expertise et un exemple de contenu.",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyez-nous votre candidature. Notre équipe vous répond dans les 5 jours ouvrés.",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "formateurs@ibig-elearning.com",
   "f": "src/app/(public)/devenir-formateur/page.tsx",
   "n": 1
  },
@@ -10011,6 +11246,16 @@
  },
  {
   "s": "Le processus en 4 étapes",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Maîtrise du français (et/ou anglais pour les formations bilingues)",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Minimum 3 ans d'expérience professionnelle dans votre domaine",
   "f": "src/app/(public)/devenir-formateur/page.tsx",
   "n": 1
  },
@@ -10110,6 +11355,416 @@
   "n": 1
  },
  {
+  "s": "\"Brush Script MT\", \"Segoe Script\", cursive",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 2
+ },
+ {
+  "s": "🎉 Votre candidature est retenue",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention de partenariat · version",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG EDUFORM vous propose la convention ci-dessous. Lisez-la attentivement, puis signez-la pour commencer à publier vos formations.",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "J'ai lu et j'accepte la convention de partenariat IBIG EDUFORM. Je reconnais que cette acceptation électronique vaut signature.",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signature — saisissez votre nom complet",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signer et devenir formateur partenaire",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Une erreur est survenue.",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 3
+ },
+ {
+  "s": "! IBIG EDUFORM étudie votre profil, généralement sous 5 jours ouvrés. Vous serez notifié dès que les conditions de partenariat vous seront proposées.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Candidature",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Candidature en cours d'examen",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Certificats cosignés",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chaque formation est vérifiée par IBIG EDUFORM avant sa mise en ligne. Vos revenus sont calculés automatiquement à chaque paiement confirmé.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chaque vente confirmée crédite automatiquement votre solde. Virement par Mobile Money ou banque.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Comment ça marche",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Confirmez votre adresse email",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Contacter IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Contactez IBIG EDUFORM pour plus d'informations.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Corrigez votre candidature ci-dessous puis renvoyez-la.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créer mon compte formateur",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créez et confirmez votre compte",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créez et soumettez vos formations",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Déposée le",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Déposez votre candidature",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Devenir formateur partenaire IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Encaissez votre part",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Étapes du partenariat",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG EDUFORM valide chaque formation puis la met en ligne.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG EDUFORM vous propose ses conditions, dont votre part des revenus. Vous les acceptez en ligne.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Inscription gratuite, puis confirmation de votre adresse email.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "J'ai déjà un compte",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les certificats de vos apprenants portent votre signature et celle d'IBIG EDUFORM.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Merci",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modifications demandées par IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modifier ma candidature",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Partagez votre expertise avec des milliers d'apprenants en Afrique francophone, encaissez votre part sur chaque vente et délivrez des certificats cosignés avec IBIG EDUFORM.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Partenariat suspendu",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Publiez vos formations avec IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Publiez vos formations sur IBIG E-LEARNING et partagez les revenus avec IBIG EDUFORM : candidature, convention de partenariat, validation et certificats cosignés.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signez la convention de partenariat",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Toutes les informations restent confidentielles et servent uniquement à l'étude de votre dossier et au versement de vos revenus.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Un lien de confirmation a été envoyé à",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre candidature de formateur partenaire",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre expertise, votre expérience et les formations que vous souhaitez créer.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "(5 maximum)",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "✓ Longueur suffisante",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Années d'expérience professionnelle *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Biographie professionnelle *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "convention de partenariat",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "de la plateforme. J'ai pris connaissance du modèle de",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Domaines d'expertise *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Encore {0} caractères minimum",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer ma candidature",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer ma candidature mise à jour",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ex : Expert-comptable, Consultant RH",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Expertise",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formations que vous souhaitez créer *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Identité",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je certifie l'exactitude de ces informations et j'accepte les",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Langues d'enseignement *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "linkedin.com/in/…",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mode de versement *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Motivation",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "N° contribuable / RCCM",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom complet *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom figurant sur vos certificats cosignés *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Numéro Mobile Money *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Pays *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Pourquoi souhaitez-vous enseigner avec IBIG EDUFORM ?",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "que je signerai si ma candidature est retenue.",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Raison sociale *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Sélectionner…",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Si différent du téléphone",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signature et engagement",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Statut et versement des revenus",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Téléphone *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titre professionnel *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titres, public visé, durée approximative de chaque formation.",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vidéo, support, chaîne…",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ville *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre parcours, vos réalisations, vos certifications… Elle apparaîtra sur votre profil public de formateur.",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
   "s": "201–500 employés",
   "f": "src/app/(public)/entreprise/B2BContactForm.tsx",
   "n": 1
@@ -10136,6 +11791,11 @@
  },
  {
   "s": "ACME Côte d'Ivoire",
+  "f": "src/app/(public)/entreprise/B2BContactForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Banque & Finance",
   "f": "src/app/(public)/entreprise/B2BContactForm.tsx",
   "n": 1
  },
@@ -10230,6 +11890,11 @@
   "n": 1
  },
  {
+  "s": "100+ apprenants",
+  "f": "src/app/(public)/entreprise/page.tsx",
+  "n": 1
+ },
+ {
   "s": "21 à 100 apprenants",
   "f": "src/app/(public)/entreprise/page.tsx",
   "n": 1
@@ -10280,6 +11945,11 @@
   "n": 1
  },
  {
+  "s": "Banques & Microfinance",
+  "f": "src/app/(public)/entreprise/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Certificats à votre image",
   "f": "src/app/(public)/entreprise/page.tsx",
   "n": 1
@@ -10325,9 +11995,9 @@
   "n": 1
  },
  {
-  "s": "Entreprise",
+  "s": "Distribution & Retail",
   "f": "src/app/(public)/entreprise/page.tsx",
-  "n": 2
+  "n": 1
  },
  {
   "s": "Équipe",
@@ -10365,7 +12035,7 @@
   "n": 1
  },
  {
-  "s": "Formez des équipes dispersées dans 12 pays africains. Paiement centralisé en XOF, EUR ou USD.",
+  "s": "Formez des équipes dispersées dans 14 pays africains. Paiement centralisé en XOF, EUR ou USD.",
   "f": "src/app/(public)/entreprise/page.tsx",
   "n": 1
  },
@@ -10416,6 +12086,11 @@
  },
  {
   "s": "Notre équipe vous répond sous 24h avec une proposition personnalisée.",
+  "f": "src/app/(public)/entreprise/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "ONG & Associations",
   "f": "src/app/(public)/entreprise/page.tsx",
   "n": 1
  },
@@ -10575,6 +12250,16 @@
   "n": 2
  },
  {
+  "s": "Aucun résultat pour \"",
+  "f": "src/app/(public)/faq/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Certificats & Reconnaissance",
+  "f": "src/app/(public)/faq/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Chaque certificat a un code de vérification unique. Scannez le QR code ou rendez-vous sur ibig-elearning.com/verify et entrez le code pour vérifier instantanément.",
   "f": "src/app/(public)/faq/page.tsx",
   "n": 1
@@ -10630,7 +12315,17 @@
   "n": 1
  },
  {
+  "s": "Formations & Apprentissage",
+  "f": "src/app/(public)/faq/page.tsx",
+  "n": 1
+ },
+ {
   "s": "IBIG E-LEARNING est une Progressive Web App (PWA). Installez-la sur votre téléphone depuis votre navigateur pour une meilleure expérience. Le contenu vidéo nécessite une connexion internet.",
+  "f": "src/app/(public)/faq/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Inscription & Compte",
   "f": "src/app/(public)/faq/page.tsx",
   "n": 1
  },
@@ -10740,6 +12435,11 @@
   "n": 1
  },
  {
+  "s": "Paiement & Tarifs",
+  "f": "src/app/(public)/faq/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Poser votre question directement →",
   "f": "src/app/(public)/faq/page.tsx",
   "n": 1
@@ -10790,6 +12490,11 @@
   "n": 1
  },
  {
+  "s": "Technique & Support",
+  "f": "src/app/(public)/faq/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Utilisez le formulaire de contact sur /contact ou écrivez à support@ibig-elearning.com. Vous pouvez aussi utiliser SARA pour les questions courantes.",
   "f": "src/app/(public)/faq/page.tsx",
   "n": 1
@@ -10820,6 +12525,11 @@
   "n": 1
  },
  {
+  "s": "Découvrez les formations de {0} sur IBIG E-LEARNING.",
+  "f": "src/app/(public)/formateur/[id]/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Formateur certifié IBIG E-LEARNING",
   "f": "src/app/(public)/formateur/[id]/page.tsx",
   "n": 1
@@ -10837,6 +12547,31 @@
  {
   "s": "Continuer la formation",
   "f": "src/app/(public)/formation/[slug]/EnrollButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "S'inscrire gratuitement",
+  "f": "src/app/(public)/formation/[slug]/EnrollButton.tsx",
+  "n": 2
+ },
+ {
+  "s": "S'inscrire maintenant",
+  "f": "src/app/(public)/formation/[slug]/EnrollButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "Se connecter pour s'inscrire",
+  "f": "src/app/(public)/formation/[slug]/EnrollButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} heures de contenu",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} leçons",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
   "n": 1
  },
  {
@@ -10885,6 +12620,11 @@
   "n": 1
  },
  {
+  "s": "de {0} h",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 1
+ },
+ {
   "s": "de contenu",
   "f": "src/app/(public)/formation/[slug]/page.tsx",
   "n": 2
@@ -10915,7 +12655,22 @@
   "n": 2
  },
  {
+  "s": "Formation dispensée en {0}",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Formation en ligne certifiante{0}, certificat vérifiable, paiement Mobile Money.",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Formation introuvable",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formation professionnelle en {0}",
   "f": "src/app/(public)/formation/[slug]/page.tsx",
   "n": 1
  },
@@ -10941,6 +12696,11 @@
  },
  {
   "s": "modules",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "opacity-60 cursor-default",
   "f": "src/app/(public)/formation/[slug]/page.tsx",
   "n": 1
  },
@@ -11155,6 +12915,11 @@
   "n": 2
  },
  {
+  "s": "Aide pour les exercices et quiz sans donner les réponses",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Aminata Koné",
   "f": "src/app/(public)/page.tsx",
   "n": 1
@@ -11200,7 +12965,12 @@
   "n": 1
  },
  {
-  "s": "Chaque certificat porte un QR code unique vérifiable en ligne par les employeurs et partenaires IBIG dans 12 pays.",
+  "s": "Chaque certificat porte un QR code unique vérifiable en ligne par les employeurs et partenaires IBIG dans 14 pays.",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chef comptable",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11240,7 +13010,17 @@
   "n": 1
  },
  {
+  "s": "Directrice RH, PME Abidjan",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
   "s": "e-learning Afrique francophone",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Entrepreneuriat & Business",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11250,12 +13030,32 @@
   "n": 1
  },
  {
+  "s": "est une photo de votre entreprise à un instant T — ce qu'elle possède (actif) et ce qu'elle doit (passif).",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Excellente question ! 🎯",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
  {
+  "s": "Exemples issus du contexte économique africain",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Explications claires en français à toute heure",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Fatoumata Bah",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Fondateur, startup Dakar",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11330,7 +13130,7 @@
   "n": 1
  },
  {
-  "s": "La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Des formations certifiantes, payables en Mobile Money, dans 12 pays.",
+  "s": "La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Des formations certifiantes, payables en Mobile Money, dans 14 pays.",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11351,6 +13151,16 @@
  },
  {
   "s": "Marketing Digital pour PME Africaines",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Marketing Manager",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Merci, c'est beaucoup plus clair ! 🙏",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11390,11 +13200,6 @@
   "n": 1
  },
  {
-  "s": "Paiement Mobile Money",
-  "f": "src/app/(public)/page.tsx",
-  "n": 2
- },
- {
   "s": "Parcourez notre catalogue de formations certifiantes adaptées au marché africain et trouvez celle qui correspond à votre objectif.",
   "f": "src/app/(public)/page.tsx",
   "n": 1
@@ -11420,7 +13225,12 @@
   "n": 1
  },
  {
-  "s": "Reconnu dans 12 pays d'Afrique francophone",
+  "s": "Recommandations de ressources complémentaires",
+  "f": "src/app/(public)/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Reconnu dans 14 pays d'Afrique francophone",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11475,7 +13285,7 @@
   "n": 1
  },
  {
-  "s": "Téléchargez votre certificat vérifiable avec QR code, reconnu par les entreprises partenaires dans 12 pays africains.",
+  "s": "Téléchargez votre certificat vérifiable avec QR code, reconnu par les entreprises partenaires dans 14 pays africains.",
   "f": "src/app/(public)/page.tsx",
   "n": 1
  },
@@ -11526,6 +13336,11 @@
  },
  {
   "s": "Aucun moyen de paiement disponible pour votre région. Contactez le support.",
+  "f": "src/app/(public)/paiement/[courseId]/PaymentForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Dans {0} jours",
   "f": "src/app/(public)/paiement/[courseId]/PaymentForm.tsx",
   "n": 1
  },
@@ -11595,11 +13410,6 @@
   "n": 2
  },
  {
-  "s": "Une erreur est survenue.",
-  "f": "src/app/(public)/paiement/[courseId]/PaymentForm.tsx",
-  "n": 1
- },
- {
   "s": "Commencer la formation",
   "f": "src/app/(public)/paiement/confirmation/page.tsx",
   "n": 1
@@ -11655,6 +13465,11 @@
   "n": 1
  },
  {
+  "s": "Votre paiement n'a pas pu être traité. Aucun montant n'a été débité.",
+  "f": "src/app/(public)/paiement/confirmation/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Parcours suivi ! Commencez dès maintenant.",
   "f": "src/app/(public)/parcours/[slug]/EnrollPathButton.tsx",
   "n": 1
@@ -11662,6 +13477,11 @@
  {
   "s": "Suivre ce parcours",
   "f": "src/app/(public)/parcours/[slug]/EnrollPathButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} — Parcours métier",
+  "f": "src/app/(public)/parcours/[slug]/page.tsx",
   "n": 1
  },
  {
@@ -11825,6 +13645,11 @@
   "n": 1
  },
  {
+  "s": "Aucun résultat pour « {0} »",
+  "f": "src/app/(public)/recherche/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Formateurs (",
   "f": "src/app/(public)/recherche/page.tsx",
   "n": 1
@@ -11965,6 +13790,11 @@
   "n": 1
  },
  {
+  "s": "Vérification certificat {0}",
+  "f": "src/app/(public)/verify/[code]/page.tsx",
+  "n": 1
+ },
+ {
   "s": "Vérification de l'authenticité d'un certificat IBIG E-LEARNING.",
   "f": "src/app/(public)/verify/[code]/page.tsx",
   "n": 1
@@ -12050,6 +13880,11 @@
   "n": 1
  },
  {
+  "s": "Changement d'onglet détecté (",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
+  "n": 1
+ },
+ {
   "s": "Erreur lors de la soumission.",
   "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
   "n": 1
@@ -12075,7 +13910,17 @@
   "n": 1
  },
  {
+  "s": "Il vous reste {0} tentative{1}.",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
+  "n": 1
+ },
+ {
   "s": "L'examen final est disponible uniquement après avoir complété toutes les leçons de la formation.",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
+  "n": 1
+ },
+ {
+  "s": "L'examen sera soumis automatiquement à",
   "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
   "n": 1
  },
@@ -12135,6 +13980,16 @@
   "n": 1
  },
  {
+  "s": "Soumettre l'examen ({0}/{1} répondues)",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
+  "n": 1
+ },
+ {
+  "s": "Soumission automatique — Trop de changements d'onglet (",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
+  "n": 1
+ },
+ {
   "s": "Soumission en cours…",
   "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
   "n": 1
@@ -12190,6 +14045,11 @@
   "n": 1
  },
  {
+  "s": "{0} leçons{1}",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/LessonPaywall.tsx",
+  "n": 1
+ },
+ {
   "s": "Accès illimité à toutes les leçons",
   "f": "src/app/apprendre/[courseId]/[lessonId]/LessonPaywall.tsx",
   "n": 1
@@ -12206,6 +14066,11 @@
  },
  {
   "s": "Contenu réservé aux inscrits",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/LessonPaywall.tsx",
+  "n": 1
+ },
+ {
+  "s": "en {0} modules",
   "f": "src/app/apprendre/[courseId]/[lessonId]/LessonPaywall.tsx",
   "n": 1
  },
@@ -12315,6 +14180,11 @@
   "n": 1
  },
  {
+  "s": "Attention — Changement d'onglet détecté (",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
+  "n": 1
+ },
+ {
   "s": "changements.",
   "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
   "n": 1
@@ -12345,12 +14215,22 @@
   "n": 1
  },
  {
+  "s": "Répondre à toutes les questions ({0}/{1})",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
+  "n": 1
+ },
+ {
   "s": "Score minimum pour valider :",
   "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
   "n": 1
  },
  {
   "s": "Soumettre mes réponses",
+  "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
+  "n": 1
+ },
+ {
+  "s": "Soumission automatique — Trop de changements d'onglet détectés (",
   "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
   "n": 1
  },
@@ -12442,7 +14322,7 @@
  {
   "s": "IBIG EDUFORM",
   "f": "src/app/layout.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "IBIG SOFT",
@@ -12460,6 +14340,11 @@
   "n": 1
  },
  {
+  "s": "La page que vous cherchez n'existe pas ou a été déplacée.",
+  "f": "src/app/not-found.tsx",
+  "n": 1
+ },
+ {
   "s": "Page introuvable",
   "f": "src/app/not-found.tsx",
   "n": 1
@@ -12470,7 +14355,17 @@
   "n": 1
  },
  {
+  "s": "Revenez à l'accueil pour continuer votre apprentissage.",
+  "f": "src/app/not-found.tsx",
+  "n": 1
+ },
+ {
   "s": "(toutes formations)",
+  "f": "src/components/admin/EnrichLessonsButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "⚠️ RÉGÉNÉRER TOUT le contenu {0} ? Cela remplace le contenu existant et peut prendre 5-15 minutes (traitement par vagues de 20 leçons).",
   "f": "src/components/admin/EnrichLessonsButton.tsx",
   "n": 1
  },
@@ -12486,6 +14381,11 @@
  },
  {
   "s": "enrichie(s) ·",
+  "f": "src/components/admin/EnrichLessonsButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "Enrichir les leçons sans contenu riche {0} ?",
   "f": "src/components/admin/EnrichLessonsButton.tsx",
   "n": 1
  },
@@ -12720,6 +14620,11 @@
   "n": 1
  },
  {
+  "s": "🎓 Je viens de terminer \"{0}\" sur IBIG E-LEARNING ! #IBIG #Formation #Afrique",
+  "f": "src/components/apprendre/CourseCompletionModal.tsx",
+  "n": 1
+ },
+ {
   "s": "Certificat en cours d'émission",
   "f": "src/components/apprendre/CourseCompletionModal.tsx",
   "n": 1
@@ -12880,6 +14785,11 @@
   "n": 1
  },
  {
+  "s": "Erreur d'upload",
+  "f": "src/components/formateur/BunnyUpload.tsx",
+  "n": 1
+ },
+ {
   "s": "Erreur lors de la création",
   "f": "src/components/formateur/BunnyUpload.tsx",
   "n": 1
@@ -12895,6 +14805,16 @@
   "n": 1
  },
  {
+  "s": "Ne fermez pas cette page pendant l'upload",
+  "f": "src/components/formateur/BunnyUpload.tsx",
+  "n": 1
+ },
+ {
+  "s": "Préparation de l'espace vidéo sur Bunny Stream…",
+  "f": "src/components/formateur/BunnyUpload.tsx",
+  "n": 1
+ },
+ {
   "s": "Upload échoué. Vérifiez votre connexion et réessayez.",
   "f": "src/components/formateur/BunnyUpload.tsx",
   "n": 1
@@ -12906,6 +14826,11 @@
  },
  {
   "s": "— Choisir —",
+  "f": "src/components/formateur/CourseEditor.tsx",
+  "n": 1
+ },
+ {
+  "s": "💾 Sauvegardez d'abord cette leçon pour ajouter des questions.",
   "f": "src/components/formateur/CourseEditor.tsx",
   "n": 1
  },
@@ -13065,6 +14990,11 @@
   "n": 1
  },
  {
+  "s": "Soumission impossible",
+  "f": "src/components/formateur/SubmitForApproval.tsx",
+  "n": 1
+ },
+ {
   "s": "Erreur — Réessayer",
   "f": "src/components/formateur/TranscriptionButton.tsx",
   "n": 1
@@ -13082,6 +15012,11 @@
  {
   "s": "Transcription générée",
   "f": "src/components/formateur/TranscriptionButton.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune discussion pour l'instant.",
+  "f": "src/components/forum/DiscussionPanel.tsx",
   "n": 1
  },
  {
@@ -13117,7 +15052,7 @@
  {
   "s": "Publier",
   "f": "src/components/forum/DiscussionPanel.tsx",
-  "n": 1
+  "n": 2
  },
  {
   "s": "Soyez le premier à poser une question !",
@@ -13250,6 +15185,11 @@
   "n": 1
  },
  {
+  "s": "Leadership & Management",
+  "f": "src/components/home/HeroAnimated.tsx",
+  "n": 1
+ },
+ {
   "s": "Management de Projet",
   "f": "src/components/home/HeroAnimated.tsx",
   "n": 1
@@ -13265,6 +15205,16 @@
   "n": 1
  },
  {
+  "s": "opacity-0 translate-y-2",
+  "f": "src/components/home/HeroAnimated.tsx",
+  "n": 1
+ },
+ {
+  "s": "opacity-100 translate-y-0",
+  "f": "src/components/home/HeroAnimated.tsx",
+  "n": 2
+ },
+ {
   "s": "vient de terminer",
   "f": "src/components/home/HeroAnimated.tsx",
   "n": 1
@@ -13272,6 +15222,11 @@
  {
   "s": "Voir la démo",
   "f": "src/components/home/HeroAnimated.tsx",
+  "n": 1
+ },
+ {
+  "s": "#1 Plateforme eLearning en Afrique francophone",
+  "f": "src/components/home/HeroSlider.tsx",
   "n": 1
  },
  {
@@ -13285,7 +15240,7 @@
   "n": 1
  },
  {
-  "s": "12 pays",
+  "s": "14 pays",
   "f": "src/components/home/HeroSlider.tsx",
   "n": 1
  },
@@ -13320,11 +15275,6 @@
   "n": 1
  },
  {
-  "s": "Certificats vérifiables",
-  "f": "src/components/home/HeroSlider.tsx",
-  "n": 1
- },
- {
   "s": "ces 2 dernières heures",
   "f": "src/components/home/HeroSlider.tsx",
   "n": 1
@@ -13335,12 +15285,17 @@
   "n": 1
  },
  {
+  "s": "Comptabilité SYSCOHADA — Décroché aujourd'hui",
+  "f": "src/components/home/HeroSlider.tsx",
+  "n": 1
+ },
+ {
   "s": "Cours actifs",
   "f": "src/components/home/HeroSlider.tsx",
   "n": 1
  },
  {
-  "s": "Formations certifiantes adaptées au marché africain — payez en Mobile Money, apprenez à votre rythme, obtenez un certificat reconnu dans 12 pays.",
+  "s": "Formations certifiantes adaptées au marché africain — payez en Mobile Money, apprenez à votre rythme, obtenez un certificat reconnu dans 14 pays.",
   "f": "src/components/home/HeroSlider.tsx",
   "n": 1
  },
@@ -13358,6 +15313,11 @@
   "s": "Mon tableau de bord",
   "f": "src/components/home/HeroSlider.tsx",
   "n": 2
+ },
+ {
+  "s": "opacity-0 translate-y-4",
+  "f": "src/components/home/HeroSlider.tsx",
+  "n": 1
  },
  {
   "s": "Tout le catalogue",
@@ -13410,6 +15370,16 @@
   "n": 3
  },
  {
+  "s": "opacity-0 pointer-events-none",
+  "f": "src/components/layout/AdminSidebar.tsx",
+  "n": 3
+ },
+ {
+  "s": "opacity-100 pointer-events-auto",
+  "f": "src/components/layout/AdminSidebar.tsx",
+  "n": 3
+ },
+ {
   "s": "Parcours",
   "f": "src/components/layout/AdminSidebar.tsx",
   "n": 1
@@ -13430,7 +15400,7 @@
   "n": 2
  },
  {
-  "s": "🌍 IBIG E-LEARNING — 12 pays d'Afrique francophone",
+  "s": "🌍 IBIG E-LEARNING — 14 pays d'Afrique francophone",
   "f": "src/components/layout/AnnouncementBar.tsx",
   "n": 1
  },
@@ -13515,6 +15485,11 @@
   "n": 1
  },
  {
+  "s": "MTN Money",
+  "f": "src/components/layout/Footer.tsx",
+  "n": 1
+ },
+ {
   "s": "Notifier",
   "f": "src/components/layout/FormateurSidebar.tsx",
   "n": 1
@@ -13522,6 +15497,16 @@
  {
   "s": "Profil",
   "f": "src/components/layout/MobileNav.tsx",
+  "n": 1
+ },
+ {
+  "s": "Affichage",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ajouter une formation",
+  "f": "src/components/layout/Navbar.tsx",
   "n": 1
  },
  {
@@ -13535,7 +15520,22 @@
   "n": 1
  },
  {
-  "s": "S'inscrire gratuitement",
+  "s": "Formateurs partenaires IBIG EDUFORM",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateurs partenaires IBIG EDUFORM : publiez vos formations",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Langue, devise et affichage",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Préférences",
   "f": "src/components/layout/Navbar.tsx",
   "n": 1
  },
@@ -13586,6 +15586,11 @@
  },
  {
   "s": "attendu :",
+  "f": "src/components/lesson/CodeSandbox.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chargement de l'éditeur…",
   "f": "src/components/lesson/CodeSandbox.tsx",
   "n": 1
  },
@@ -13666,6 +15671,11 @@
  },
  {
   "s": "Recommencer",
+  "f": "src/components/player/QuizPlayer.tsx",
+  "n": 1
+ },
+ {
+  "s": "Répondez à toutes les questions ({0} restante{1})",
   "f": "src/components/player/QuizPlayer.tsx",
   "n": 1
  },
@@ -13760,11 +15770,6 @@
   "n": 1
  },
  {
-  "s": "(optionnel)",
-  "f": "src/components/reviews/ReviewForm.tsx",
-  "n": 1
- },
- {
   "s": "Avis publié ! Merci pour votre retour.",
   "f": "src/components/reviews/ReviewForm.tsx",
   "n": 1
@@ -13805,6 +15810,11 @@
   "n": 1
  },
  {
+  "s": "Aucun avis pour l'instant. Soyez le premier à noter !",
+  "f": "src/components/reviews/ReviewsList.tsx",
+  "n": 1
+ },
+ {
   "s": "avis",
   "f": "src/components/reviews/ReviewsList.tsx",
   "n": 1
@@ -13816,6 +15826,11 @@
  },
  {
   "s": "Assistante pédagogique IA",
+  "f": "src/components/sara/SaraChat.tsx",
+  "n": 1
+ },
+ {
+  "s": "Bonjour ! Je suis **SARA**, votre assistante pédagogique IA 🌟 Je suis là pour vous aider à comprendre **{0}**. Posez-moi vos questions !",
   "f": "src/components/sara/SaraChat.tsx",
   "n": 1
  },
@@ -14000,12 +16015,52 @@
   "n": 1
  },
  {
+  "s": "\"Brush Script MT\", \"Segoe Script\", \"Lucida Handwriting\", cursive",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
+  "s": "Certificat cosigné par le formateur partenaire et IBIG EDUFORM",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
+  "s": "Direction pédagogique — IBIG SARL",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateur partenaire",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
   "s": "🎉 FÉLICITATIONS !",
   "f": "src/components/ui/CompletionCelebration.tsx",
   "n": 1
  },
  {
+  "s": "🎓 Je viens de terminer la formation \"{0}\" sur IBIG E-LEARNING et j'ai obtenu mon certificat ! 🏆",
+  "f": "src/components/ui/CompletionCelebration.tsx",
+  "n": 1
+ },
+ {
   "s": "🏆 Votre certificat a été émis automatiquement",
+  "f": "src/components/ui/CompletionCelebration.tsx",
+  "n": 1
+ },
+ {
+  "s": "Continuer l'apprentissage",
+  "f": "src/components/ui/CompletionCelebration.tsx",
+  "n": 1
+ },
+ {
+  "s": "scale-100 opacity-100 translate-y-0",
+  "f": "src/components/ui/CompletionCelebration.tsx",
+  "n": 1
+ },
+ {
+  "s": "scale-90 opacity-0 translate-y-4",
   "f": "src/components/ui/CompletionCelebration.tsx",
   "n": 1
  },
@@ -14267,1996 +16322,6 @@
  {
   "s": "Retirer des favoris",
   "f": "src/components/ui/WishlistButton.tsx",
-  "n": 1
- },
- {
-  "s": "· Soumis le {0}",
-  "f": "src/app/(admin)/admin/approbations/page.tsx",
-  "n": 1
- },
- {
-  "s": "· Expire le {0}",
-  "f": "src/app/(admin)/admin/coupons/CouponList.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyer à {0} destinataire{1}",
-  "f": "src/app/(admin)/admin/notifications/page.tsx",
-  "n": 1
- },
- {
-  "s": "{0} vient de s'inscrire",
-  "f": "src/app/(admin)/admin/page.tsx",
-  "n": 1
- },
- {
-  "s": "Paiement de {0}{1}",
-  "f": "src/app/(admin)/admin/page.tsx",
-  "n": 1
- },
- {
-  "s": "Supprimer le parcours \"{0}\" ?",
-  "f": "src/app/(admin)/admin/parcours/page.tsx",
-  "n": 1
- },
- {
-  "s": "{0} apprenant{1} inactif{2} ciblé{3}",
-  "f": "src/app/(admin)/admin/relances/RelancesPanel.tsx",
-  "n": 1
- },
- {
-  "s": "Sièges ({0}/{1})",
-  "f": "src/app/(dashboard)/organisation/[slug]/OrgDashboard.tsx",
-  "n": 1
- },
- {
-  "s": "{0} t'invite à rejoindre IBIG E-LEARN — la plateforme panafricaine de formation. Utilise mon lien pour t'inscrire et recevoir un bonus !",
-  "f": "src/app/(dashboard)/parrainage/ReferralDashboard.tsx",
-  "n": 1
- },
- {
-  "s": "✓ Validé (min. {0})",
-  "f": "src/app/(formateur)/formateur/devoirs/[courseId]/AssignmentGrader.tsx",
-  "n": 1
- },
- {
-  "s": "Erreur leçon : {0}",
-  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyer ce message à {0} apprenant(s) ?",
-  "f": "src/app/(formateur)/formateur/messagerie/BulkMessageForm.tsx",
-  "n": 1
- },
- {
-  "s": "{0} publiée{1}",
-  "f": "src/app/(formateur)/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Les apprenants doivent obtenir au moins {0}% pour valider ce quiz.",
-  "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
-  "n": 1
- },
- {
-  "s": "Question {0} : énoncé vide.",
-  "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
-  "n": 1
- },
- {
-  "s": "Question {0} : toutes les options doivent être remplies.",
-  "f": "src/app/(formateur)/formateur/quiz/[lessonId]/QuizEditor.tsx",
-  "n": 1
- },
- {
-  "s": "Découvrez les formations de {0} sur IBIG E-LEARNING.",
-  "f": "src/app/(public)/formateur/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "{0} heures de contenu",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "{0} leçons",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "de {0} h",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Formation en ligne certifiante{0}, certificat vérifiable, paiement Mobile Money.",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Formation professionnelle en {0}",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Dans {0} jours",
-  "f": "src/app/(public)/paiement/[courseId]/PaymentForm.tsx",
-  "n": 1
- },
- {
-  "s": "{0} — Parcours métier",
-  "f": "src/app/(public)/parcours/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucun résultat pour « {0} »",
-  "f": "src/app/(public)/recherche/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vérification certificat {0}",
-  "f": "src/app/(public)/verify/[code]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Il vous reste {0} tentative{1}.",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
-  "n": 1
- },
- {
-  "s": "Soumettre l'examen ({0}/{1} répondues)",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
-  "n": 1
- },
- {
-  "s": "{0} leçons{1}",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/LessonPaywall.tsx",
-  "n": 1
- },
- {
-  "s": "en {0} modules",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/LessonPaywall.tsx",
-  "n": 1
- },
- {
-  "s": "Répondre à toutes les questions ({0}/{1})",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
-  "n": 1
- },
- {
-  "s": "⚠️ RÉGÉNÉRER TOUT le contenu {0} ? Cela remplace le contenu existant et peut prendre 5-15 minutes (traitement par vagues de 20 leçons).",
-  "f": "src/components/admin/EnrichLessonsButton.tsx",
-  "n": 1
- },
- {
-  "s": "Enrichir les leçons sans contenu riche {0} ?",
-  "f": "src/components/admin/EnrichLessonsButton.tsx",
-  "n": 1
- },
- {
-  "s": "🎓 Je viens de terminer \"{0}\" sur IBIG E-LEARNING ! #IBIG #Formation #Afrique",
-  "f": "src/components/apprendre/CourseCompletionModal.tsx",
-  "n": 1
- },
- {
-  "s": "Répondez à toutes les questions ({0} restante{1})",
-  "f": "src/components/player/QuizPlayer.tsx",
-  "n": 1
- },
- {
-  "s": "Bonjour ! Je suis **SARA**, votre assistante pédagogique IA 🌟 Je suis là pour vous aider à comprendre **{0}**. Posez-moi vos questions !",
-  "f": "src/components/sara/SaraChat.tsx",
-  "n": 1
- },
- {
-  "s": "🎓 Je viens de terminer la formation \"{0}\" sur IBIG E-LEARNING et j'ai obtenu mon certificat ! 🏆",
-  "f": "src/components/ui/CompletionCelebration.tsx",
-  "n": 1
- },
- {
-  "s": "Carrière",
-  "f": "src/app/(admin)/admin/blog/page.tsx",
-  "n": 1
- },
- {
-  "s": "Exportez les rapports financiers chaque fin de mois et archivez-les",
-  "f": "src/app/(admin)/admin/guide/page.tsx",
-  "n": 1
- },
- {
-  "s": "Maintenez toujours au moins 2 comptes admin pour éviter un blocage de la plateforme",
-  "f": "src/app/(admin)/admin/guide/page.tsx",
-  "n": 1
- },
- {
-  "s": "Ne partagez jamais vos identifiants admin — créez un compte coordinateur pour les collègues",
-  "f": "src/app/(admin)/admin/guide/page.tsx",
-  "n": 1
- },
- {
-  "s": "Révoquez immédiatement les accès des collaborateurs qui quittent l'équipe via /admin/superadmin",
-  "f": "src/app/(admin)/admin/guide/page.tsx",
-  "n": 1
- },
- {
-  "s": "Validez les formations dans les 48h suivant la soumission d'un formateur",
-  "f": "src/app/(admin)/admin/guide/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vérifiez les tentatives anti-triche signalées chaque semaine dans /admin/antitricherie",
-  "f": "src/app/(admin)/admin/guide/page.tsx",
-  "n": 1
- },
- {
-  "s": "CinetPay (Mobile Money)",
-  "f": "src/app/(admin)/admin/parametres/page.tsx",
-  "n": 1
- },
- {
-  "s": "Moov Money",
-  "f": "src/app/(admin)/admin/parametres/page.tsx",
-  "n": 1
- },
- {
-  "s": "MTN MoMo",
-  "f": "src/app/(admin)/admin/parametres/page.tsx",
-  "n": 1
- },
- {
-  "s": "Bouton login",
-  "f": "src/app/(admin)/admin/sso/SSOManager.tsx",
-  "n": 1
- },
- {
-  "s": "Domaines email",
-  "f": "src/app/(admin)/admin/sso/SSOManager.tsx",
-  "n": 1
- },
- {
-  "s": "1–2 leçons en aperçu gratuit",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Au moins 3 modules structurés",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Créez des codes promo à -20% pour le lancement de chaque nouvelle formation",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Description complète (objectifs, public, prérequis)",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Image de couverture 16:9 (1280×720)",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Mettez à jour régulièrement vos formations pour rester dans les recommandations",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Minimum 1h de contenu vidéo total",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Organisez 1 session live mensuelle gratuite pour fidéliser vos apprenants",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Prix défini ou formation marquée gratuite",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Publiez au moins 5h de contenu vidéo par formation — les apprenants perçoivent plus de valeur",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Rejoignez notre programme d'ambassadeurs pour doubler votre visibilité sur la plateforme",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Répondez aux questions en moins de 24h pour obtenir de meilleures notes",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Un quiz final (min 5 questions)",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vidéo de présentation (2–3 min) recommandée",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Accès aux données de production restreint aux administrateurs autorisés avec MFA",
-  "f": "src/app/(public)/confidentialite/page.tsx",
-  "n": 1
- },
- {
-  "s": "Audits de sécurité réguliers et mises à jour des dépendances",
-  "f": "src/app/(public)/confidentialite/page.tsx",
-  "n": 1
- },
- {
-  "s": "Authentification sécurisée via Supabase Auth avec hachage bcrypt des mots de passe",
-  "f": "src/app/(public)/confidentialite/page.tsx",
-  "n": 1
- },
- {
-  "s": "Chiffrement des données en transit (HTTPS/TLS 1.3) et au repos (AES-256)",
-  "f": "src/app/(public)/confidentialite/page.tsx",
-  "n": 1
- },
- {
-  "s": "Politique de Row-Level Security (RLS) sur la base de données — chaque utilisateur n'accède qu'à ses propres données",
-  "f": "src/app/(public)/confidentialite/page.tsx",
-  "n": 1
- },
- {
-  "s": "Sauvegardes quotidiennes chiffrées conservées 30 jours",
-  "f": "src/app/(public)/confidentialite/page.tsx",
-  "n": 1
- },
- {
-  "s": "Capacité à créer du contenu vidéo de qualité",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Disponibilité pour répondre aux questions des apprenants",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Engagement pour la qualité et la mise à jour du contenu",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Maîtrise du français (et/ou anglais pour les formations bilingues)",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Minimum 3 ans d'expérience professionnelle dans votre domaine",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aide pour les exercices et quiz sans donner les réponses",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Exemples issus du contexte économique africain",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Explications claires en français à toute heure",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Recommandations de ressources complémentaires",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "MTN Money",
-  "f": "src/components/layout/Footer.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune formation en attente d'approbation.",
-  "f": "src/app/(admin)/admin/approbations/page.tsx",
-  "n": 1
- },
- {
-  "s": "Période (pour les exports comptables & B2B)",
-  "f": "src/app/(admin)/admin/exports/ExportPanel.tsx",
-  "n": 1
- },
- {
-  "s": "Exports & Comptabilité",
-  "f": "src/app/(admin)/admin/exports/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune formation pour l'instant",
-  "f": "src/app/(admin)/admin/formations/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vue d'ensemble de la plateforme IBIG E-LEARNING",
-  "f": "src/app/(admin)/admin/page.tsx",
-  "n": 1
- },
- {
-  "s": "Inscriptions & complétion",
-  "f": "src/app/(admin)/admin/rapports/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vérifier l'authenticité",
-  "f": "src/app/(dashboard)/mes-certificats/[id]/imprimer/page.tsx",
-  "n": 1
- },
- {
-  "s": "Date d'émission",
-  "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
-  "n": 1
- },
- {
-  "s": "IBIG SARL — Abidjan, Côte d'Ivoire",
-  "f": "src/app/(dashboard)/mes-factures/[paymentId]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune facture pour l'instant",
-  "f": "src/app/(dashboard)/mes-factures/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune formation sauvegardée pour l'instant.",
-  "f": "src/app/(dashboard)/mes-favoris/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vous n'êtes inscrit à aucune formation",
-  "f": "src/app/(dashboard)/mes-formations/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune note. Ouvrez une leçon et utilisez le panneau \"Mes notes\" pour prendre des notes.",
-  "f": "src/app/(dashboard)/mes-notes/page.tsx",
-  "n": 1
- },
- {
-  "s": "Calendrier d'activité — 16 semaines",
-  "f": "src/app/(dashboard)/mes-stats/page.tsx",
-  "n": 1
- },
- {
-  "s": "Suivez votre progression et vos habitudes d'apprentissage.",
-  "f": "src/app/(dashboard)/mes-stats/page.tsx",
-  "n": 1
- },
- {
-  "s": "Temps d'apprentissage par semaine",
-  "f": "src/app/(dashboard)/mes-stats/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vos formateurs n'ont pas encore programmé de sessions",
-  "f": "src/app/(dashboard)/sessions-live/page.tsx",
-  "n": 1
- },
- {
-  "s": "Taux d'abandon par leçon",
-  "f": "src/app/(formateur)/formateur/analytics/[courseId]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Les questions s'ajoutent depuis l'onglet",
-  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyez un message à tous les apprenants d'une formation",
-  "f": "src/app/(formateur)/formateur/messagerie/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aujourd'hui",
-  "f": "src/app/(formateur)/formateur/sessions-live/LiveSessionList.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune demande de virement pour l'instant.",
-  "f": "src/app/(formateur)/formateur/virements/page.tsx",
-  "n": 1
- },
- {
-  "s": "L'admin traitera votre virement sous 2-3 jours ouvrés.",
-  "f": "src/app/(formateur)/formateur/virements/PayoutRequestForm.tsx",
-  "n": 1
- },
- {
-  "s": "← Retour au centre d'aide",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Les formateurs bénéficient d'un support prioritaire — réponse sous 12h.",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Des formations certifiantes, conçues pour l'Afrique francophone, payables en Mobile Money.",
-  "f": "src/app/(public)/blog/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Passez de la lecture à l'action",
-  "f": "src/app/(public)/blog/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "S'inscrire gratuitement — Mode",
-  "f": "src/app/(public)/choisir-mode/[courseId]/ModeSelectorForm.tsx",
-  "n": 1
- },
- {
-  "s": "Aucun résultat pour \"",
-  "f": "src/app/(public)/faq/page.tsx",
-  "n": 1
- },
- {
-  "s": "S'inscrire maintenant",
-  "f": "src/app/(public)/formation/[slug]/EnrollButton.tsx",
-  "n": 1
- },
- {
-  "s": "Se connecter pour s'inscrire",
-  "f": "src/app/(public)/formation/[slug]/EnrollButton.tsx",
-  "n": 1
- },
- {
-  "s": "est une photo de votre entreprise à un instant T — ce qu'elle possède (actif) et ce qu'elle doit (passif).",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Merci, c'est beaucoup plus clair ! 🙏",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Votre paiement n'a pas pu être traité. Aucun montant n'a été débité.",
-  "f": "src/app/(public)/paiement/confirmation/page.tsx",
-  "n": 1
- },
- {
-  "s": "Changement d'onglet détecté (",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
-  "n": 1
- },
- {
-  "s": "L'examen sera soumis automatiquement à",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
-  "n": 1
- },
- {
-  "s": "Soumission automatique — Trop de changements d'onglet (",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/FinalExamSection.tsx",
-  "n": 1
- },
- {
-  "s": "Attention — Changement d'onglet détecté (",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
-  "n": 1
- },
- {
-  "s": "Soumission automatique — Trop de changements d'onglet détectés (",
-  "f": "src/app/apprendre/[courseId]/[lessonId]/QuizSection.tsx",
-  "n": 1
- },
- {
-  "s": "La page que vous cherchez n'existe pas ou a été déplacée.",
-  "f": "src/app/not-found.tsx",
-  "n": 1
- },
- {
-  "s": "Revenez à l'accueil pour continuer votre apprentissage.",
-  "f": "src/app/not-found.tsx",
-  "n": 1
- },
- {
-  "s": "Erreur d'upload",
-  "f": "src/components/formateur/BunnyUpload.tsx",
-  "n": 1
- },
- {
-  "s": "Ne fermez pas cette page pendant l'upload",
-  "f": "src/components/formateur/BunnyUpload.tsx",
-  "n": 1
- },
- {
-  "s": "Préparation de l'espace vidéo sur Bunny Stream…",
-  "f": "src/components/formateur/BunnyUpload.tsx",
-  "n": 1
- },
- {
-  "s": "💾 Sauvegardez d'abord cette leçon pour ajouter des questions.",
-  "f": "src/components/formateur/CourseEditor.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune discussion pour l'instant.",
-  "f": "src/components/forum/DiscussionPanel.tsx",
-  "n": 1
- },
- {
-  "s": "Comptabilité SYSCOHADA — Décroché aujourd'hui",
-  "f": "src/components/home/HeroSlider.tsx",
-  "n": 1
- },
- {
-  "s": "Chargement de l'éditeur…",
-  "f": "src/components/lesson/CodeSandbox.tsx",
-  "n": 1
- },
- {
-  "s": "Aucun avis pour l'instant. Soyez le premier à noter !",
-  "f": "src/components/reviews/ReviewsList.tsx",
-  "n": 1
- },
- {
-  "s": "Continuer l'apprentissage",
-  "f": "src/components/ui/CompletionCelebration.tsx",
-  "n": 1
- },
- {
-  "s": "Développement & Support de la plateforme",
-  "f": "src/app/(public)/a-propos/page.tsx",
-  "n": 1
- },
- {
-  "s": "Pôle formation du groupe IBIG SARL",
-  "f": "src/app/(public)/a-propos/page.tsx",
-  "n": 1
- },
- {
-  "s": "Praticiens reconnus dans leurs domaines",
-  "f": "src/app/(public)/a-propos/page.tsx",
-  "n": 1
- },
- {
-  "s": "Chef comptable",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Directrice RH, PME Abidjan",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Fondateur, startup Dakar",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Marketing Manager",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "scale-125 ring-2 ring-offset-2 ring-gray-400",
-  "f": "src/app/(admin)/admin/badges/BadgesManager.tsx",
-  "n": 1
- },
- {
-  "s": "ring-2 ring-offset-2 ring-[#0B3D91]",
-  "f": "src/app/(admin)/admin/temoignages/page.tsx",
-  "n": 1
- },
- {
-  "s": "Banque & Finance",
-  "f": "src/app/(public)/entreprise/B2BContactForm.tsx",
-  "n": 1
- },
- {
-  "s": "100+ apprenants",
-  "f": "src/app/(public)/entreprise/page.tsx",
-  "n": 1
- },
- {
-  "s": "Banques & Microfinance",
-  "f": "src/app/(public)/entreprise/page.tsx",
-  "n": 1
- },
- {
-  "s": "Distribution & Retail",
-  "f": "src/app/(public)/entreprise/page.tsx",
-  "n": 1
- },
- {
-  "s": "ONG & Associations",
-  "f": "src/app/(public)/entreprise/page.tsx",
-  "n": 1
- },
- {
-  "s": "Certificats & Reconnaissance",
-  "f": "src/app/(public)/faq/page.tsx",
-  "n": 1
- },
- {
-  "s": "Formations & Apprentissage",
-  "f": "src/app/(public)/faq/page.tsx",
-  "n": 1
- },
- {
-  "s": "Inscription & Compte",
-  "f": "src/app/(public)/faq/page.tsx",
-  "n": 1
- },
- {
-  "s": "Paiement & Tarifs",
-  "f": "src/app/(public)/faq/page.tsx",
-  "n": 1
- },
- {
-  "s": "Technique & Support",
-  "f": "src/app/(public)/faq/page.tsx",
-  "n": 1
- },
- {
-  "s": "opacity-60 cursor-default",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Entrepreneuriat & Business",
-  "f": "src/app/(public)/page.tsx",
-  "n": 1
- },
- {
-  "s": "Leadership & Management",
-  "f": "src/components/home/HeroAnimated.tsx",
-  "n": 1
- },
- {
-  "s": "opacity-0 translate-y-2",
-  "f": "src/components/home/HeroAnimated.tsx",
-  "n": 1
- },
- {
-  "s": "opacity-100 translate-y-0",
-  "f": "src/components/home/HeroAnimated.tsx",
-  "n": 2
- },
- {
-  "s": "opacity-0 translate-y-4",
-  "f": "src/components/home/HeroSlider.tsx",
-  "n": 1
- },
- {
-  "s": "opacity-0 pointer-events-none",
-  "f": "src/components/layout/AdminSidebar.tsx",
-  "n": 3
- },
- {
-  "s": "opacity-100 pointer-events-auto",
-  "f": "src/components/layout/AdminSidebar.tsx",
-  "n": 3
- },
- {
-  "s": "scale-100 opacity-100 translate-y-0",
-  "f": "src/components/ui/CompletionCelebration.tsx",
-  "n": 1
- },
- {
-  "s": "scale-90 opacity-0 translate-y-4",
-  "f": "src/components/ui/CompletionCelebration.tsx",
-  "n": 1
- },
- {
-  "s": "#1 Plateforme eLearning en Afrique francophone",
-  "f": "src/components/home/HeroSlider.tsx",
-  "n": 1
- },
- {
-  "s": "À examiner",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune candidature dans cette catégorie.",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Candidatures, conventions de partenariat et partage des revenus",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Convention envoyée",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Formateurs partenaires",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 2
- },
- {
-  "s": "Modifications demandées",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Partenaires",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Suspendus",
-  "f": "src/app/(admin)/admin/partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "· déposée le",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "% · IBIG EDUFORM :",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "% formateur",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "ans d'expérience",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Conditions particulières (optionnel) : exclusivité, bonus de lancement, engagement de volume…",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Convention envoyée le",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Demander des modifications",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Dernier motif de refus",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Dossier complet",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyer la convention",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyer la demande",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Exemple de contenu",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 2
- },
- {
-  "s": "FCFA · Solde :",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Formations envisagées",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Gains cumulés :",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Modifier la convention",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Motif de la suspension (visible par le formateur)…",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Motif et points à corriger (visible par le candidat)…",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Nom de signature",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "par «",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Part formateur",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Personne physique",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 2
- },
- {
-  "s": "Retenir et proposer la convention",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Signée le",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Site web",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 2
- },
- {
-  "s": "Suspendre le partenariat",
-  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
-  "n": 1
- },
- {
-  "s": "Étape 1/4 du programme Formateurs Partenaires : créez votre compte, confirmez votre email, puis déposez votre candidature.",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Enregistrez vos modifications, puis soumettez la formation : IBIG EDUFORM la vérifie et la met en ligne.",
-  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
-  "n": 1
- },
- {
-  "s": "Langue d'enseignement",
-  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
-  "n": 1
- },
- {
-  "s": "Retour d'IBIG EDUFORM :",
-  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
-  "n": 1
- },
- {
-  "s": "Après la création, ajoutez vos modules, leçons et quiz, puis cliquez sur « Soumettre pour validation ». IBIG EDUFORM vérifie la formation et la met en ligne. Vos revenus sont ensuite partagés selon votre convention de partenariat.",
-  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
-  "n": 1
- },
- {
-  "s": "Publication par IBIG EDUFORM",
-  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
-  "n": 1
- },
- {
-  "s": "). La part de revenus indiquée (",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "[Nom du formateur partenaire]",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "%) est la part standard : la part exacte et d'éventuelles conditions particulières figurent dans la convention personnelle qui vous est proposée après étude de votre candidature.",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Convention de partenariat",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Convention de partenariat formateurs",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Devenir formateur partenaire",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Modèle de convention entre IBIG EDUFORM et les formateurs partenaires : validation des formations, partage des revenus, propriété intellectuelle, certificats cosignés.",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Modèle en vigueur (version",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 1
- },
- {
-  "s": "Programme Formateurs Partenaires",
-  "f": "src/app/(public)/conditions-partenaires/page.tsx",
-  "n": 2
- },
- {
-  "s": "Créez votre compte, déposez votre candidature en ligne : IBIG EDUFORM vous répond sous 5 jours ouvrés avec sa proposition de partenariat.",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Déposer ma candidature",
-  "f": "src/app/(public)/devenir-formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "\"Brush Script MT\", \"Segoe Script\", cursive",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 2
- },
- {
-  "s": "🎉 Votre candidature est retenue",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "Convention de partenariat · version",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "IBIG EDUFORM vous propose la convention ci-dessous. Lisez-la attentivement, puis signez-la pour commencer à publier vos formations.",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "J'ai lu et j'accepte la convention de partenariat IBIG EDUFORM. Je reconnais que cette acceptation électronique vaut signature.",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "Part IBIG EDUFORM",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "Signature — saisissez votre nom complet",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "Signer et devenir formateur partenaire",
-  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
-  "n": 1
- },
- {
-  "s": "! IBIG EDUFORM étudie votre profil, généralement sous 5 jours ouvrés. Vous serez notifié dès que les conditions de partenariat vous seront proposées.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Candidature",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Candidature en cours d'examen",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Certificats cosignés",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Chaque formation est vérifiée par IBIG EDUFORM avant sa mise en ligne. Vos revenus sont calculés automatiquement à chaque paiement confirmé.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Chaque vente confirmée crédite automatiquement votre solde. Virement par Mobile Money ou banque.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Comment ça marche",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Confirmez votre adresse email",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Consultez le modèle de",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Contacter IBIG EDUFORM",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Contactez IBIG EDUFORM pour plus d'informations.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Convention",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "convention de partenariat",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 2
- },
- {
-  "s": "Corrigez votre candidature ci-dessous puis renvoyez-la.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Créer mon compte formateur",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Créez et confirmez votre compte",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Créez et soumettez vos formations",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Déposée le",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Déposez votre candidature",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Devenir formateur partenaire IBIG EDUFORM",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Encaissez votre part",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Étapes du partenariat",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "IBIG EDUFORM valide chaque formation puis la met en ligne.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "IBIG EDUFORM vous propose ses conditions, dont votre part des revenus. Vous les acceptez en ligne.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Inscription gratuite, puis confirmation de votre adresse email.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "J'ai déjà un compte",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Les certificats de vos apprenants portent votre signature et celle d'IBIG EDUFORM.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Merci",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Modifications demandées par IBIG EDUFORM",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Modifier ma candidature",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Partagez votre expertise avec des milliers d'apprenants en Afrique francophone, encaissez votre part sur chaque vente et délivrez des certificats cosignés avec IBIG EDUFORM.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Partenariat suspendu",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Publiez vos formations avec IBIG EDUFORM",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Publiez vos formations sur IBIG E-LEARNING et partagez les revenus avec IBIG EDUFORM : candidature, convention de partenariat, validation et certificats cosignés.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Signez la convention de partenariat",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Toutes les informations restent confidentielles et servent uniquement à l'étude de votre dossier et au versement de vos revenus.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Un lien de confirmation a été envoyé à",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Votre candidature de formateur partenaire",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "Votre expertise, votre expérience et les formations que vous souhaitez créer.",
-  "f": "src/app/(public)/devenir-partenaire/page.tsx",
-  "n": 1
- },
- {
-  "s": "(5 maximum)",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "✓ Longueur suffisante",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Années d'expérience professionnelle *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Biographie professionnelle *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "de la plateforme. J'ai pris connaissance du modèle de",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Domaines d'expertise *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Encore {0} caractères minimum",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyer ma candidature",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Envoyer ma candidature mise à jour",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Ex : Expert-comptable, Consultant RH",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Expertise",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Formations que vous souhaitez créer *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Identité",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Je certifie l'exactitude de ces informations et j'accepte les",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Langues d'enseignement *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "linkedin.com/in/…",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Mode de versement *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Motivation",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "N° contribuable / RCCM",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Nom complet *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Nom figurant sur vos certificats cosignés *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Numéro Mobile Money *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Pays *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Pourquoi souhaitez-vous enseigner avec IBIG EDUFORM ?",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "que je signerai si ma candidature est retenue.",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Raison sociale *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Sélectionner…",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Si différent du téléphone",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Signature et engagement",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Statut et versement des revenus",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Téléphone *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Titre professionnel *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Titres, public visé, durée approximative de chaque formation.",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Vidéo, support, chaîne…",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Ville *",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Votre parcours, vos réalisations, vos certifications… Elle apparaîtra sur votre profil public de formateur.",
-  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
-  "n": 1
- },
- {
-  "s": "Formation dispensée en {0}",
-  "f": "src/app/(public)/formation/[slug]/page.tsx",
-  "n": 2
- },
- {
-  "s": "Soumission impossible",
-  "f": "src/components/formateur/SubmitForApproval.tsx",
-  "n": 1
- },
- {
-  "s": "Ajouter une formation",
-  "f": "src/components/layout/Navbar.tsx",
-  "n": 1
- },
- {
-  "s": "Formateurs partenaires IBIG EDUFORM",
-  "f": "src/components/layout/Navbar.tsx",
-  "n": 1
- },
- {
-  "s": "Formateurs partenaires IBIG EDUFORM : publiez vos formations",
-  "f": "src/components/layout/Navbar.tsx",
-  "n": 1
- },
- {
-  "s": "\"Brush Script MT\", \"Segoe Script\", \"Lucida Handwriting\", cursive",
-  "f": "src/components/ui/CertificateSignatures.tsx",
-  "n": 1
- },
- {
-  "s": "Certificat cosigné par le formateur partenaire et IBIG EDUFORM",
-  "f": "src/components/ui/CertificateSignatures.tsx",
-  "n": 1
- },
- {
-  "s": "Direction pédagogique — IBIG SARL",
-  "f": "src/components/ui/CertificateSignatures.tsx",
-  "n": 1
- },
- {
-  "s": "Formateur partenaire",
-  "f": "src/components/ui/CertificateSignatures.tsx",
-  "n": 1
- },
- {
-  "s": "À rembourser",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune séance pour l'instant.",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Coach",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 2
- },
- {
-  "s": "Coaching",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 6
- },
- {
-  "s": "Coaching individuel",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 4
- },
- {
-  "s": "Offre",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Offres en ligne",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "remboursement(s) à traiter",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Séances confirmées",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Séances payées puis annulées. Remboursez via CinetPay, puis passez le paiement en « Remboursé » dans Paiements : la part du coach est alors retirée automatiquement.",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Séances réservées, revenus et remboursements",
-  "f": "src/app/(admin)/admin/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Accédez au catalogue, suivez vos formations et obtenez des certificats vérifiables.",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Coachs professionnels : rejoignez le programme partenaire IBIG EDUFORM pour proposer vos programmes d'accompagnement et vos sessions live, avec partage des revenus.",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Entreprises, ONG et institutions : créez votre compte, puis décrivez votre besoin pour recevoir une offre sur mesure pour vos équipes.",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Former mes équipes",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "J'accompagne",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Je m'inscris en tant que",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Je veux enseigner",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Je veux me former",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Nom de l'entreprise / organisation",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Programme Formateurs Partenaires IBIG EDUFORM : créez votre compte, confirmez votre email, puis déposez votre candidature pour publier vos formations.",
-  "f": "src/app/(auth)/inscription/page.tsx",
-  "n": 1
- },
- {
-  "s": "Annuler cette séance ?",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "avec",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Lien de la visio",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Marquer comme réalisée",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Objectif :",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Paiement en cours de confirmation. Le créneau est réservé pendant 20 minutes.",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Rejoindre maintenant",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Séance de coaching",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Vos notes de séance",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Votre séance",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Vous coachez",
-  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune séance à venir.",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 1
- },
- {
-  "s": "Découvrir les coachs →",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 1
- },
- {
-  "s": "Mes séances",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 1
- },
- {
-  "s": "Mes séances de coaching",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 2
- },
- {
-  "s": "Paiement reçu : votre séance sera confirmée dans quelques instants (actualisez la page si besoin).",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 1
- },
- {
-  "s": "Réserver",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 3
- },
- {
-  "s": "Séance réservée ! Vous avez reçu une confirmation.",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vos séances de coaching individuel",
-  "f": "src/app/(dashboard)/mes-seances/page.tsx",
-  "n": 1
- },
- {
-  "s": "Ajoutez au moins une plage : sans disponibilité, vos offres n'affichent aucun créneau.",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Aucune offre. Créez votre première offre de coaching.",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Ce que la séance apporte, pour qui, comment elle se déroule…",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "De",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "En ligne",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Format",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Fuseau horaire enregistré",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Jour",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "L'heure de fin doit être après l'heure de début.",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Les apprenants réservent dans ces plages (au moins 12 h à l'avance, jusqu'à 3 semaines). Les créneaux déjà réservés sont retirés automatiquement.",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Masquée",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Mes disponibilités hebdomadaires",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Mes offres de coaching",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Nouvelle offre",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Offre enregistrée",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Prix (FCFA)",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Thème (optionnel) — ex : Carrière, Entrepreneuriat, Leadership",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Titre — ex : Préparer un entretien d'embauche",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Titre (5 caractères min.) et description (30 caractères min.) requis.",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Visio",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Voir la page publique",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Votre fuseau horaire",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "Votre part : selon votre convention de partenariat (50 % par défaut), créditée à chaque séance payée.",
-  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
-  "n": 1
- },
- {
-  "s": "à venir ·",
-  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "réalisées)",
-  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Voir mes séances (",
-  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vos offres, vos disponibilités et vos séances réservées",
-  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "12 500 FCFA",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "Le revenu net de chaque vente est partagé à 50 % pour vous et 50 % pour IBIG EDUFORM (part standard, précisée dans votre convention de partenariat).",
-  "f": "src/app/(public)/aide/formateur/page.tsx",
-  "n": 1
- },
- {
-  "s": "{0} — coaching avec {1}",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "À propos du coach",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Choisissez votre créneau",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Coaching introuvable",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "En visio",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Paiement sécurisé Mobile Money ou carte. Annulation gratuite jusqu'à 24 h avant la séance. Lien de visio envoyé après confirmation.",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Par téléphone",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "un coach",
-  "f": "src/app/(public)/coaching/[id]/page.tsx",
-  "n": 1
- },
- {
-  "s": "Aucun créneau disponible pour le moment. Revenez bientôt.",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "C'est votre propre offre : gérez-la depuis votre espace formateur.",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Choisissez un créneau",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Ex : préparer un entretien, structurer mon business plan…",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Horaires affichés dans votre fuseau (",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Jours disponibles",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Réservation impossible.",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Réserver et payer",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Se connecter pour réserver",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Votre objectif pour cette séance",
-  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
-  "n": 1
- },
- {
-  "s": "Des séances en visio avec des coachs et experts partenaires d'IBIG EDUFORM. Choisissez votre créneau, payez en Mobile Money, recevez votre lien de visio.",
-  "f": "src/app/(public)/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Devenir coach partenaire",
-  "f": "src/app/(public)/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Les premiers coachs arrivent bientôt",
-  "f": "src/app/(public)/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Progressez plus vite avec un coach",
-  "f": "src/app/(public)/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Réservez une séance de coaching individuel en visio avec un coach partenaire IBIG EDUFORM : carrière, entrepreneuriat, leadership, prise de parole. Paiement Mobile Money.",
-  "f": "src/app/(public)/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Vous êtes coach ? Rejoignez le programme partenaire IBIG EDUFORM pour proposer vos séances.",
-  "f": "src/app/(public)/coaching/page.tsx",
-  "n": 1
- },
- {
-  "s": "Affichage",
-  "f": "src/components/layout/Navbar.tsx",
-  "n": 1
- },
- {
-  "s": "Langue, devise et affichage",
-  "f": "src/components/layout/Navbar.tsx",
-  "n": 1
- },
- {
-  "s": "Préférences",
-  "f": "src/components/layout/Navbar.tsx",
   "n": 1
  }
 ]
