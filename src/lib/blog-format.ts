@@ -90,7 +90,8 @@ export function toIsoDate(value: string | null | undefined): string | undefined 
   if (/^\d{4}-\d{2}-\d{2}/.test(value)) return value.slice(0, 10)
   const m = value.toLowerCase().match(/^(\d{1,2})(?:er)?\s+([a-zéû]+)\s+(\d{4})$/)
   if (!m) return undefined
-  const month = MOIS.indexOf(m[2])
+  const EN = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+  const month = MOIS.indexOf(m[2]) >= 0 ? MOIS.indexOf(m[2]) : EN.indexOf(m[2])
   if (month < 0) return undefined
   return `${m[3]}-${String(month + 1).padStart(2, '0')}-${m[1].padStart(2, '0')}`
 }

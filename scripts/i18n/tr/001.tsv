@@ -1,0 +1,226 @@
+160	to
+161	PURCHASE ORDER
+162	This purchase order is valid for 30 days from its date of issue. Payment within 30 days of invoice date. For any question: contact@ibig-elearning.com
+163	Cohort:
+164	employee
+166	Date:
+167	Description
+168	Recipient
+169	Documents —
+170	Issued by
+173	List of beneficiaries
+174	Subject
+175	Unit price excl. tax
+176	Period:
+177	Training platform
+178	Pan-African online training platform
+179	for
+180	Qty
+181	Total excl. tax
+182	TOTAL INCL. TAX
+183	VAT (0%)
+184	Adding...
+185	added,
+186	Add learners (emails separated by line break, comma or semicolon)
+187	Add and invite by email
+188	Learners (
+189	No learner in this cohort.
+190	No valid email address found.
+191	Account
+192	skipped (already present)
+193	Invited
+195	Purchase order / Invoice
+196	Details
+197	Billing
+198	Price / learner
+199	Status:
+201	Creating...
+202	Create cohort
+203	Start date
+204	End date
+205	Currency
+206	Company (won B2B request) *
+207	Network error
+209	E.g.: Finance Cohort – Jan 2025
+210	Course *
+212	Cohort name *
+213	New cohort
+214	New company cohort
+215	Price per learner
+216	Select
+219	Cancelled
+220	learners
+221	No cohort created
+222	Draft
+223	Company cohorts
+224	Confirmed
+225	Create a cohort from a won B2B request.
+227	In progress
+228	Manage
+229	Employee groups enrolled in B2B training
+230	Completed
+231	Total learners
+232	Total cohorts
+233	No company request yet.
+234	Cohorts
+235	Create cohort
+236	Company requests (B2B)
+237	Won
+238	Manage corporate training requests
+239	Requests submitted via /entreprise will appear here.
+240	New
+241	Total requests
+242	Learner, course, progress, date
+243	Purchase order, company, course, learners, unit price, total excl. tax
+244	This month
+245	This year
+246	B2B cohorts
+247	Basic data
+248	From
+249	Accounting exports
+250	Instructor, amount, currency, status, request and processing dates
+251	Enrollments
+252	Sales journal
+253	Name, email, country, level, points, registration date
+254	Number, learner, course, issue date
+255	Company offer
+256	Reference, date, customer, course, amount excl. tax, VAT, incl. tax, payment method
+257	Current qtr.
+258	Instructor payouts
+259	Encoding
+260	for optimal compatibility with Microsoft Excel and Google Sheets.
+261	Download data as CSV (Excel / Google Sheets compatible)
+262	All files are encoded in
+263	UTF-8 with BOM
+264	Advanced
+265	Beginner
+266	Enrich all lessons (AI)
+267	course(s) in total
+268	Courses
+269	Enrolled
+270	Intermediate
+271	Price XOF
+272	Publication
+273	All levels
+274	Featured
+275	View
+276	"admin" has all rights. "coordinateur" has the same rights except managing admins and critical settings.
+277	✉️ admin@ibig-elearning.com
+278	🚨 urgence@ibig-elearning.com
+279	Go to the console
+280	Admin access
+281	Last admin alert
+282	Go to /admin/superadmin → Coordinators section or /admin/utilisateurs → change the role to "admin". Only an admin can do this.
+283	Anti-cheating
+284	Approvals
+285	Approvals (priority)
+286	Blog posts
+287	Assign the "coordinateur" role from /admin/utilisateurs. Coordinators can access everything except /admin/superadmin and critical settings.
+288	Gamification badges
+289	Blog and editorial content
+290	Security best practices
+291	Change a role
+292	Each flagged attempt shows: score, number of tab switches, reason for flagging and date.
+293	CinetPay (Mobile Money) and Stripe (international cards) API keys in Settings → Payments.
+294	Click ‹ to collapse the menu to icons, › to expand it. The scroll position is preserved on each click.
+295	How do I add a second administrator?
+296	How do I review suspicious exam attempts?
+297	How do I create a coordinator without giving access to settings?
+298	How do I export the user list for an audit?
+299	Company accounts
+300	Sign in with an admin or coordinator account → you are automatically redirected to /admin.
+301	Admin console
+302	Full console except admin management and critical settings.
+303	Global coupons
+304	In /admin/exports → "Users" → choose columns and date range → "Export CSV" (name, email, role, country, registration date).
+305	In the payment record → "Initiate a refund". Policy: 7 days and < 20% of content viewed.
+306	In the list, use the role selector (learner → instructor → coordinator). Only an admin can assign the "admin" role.
+307	From /admin/utilisateurs or /admin/superadmin → role selector. The change is immediate and secured server-side.
+308	From Supabase → Authentication → Users → Send magic link. A sign-in link is sent to the user's email.
+309	Automatic detection
+310	Instructor area + learner dashboard.
+311	Accounting export
+312	Filter all reports by country to track performance in each of the 12 countries covered.
+313	Generate PDF progress reports per cohort, exportable and sendable to HR managers.
+314	Manage courses
+315	Manage payments
+316	Manage users
+317	B2B management — Companies
+318	Admin access management
+319	Administrator guide
+320	Administrator Guide
+321	Role hierarchy
+322	Full history
+323	Cheating indicators
+324	Payment integrations
+325	The sidebar stays fixed while navigating: clicking a menu item does not scroll or close the sidebar.
+326	The system detects: tab switches (≥3), automatic submission, answers too fast (<5s/question), timer overrun.
+327	Questions are shuffled uniquely for each attempt (seeded shuffle) to prevent memorising the order.
+328	When rejecting, write a precise comment. The instructor is notified immediately.
+329	White label
+330	Stable navigation
+332	"Suspend" option to temporarily block access without deleting data or courses.
+333	Yes, managed from /admin/superadmin. Prefer the "coordinateur" role for staff to limit risks on critical settings.
+334	Admin access page
+335	Anti-cheating page
+336	General settings
+337	System settings
+338	Career paths
+339	Can there be several administrators?
+340	For a critical incident, use the emergency channel.
+341	Automatic protections
+342	Frequently asked questions
+343	Shuffled questions
+344	Report by country
+345	HR reports
+346	Reports and analytics
+347	Financial reports
+348	Learning reports
+349	Search and filters
+350	Complete reference for the IBIG E-LEARNING administration console
+351	Reset a password
+352	Reject with feedback
+353	Refund a learner
+354	Go to /admin/antitricherie — you will find all exams and quizzes automatically flagged by the anti-cheating system.
+355	Access roles
+356	If you are the only admin, an orange alert appears on /admin/superadmin inviting you to add a second admin.
+357	Collapsible sidebar
+359	Administrator technical support
+360	Suspend an account
+361	Dashboard and courses only.
+362	Completion rate, most followed courses, quiz results, average training time.
+363	Testimonials
+364	All rights — admin management, settings, everything.
+365	All courses
+366	A coordinator cannot promote or demote an admin. The last admin of the platform cannot be demoted.
+367	An instructor says their payout has not been received — what should I do?
+368	Access URL
+369	Users
+370	Check the status in /admin/virements. If "processed", ask for the Mobile Money transaction number and contact the operator. Maximum delay: 7 business days.
+371	enrollments in total
+372	Not started
+373	Progress
+374	Completed
+376	Preview
+377	No tenant configured
+378	Branding hidden
+379	Primary color
+380	Secondary color
+381	Theme colors
+382	Create tenant
+383	Create custom portals for your B2B clients
+384	Create your first white-label portal
+385	Custom domain (optional)
+386	Background
+387	Hidden
+388	Hide IBIG E-LEARNING branding (
+389	Custom footer message
+390	Update
+391	Tenant name *
+392	New tenant
+393	New white-label tenant
+395	Primary
+396	Secondary
+397	Subdomain *
+398	Subdomain and name are required
+399	Delete this tenant?

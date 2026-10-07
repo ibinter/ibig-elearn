@@ -1,4 +1,5 @@
-import { readingMinutes } from './blog-format'
+import { readingMinutes, toIsoDate } from './blog-format'
+import { articlesEn } from './blog-en'
 
 export interface Article {
   slug: string
@@ -702,3 +703,23 @@ export function getArticleBySlug(slug: string): Article | undefined {
 
 // Durée de lecture calculée sur le contenu réel (≈ 200 mots/min)
 for (const a of articles) a.readTime = `${readingMinutes(a.content)} min`
+
+/** Articles dans la langue demandée (titre, extrait, catégorie, contenu et date traduits en anglais). */
+export function localizedArticles(locale: 'fr' | 'en'): Article[] {
+  if (locale !== 'en') return articles
+  return articles.map(a => {
+    const en = articlesEn[a.slug]
+    if (!en) return a
+    const iso = toIsoDate(a.date)
+    return {
+      ...a,
+      title: en.title,
+      excerpt: en.excerpt,
+      category: en.category,
+      content: en.content,
+      date: iso ? new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : a.date,
+      readTime: `${readingMinutes(en.content)} min`,
+      keywords: [],
+    }
+  })
+}

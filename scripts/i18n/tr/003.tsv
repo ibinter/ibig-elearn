@@ -1,0 +1,206 @@
+640	Link
+642	Past (
+643	Upcoming sessions
+644	Past sessions
+645	Title
+646	All live sessions scheduled by instructors
+647	SSO — Company sign-in
+648	(leave empty to keep)
+649	(comma separated)
+650	Button preview:
+651	No SSO provider configured
+652	OAuth Client ID
+654	Set up Google Workspace, Azure AD or SAML for your B2B clients
+655	Single sign-on for your B2B clients' teams
+656	Create provider
+657	Email domains *
+660	Button label
+661	Users with these domains will see the SSO button when signing in
+664	Edit SSO provider
+665	Organisation name *
+666	Organisation name and email domains are required
+667	New SSO provider
+668	Generic OIDC
+669	Active provider
+670	Total providers
+671	Sign in with SSO
+672	Enterprise SSO
+673	Delete this SSO provider?
+676	Provider type *
+677	SAML metadata URL
+678	Icon URL
+679	Administration access
+680	Full access: roles, settings, exports, everything.
+681	Course access only, no admin access.
+682	admin (you)
+683	Administrators (
+684	No administrator found
+685	No coordinator — promote a user from
+686	Single admin account
+687	Full admin console except managing admins and admin roles.
+688	Coordinators (
+689	Instructor area only (learner dashboard + pro area).
+690	Manage the platform's admin and coordinator roles
+691	Access levels
+692	You are the only administrator. Add a second admin before any change to avoid being locked out.
+693	Add
+694	No testimonial. Click "Add" to create one.
+695	Loading…
+696	Testimonial content *
+697	Manage the reviews shown on the homepage
+698	Initials (e.g. KA)
+699	New testimonial
+700	Order
+701	Role / Position *
+702	Delete this testimonial?
+703	(you)
+704	registered account(s)
+705	No pending request.
+706	pending request(s) — Total:
+707	Payout requests
+708	History
+709	Paid
+711	Mark as paid
+712	Reason...
+713	Sign in to your IBIG E-LEARNING account to access your courses and certificates and track your progress.
+714	Sign in
+715	SSO error
+716	create IBIG account
+717	Create your account and start your online professional training journey.
+718	Create your free account and access certified professional courses in French-speaking Africa.
+719	free course Africa
+720	online course sign up
+721	Free sign-up
+722	Join IBIG E-LEARNING — Free sign-up
+724	Other
+725	Cameroon
+731	Morocco
+732	or
+736	Forgot password
+737	Reset your IBIG E-LEARNING password.
+738	← Back
+739	← Back to sign in
+740	Email sent!
+741	Enter your email and we will send you a reset link.
+742	Send link
+743	Check your inbox and click the link to reset your password.
+744	your@email.com
+745	No certificate yet
+746	certificate
+747	Explore courses
+748	h of training
+749	My certificates
+750	earned
+751	by
+752	Revoked
+753	Complete a course to earn your certificate
+754	Access to 1 free course
+755	1 month of Premium access free
+756	Silver
+758	1-to-1 coaching, 30 min
+759	How to earn points
+760	Complete in under 7 days
+761	Complete a course
+762	Diamond
+763	Earn points, unlock rewards
+764	Points history
+765	Leave a review
+766	Gold
+767	Refer a friend
+769	points required
+770	Loyalty programme
+771	Progress to the next level
+773	Rewards to unlock
+774	20% off your next purchase
+775	You have reached the maximum level! 🎉
+778	th of
+779	Elite
+780	day
+781	League being created…
+782	Stay
+785	Relegation
+786	left
+787	Come back in a few moments.
+788	Be the first to earn XP!
+790	Your league
+791	You are
+792	XP earned this week counts
+793	To unlock (
+794	Complete courses to unlock your first badges!
+795	My badges
+796	Earned on
+797	Earned (
+798	No badge yet
+799	Your rewards and achievements
+800	📜 Official certificate
+801	This certificate is awarded to
+802	Academic management
+803	hours · Instructor:
+806	Pan-African platform
+807	for successfully completing the course
+808	QR verification
+810	Issued on:
+811	Instructor:
+812	Download
+813	Complete a course to earn your first verifiable certificate.
+815	Lifetime access · Certificate included · IBIG E-LEARNING platform
+816	This invoice serves as an official receipt. Keep it for your records.
+817	Billed to
+818	Online course
+819	Invoice details
+821	Payment method
+822	Payment received and confirmed
+823	Paid
+824	Payment reference
+825	Subtotal
+828	Total incl. tax
+829	Transaction processed via CinetPay · Ref.
+830	VAT included if applicable
+831	VAT not applicable (WAEMU regime)
+832	Discover courses
+833	invoice
+834	Invoice
+835	My invoices
+836	View / Download
+837	Your invoices will appear here after each confirmed payment.
+838	My favourites
+839	Browse the catalogue
+840	saved
+841	View course
+842	🎉 Course completed!
+843	Certified course!
+844	Generate my certificate
+845	h of content
+846	lessons
+847	lessons completed
+848	You have earned your certificate for this course.
+849	In progress (
+850	Explore our catalogue and start learning.
+851	My courses
+852	Completed · Review
+853	Completed (
+854	View curriculum →
+855	No bookmark. Use the 🔖 button in a lesson to save your position.
+856	lesson
+857	Bookmarks
+858	My notes
+860	Open
+861	written
+862	No path in progress
+863	Discover paths
+864	Explore paths
+865	Congratulations!
+866	courses
+867	courses completed
+868	Guided paths help you progress step by step towards expertise in a field.
+869	My paths
+870	path followed
+871	View my certificates
+872	You have completed a path. Your path certificate has been generated.
+873	✅ Quiz passed
+874	🎯 Module completed
+875	🏅 Course completed
+876	📖 Lesson completed
+877	📝 Assignment passed
+878	🔥 Streak bonus
+879	🔥 Daily streak

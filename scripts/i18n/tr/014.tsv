@@ -1,0 +1,87 @@
+2891	Career
+2892	Export the financial reports at the end of each month and archive them
+2893	Always keep at least 2 admin accounts to avoid locking the platform
+2894	Never share your admin credentials — create a coordinator account for colleagues
+2895	Immediately revoke the access of staff who leave the team via /admin/superadmin
+2896	Approve courses within 48h of an instructor submitting them
+2897	Check flagged anti-cheating attempts every week in /admin/antitricherie
+2901	Login button
+2902	Email domains
+2903	1–2 lessons as a free preview
+2904	At least 3 structured modules
+2905	Create -20% promo codes for the launch of each new course
+2906	Full description (objectives, audience, prerequisites)
+2907	16:9 cover image (1280×720)
+2908	Update your courses regularly to stay in the recommendations
+2909	Minimum 1h of total video content
+2910	Hold 1 free live session a month to build learner loyalty
+2911	Price set or course marked as free
+2912	Publish at least 5h of video content per course — learners perceive more value
+2913	Join our ambassador programme to double your visibility on the platform
+2914	Answer questions in under 24h to get better ratings
+2915	A final quiz (min. 5 questions)
+2916	Introduction video (2–3 min) recommended
+2917	Access to production data restricted to authorised administrators with MFA
+2918	Regular security audits and dependency updates
+2919	Secure authentication via Supabase Auth with bcrypt password hashing
+2920	Encryption of data in transit (HTTPS/TLS 1.3) and at rest (AES-256)
+2921	Row-Level Security (RLS) policy on the database — each user can only access their own data
+2922	Encrypted daily backups kept for 30 days
+2923	Ability to create quality video content
+2924	Availability to answer learners' questions
+2925	Commitment to quality and keeping content up to date
+2926	Fluency in French (and/or English for bilingual courses)
+2927	Minimum 3 years of professional experience in your field
+2928	Help with exercises and quizzes without giving away the answers
+2929	Examples from the African economic context
+2930	Clear explanations in French at any time
+2931	Recommendations for further resources
+2933	No course awaiting approval.
+2934	Period (for accounting & B2B exports)
+2935	Exports & Accounting
+2936	No course yet
+2937	Overview of the IBIG E-LEARNING platform
+2938	Enrollments & completion
+2939	Verify authenticity
+2940	Issue date
+2942	No invoice yet
+2943	No saved course yet.
+2944	You are not enrolled in any course
+2945	No notes. Open a lesson and use the "My notes" panel to take notes.
+2946	Activity calendar — 16 weeks
+2947	Track your progress and your learning habits.
+2948	Learning time per week
+2949	Your instructors have not scheduled any sessions yet
+2950	Drop-off rate per lesson
+2951	Questions are added from the tab
+2952	Send a message to all learners in a course
+2953	Today
+2954	No payout request yet.
+2955	The admin will process your payout within 2-3 business days.
+2956	← Back to the help centre
+2957	Instructors get priority support — reply within 12h.
+2958	Certified courses designed for French-speaking Africa, payable by Mobile Money.
+2959	Go from reading to action
+2960	Sign up for free — Mode
+2961	No results for "
+2962	Enrol now
+2963	Sign in to enrol
+2964	is a snapshot of your company at a given moment — what it owns (assets) and what it owes (liabilities).
+2965	Thanks, that's much clearer! 🙏
+2966	Your payment could not be processed. No amount has been debited.
+2967	Tab switch detected (
+2968	The exam will be submitted automatically after
+2969	Automatic submission — Too many tab switches (
+2970	Warning — Tab switch detected (
+2971	Automatic submission — Too many tab switches detected (
+2972	The page you are looking for does not exist or has been moved.
+2973	Go back to the home page to continue learning.
+2974	Upload error
+2975	Do not close this page during the upload
+2976	Preparing the video space on Bunny Stream…
+2977	💾 Save this lesson first to add questions.
+2978	No discussion yet.
+2979	SYSCOHADA accounting — Earned today
+2980	Loading the editor…
+2981	No reviews yet. Be the first to rate!
+2982	Keep learning

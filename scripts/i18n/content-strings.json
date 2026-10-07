@@ -1,0 +1,1702 @@
+[
+ {
+  "s": "Comptabilité OHADA pour PME — Sans Être Comptable",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable"
+ },
+ {
+  "s": "Lisez vos chiffres et pilotez votre PME avec le référentiel OHADA.",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:short"
+ },
+ {
+  "s": "Comprenez les états financiers de votre entreprise, maîtrisez le plan comptable OHADA, lisez un bilan et un compte de résultat, et pilotez votre trésorerie. Une formation accessible aux non-comptables dirigeants de PME en Afrique.",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:desc"
+ },
+ {
+  "s": "Comprendre le plan comptable OHADA",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:objective"
+ },
+ {
+  "s": "Lire et interpréter un bilan et un compte de résultat",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:objective"
+ },
+ {
+  "s": "Gérer la trésorerie de sa PME",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:objective"
+ },
+ {
+  "s": "Communiquer efficacement avec son comptable",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:objective"
+ },
+ {
+  "s": "Éviter les erreurs fiscales courantes",
+  "ctx": "course:comptabilite-ohada-pme-sans-etre-comptable:objective"
+ },
+ {
+  "s": "Excel & Google Sheets Avancé pour Professionnels",
+  "ctx": "course:excel-google-sheets-avance-professionnels"
+ },
+ {
+  "s": "Devenez expert Excel/Sheets et automatisez votre travail quotidien.",
+  "ctx": "course:excel-google-sheets-avance-professionnels:short"
+ },
+ {
+  "s": "Maîtrisez les formules avancées, tableaux croisés dynamiques, automatisation et visualisation de données pour transformer votre productivité professionnelle. Formation orientée cas pratiques africains.",
+  "ctx": "course:excel-google-sheets-avance-professionnels:desc"
+ },
+ {
+  "s": "Maîtriser les formules avancées (INDEX/MATCH, SUMIFS)",
+  "ctx": "course:excel-google-sheets-avance-professionnels:objective"
+ },
+ {
+  "s": "Créer des tableaux de bord dynamiques",
+  "ctx": "course:excel-google-sheets-avance-professionnels:objective"
+ },
+ {
+  "s": "Automatiser avec les macros",
+  "ctx": "course:excel-google-sheets-avance-professionnels:objective"
+ },
+ {
+  "s": "Analyser avec les tableaux croisés dynamiques",
+  "ctx": "course:excel-google-sheets-avance-professionnels:objective"
+ },
+ {
+  "s": "Marketing Digital pour PME Africaines",
+  "ctx": "course:marketing-digital-pme-africaines"
+ },
+ {
+  "s": "Attirez des clients en ligne et faites croître votre PME africaine avec le digital.",
+  "ctx": "course:marketing-digital-pme-africaines:short"
+ },
+ {
+  "s": "Apprenez à développer votre présence en ligne, acquérir des clients via les réseaux sociaux, créer du contenu percutant et rentabiliser votre marketing digital — adapté aux réalités des PME africaines avec de petits budgets.",
+  "ctx": "course:marketing-digital-pme-africaines:desc"
+ },
+ {
+  "s": "Créer et optimiser une page Facebook/Instagram professionnelle",
+  "ctx": "course:marketing-digital-pme-africaines:objective"
+ },
+ {
+  "s": "Lancer des campagnes publicitaires avec un petit budget",
+  "ctx": "course:marketing-digital-pme-africaines:objective"
+ },
+ {
+  "s": "Produire du contenu engageant adapté à l'Afrique",
+  "ctx": "course:marketing-digital-pme-africaines:objective"
+ },
+ {
+  "s": "Utiliser WhatsApp Business pour fidéliser ses clients",
+  "ctx": "course:marketing-digital-pme-africaines:objective"
+ },
+ {
+  "s": "Management et Leadership en Afrique",
+  "ctx": "course:management-leadership-afrique"
+ },
+ {
+  "s": "Devenez le leader que votre équipe et votre organisation méritent.",
+  "ctx": "course:management-leadership-afrique:short"
+ },
+ {
+  "s": "Développez vos compétences de manager et de leader dans le contexte africain : gestion d'équipes multigénérationnelles, leadership situationnel, résolution de conflits, et création d'une culture d'excellence adaptée aux réalités locales.",
+  "ctx": "course:management-leadership-afrique:desc"
+ },
+ {
+  "s": "Comprendre les styles de leadership et choisir le bon",
+  "ctx": "course:management-leadership-afrique:objective"
+ },
+ {
+  "s": "Motiver une équipe africaine multigénérationnelle",
+  "ctx": "course:management-leadership-afrique:objective"
+ },
+ {
+  "s": "Gérer les conflits et situations difficiles",
+  "ctx": "course:management-leadership-afrique:objective"
+ },
+ {
+  "s": "Déléguer efficacement et faire confiance",
+  "ctx": "course:management-leadership-afrique:objective"
+ },
+ {
+  "s": "Intelligence Artificielle & Outils IA pour les Professionnels",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels"
+ },
+ {
+  "s": "Maîtrisez l'IA et multipliez votre productivité professionnelle par 10.",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:short"
+ },
+ {
+  "s": "Maîtrisez les outils d'intelligence artificielle incontournables pour les professionnels africains : ChatGPT, Claude, Gemini, Midjourney, outils d'automatisation et de productivité. Apprenez à intégrer l'IA dans votre quotidien professionnel pour gagner du temps et créer plus de valeur.",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:desc"
+ },
+ {
+  "s": "Utiliser ChatGPT, Claude et Gemini comme des experts",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:objective"
+ },
+ {
+  "s": "Créer du contenu professionnel avec l'IA",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:objective"
+ },
+ {
+  "s": "Automatiser les tâches répétitives avec l'IA",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:objective"
+ },
+ {
+  "s": "Générer des images et visuels avec Midjourney",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:objective"
+ },
+ {
+  "s": "Intégrer l'IA dans sa stratégie professionnelle",
+  "ctx": "course:intelligence-artificielle-outils-ia-professionnels:objective"
+ },
+ {
+  "s": "Finance Personnelle & Investissement en Afrique",
+  "ctx": "course:finance-personnelle-investissement-afrique"
+ },
+ {
+  "s": "Gérez votre argent, épargnez intelligemment et investissez en Afrique.",
+  "ctx": "course:finance-personnelle-investissement-afrique:short"
+ },
+ {
+  "s": "Maîtrisez les fondamentaux de la finance personnelle adaptés au contexte africain : gestion du budget, épargne, investissement en bourse régionale (BRVM), immobilier, et protection contre l'inflation. Une formation concrète pour bâtir votre patrimoine durablement.",
+  "ctx": "course:finance-personnelle-investissement-afrique:desc"
+ },
+ {
+  "s": "Construire un budget personnel solide",
+  "ctx": "course:finance-personnelle-investissement-afrique:objective"
+ },
+ {
+  "s": "Épargner avec méthode malgré les aléas",
+  "ctx": "course:finance-personnelle-investissement-afrique:objective"
+ },
+ {
+  "s": "Investir à la BRVM (Bourse Régionale)",
+  "ctx": "course:finance-personnelle-investissement-afrique:objective"
+ },
+ {
+  "s": "Comprendre l'immobilier en Afrique de l'Ouest",
+  "ctx": "course:finance-personnelle-investissement-afrique:objective"
+ },
+ {
+  "s": "Protéger son patrimoine contre l'inflation",
+  "ctx": "course:finance-personnelle-investissement-afrique:objective"
+ },
+ {
+  "s": "E-commerce et Vente en Ligne en Afrique",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique"
+ },
+ {
+  "s": "Créez votre boutique en ligne et vendez dans toute l'Afrique francophone.",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:short"
+ },
+ {
+  "s": "Lancez et développez votre boutique en ligne adaptée au marché africain : choix de la plateforme, gestion des paiements Mobile Money, logistique, marketing digital e-commerce, et stratégies pour conquérir les clients africains sur internet.",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:desc"
+ },
+ {
+  "s": "Créer une boutique en ligne adaptée au marché africain",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:objective"
+ },
+ {
+  "s": "Intégrer les paiements Mobile Money et carte bancaire",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:objective"
+ },
+ {
+  "s": "Gérer la logistique et les livraisons en Afrique",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:objective"
+ },
+ {
+  "s": "Attirer des clients via les réseaux sociaux",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:objective"
+ },
+ {
+  "s": "Analyser et optimiser ses ventes en ligne",
+  "ctx": "course:ecommerce-vente-en-ligne-afrique:objective"
+ },
+ {
+  "s": "Ressources Humaines : Recruter, Former, Fidéliser",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser"
+ },
+ {
+  "s": "Attirez, développez et retenez les meilleurs talents pour votre organisation.",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:short"
+ },
+ {
+  "s": "Maîtrisez les pratiques RH adaptées aux entreprises africaines : recrutement efficace, intégration, formation, évaluation des performances, gestion du droit du travail OHADA et fidélisation des talents dans un marché compétitif.",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:desc"
+ },
+ {
+  "s": "Concevoir un processus de recrutement efficace",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:objective"
+ },
+ {
+  "s": "Intégrer et former les nouveaux collaborateurs",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:objective"
+ },
+ {
+  "s": "Évaluer les performances avec équité",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:objective"
+ },
+ {
+  "s": "Connaître le droit du travail OHADA essentiel",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:objective"
+ },
+ {
+  "s": "Fidéliser les talents dans un marché compétitif",
+  "ctx": "course:ressources-humaines-recruter-former-fideliser:objective"
+ },
+ {
+  "s": "Communication Professionnelle et Prise de Parole en Public",
+  "ctx": "course:communication-professionnelle-prise-de-parole"
+ },
+ {
+  "s": "Captivez votre audience, convainquez vos interlocuteurs, développez votre leadership.",
+  "ctx": "course:communication-professionnelle-prise-de-parole:short"
+ },
+ {
+  "s": "Développez votre impact à l'oral et à l'écrit : prise de parole en réunion, présentation en public, rédaction professionnelle, communication interculturelle africaine et assertivité. Une formation transformatrice pour les professionnels ambitieux.",
+  "ctx": "course:communication-professionnelle-prise-de-parole:desc"
+ },
+ {
+  "s": "Prendre la parole en public avec assurance et impact",
+  "ctx": "course:communication-professionnelle-prise-de-parole:objective"
+ },
+ {
+  "s": "Structurer et présenter des idées de manière convaincante",
+  "ctx": "course:communication-professionnelle-prise-de-parole:objective"
+ },
+ {
+  "s": "Rédiger des emails et rapports professionnels percutants",
+  "ctx": "course:communication-professionnelle-prise-de-parole:objective"
+ },
+ {
+  "s": "Développer son assertivité en contexte africain",
+  "ctx": "course:communication-professionnelle-prise-de-parole:objective"
+ },
+ {
+  "s": "Gérer le stress de la prise de parole",
+  "ctx": "course:communication-professionnelle-prise-de-parole:objective"
+ },
+ {
+  "s": "Comment Entreprendre Efficacement : De l'Idée à la Réussite",
+  "ctx": "course:comment-entreprendre-efficacement-afrique"
+ },
+ {
+  "s": "Créez et développez votre entreprise en Afrique : validation d'idée, business model, financement, lancement et croissance.",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:short"
+ },
+ {
+  "s": "Cette formation complète vous guide pas à pas dans la création et le développement de votre entreprise en Afrique. Du choix de l'idée à la croissance durable, vous apprendrez les méthodes concrètes utilisées par les entrepreneurs africains qui réussissent. À travers 6 modules progressifs et 24 leçons pratiques, vous maîtriserez la validation d'idée, la construction d'un business model solide, les stratégies de financement adaptées au contexte africain, le lancement opérationnel et la gestion quotidienne de votre activité. Aucun prérequis — cette formation est conçue pour les débutants comme pour les entrepreneurs déjà en activité qui souhaitent structurer leur approche.",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:desc"
+ },
+ {
+  "s": "Identifier et valider une idée de business viable en Afrique",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Construire un business model canvas adapté à votre marché",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Rédiger un plan d'affaires convaincant pour les investisseurs",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Identifier les sources de financement disponibles en Afrique",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Lancer votre entreprise avec un budget limité",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Gérer la croissance et les ressources humaines",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Maîtriser les outils digitaux pour développer votre activité",
+  "ctx": "course:comment-entreprendre-efficacement-afrique:objective"
+ },
+ {
+  "s": "Introduction à la comptabilité OHADA",
+  "ctx": "module"
+ },
+ {
+  "s": "Lire et comprendre le bilan",
+  "ctx": "module"
+ },
+ {
+  "s": "Le compte de résultat et la rentabilité",
+  "ctx": "module"
+ },
+ {
+  "s": "Gérer sa trésorerie et éviter les crises",
+  "ctx": "module"
+ },
+ {
+  "s": "États Financiers OHADA : Lire et Analyser le Bilan et le Compte de Résultat",
+  "ctx": "module"
+ },
+ {
+  "s": "Gestion de Trésorerie et Prévisions Financières",
+  "ctx": "module"
+ },
+ {
+  "s": "Fiscalité des PME en Zone OHADA",
+  "ctx": "module"
+ },
+ {
+  "s": "Recruter les bons profils efficacement",
+  "ctx": "module"
+ },
+ {
+  "s": "Intégration et formation des collaborateurs",
+  "ctx": "module"
+ },
+ {
+  "s": "Évaluation des performances",
+  "ctx": "module"
+ },
+ {
+  "s": "Droit du travail OHADA et fidélisation",
+  "ctx": "module"
+ },
+ {
+  "s": "Droit du Travail en Zone OHADA et UEMOA",
+  "ctx": "module"
+ },
+ {
+  "s": "Rémunération, Avantages Sociaux et Motivation",
+  "ctx": "module"
+ },
+ {
+  "s": "Digitalisation RH et SIRH pour PME Africaines",
+  "ctx": "module"
+ },
+ {
+  "s": "Choisir et créer sa boutique en ligne",
+  "ctx": "module"
+ },
+ {
+  "s": "Paiements et logistique en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Attirer et convertir des clients",
+  "ctx": "module"
+ },
+ {
+  "s": "Analyser et faire croître son e-commerce",
+  "ctx": "module"
+ },
+ {
+  "s": "Logistique et Livraison : Le Défi n°1 du E-commerce Africain",
+  "ctx": "module"
+ },
+ {
+  "s": "Service Client Digital et Gestion des Avis",
+  "ctx": "module"
+ },
+ {
+  "s": "Analytics E-commerce et Croissance du Chiffre d'Affaires",
+  "ctx": "module"
+ },
+ {
+  "s": "Créer sa Boutique en Ligne",
+  "ctx": "module"
+ },
+ {
+  "s": "Sourcing, Stock et Logistique en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Paiement en Ligne et Mobile Money",
+  "ctx": "module"
+ },
+ {
+  "s": "Vendre sur les Marketplaces Africaines",
+  "ctx": "module"
+ },
+ {
+  "s": "Les fondamentaux de la communication impactante",
+  "ctx": "module"
+ },
+ {
+  "s": "Prise de parole en public et présentation",
+  "ctx": "module"
+ },
+ {
+  "s": "Communication écrite professionnelle",
+  "ctx": "module"
+ },
+ {
+  "s": "Assertivité et communication interculturelle",
+  "ctx": "module"
+ },
+ {
+  "s": "Négociation et Influence Interculturelle en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Communication de Crise et Gestion des Situations Difficiles",
+  "ctx": "module"
+ },
+ {
+  "s": "Communication Digitale et Personal Branding Professionnel",
+  "ctx": "module"
+ },
+ {
+  "s": "Écriture professionnelle efficace",
+  "ctx": "module"
+ },
+ {
+  "s": "Gérer les situations de communication difficiles",
+  "ctx": "module"
+ },
+ {
+  "s": "Les fondamentaux de la finance personnelle",
+  "ctx": "module"
+ },
+ {
+  "s": "Épargne et gestion du budget familial",
+  "ctx": "module"
+ },
+ {
+  "s": "Investir à la BRVM — Bourse Régionale des Valeurs Mobilières",
+  "ctx": "module"
+ },
+ {
+  "s": "Immobilier et investissements alternatifs",
+  "ctx": "module"
+ },
+ {
+  "s": "Protéger et transmettre son patrimoine",
+  "ctx": "module"
+ },
+ {
+  "s": "Planification de la retraite en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Finance d'entreprise familiale et PME",
+  "ctx": "module"
+ },
+ {
+  "s": "Outils numériques de gestion financière personnelle",
+  "ctx": "module"
+ },
+ {
+  "s": "Construire son Budget et Épargner en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Investir : Immobilier, Bourse et Entrepreneuriat",
+  "ctx": "module"
+ },
+ {
+  "s": "Crédits, Dettes et Mobile Money",
+  "ctx": "module"
+ },
+ {
+  "s": "Préparer sa Retraite et Protéger sa Famille",
+  "ctx": "module"
+ },
+ {
+  "s": "Formules avancées et fonctions essentielles",
+  "ctx": "module"
+ },
+ {
+  "s": "Tableaux croisés dynamiques (TCD)",
+  "ctx": "module"
+ },
+ {
+  "s": "Tableaux de bord et visualisation",
+  "ctx": "module"
+ },
+ {
+  "s": "Automatisation et macros",
+  "ctx": "module"
+ },
+ {
+  "s": "Tableaux Croisés Dynamiques Avancés",
+  "ctx": "module"
+ },
+ {
+  "s": "Power Query et Connexion à des Données Externes",
+  "ctx": "module"
+ },
+ {
+  "s": "Macros VBA et Automatisation Excel",
+  "ctx": "module"
+ },
+ {
+  "s": "Tableaux de Bord et Visualisation Professionnelle",
+  "ctx": "module"
+ },
+ {
+  "s": "Comprendre le leadership en contexte africain",
+  "ctx": "module"
+ },
+ {
+  "s": "Motiver et engager son équipe",
+  "ctx": "module"
+ },
+ {
+  "s": "Déléguer, contrôler et faire confiance",
+  "ctx": "module"
+ },
+ {
+  "s": "Intelligence Émotionnelle et Leadership Africain",
+  "ctx": "module"
+ },
+ {
+  "s": "Gestion du Changement et Transformation Organisationnelle",
+  "ctx": "module"
+ },
+ {
+  "s": "Coaching, Mentorat et Développement des Talents",
+  "ctx": "module"
+ },
+ {
+  "s": "Les bases du marketing digital en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Facebook & Instagram pour les PME",
+  "ctx": "module"
+ },
+ {
+  "s": "WhatsApp Business & stratégie de contenu",
+  "ctx": "module"
+ },
+ {
+  "s": "Publicité digitale avec un petit budget",
+  "ctx": "module"
+ },
+ {
+  "s": "Email Marketing et Automatisation pour PME",
+  "ctx": "module"
+ },
+ {
+  "s": "SEO et Référencement pour Marchés Africains",
+  "ctx": "module"
+ },
+ {
+  "s": "Publicité Payante : Meta Ads et Google Ads en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Analytics et Mesure de Performance Marketing",
+  "ctx": "module"
+ },
+ {
+  "s": "Stratégie Digitale pour PME Africaines",
+  "ctx": "module"
+ },
+ {
+  "s": "Facebook et Instagram Ads : Publicité Payante",
+  "ctx": "module"
+ },
+ {
+  "s": "Email Marketing et Automatisation",
+  "ctx": "module"
+ },
+ {
+  "s": "Mesurer et Optimiser : Analytics et ROI",
+  "ctx": "module"
+ },
+ {
+  "s": "Module 1 — Comprendre l'entrepreneuriat africain",
+  "ctx": "module"
+ },
+ {
+  "s": "Module 2 — Trouver et valider votre idée de business",
+  "ctx": "module"
+ },
+ {
+  "s": "Module 3 — Construire votre business model",
+  "ctx": "module"
+ },
+ {
+  "s": "Module 4 — Financer votre projet en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Module 5 — Lancer et gérer votre entreprise au quotidien",
+  "ctx": "module"
+ },
+ {
+  "s": "Module 6 — Développer et faire grandir votre activité",
+  "ctx": "module"
+ },
+ {
+  "s": "Financer et structurer son entreprise",
+  "ctx": "module"
+ },
+ {
+  "s": "Faire croître et pérenniser votre entreprise",
+  "ctx": "module"
+ },
+ {
+  "s": "Comprendre l'IA et ses opportunités en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Maîtriser ChatGPT et Claude pour le travail",
+  "ctx": "module"
+ },
+ {
+  "s": "L'art du prompting : parler à l'IA comme un expert",
+  "ctx": "module"
+ },
+ {
+  "s": "IA pour la création de contenu et les visuels",
+  "ctx": "module"
+ },
+ {
+  "s": "Automatisation et intégration de l'IA dans votre workflow",
+  "ctx": "module"
+ },
+ {
+  "s": "IA et Productivité Avancée : Automatiser son Travail avec l'IA",
+  "ctx": "module"
+ },
+ {
+  "s": "IA pour Entrepreneurs Africains : Applications Concrètes",
+  "ctx": "module"
+ },
+ {
+  "s": "Éthique de l'IA, Biais et Futur du Travail en Afrique",
+  "ctx": "module"
+ },
+ {
+  "s": "Définir sa cible et son persona client en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Publicité Facebook et Instagram : créer sa première campagne",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire votre personal branding professionnel en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le contrat de travail en droit OHADA : types et clauses essentielles",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer des formulaires et boîtes de dialogue VBA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer les congés, absences et licenciements selon le droit africain",
+  "ctx": "lesson"
+ },
+ {
+  "s": "La CNPS et la protection sociale des salariés en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Publicité Facebook & Instagram",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Automatiser son travail avec l'IA et No-Code",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Concevoir une politique de rémunération attractive et équitable",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Fidéliser les talents : au-delà du salaire",
+  "ctx": "lesson"
+ },
+ {
+  "s": "SIRH : choisir et mettre en place un logiciel RH pour PME",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Comprendre le flux d'argent dans votre vie",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les pièges financiers à éviter absolument",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Comprendre l'Intelligence Artificielle",
+  "ctx": "lesson"
+ },
+ {
+  "s": "L'art de déléguer sans perdre le contrôle",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire un budget familial africain efficace",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Lire un bilan OHADA en 15 minutes",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le compte de résultat : mesurer la rentabilité",
+  "ctx": "lesson"
+ },
+ {
+  "s": "L'écosystème startup africain : acteurs et tendances",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le profil de l'entrepreneur africain qui réussit",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer sa trésorerie et éviter les crises de liquidités",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le futur du travail en Afrique à l'ère de l'IA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Choisir la bonne plateforme e-commerce pour l'Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "L'IA en Afrique : opportunités et enjeux",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le digital en Afrique : chiffres et opportunités",
+  "ctx": "lesson"
+ },
+ {
+  "s": "RECHERCHEV, INDEX/EQUIV : les formules qui changent tout",
+  "ctx": "lesson"
+ },
+ {
+  "s": "TVA et obligations fiscales mensuelles des PME",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les 4 styles de leadership et lequel vous convient",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le modèle de communication de Mehrabian : les 3 canaux",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Bienvenue : L'entrepreneuriat africain, une opportunité unique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire un processus de recrutement efficace",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Idée, validation et modèle économique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Valider votre idée : le MVP africain",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Étude de marché : connaître son client africain",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le Business Model Canvas adapté à l'Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Rédiger un plan d'affaires convaincant",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Fixer ses prix : stratégies et psychologie",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les sources de financement disponibles en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Convaincre les investisseurs : le pitch parfait",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Négocier avec les banques et la microfinance",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer son entreprise légalement (OHADA)",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Vendre et acquérir ses premiers clients",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer sa trésorerie et ses finances",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Scaler votre business : de la startup à la PME",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Intégrer les paiements Mobile Money sur votre boutique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Logistique et livraison : les solutions africaines",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Power Query : Importer et transformer des données automatiquement",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Analyser et faire croître votre e-commerce",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Maîtriser ChatGPT et Claude pour le travail professionnel",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer des campagnes email qui convertissent",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Google Analytics 4 : comprendre vos visiteurs africains",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Optimiser votre page Facebook professionnelle",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devenir un manager-coach : libérer le potentiel de votre équipe",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Analyser le Compte de Résultat et les Soldes Intermédiaires de Gestion",
+  "ctx": "lesson"
+ },
+ {
+  "s": "WhatsApp Business : votre outil de vente le plus puissant",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les fondamentaux de la négociation en contexte africain",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Financement court terme et gestion de la trésorerie quotidienne",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Impôt sur les bénéfices et optimisation fiscale légale",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Optimiser le Besoin en Fonds de Roulement (BFR)",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Lancer une campagne Facebook Ads avec 10 000 XOF",
+  "ctx": "lesson"
+ },
+ {
+  "s": "L'intelligence émotionnelle : le facteur clé du leadership africain",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Tableaux Croisés Dynamiques : analyser 10 000 lignes en 5 minutes",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer un tableau de bord professionnel",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Automatiser avec les macros Excel (VBA simplifié)",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les 7 leviers de motivation d'une équipe africaine",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer les personnalités difficiles et les conflits d'équipe",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Pourquoi planifier sa retraite dès aujourd'hui en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les produits d'épargne retraite disponibles en zone UEMOA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Simuler et optimiser votre épargne retraite",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer les conflits dans une équipe africaine",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Maîtriser les Tableaux Croisés Dynamiques de A à Z",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Structurer une présentation en public avec la méthode SPRI",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Rédiger des emails professionnels qui obtiennent des réponses",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire sa liste email depuis zéro en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Accéder au financement bancaire et aux microcrédits en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "WhatsApp Marketing professionnel pour PME africaines",
+  "ctx": "lesson"
+ },
+ {
+  "s": "SEO local : être trouvé sur Google par vos clients africains",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer du contenu qui positionne votre PME en experte",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Meta Ads (Facebook/Instagram) : cibler les clients africains",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Google Ads pour PME africaines : apparaître en premier sur Google",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Comment trouver une idée de business rentable",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Intégrer et former efficacement les nouveaux collaborateurs",
+  "ctx": "lesson"
+ },
+ {
+  "s": "S'internationaliser : conquérir l'Afrique et au-delà",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Conclusion : Votre plan d'action — les 100 premiers jours",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Droit du travail OHADA et fidélisation des talents",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Graphiques Croisés Dynamiques et Segments Interactifs",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Fonctions de recherche avancées : INDEX/EQUIV et XLOOKUP",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Assurance vie et transmission du patrimoine en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Google Sheets : fonctions avancées et collaboration en temps réel",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Introduction aux Macros VBA : automatiser vos tâches répétitives",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire une culture de haute performance en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Lire et comprendre le Bilan comptable OHADA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Tableau de flux de trésorerie : comprendre les mouvements de cash",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Concevoir un tableau de bord Excel professionnel",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Techniques d'influence et de persuasion éthique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Leadership situationnel : adapter son style selon le contexte",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Conduire le changement dans les organisations africaines",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer une crise de communication en entreprise africaine",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Piloter une transformation digitale dans votre organisation",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Piloter la performance organisationnelle avec les OKR",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Créer et optimiser sa boutique en ligne",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Leadership et management d'équipes",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Recrutement et sélection",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Communication professionnelle",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Positionnement et message marketing différenciant",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer un calendrier éditorial réseaux sociaux",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Créer votre stratégie digitale sur 90 jours",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Ciblage avancé : audiences similaires et retargeting",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer des visuels et textes publicitaires qui convertissent",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire une liste email et créer sa newsletter",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : Marketing Digital pour PME Africaines",
+  "ctx": "lesson"
+ },
+ {
+  "s": "WhatsApp Business : transformer vos contacts en clients",
+  "ctx": "lesson"
+ },
+ {
+  "s": "La méthode du budget 50/30/20 adaptée à l'Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Google Analytics et mesure des performances",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Calculer le ROI de ses actions marketing",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Mener des négociations commerciales gagnant-gagnant",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Budget, épargne et fonds d'urgence",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Bases de la comptabilité OHADA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Introduction à la BRVM — Comment acheter vos premières actions",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Le système OHADA : pourquoi c'est important pour votre PME",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Service client e-commerce : transformer les plaintes en fidélité",
+  "ctx": "lesson"
+ },
+ {
+  "s": "L'immobilier en Afrique de l'Ouest : acheter intelligemment",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Faire son bilan financier personnel : actif, passif, net worth",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : Comptabilité OHADA pour PME",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : Finance Personnelle et Investissement",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : E-commerce et Vente en Ligne",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Communication non-verbale et image professionnelle",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Maîtriser la logistique de livraison en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Vendre sur les marketplaces africaines : Jumia, Glovo et autres",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire un service client e-commerce d'excellence",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Analytics e-commerce : optimiser votre taux de conversion",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Maîtriser le prompt engineering pour des résultats professionnels",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Automatiser ses tâches avec Make, Zapier et les API IA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer du contenu professionnel avec les outils IA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "IA pour la gestion commerciale et la relation client",
+  "ctx": "lesson"
+ },
+ {
+  "s": "IA pour l'agriculture, la santé et l'éducation en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les biais de l'IA et leurs implications pour l'Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Planifier la succession et transmission de votre patrimoine entrepreneurial",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Applications et outils gratuits pour gérer ses finances personnelles",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Cryptomonnaies et fintech africaines : opportunités et précautions",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Stratégie digitale et persona",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Investissement immobilier et bourse",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Paiement en ligne et sécurité",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Outils IA et productivité au quotidien",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Droit du travail en zone OHADA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Prise de parole et présentation en public",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Quiz : Financement et croissance de la PME",
+  "ctx": "lesson"
+ },
+ {
+  "s": "La Bourse en Afrique : BRVM, NGX et investissement actions",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Les OPCVM et fonds d'investissement accessibles en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Structurer un email professionnel percutant",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Constituer un fonds d'urgence : combien, où et comment ?",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Investir dans l'immobilier en Afrique : guide pratique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Comprendre et utiliser intelligemment le crédit",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Mobile Money : épargne, transfert et crédit numérique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Préparer sa retraite en Afrique : CNPS et épargne privée",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Assurances et protection financière de la famille",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Séparer finances personnelles et finances d'entreprise",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Choisir sa plateforme e-commerce : Shopify, WooCommerce ou solution locale",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Créer des fiches produits qui vendent",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Livraison et expérience client : les clés de la fidélisation",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Trouver ses fournisseurs : Chine, local et dropshipping",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer son stock et éviter les ruptures et surstocks",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Intégrer le Mobile Money sur sa boutique en ligne",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Sécurité, fraudes et protection des transactions en ligne",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Vendre sur Jumia, Amazon et les marketplaces africaines",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Saisir et équilibrer un journal comptable",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Plan de développement de votre équipe",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Automatiser une tâche de votre travail avec l'IA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Processus de recrutement complet pour un poste",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : Management et Leadership",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : Intelligence Artificielle et Outils IA",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Examen Final : Ressources Humaines",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Créer et optimiser une fiche produit complète",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Devoir : Votre plan financier personnel sur 5 ans",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Rédiger des rapports et comptes-rendus clairs",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Donner et recevoir du feedback constructif",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Gérer les conflits interpersonnels au travail",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Choisir la forme juridique adaptée à votre projet",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Trouver des financements pour votre entreprise africaine",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Construire votre réseau entrepreneurial en Afrique",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Passer de l'artisan à l'entrepreneur : systèmes et délégation",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Mesurer la performance de votre entreprise : les KPIs essentiels",
+  "ctx": "lesson"
+ },
+ {
+  "s": "Formation professionnelle",
+  "ctx": "category"
+ },
+ {
+  "s": "Développez vos compétences professionnelles",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Numérique & Informatique",
+  "ctx": "category"
+ },
+ {
+  "s": "Maîtrisez les outils numériques",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Immobilier & Gestion foncière",
+  "ctx": "category"
+ },
+ {
+  "s": "Expertise immobilière en Afrique",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "BTP & Travaux publics",
+  "ctx": "category"
+ },
+ {
+  "s": "Construction et infrastructures",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Commerce & E-commerce",
+  "ctx": "category"
+ },
+ {
+  "s": "Vente et commerce en ligne",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Gestion & Entrepreneuriat",
+  "ctx": "category"
+ },
+ {
+  "s": "Créez et développez votre entreprise",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Numérique & Développement",
+  "ctx": "category"
+ },
+ {
+  "s": "Programmation, web, mobile, data",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "BTP & Immobilier",
+  "ctx": "category"
+ },
+ {
+  "s": "Construction, gestion foncière, architecture",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Gestion & Finance",
+  "ctx": "category"
+ },
+ {
+  "s": "Comptabilité, gestion entreprise, finance",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Marketing & Commerce",
+  "ctx": "category"
+ },
+ {
+  "s": "Marketing digital, vente, e-commerce",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Leadership & Management",
+  "ctx": "category"
+ },
+ {
+  "s": "Management, RH, entrepreneuriat",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Santé & Social",
+  "ctx": "category"
+ },
+ {
+  "s": "Santé publique, travail social",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Entrepreneuriat & Business",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Entrepreneuriat & Business",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Autres Formations",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Autres Formations",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Agriculture & Agroalimentaire",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Agriculture & Agroalimentaire",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Banque & Assurance",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Banque & Assurance",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "BTP & Construction",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations BTP & Construction",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Beauté & Bien-être",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Beauté & Bien-être",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Communication & Médias",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Communication & Médias",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Comptabilité & Finance",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Comptabilité & Finance",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Création de Contenu",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Création de Contenu",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Développement Personnel",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Développement Personnel",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Direction & Administration",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Direction & Administration",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Droit & Juridique",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Droit & Juridique",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Éducation & Formation",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Éducation & Formation",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Gestion des Ressources Humaines",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Gestion des Ressources Humaines",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Commercial & Marketing",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Commercial & Marketing",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "IA & Digitalisation",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations IA & Digitalisation",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Immobilier",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Immobilier",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Infographie & Design",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Infographie & Design",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Informatique & Technologie",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Informatique & Technologie",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Logistique & Supply Chain",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Logistique & Supply Chain",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Management & Leadership",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Management & Leadership",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Mines, Énergie & Pétrole",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Mines, Énergie & Pétrole",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "QHSE & Environnement",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations QHSE & Environnement",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Santé & Pharmacie",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Santé & Pharmacie",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "Tourisme & Hôtellerie",
+  "ctx": "category"
+ },
+ {
+  "s": "Formations Tourisme & Hôtellerie",
+  "ctx": "category:desc"
+ },
+ {
+  "s": "IBIG Academy regroupe des formateurs experts en gestion, finance, marketing et digital, engagés à proposer des formations de qualité adaptées aux réalités des professionnels d'Afrique francophone.",
+  "ctx": "instructor:bio"
+ }
+]

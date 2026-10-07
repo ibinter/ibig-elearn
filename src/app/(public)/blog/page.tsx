@@ -1,6 +1,7 @@
 ﻿import Link from 'next/link'
 import { ArrowRight, Clock, Eye } from 'lucide-react'
-import { articles } from '@/lib/blog'
+import { localizedArticles } from '@/lib/blog'
+import { getLocale } from '@/i18n'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -173,6 +174,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
   }
 
   // Static fallback
+  const articles = localizedArticles(await getLocale())
   const featured = articles[0]
   const rest = articles.slice(1)
 

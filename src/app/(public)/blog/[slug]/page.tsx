@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ArrowLeft, ArrowRight, Clock, Eye, ListOrdered, ChevronDown, Calendar } from 'lucide-react'
-import { articles } from '@/lib/blog'
+import { localizedArticles } from '@/lib/blog'
+import { getLocale } from '@/i18n'
 import { createClient } from '@/lib/supabase/server'
 import { extractToc, formatArticleDate, isHtml, normalizeMarkdown, readingMinutes, toIsoDate } from '@/lib/blog-format'
 import { SITE_URL } from '@/lib/site'
@@ -58,6 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  const articles = localizedArticles(await getLocale())
   const article = articles.find(a => a.slug === slug)
   if (!article) return { title: 'Article introuvable' }
   return {
@@ -127,6 +129,7 @@ async function loadArticle(slug: string): Promise<ArticleView | null> {
     }
   }
 
+  const articles = localizedArticles(await getLocale())
   const article = articles.find(a => a.slug === slug)
   if (!article) return null
 

@@ -334,3 +334,10 @@ html.dark .article-body { color: #cbd5e1; }
 html.dark .article-body h2, html.dark .article-body strong, html.dark .article-body h4 { color: #f1f5f9; }
 html.dark .article-body h3, html.dark .article-body a { color: #93c5fd; }
 html.dark .article-body blockquote { background: #1e293b; color: #cbd5e1; }
+
+/* ═════════ Traduction anglaise : masque la page le temps de la traduction ═════════ */
+html.i18n-pending body {
+  visibility: hidden;
+  animation: i18n-reveal 0s linear 3s forwards; /* filet de sécurité si le script ne s'exécute pas */
+}
+@keyframes i18n-reveal { to { visibility: visible; } }

@@ -5,6 +5,8 @@ import { CurrencyProvider } from '@/lib/currency-context'
 import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
 import { getTenant } from '@/lib/tenant'
 import TenantTheme from '@/components/tenant/TenantTheme'
+import DomTranslator from '@/components/i18n/DomTranslator'
+import { getLocale } from '@/i18n'
 import { SITE_URL } from '@/lib/site'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -58,12 +60,14 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const tenant = await getTenant()
+  const locale = await getLocale()
   return (
-    <html lang="fr">
+    <html lang={locale} className={locale === 'en' ? 'i18n-pending' : undefined}>
       <body className={`${inter.className} overflow-x-clip w-full`}>
         {tenant && <TenantTheme tenant={tenant} />}
         <CurrencyProvider>{children}</CurrencyProvider>
         <ServiceWorkerRegister />
+        <DomTranslator locale={locale} />
       </body>
     </html>
   )

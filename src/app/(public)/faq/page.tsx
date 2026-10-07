@@ -38,7 +38,7 @@ const FAQ = [
     category: 'Certificats & Reconnaissance',
     items: [
       { q: "Les certificats sont-ils reconnus par les entreprises ?", a: "Les certificats IBIG E-LEARNING sont reconnus par les entreprises partenaires d'IBIG EDUFORM en Côte d'Ivoire et dans les pays couverts. Chaque certificat comporte un QR code de vérification d'authenticité." },
-      { q: "Comment vérifier l'authenticité d'un certificat ?", a: "Chaque certificat a un code de vérification unique. Scannez le QR code ou rendez-vous sur ibig-elearn.vercel.app/verify et entrez le code pour vérifier instantanément." },
+      { q: "Comment vérifier l'authenticité d'un certificat ?", a: "Chaque certificat a un code de vérification unique. Scannez le QR code ou rendez-vous sur ibig-elearning.com/verify et entrez le code pour vérifier instantanément." },
       { q: "Puis-je partager mon certificat sur LinkedIn ?", a: "Absolument ! Sur la page de votre certificat, cliquez sur le bouton LinkedIn pour le partager directement sur votre profil professionnel." },
     ]
   },

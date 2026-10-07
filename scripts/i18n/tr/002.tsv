@@ -1,0 +1,202 @@
+400	Active tenant
+401	Total tenants
+402	Text
+405	Logo URL
+406	Portal URL:
+408	Full white label
+411	learner
+412	No role selected = all users
+413	successfully.
+414	coordinator
+415	Coordinators
+416	Body of your message (line breaks are kept)…
+417	recipient
+418	Recipients
+419	Email sent to
+420	Sending…
+421	Send newsletter
+422	Send an email to your users
+423	instructor
+424	Instructors
+426	Email subject…
+427	Subject
+428	Subject and content required
+430	General announcement
+432	successfully!
+433	Certificate
+435	Additional details...
+437	Sending...
+438	sent
+439	Send notifications
+440	E.g.: /catalogue or /parcours/marketing-digital
+441	E.g.: New course available!
+442	Redirect link (optional)
+444	Message (optional)
+446	Notify your learners directly in their dashboard
+447	By role
+449	selected
+450	Live session
+452	Specific
+454	All users
+455	Notification type
+456	Learners by country
+457	No payment
+458	No user
+459	No data
+460	Benin
+462	Certificates issued
+463	Enrollment conversion
+465	Growth — last 12 months
+467	Guinea
+468	enrolled
+469	Business KPIs
+470	Nigeria
+471	New users
+472	New users and enrollments per month
+473	New user
+474	payment
+475	Recent payments
+476	Countries represented
+477	Reports
+478	Revenue — last 12 months
+479	XOF revenue
+480	Senegal
+481	Admin dashboard
+482	Completion rate
+483	Completion rate
+485	Total XOF:
+486	See all
+488	No payment recorded
+489	Completed
+490	Failed
+491	Method
+492	Amount
+493	Payments
+494	Refunded
+496	User
+497	Enable, disable or set the default provider. The default provider is used automatically based on the learner's country.
+498	Payment providers
+500	Default
+501	Set as default provider
+502	Currencies
+503	is shown first to the learner. Only providers whose API route is implemented can be enabled. To plug in a new provider, create
+504	and enable it here.
+505	inactive
+506	The
+507	Methods
+508	Countries covered
+509	default provider
+510	API route:
+512	All
+513	Enabled
+514	Shows a maintenance page to visitors
+515	Authentication
+516	Database
+518	Certificate of completion
+519	Database encryption
+520	Platform commission (%)
+522	General configuration of the IBIG E-LEARNING platform
+523	Enrollment confirmation
+524	Payment confirmation
+525	Default currency
+526	Domain
+527	EGP (Egyptian pound)
+528	Contact email
+529	Transactional emails
+531	EUR (Euro)
+534	Refund guarantee (days)
+535	Multi-bitrate HLS
+536	General information
+538	Default language
+540	MAD (Moroccan dirham)
+541	Payment methods
+542	Maintenance mode
+543	Monthly newsletter
+544	Platform name
+545	Operational
+546	Payment
+547	Settings
+548	Daily (Supabase)
+549	Course reminder
+551	Backup
+552	Saved!
+555	System
+556	USD (US dollar)
+558	Videos
+559	XAF (CEMAC CFA franc)
+560	XOF (WAEMU CFA franc)
+561	No path created. Click "Create a path" to get started.
+562	Create path
+563	Create a path
+564	Short description
+565	Estimated duration (hours)
+566	Path courses (
+567	Title is required
+568	Featured
+569	Edit
+570	Edit path
+571	Level
+572	New path
+573	Path order:
+574	paths
+575	Path created
+576	Learning paths
+577	Path updated
+578	Path deleted
+580	Delete
+581	% completed
+582	← CSV exports
+583	Analysis of sales and learning performance
+584	No payment in this period
+585	No data in this period
+586	No enrollment in this period
+587	Revenue by instructor
+588	course
+589	enr. ·
+590	New learners by country
+591	New users
+592	Avg. progress
+593	Advanced reports
+594	EUR revenue
+595	Revenue by course
+596	user
+597	sale
+598	Apply
+599	Campaigns sent
+600	targeted
+601	Last campaign
+602	Emails sent
+603	sent
+604	Campaign history
+605	d · Segment:
+606	Re-engage inactive learners with personalised emails
+607	Inactivity reminders
+608	Threshold:
+609	Analysing...
+610	No inactive learner found
+611	No learner matches these criteria. Try lowering the threshold or changing the segment.
+612	others
+613	Campaign sent successfully!
+614	Campaign settings
+615	recipients.
+617	Sending...
+618	sent
+619	Send
+620	Sending error
+621	Course (optional)
+622	Inactive for (days)
+623	d inactive
+624	Never started (0%)
+625	Campaign name
+626	Barely started (< 25%)
+627	Almost done (≥ 75%)
+628	Preview recipients
+629	Collapse
+631	All inactive
+632	See the
+633	Upcoming (
+634	No live session
+635	Virtual classes
+636	Duration/Platform
+637	Live now
+639	Instructors have not scheduled any sessions yet
