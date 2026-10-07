@@ -1,16 +1,36 @@
-﻿import { notFound } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { ArrowLeft, Clock, User, Tag, Eye } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Clock, Eye, ListOrdered, ChevronDown, Calendar } from 'lucide-react'
 import { articles } from '@/lib/blog'
 import { createClient } from '@/lib/supabase/server'
+import { extractToc, formatArticleDate, isHtml, normalizeMarkdown, readingMinutes } from '@/lib/blog-format'
+import ArticleBody from '@/components/blog/ArticleBody'
+import ReadingProgress from '@/components/blog/ReadingProgress'
+import ShareButtons from '@/components/blog/ShareButtons'
 
 interface Props { params: Promise<{ slug: string }> }
+
+type RelatedItem = { slug: string; title: string; category: string | null; minutes: number | null }
+
+type ArticleView = {
+  title: string
+  excerpt: string | null
+  category: string | null
+  categoryClass: string
+  cover: string | null
+  author: string | null
+  date: string | null
+  minutes: number
+  views: number | null
+  content: string
+  keywords: string[]
+  related: RelatedItem[]
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
 
-  // DB first
   const supabase = await createClient()
   const { data: dbPost } = await supabase
     .from('blog_posts')
@@ -37,11 +57,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function ArticlePage({ params }: Props) {
-  const { slug } = await params
+async function loadArticle(slug: string): Promise<ArticleView | null> {
   const supabase = await createClient()
 
-  // Essayer DB en premier
   const { data: dbPost } = await supabase
     .from('blog_posts')
     .select('id, title, slug, excerpt, content, category, cover_image, reading_time_minutes, views_count, published_at, author:profiles(full_name)')
@@ -57,7 +75,6 @@ export default async function ArticlePage({ params }: Props) {
       ? (dbPost.author[0] as any)?.full_name
       : (dbPost.author as any)?.full_name
 
-    // Articles connexes (même catégorie, depuis DB)
     const { data: relatedPosts } = await supabase
       .from('blog_posts')
       .select('id, title, slug, category, reading_time_minutes')
@@ -66,132 +83,178 @@ export default async function ArticlePage({ params }: Props) {
       .neq('id', dbPost.id)
       .limit(3)
 
-    return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0B3D91] mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Retour au blog
-        </Link>
+    const raw = dbPost.content ?? ''
+    const content = isHtml(raw) ? raw : normalizeMarkdown(raw)
 
-        {dbPost.cover_image && (
-          <img src={dbPost.cover_image} alt={dbPost.title} className="w-full h-64 sm:h-96 object-cover rounded-2xl mb-8" />
+    return {
+      title: dbPost.title,
+      excerpt: dbPost.excerpt,
+      category: dbPost.category,
+      categoryClass: 'bg-blue-50 text-[#0B3D91]',
+      cover: dbPost.cover_image,
+      author: authorName ?? null,
+      date: formatArticleDate(dbPost.published_at),
+      minutes: readingMinutes(raw),
+      views: dbPost.views_count ?? 0,
+      content,
+      keywords: [],
+      related: ((relatedPosts ?? []) as any[]).map(a => ({
+        slug: a.slug, title: a.title, category: a.category, minutes: a.reading_time_minutes,
+      })),
+    }
+  }
+
+  const article = articles.find(a => a.slug === slug)
+  if (!article) return null
+
+  return {
+    title: article.title,
+    excerpt: article.excerpt,
+    category: article.category,
+    categoryClass: article.categoryColor,
+    cover: null,
+    author: article.author,
+    date: formatArticleDate(article.date),
+    minutes: readingMinutes(article.content),
+    views: null,
+    content: normalizeMarkdown(article.content),
+    keywords: article.keywords ?? [],
+    related: articles
+      .filter(a => a.slug !== slug && a.category === article.category)
+      .concat(articles.filter(a => a.slug !== slug && a.category !== article.category))
+      .slice(0, 3)
+      .map(a => ({ slug: a.slug, title: a.title, category: a.category, minutes: readingMinutes(a.content) })),
+  }
+}
+
+export default async function ArticlePage({ params }: Props) {
+  const { slug } = await params
+  const a = await loadArticle(slug)
+  if (!a) notFound()
+
+  const toc = isHtml(a.content) ? [] : extractToc(a.content)
+
+  return (
+    <>
+      <ReadingProgress />
+
+      <article className="bg-white">
+        {/* ── En-tête ── */}
+        <header className="max-w-3xl mx-auto px-4 sm:px-6 pt-5 sm:pt-10">
+          <Link href="/blog" className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-[#0B3D91] transition-colors -ml-1 px-1 py-1">
+            <ArrowLeft className="w-4 h-4" /> Blog
+          </Link>
+
+          {a.category && (
+            <div className="mt-5"><span className={`inline-block text-xs font-bold px-3 py-1 rounded-full ${a.categoryClass}`}>{a.category}</span></div>
+          )}
+
+          <h1 className="mt-3 text-[28px] leading-[1.18] sm:text-[40px] sm:leading-[1.12] font-extrabold tracking-tight text-[#0B1E4B] break-words">
+            {a.title}
+          </h1>
+
+          {a.excerpt && (
+            <p className="mt-4 text-[17px] sm:text-xl leading-relaxed text-gray-600">{a.excerpt}</p>
+          )}
+
+          <div className="mt-6 flex items-center gap-3 pb-6 border-b border-gray-100">
+            <div className="w-10 h-10 rounded-full ibig-gradient flex items-center justify-center text-white font-bold flex-shrink-0">
+              {(a.author ?? 'I').charAt(0)}
+            </div>
+            <div className="min-w-0 text-sm leading-tight">
+              <p className="font-semibold text-gray-900 truncate">{a.author ?? 'IBIG E-LEARNING'}</p>
+              <p className="mt-1 text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1">
+                {a.date && <span className="inline-flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{a.date}</span>}
+                <span className="inline-flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{a.minutes} min de lecture</span>
+                {a.views !== null && <span className="inline-flex items-center gap-1"><Eye className="w-3.5 h-3.5" />{a.views} vues</span>}
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {a.cover && (
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-6">
+            <img src={a.cover} alt="" className="w-full aspect-[16/9] object-cover rounded-2xl" />
+          </div>
         )}
 
-        <article>
-          <header className="mb-10">
-            {dbPost.category && (
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-700 mb-4 inline-block">{dbPost.category}</span>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+          {/* ── Sommaire ── */}
+          {toc.length >= 3 && (
+            <details className="group mb-8 rounded-2xl border border-gray-100 bg-gray-50/70">
+              <summary className="flex items-center gap-2 px-4 py-3.5 cursor-pointer list-none select-none font-semibold text-gray-900 text-[15px]">
+                <ListOrdered className="w-4 h-4 text-[#0B3D91]" />
+                Sommaire
+                <span className="text-gray-400 font-normal text-sm">· {toc.length} parties</span>
+                <ChevronDown className="w-4 h-4 text-gray-400 ml-auto transition-transform group-open:rotate-180" />
+              </summary>
+              <ol className="px-4 pb-4 space-y-1">
+                {toc.map((t, i) => (
+                  <li key={t.id}>
+                    <a href={`#${t.id}`} className="flex gap-3 py-1.5 text-[15px] text-gray-700 hover:text-[#0B3D91]">
+                      <span className="text-[#FFA500] font-bold tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="leading-snug">{t.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          )}
+
+          {/* ── Corps ── */}
+          <div id="article-content">
+            <ArticleBody content={a.content} />
+          </div>
+
+          {/* ── Mots-clés & partage ── */}
+          <div className="mt-10 pt-6 border-t border-gray-100 space-y-5">
+            {a.keywords.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {a.keywords.map(kw => (
+                  <span key={kw} className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">#{kw}</span>
+                ))}
+              </div>
             )}
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-5">{dbPost.title}</h1>
-            {dbPost.excerpt && <p className="text-lg text-gray-600 mb-6 leading-relaxed">{dbPost.excerpt}</p>}
-            <div className="flex flex-wrap items-center gap-5 text-sm text-gray-500 pb-8 border-b border-gray-200">
-              {authorName && <span className="flex items-center gap-1.5"><User className="w-4 h-4" /> {authorName}</span>}
-              {dbPost.reading_time_minutes && <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {dbPost.reading_time_minutes} min de lecture</span>}
-              {dbPost.published_at && <span>{new Date(dbPost.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>}
-              <span className="flex items-center gap-1.5 ml-auto"><Eye className="w-4 h-4" /> {dbPost.views_count ?? 0} vues</span>
+            <div>
+              <p className="text-sm font-semibold text-gray-900 mb-3">Cet article vous a été utile ? Partagez-le</p>
+              <ShareButtons title={a.title} />
             </div>
-          </header>
+          </div>
 
-          <div
-            className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-a:text-[#0B3D91] prose-a:no-underline hover:prose-a:underline prose-ul:text-gray-700 prose-li:my-1"
-            dangerouslySetInnerHTML={{ __html: dbPost.content ?? '' }}
-          />
-        </article>
-
-        {/* CTA */}
-        <div className="mt-12 ibig-gradient rounded-3xl p-8 text-white text-center">
-          <h2 className="text-2xl font-bold mb-3">Prêt à vous former ?</h2>
-          <p className="text-blue-100 mb-6">Découvrez nos formations et développez vos compétences avec les meilleurs experts africains.</p>
-          <Link href="/catalogue" className="inline-block bg-[#FFA500] text-black font-bold px-8 py-3 rounded-xl hover:bg-yellow-400 transition-colors">
-            Voir le catalogue
-          </Link>
+          {/* ── CTA ── */}
+          <div className="mt-10 ibig-gradient rounded-2xl p-6 sm:p-8 text-white">
+            <h2 className="text-xl sm:text-2xl font-bold leading-snug">Passez de la lecture à l&apos;action</h2>
+            <p className="mt-2 text-blue-100 text-[15px] leading-relaxed">
+              Des formations certifiantes, conçues pour l&apos;Afrique francophone, payables en Mobile Money.
+            </p>
+            <Link href="/catalogue" className="mt-5 inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-[#FFA500] text-black font-bold px-6 py-3 rounded-xl hover:bg-yellow-400 transition-colors">
+              Voir les formations <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
+      </article>
 
-        {/* Articles connexes */}
-        {(relatedPosts ?? []).length > 0 && (
-          <div className="mt-14">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Articles connexes</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-              {(relatedPosts as any[]).map(a => (
-                <Link key={a.slug} href={`/blog/${a.slug}`}
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 group">
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 mb-3 inline-block">{a.category}</span>
-                  <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-2 group-hover:text-[#0B3D91] transition-colors line-clamp-3">{a.title}</h3>
-                  {a.reading_time_minutes && <p className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> {a.reading_time_minutes} min</p>}
+      {/* ── À lire aussi ── */}
+      {a.related.length > 0 && (
+        <section className="bg-gray-50 border-t border-gray-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">À lire aussi</h2>
+            <div className="space-y-3">
+              {a.related.map(r => (
+                <Link key={r.slug} href={`/blog/${r.slug}`}
+                  className="flex items-center gap-4 bg-white rounded-2xl border border-gray-100 p-4 hover:border-[#0B3D91]/30 hover:shadow-sm transition-all group">
+                  <div className="min-w-0 flex-1">
+                    {r.category && <p className="text-[11px] font-bold uppercase tracking-wide text-[#FFA500] mb-1">{r.category}</p>}
+                    <h3 className="font-semibold text-gray-900 text-[15px] leading-snug line-clamp-2 group-hover:text-[#0B3D91] transition-colors">{r.title}</h3>
+                    {r.minutes && <p className="mt-1 text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> {r.minutes} min</p>}
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#0B3D91] flex-shrink-0" />
                 </Link>
               ))}
             </div>
           </div>
-        )}
-      </div>
-    )
-  }
-
-  // Fallback aux articles statiques
-  const article = articles.find(a => a.slug === slug)
-  if (!article) notFound()
-
-  const related = articles.filter(a => a.slug !== slug && a.category === article.category).slice(0, 3)
-
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0B3D91] mb-8 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Retour au blog
-      </Link>
-
-      <article>
-        <header className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className={`text-xs font-bold px-3 py-1 rounded-full ${article.categoryColor}`}>{article.category}</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-5">{article.title}</h1>
-          <p className="text-lg text-gray-600 mb-6 leading-relaxed">{article.excerpt}</p>
-          <div className="flex flex-wrap items-center gap-5 text-sm text-gray-500 pb-8 border-b border-gray-200">
-            <span className="flex items-center gap-1.5"><User className="w-4 h-4" /> {article.author}</span>
-            <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {article.readTime}</span>
-            <span>{new Date(article.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-          </div>
-        </header>
-
-        <div
-          className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-a:text-[#0B3D91] prose-a:no-underline hover:prose-a:underline prose-ul:text-gray-700 prose-li:my-1"
-          dangerouslySetInnerHTML={{ __html: article.content }}
-        />
-
-        {article.keywords?.length > 0 && (
-          <div className="mt-10 pt-8 border-t border-gray-200">
-            <div className="flex flex-wrap gap-2 items-center">
-              <Tag className="w-4 h-4 text-gray-400" />
-              {article.keywords.map(kw => (
-                <span key={kw} className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full">{kw}</span>
-              ))}
-            </div>
-          </div>
-        )}
-      </article>
-
-      <div className="mt-12 ibig-gradient rounded-3xl p-8 text-white text-center">
-        <h2 className="text-2xl font-bold mb-3">Prêt à vous former ?</h2>
-        <p className="text-blue-100 mb-6">Découvrez nos formations et développez vos compétences avec les meilleurs experts africains.</p>
-        <Link href="/catalogue" className="inline-block bg-[#FFA500] text-black font-bold px-8 py-3 rounded-xl hover:bg-yellow-400 transition-colors">
-          Voir le catalogue
-        </Link>
-      </div>
-
-      {related.length > 0 && (
-        <div className="mt-14">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Articles connexes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {related.map(a => (
-              <Link key={a.slug} href={`/blog/${a.slug}`}
-                className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 group">
-                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${a.categoryColor} mb-3 inline-block`}>{a.category}</span>
-                <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-2 group-hover:text-[#0B3D91] transition-colors line-clamp-3">{a.title}</h3>
-                <p className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> {a.readTime}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
+        </section>
       )}
-    </div>
+    </>
   )
 }

@@ -1,4 +1,6 @@
-﻿export interface Article {
+﻿import { readingMinutes } from './blog-format'
+
+export interface Article {
   slug: string
   category: string
   categoryColor: string
@@ -316,3 +318,6 @@ IBIG E-LEARNING accepte Orange Money, MTN Mobile Money, Wave et Moov Money dans 
 export function getArticleBySlug(slug: string): Article | undefined {
   return articles.find(a => a.slug === slug)
 }
+
+// Durée de lecture calculée sur le contenu réel (≈ 200 mots/min)
+for (const a of articles) a.readTime = `${readingMinutes(a.content)} min`
