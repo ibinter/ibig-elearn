@@ -383,5 +383,6 @@ html.i18n-pending body {
   .bg-about { --hero-img: url(/images/bg/about.webp); --hero-img-m: url(/images/bg/about-m.webp); }
   .bg-partner { --hero-img: url(/images/bg/partner.webp); --hero-img-m: url(/images/bg/partner-m.webp); }
   .bg-graduates { --hero-img: url(/images/bg/graduates.webp); --hero-img-m: url(/images/bg/graduates-m.webp); }
+  .bg-support { --hero-img: url(/images/bg/support.webp); --hero-img-m: url(/images/bg/support-m.webp); }
   .bg-learner { --hero-img: url(/images/bg/learner.webp); --hero-img-m: url(/images/bg/learner-m.webp); }
 }

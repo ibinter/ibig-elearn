@@ -43,7 +43,7 @@ export default function ContactPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
       {/* Header */}
-      <div className="text-center mb-12 hero-photo bg-team rounded-3xl text-white px-6 py-12 sm:py-16">
+      <div className="text-center mb-12 hero-photo bg-support rounded-3xl text-white px-6 py-12 sm:py-16">
         <h1 className="text-3xl sm:text-4xl font-bold mb-3">{t.contact.title}</h1>
         <p className="text-blue-100 max-w-xl mx-auto">{t.contact.subtitle}</p>
       </div>
@@ -51,6 +51,16 @@ export default function ContactPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Infos contact */}
         <div className="space-y-6">
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-sm">
+            <picture>
+              <source media="(max-width: 767px)" srcSet="/images/bg/team-m.webp" />
+              <img src="/images/bg/team.webp" alt="L&apos;équipe IBIG à votre écoute" loading="lazy" className="w-full h-full object-cover" />
+            </picture>
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 text-white">
+              <p className="font-bold">Une équipe à votre écoute</p>
+              <p className="text-sm text-white/80">Apprenants, formateurs et entreprises : réponse sous 24 h ouvrées.</p>
+            </div>
+          </div>
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <h2 className="font-bold text-gray-900 mb-5">{t.contact.coordinatesTitle}</h2>
             <div className="space-y-4">
