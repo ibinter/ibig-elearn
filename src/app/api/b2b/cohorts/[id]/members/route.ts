@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { sendEmail } from '@/lib/email'
+import { SITE_URL } from '@/lib/site'
 
 async function requireAdmin(supabase: Awaited<ReturnType<typeof createClient>>) {
   const { data: { user } } = await supabase.auth.getUser()
@@ -56,7 +57,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     // Envoyer email d'invitation
     const course = cohort.course as any
     const b2bReq = cohort.b2b_request as any
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+    const appUrl = SITE_URL
     try {
       await sendEmail({
         to: member.email,

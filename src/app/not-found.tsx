@@ -20,7 +20,7 @@ export default function NotFound() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/accueil"
+          <Link href="/"
             className="flex items-center justify-center gap-2 ibig-gradient text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity">
             <Home className="w-4 h-4" /> Accueil
           </Link>

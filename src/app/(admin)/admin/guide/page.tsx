@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 
 export const metadata = {
-  title: 'Guide Administrateur — Console IBIG E-LEARNING',
+  title: 'Guide administrateur',
 }
 
 const sections = [

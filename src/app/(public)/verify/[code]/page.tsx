@@ -8,7 +8,7 @@ interface Props { params: Promise<{ code: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params
   return {
-    title: `Vérification certificat ${code} — IBIG E-LEARNING`,
+    title: `Vérification certificat ${code}`,
     description: 'Vérification de l\'authenticité d\'un certificat IBIG E-LEARNING.',
   }
 }

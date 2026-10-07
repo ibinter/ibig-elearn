@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { BookOpen, UserPlus, Search, CreditCard, Play, Award, MessageCircle, ChevronRight, Star, BarChart2, Heart } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Guide Apprenant — IBIG E-LEARNING',
+export const metadata: Metadata = { alternates: { canonical: '/aide/apprenant' },
+  title: 'Guide Apprenant',
   description: 'Guide complet pour démarrer votre formation sur IBIG E-LEARNING : inscription, choix de formation, paiement, certificat.',
 }
 

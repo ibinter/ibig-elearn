@@ -13,7 +13,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createClient()
   const { data } = await supabase.from('learning_paths').select('title, short_description').eq('slug', slug).single()
   if (!data) return { title: 'Parcours introuvable' }
-  return { title: `${data.title} — Parcours IBIG E-LEARNING`, description: data.short_description ?? undefined }
+  return {
+    title: `${data.title} — Parcours métier`,
+    description: data.short_description ?? undefined,
+    alternates: { canonical: `/parcours/${slug}` },
+    openGraph: { title: data.title, description: data.short_description ?? undefined, url: `/parcours/${slug}` },
+  }
 }
 
 const levelLabel: Record<string, string> = {

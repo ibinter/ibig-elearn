@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Conditions Générales de Vente — IBIG E-LEARNING',
+  title: 'Conditions Générales de Vente',
   description: 'CGV de la plateforme IBIG E-LEARNING. Modalités d\'achat, paiement Mobile Money, politique de remboursement, accès aux formations.',
-  alternates: { canonical: 'https://ibig-elearning.com/cgv' },
+  alternates: { canonical: '/cgv' },
   robots: { index: true, follow: false },
 }
 

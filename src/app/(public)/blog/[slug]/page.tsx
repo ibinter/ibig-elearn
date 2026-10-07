@@ -4,7 +4,8 @@ import type { Metadata } from 'next'
 import { ArrowLeft, ArrowRight, Clock, Eye, ListOrdered, ChevronDown, Calendar } from 'lucide-react'
 import { articles } from '@/lib/blog'
 import { createClient } from '@/lib/supabase/server'
-import { extractToc, formatArticleDate, isHtml, normalizeMarkdown, readingMinutes } from '@/lib/blog-format'
+import { extractToc, formatArticleDate, isHtml, normalizeMarkdown, readingMinutes, toIsoDate } from '@/lib/blog-format'
+import { SITE_URL } from '@/lib/site'
 import ArticleBody from '@/components/blog/ArticleBody'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import ShareButtons from '@/components/blog/ShareButtons'
@@ -21,6 +22,7 @@ type ArticleView = {
   cover: string | null
   author: string | null
   date: string | null
+  isoDate: string | undefined
   minutes: number
   views: number | null
   content: string
@@ -34,26 +36,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createClient()
   const { data: dbPost } = await supabase
     .from('blog_posts')
-    .select('title, excerpt, cover_image')
+    .select('title, excerpt, cover_image, published_at')
     .eq('slug', slug)
     .eq('is_published', true)
     .single()
 
   if (dbPost) {
     return {
-      title: `${dbPost.title} — IBIG E-LEARNING Blog`,
+      title: dbPost.title,
       description: dbPost.excerpt ?? undefined,
-      openGraph: { title: dbPost.title, description: dbPost.excerpt ?? undefined, type: 'article', images: dbPost.cover_image ? [dbPost.cover_image] : [] },
+      alternates: { canonical: `/blog/${slug}` },
+      openGraph: {
+        title: dbPost.title,
+        description: dbPost.excerpt ?? undefined,
+        type: 'article',
+        url: `/blog/${slug}`,
+        publishedTime: toIsoDate(dbPost.published_at),
+        images: dbPost.cover_image ? [dbPost.cover_image] : undefined,
+      },
+      twitter: { card: 'summary_large_image', title: dbPost.title, description: dbPost.excerpt ?? undefined },
     }
   }
 
   const article = articles.find(a => a.slug === slug)
   if (!article) return { title: 'Article introuvable' }
   return {
-    title: `${article.title} — IBIG E-LEARNING Blog`,
+    title: article.title,
     description: article.excerpt,
     keywords: article.keywords,
-    openGraph: { title: article.title, description: article.excerpt, type: 'article' },
+    authors: [{ name: article.author }],
+    alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      type: 'article',
+      url: `/blog/${slug}`,
+      publishedTime: toIsoDate(article.date),
+      authors: [article.author],
+      tags: article.keywords,
+    },
+    twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt },
   }
 }
 
@@ -94,6 +116,7 @@ async function loadArticle(slug: string): Promise<ArticleView | null> {
       cover: dbPost.cover_image,
       author: authorName ?? null,
       date: formatArticleDate(dbPost.published_at),
+      isoDate: toIsoDate(dbPost.published_at),
       minutes: readingMinutes(raw),
       views: dbPost.views_count ?? 0,
       content,
@@ -115,6 +138,7 @@ async function loadArticle(slug: string): Promise<ArticleView | null> {
     cover: null,
     author: article.author,
     date: formatArticleDate(article.date),
+    isoDate: toIsoDate(article.date),
     minutes: readingMinutes(article.content),
     views: null,
     content: normalizeMarkdown(article.content),
@@ -133,9 +157,40 @@ export default async function ArticlePage({ params }: Props) {
   if (!a) notFound()
 
   const toc = isHtml(a.content) ? [] : extractToc(a.content)
+  const url = `${SITE_URL}/blog/${slug}`
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${url}#article`,
+        mainEntityOfPage: url,
+        headline: a.title,
+        description: a.excerpt ?? undefined,
+        image: a.cover ?? `${SITE_URL}/logo-full.webp`,
+        datePublished: a.isoDate,
+        dateModified: a.isoDate,
+        inLanguage: 'fr',
+        keywords: a.keywords.join(', ') || undefined,
+        articleSection: a.category ?? undefined,
+        author: { '@type': 'Organization', name: a.author ?? 'IBIG E-LEARNING', url: SITE_URL },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+          { '@type': 'ListItem', position: 3, name: a.title, item: url },
+        ],
+      },
+    ],
+  }
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ReadingProgress />
 
       <article className="bg-white">

@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Upload, User, BookOpen, Video, DollarSign, Users, BarChart2, ChevronRight, Lightbulb, Tag, AlertTriangle, CheckCircle, FileText, Settings } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Guide Formateur — IBIG E-LEARNING',
+export const metadata: Metadata = { alternates: { canonical: '/aide/formateur' },
+  title: 'Guide Formateur',
   description: 'Guide complet pour créer et vendre vos formations sur IBIG E-LEARNING : profil, création de cours, leçons vidéo, revenus.',
 }
 

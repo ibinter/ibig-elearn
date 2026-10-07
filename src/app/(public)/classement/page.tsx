@@ -2,8 +2,8 @@
 import { Trophy, Flame, Star, Award, TrendingUp, Medal } from 'lucide-react'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Classement — IBIG E-LEARNING',
+export const metadata: Metadata = { alternates: { canonical: '/classement' },
+  title: 'Classement',
   description: 'Les apprenants les plus actifs de la plateforme IBIG E-LEARNING.',
 }
 

@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Mentions légales — IBIG E-LEARNING',
+  title: 'Mentions légales',
   description: 'Mentions légales de la plateforme IBIG E-LEARNING — IBIG SARL, Intermark Business International Group, Abidjan Cocody Riviera Palmeraie.',
-  alternates: { canonical: 'https://ibig-elearning.com/mentions-legales' },
+  alternates: { canonical: '/mentions-legales' },
 }
 
 const LAST_UPDATE = 'Octobre 2026'

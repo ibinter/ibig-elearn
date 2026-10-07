@@ -81,3 +81,16 @@ export function formatArticleDate(value: string | null | undefined): string | nu
   }
   return value
 }
+
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+
+/** « 1er septembre 2026 » ou ISO → « 2026-09-01 » (pour schema.org / Open Graph). */
+export function toIsoDate(value: string | null | undefined): string | undefined {
+  if (!value) return undefined
+  if (/^\d{4}-\d{2}-\d{2}/.test(value)) return value.slice(0, 10)
+  const m = value.toLowerCase().match(/^(\d{1,2})(?:er)?\s+([a-zéû]+)\s+(\d{4})$/)
+  if (!m) return undefined
+  const month = MOIS.indexOf(m[2])
+  if (month < 0) return undefined
+  return `${m[3]}-${String(month + 1).padStart(2, '0')}-${m[1].padStart(2, '0')}`
+}

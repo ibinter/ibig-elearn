@@ -6,11 +6,11 @@ import type { Course, Category } from '@/types'
 import CatalogueFilters from './CatalogueFilters'
 import { getT } from '@/i18n'
 
-export const metadata = {
+export const metadata = { alternates: { canonical: '/catalogue' },
   title: 'Catalogue des formations professionnelles',
   description: 'Explorez 184+ formations certifiantes en ligne adaptées aux marchés africains. Filtrez par domaine, niveau, prix, langue. Payez en Mobile Money.',
   openGraph: {
-    title: 'Catalogue — IBIG E-LEARNING',
+    title: 'Catalogue',
     description: '184+ formations certifiantes pour les professionnels d\'Afrique francophone.',
     type: 'website' as const,
   },

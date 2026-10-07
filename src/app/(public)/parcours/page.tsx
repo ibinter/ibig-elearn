@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { BookOpen, Clock, Star, Target, ChevronRight, Award } from 'lucide-react'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Parcours de formation — IBIG E-LEARNING',
+export const metadata: Metadata = { alternates: { canonical: '/parcours' },
+  title: 'Parcours de formation',
   description: 'Des séquences de formations organisées par experts pour vous emmener du débutant à l\'expert dans votre domaine.',
 }
 

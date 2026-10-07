@@ -1,6 +1,10 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import FormateurSidebar from '@/components/layout/FormateurSidebar'
+
+// Espace privé : jamais indexé
+export const metadata: Metadata = { robots: { index: false, follow: false } }
 
 export default async function FormateurLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()

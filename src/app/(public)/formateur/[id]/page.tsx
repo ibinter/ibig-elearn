@@ -15,7 +15,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { data } = await supabase.from('profiles').select('full_name, bio, country').eq('id', id).single()
   if (!data) return { title: 'Formateur introuvable' }
   return {
-    title: `${data.full_name} — Formateur IBIG E-LEARNING`,
+    alternates: { canonical: `/formateur/${id}` },
+    title: `${data.full_name}, formateur`,
     description: data.bio ?? `Découvrez les formations de ${data.full_name} sur IBIG E-LEARNING.`,
   }
 }

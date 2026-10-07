@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Send, Mail, Users, ChevronDown, CheckCircle2 } from 'lucide-react'
+import { SITE_URL } from '@/lib/site'
 
 const ROLES = [
   { value: 'apprenant', label: 'Apprenants' },
@@ -32,7 +33,7 @@ export default function NewsletterPage() {
         <h2 style="color:#111827">${subject}</h2>
         <div style="color:#374151;line-height:1.7">${body.replace(/\n/g, '<br>')}</div>
         <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb">
-        <p style="color:#9ca3af;font-size:12px">IBIG E-LEARNING · Plateforme panafricaine de formation · <a href="https://ibig-elearn.com" style="color:#0B3D91">ibig-elearn.com</a></p>
+        <p style="color:#9ca3af;font-size:12px">IBIG E-LEARNING · Plateforme panafricaine de formation · <a href="${SITE_URL}" style="color:#0B3D91">${SITE_URL.split('//').pop()}</a></p>
       </div>
     </div>`
     try {

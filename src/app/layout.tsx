@@ -5,6 +5,7 @@ import { CurrencyProvider } from '@/lib/currency-context'
 import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
 import { getTenant } from '@/lib/tenant'
 import TenantTheme from '@/components/tenant/TenantTheme'
+import { SITE_URL } from '@/lib/site'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   keywords: ['formation en ligne', 'e-learning', 'Afrique', 'certification', 'IBIG', 'cours en ligne'],
   authors: [{ name: 'IBIG EDUFORM' }],
   creator: 'IBIG SOFT',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'),
+  metadataBase: new URL(SITE_URL),
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

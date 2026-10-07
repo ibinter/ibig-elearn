@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Conditions Générales d\'Utilisation — IBIG E-LEARNING',
+  title: 'Conditions Générales d\'Utilisation',
   description: 'CGU de la plateforme IBIG E-LEARNING. Règles d\'utilisation, droits et obligations des utilisateurs, formateurs et administrateurs.',
-  alternates: { canonical: 'https://ibig-elearning.com/cgu' },
+  alternates: { canonical: '/cgu' },
   robots: { index: true, follow: false },
 }
 

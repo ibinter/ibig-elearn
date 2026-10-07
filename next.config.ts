@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'b-cdn.net' },
     ],
   },
+  // Une seule URL pour la page d'accueil (SEO)
+  async redirects() {
+    return [{ source: '/accueil', destination: '/', permanent: true }]
+  },
   // Sécurité headers
   async headers() {
     return [

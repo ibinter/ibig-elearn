@@ -1,8 +1,9 @@
 ﻿import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { sendEmail } from '@/lib/email'
+import { SITE_URL } from '@/lib/site'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+const APP_URL = SITE_URL
 
 function relanceEmailHtml({
   name,

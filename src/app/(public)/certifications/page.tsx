@@ -1,7 +1,7 @@
 ﻿import Link from 'next/link'
 import { Award, CheckCircle, Shield, QrCode, Globe, BookOpen } from 'lucide-react'
 
-export const metadata = { title: 'Certifications — IBIG E-LEARNING', description: 'Découvrez nos certifications professionnelles vérifiables, reconnues dans 12 pays africains.' }
+export const metadata = { alternates: { canonical: '/certifications' }, title: 'Certifications', description: 'Découvrez nos certifications professionnelles vérifiables, reconnues dans 12 pays africains.' }
 
 export default function CertificationsPage() {
   return (

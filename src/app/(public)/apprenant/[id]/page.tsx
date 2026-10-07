@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps) {
   const supabase = await createClient()
   const { data } = await supabase.from('profiles').select('full_name, country').eq('id', id).single()
   if (!data) return { title: 'Profil introuvable' }
-  return { title: `${data.full_name} — IBIG E-LEARNING` }
+  return { title: `${data.full_name}` }
 }
 
 export default async function ProfilPublicPage({ params }: PageProps) {

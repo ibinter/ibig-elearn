@@ -1,706 +1,593 @@
-﻿import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
+import Link from 'next/link'
+import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle, ChevronRight, Flame, Clock, BadgeCheck, Smartphone, Lock, BarChart3, MessageSquare, Sparkles } from 'lucide-react'
+import CourseCard from '@/components/ui/CourseCard'
+import HeroSlider from '@/components/home/HeroSlider'
+import { getT } from '@/i18n'
 import type { Metadata } from 'next'
-import { ArrowRight, Users, BookOpen, Award, Shield, Smartphone, Globe, CheckCircle, TrendingUp, Star, Zap, Target, BarChart3, Clock, BadgeCheck, Flame, Play, ChevronRight, MapPin, Sparkles, Trophy, Rocket, MessageCircle, Brain, Lock, ShieldCheck } from 'lucide-react'
+import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'IBIG E-LEARNING — La plateforme eLearning #1 en Afrique francophone',
-  description: 'Formations certifiantes et professionnelles adaptées au marché africain. Payez en Mobile Money (Orange Money, Wave, MTN), obtenez un certificat vérifiable dans 12 pays. Assistante IA SARA disponible 24h/24.',
-  keywords: ['formation en ligne Afrique', 'e-learning Afrique francophone', 'certification professionnelle', 'Orange Money', 'formation certifiante', 'IBIG elearning'],
+  title: { absolute: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique' },
+  description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Plus de 179 formations certifiantes dans 12 pays.',
+  keywords: ['formation en ligne Afrique', 'e-learning Afrique francophone', 'formation professionnelle Côte d\'Ivoire', 'certification en ligne', 'IBIG E-LEARNING'],
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'IBIG E-LEARNING — La plateforme qui forme l\'Afrique de demain',
-    description: 'Formations certifiantes, paiement Mobile Money, certificats vérifiables dans 12 pays africains.',
-    url: 'https://ibig-elearning.com',
-    siteName: 'IBIG E-LEARNING',
-    locale: 'fr_FR',
-    type: 'website',
+    title: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique',
+    description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Plus de 179 formations certifiantes.',
+    url: '/',
+    images: [{ url: '/logo-full.webp', width: 1200, height: 630, alt: 'IBIG E-LEARNING' }],
   },
-  alternates: { canonical: 'https://ibig-elearning.com' },
-}
-import { createClient } from '@/lib/supabase/server'
-import type { Course, Category } from '@/types'
-import CourseCard from '@/components/ui/CourseCard'
-import RecommendedCourses from '@/components/ui/RecommendedCourses'
-import CountUp from '@/components/ui/CountUp'
-import CountriesMarquee from '@/components/home/CountriesMarquee'
-import TestimonialsCarousel from '@/components/home/TestimonialsCarousel'
-import HeroSlider from '@/components/home/HeroSlider'
-
-async function getFeaturedCourses(): Promise<{ courses: Course[]; isFeatured: boolean }> {
-  const supabase = await createClient()
-  const { data: featured } = await supabase
-    .from('courses')
-    .select('*, instructor:profiles(full_name, avatar_url), category:categories(name, slug), price_eur, price_usd')
-    .eq('is_published', true)
-    .eq('is_featured', true)
-    .order('enrollment_count', { ascending: false })
-    .limit(6)
-  if (featured && featured.length > 0) return { courses: featured as Course[], isFeatured: true }
-  // Fallback : les plus populaires
-  const { data: popular } = await supabase
-    .from('courses')
-    .select('*, instructor:profiles(full_name, avatar_url), category:categories(name, slug), price_eur, price_usd')
-    .eq('is_published', true)
-    .order('enrollment_count', { ascending: false })
-    .limit(6)
-  return { courses: (popular as Course[]) ?? [], isFeatured: false }
 }
 
-async function getTopCategories(): Promise<Category[]> {
-  const supabase = await createClient()
-  const { data } = await supabase.from('categories').select('*').order('position').limit(8)
-  return (data as Category[]) ?? []
-}
-
-async function getStats() {
-  const supabase = await createClient()
-  const [{ count: courses }, { count: enrollments }, { count: certificates }, { count: instructors }] = await Promise.all([
-    supabase.from('courses').select('*', { count: 'exact', head: true }).eq('is_published', true),
-    supabase.from('enrollments').select('*', { count: 'exact', head: true }),
-    supabase.from('certificates').select('*', { count: 'exact', head: true }),
-    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'formateur'),
-  ])
-  return { courses: courses ?? 0, enrollments: enrollments ?? 0, certificates: certificates ?? 0, instructors: instructors ?? 0 }
-}
-
-async function getTopInstructors() {
-  const supabase = await createClient()
-  const { data } = await supabase.from('profiles').select('id, full_name, avatar_url, bio, country').eq('role', 'formateur').limit(4)
-  return data ?? []
-}
-
-async function getPublishedTestimonials() {
-  const supabase = await createClient()
-  const { data } = await supabase.from('testimonials').select('*').eq('is_published', true).order('position').limit(9)
-  return data ?? []
-}
-
-const CATEGORY_ICONS: Record<string, string> = {
-  'informatique-et-technologie': '💻',
-  'management-et-leadership': '🎯',
-  'comptabilite-et-finance': '📊',
-  'commercial-et-marketing': '📈',
-  'gestion-des-ressources-humaines': '👥',
-  'entrepreneuriat-et-business': '🚀',
-  'btp-et-construction': '🏗️',
-  'immobilier': '🏠',
-  'ia-et-digitalisation': '🤖',
-  'sante-et-pharmacie': '🏥',
-  'droit-et-juridique': '⚖️',
-  'agriculture-et-agroalimentaire': '🌱',
-  'banque-et-assurance': '🏦',
-  'logistique-et-supply-chain': '🚚',
-  'infographie-et-design': '🎨',
-  'developpement-personnel': '✨',
-  'education-et-formation': '🎓',
-  'communication-et-medias': '📡',
-  'tourisme-et-hotellerie': '✈️',
-  'mines-energie-et-petrole': '⛏️',
-  'qhse-et-environnement': '🌿',
-  'creation-de-contenu': '🎬',
-  'direction-et-administration': '🏛️',
-}
-
-const FALLBACK_TESTIMONIALS = [
-  { id: '1', author_name: 'Kouassi Ange-Brice', author_role: 'Directeur Commercial', author_country: "Côte d'Ivoire", content: "Ce que j'apprécie vraiment, c'est que les exemples sont africains. La compta OHADA, le Mobile Money, les cas de PME ivoiriennes — enfin une formation qui ne parle pas que de la France ou des USA.", rating: 5, color: 'bg-blue-600' },
-  { id: '2', author_name: 'Fatou Diallo', author_role: 'Responsable RH', author_country: 'Sénégal', content: "J'ai suivi la formation RH tout en travaillant. Le contenu est dense, j'ai dû reprendre certaines leçons deux fois, mais ça vaut vraiment le coup. Le paiement en Orange Money c'est très pratique.", rating: 4, color: 'bg-green-600' },
-  { id: '3', author_name: 'Moussa Traoré', author_role: 'Entrepreneur', author_country: 'Mali', content: "La formation comptabilité m'a aidé à mieux suivre ma PME. Je ne suis pas comptable de formation donc certaines notions étaient nouvelles, mais les explications sont claires.", rating: 5, color: 'bg-orange-600' },
-  { id: '4', author_name: 'Aminata Koné', author_role: 'Chargée de projet', author_country: 'Guinée', content: "Bonne plateforme. Les cours sont bien structurés et accessibles même avec une connexion limitée. J'aurais aimé un peu plus d'exercices pratiques, mais dans l'ensemble je suis satisfaite.", rating: 4, color: 'bg-purple-600' },
+const ETAPES = [
+  { num: '01', icon: BookOpen, title: 'Choisissez votre formation', desc: 'Parcourez notre catalogue de formations certifiantes adaptées au marché africain et trouvez celle qui correspond à votre objectif.' },
+  { num: '02', icon: Smartphone, title: 'Payez en Mobile Money', desc: 'Orange Money, MTN, Wave, Moov ou carte bancaire — réglez en toute sécurité dans votre monnaie locale, sans frais cachés.' },
+  { num: '03', icon: Play, title: 'Apprenez à votre rythme', desc: 'Accédez à vie à vos cours en vidéo, quiz interactifs et ressources PDF depuis votre téléphone ou ordinateur.' },
+  { num: '04', icon: Award, title: 'Obtenez votre certificat', desc: 'Téléchargez votre certificat vérifiable avec QR code, reconnu par les entreprises partenaires dans 12 pays africains.' },
 ]
 
-export default async function HomePage() {
-  const [{ courses: featuredCourses, isFeatured }, categories, stats, instructors, testimonials] = await Promise.all([
-    getFeaturedCourses(), getTopCategories(), getStats(), getTopInstructors(), getPublishedTestimonials(),
+const AVANTAGES = [
+  { icon: BadgeCheck, title: 'Certifications reconnues', desc: 'Chaque certificat porte un QR code unique vérifiable en ligne par les employeurs et partenaires IBIG dans 12 pays.', color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
+  { icon: Smartphone, title: 'Mobile Money accepté', desc: 'Orange Money, MTN Mobile Money, Wave, Moov Money et carte bancaire. Payez comme vous voulez, en FCFA.', color: 'text-orange-500', bg: 'bg-orange-50 border-orange-100' },
+  { icon: Zap, title: 'Accès immédiat', desc: 'Votre formation s\'ouvre dès la confirmation de paiement. Commencez dans les 2 minutes qui suivent.', color: 'text-yellow-500', bg: 'bg-yellow-50 border-yellow-100' },
+  { icon: Headphones, title: 'Assistante SARA 24/7', desc: 'Notre IA pédagogique répond à toutes vos questions de cours à n\'importe quelle heure, en français.', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
+  { icon: Globe2, title: 'Contenu 100% africain', desc: 'Des exemples, des cas pratiques et des formateurs issus du contexte africain — pour des compétences directement applicables.', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
+  { icon: BarChart3, title: 'Suivi de progression', desc: 'Tableau de bord personnel, streaks quotidiens, points de fidélité et badges — restez motivé jusqu\'au certificat.', color: 'text-teal-600', bg: 'bg-teal-50 border-teal-100' },
+]
+
+const TEMOIGNAGES = [
+  {
+    nom: 'Aminata Koné', pays: 'Côte d\'Ivoire 🇨🇮', role: 'Directrice RH, PME Abidjan',
+    text: 'J\'ai obtenu ma certification GRH en 3 mois tout en travaillant à temps plein. Les cours sont réellement adaptés à notre contexte africain — les exemples parlent de nos entreprises, pas de multinationales américaines.',
+    note: 5, formation: 'Gestion des Ressources Humaines',
+  },
+  {
+    nom: 'Moussa Diallo', pays: 'Sénégal 🇸🇳', role: 'Fondateur, startup Dakar',
+    text: 'La formation Entrepreneuriat m\'a donné les outils concrets pour structurer mon business plan. En 6 mois, j\'avais levé mes premiers fonds. L\'assistante SARA est un vrai plus — disponible à 2h du matin quand j\'avais des questions.',
+    note: 5, formation: 'Entrepreneuriat & Business',
+  },
+  {
+    nom: 'Fatoumata Bah', pays: 'Guinée 🇬🇳', role: 'Chef comptable',
+    text: 'Le paiement en Mobile Money a tout changé pour moi. J\'ai pu m\'inscrire sans carte bancaire. La formation SYSCOHADA est la meilleure que j\'ai trouvée en ligne — mes collègues m\'ont déjà demandé le lien.',
+    note: 5, formation: 'Comptabilité SYSCOHADA',
+  },
+  {
+    nom: 'Kofi Mensah', pays: 'Ghana 🇬🇭', role: 'Marketing Manager',
+    text: 'J\'étais sceptique au départ, mais la qualité des vidéos et des formateurs m\'a convaincu dès le premier module. J\'ai mis mes nouvelles compétences en pratique immédiatement et j\'ai été promu 4 mois après.',
+    note: 5, formation: 'Marketing Digital pour PME Africaines',
+  },
+]
+
+const DOMAINES_PHARES = [
+  { emoji: '📊', nom: 'Comptabilité & Finance', nb: 3, slug: 'finance' },
+  { emoji: '📱', nom: 'Marketing Digital', nb: 2, slug: 'marketing' },
+  { emoji: '🤖', nom: 'Intelligence Artificielle', nb: 2, slug: 'ia' },
+  { emoji: '👥', nom: 'Management & RH', nb: 2, slug: 'management' },
+  { emoji: '💼', nom: 'Entrepreneuriat', nb: 1, slug: 'entrepreneuriat' },
+  { emoji: '🛒', nom: 'E-Commerce', nb: 1, slug: 'ecommerce' },
+]
+
+const PAYS = ['🇨🇮 Côte d\'Ivoire', '🇸🇳 Sénégal', '🇨🇲 Cameroun', '🇲🇱 Mali', '🇧🇫 Burkina Faso', '🇬🇳 Guinée', '🇹🇬 Togo', '🇧🇯 Bénin', '🇨🇩 RD Congo', '🇲🇦 Maroc', '🇬🇦 Gabon', '🇳🇪 Niger']
+
+export default async function AccueilPage() {
+  const t = await getT()
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  let userProfile = null
+  let userEnrollments: any[] = []
+  if (user) {
+    const [{ data: profile }, { data: enrolls }] = await Promise.all([
+      supabase.from('profiles').select('full_name, streak_days, total_points').eq('id', user.id).single(),
+      supabase.from('enrollments')
+        .select('progress_percent, course:courses(id, title, slug, thumbnail_url)')
+        .eq('user_id', user.id)
+        .eq('status', 'active')
+        .order('last_accessed_at', { ascending: false, nullsFirst: false })
+        .limit(3),
+    ])
+    userProfile = profile
+    userEnrollments = enrolls ?? []
+  }
+
+  const [
+    { data: featuredCourses },
+    { data: categories },
+    { count: totalCourses },
+    { count: totalUsers },
+    { count: totalCerts },
+  ] = await Promise.all([
+    supabase.from('courses')
+      .select('*, instructor:profiles(full_name, avatar_url), category:categories(name, slug)')
+      .eq('is_published', true)
+      .eq('is_featured', true)
+      .order('enrollment_count', { ascending: false })
+      .limit(8),
+    supabase.from('categories')
+      .select('id, name, slug, icon, description')
+      .order('name')
+      .limit(12),
+    supabase.from('courses').select('*', { count: 'exact', head: true }).eq('is_published', true),
+    supabase.from('profiles').select('*', { count: 'exact', head: true }),
+    supabase.from('certificates').select('*', { count: 'exact', head: true }),
   ])
 
-  const allTestimonials = (testimonials.length > 0
-    ? testimonials.map((t: any) => ({ ...t, initials: t.author_name?.slice(0, 2).toUpperCase() }))
-    : FALLBACK_TESTIMONIALS) as any[]
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'IBIG E-LEARNING',
+        url: SITE_URL,
+        logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo-full.webp` },
+        description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone.',
+        address: { '@type': 'PostalAddress', addressLocality: 'Abidjan', addressCountry: 'CI' },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: 'IBIG E-LEARNING',
+        inLanguage: 'fr',
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/recherche?q={search_term_string}` },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+    ],
+  }
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="min-h-screen bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* ═══════════════════════════════════════════════
-          HERO SLIDER DYNAMIQUE
-      ═══════════════════════════════════════════════ */}
-      <HeroSlider featuredCourses={featuredCourses} totalEnrollments={stats.enrollments} />
+      {/* ══ HERO SLIDER ══ */}
+      <HeroSlider featuredCourses={featuredCourses ?? []} totalEnrollments={totalUsers ?? 0} />
 
-
-      {/* ═══════════════════════════════════════════════
-          STATS BAND — CHIFFRES CLÉS
-      ═══════════════════════════════════════════════ */}
-      <section className="relative py-0 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-gray-100">
-            {[
-              { end: stats.courses > 0 ? stats.courses : 184, suffix: '+', label: 'Formations certifiantes', sub: 'disponibles maintenant', icon: BookOpen, color: 'text-[#0B3D91]', bg: 'bg-blue-50' },
-              { end: stats.enrollments > 0 ? stats.enrollments : 2400, suffix: '+', label: 'Apprenants actifs', sub: 'à travers 12 pays', icon: Users, color: 'text-green-600', bg: 'bg-green-50' },
-              { end: stats.certificates > 0 ? stats.certificates : 1200, suffix: '+', label: 'Certificats délivrés', sub: 'vérifiables par QR code', icon: Award, color: 'text-orange-600', bg: 'bg-orange-50' },
-              { end: 12, suffix: ' pays', label: 'Pays couverts', sub: 'Afrique francophone', icon: Globe, color: 'text-purple-600', bg: 'bg-purple-50' },
-            ].map((s, i) => (
-              <div key={i} className="flex flex-col items-center py-10 px-6 gap-3 group hover:bg-gray-50/50 transition-colors">
-                <div className={`w-14 h-14 rounded-2xl ${s.bg} ${s.color} flex items-center justify-center mb-1 group-hover:scale-110 transition-transform`}>
-                  <s.icon className="w-7 h-7" />
-                </div>
-                <div className="text-4xl sm:text-5xl font-black text-gray-900">
-                  <CountUp end={s.end} suffix={s.suffix} />
-                </div>
-                <div className="text-center">
-                  <p className="font-bold text-gray-900 text-sm">{s.label}</p>
-                  <p className="text-gray-400 text-xs mt-0.5">{s.sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          CATÉGORIES — GRILLE PREMIUM
-      ═══════════════════════════════════════════════ */}
-      <section className="py-24" style={{ background: 'linear-gradient(180deg, #f8faff 0%, #ffffff 100%)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-50 px-4 py-1.5 rounded-full">
-              <Target className="w-3.5 h-3.5" /> Nos domaines
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4 leading-tight">
-              25+ domaines professionnels<br />
-              <span style={{ background: 'linear-gradient(90deg, #0B3D91, #1a6cc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                couverts par nos experts
-              </span>
-            </h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Tous les secteurs porteurs du marché africain, enseignés par des praticiens reconnus</p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {categories.map((cat, i) => (
-              <Link key={cat.slug} href={`/catalogue?categorie=${cat.slug}`}
-                className="group relative flex flex-col items-center gap-2.5 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-[#0B3D91]/20 transition-all duration-300 text-center overflow-hidden">
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-                  style={{ background: `linear-gradient(135deg, hsl(${200 + i * 15}, 70%, 97%), white)` }} />
-                <span className="text-3xl relative z-10 group-hover:scale-110 transition-transform duration-300">{CATEGORY_ICONS[cat.slug] ?? '📚'}</span>
-                <span className="font-semibold text-[11px] leading-tight text-gray-700 group-hover:text-[#0B3D91] transition-colors relative z-10">{cat.name}</span>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <Link href="/catalogue"
-              className="inline-flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] font-bold px-8 py-3.5 rounded-2xl hover:bg-[#0B3D91] hover:text-white transition-all group">
-              Voir les 25+ domaines <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          FORMATIONS À LA UNE
-      ═══════════════════════════════════════════════ */}
-      {featuredCourses.length > 0 && (
-        <section className="py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
-              <div>
-                <span className="inline-flex items-center gap-2 text-orange-600 text-xs font-bold uppercase tracking-widest mb-3 bg-orange-50 px-4 py-1.5 rounded-full">
-                  <Flame className="w-3.5 h-3.5" /> {isFeatured ? 'Formations à la une' : 'Top formations'}
+      {/* ══ BANDEAU REPRISE (connectés) ══ */}
+      {user && (
+        <div className="bg-[#0B3D91] text-white border-b border-blue-800">
+          <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="font-semibold text-sm">{t.home.hello}, {userProfile?.full_name?.split(' ')[0] ?? 'Apprenant'} 👋</span>
+              {(userProfile as any)?.streak_days > 0 && (
+                <span className="text-xs bg-orange-500/20 border border-orange-400/30 rounded-full px-2 py-0.5 text-orange-300 flex items-center gap-1">
+                  <Flame className="w-3 h-3" />{(userProfile as any).streak_days} jours
                 </span>
-                <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-2">
-                  {isFeatured ? 'Sélectionnées par nos experts' : 'Les plus populaires'}
-                </h2>
-                <p className="text-gray-500">
-                  {isFeatured
-                    ? 'Les meilleures formations recommandées par IBIG pour booster votre carrière'
-                    : 'Plébiscitées par nos apprenants à travers toute l\'Afrique'}
-                </p>
-              </div>
-              <Link href={isFeatured ? '/catalogue?featured=true' : '/catalogue'}
-                className="inline-flex items-center gap-1.5 text-[#0B3D91] font-bold text-sm bg-blue-50 px-5 py-2.5 rounded-xl hover:bg-blue-100 transition-colors flex-shrink-0">
-                Voir tout le catalogue <ArrowRight className="w-4 h-4" />
-              </Link>
+              )}
             </div>
-
-            {/* Grille avec carte mise en avant */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredCourses.map((course, i) => (
-                <div key={course.id} className={i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}>
-                  <CourseCard course={course} />
-                </div>
-              ))}
-            </div>
-
-            {/* CTA mobile */}
-            <div className="sm:hidden text-center mt-8">
-              <Link href={isFeatured ? '/catalogue?featured=true' : '/catalogue'}
-                className="inline-flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] font-bold px-6 py-3 rounded-xl hover:bg-[#0B3D91] hover:text-white transition-all">
-                Voir toutes les formations <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ═══════════════════════════════════════════════
-          RECOMMANDÉS
-      ═══════════════════════════════════════════════ */}
-      <section className="pb-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RecommendedCourses title="Formations populaires" />
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          COMMENT ÇA MARCHE — TIMELINE
-      ═══════════════════════════════════════════════ */}
-      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f8faff 0%, #eef3ff 50%, #f8faff 100%)' }}>
-        {/* Decorative circles */}
-        <div className="hidden sm:block absolute top-20 -left-20 w-64 h-64 rounded-full opacity-30 blur-3xl" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
-        <div className="hidden sm:block absolute bottom-20 -right-20 w-64 h-64 rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-100/70 px-4 py-1.5 rounded-full">
-              <Rocket className="w-3.5 h-3.5" /> Simple & rapide
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">De zéro à certifié<br />en 3 étapes</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Depuis votre smartphone, en francs CFA, en quelques semaines</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 relative">
-            {/* Connecting line */}
-            <div className="hidden sm:block absolute top-16 left-[16.66%] right-[16.66%] h-0.5"
-              style={{ background: 'linear-gradient(90deg, #0B3D91, #FFA500, #10b981)' }} />
-
-            {[
-              {
-                step: '1', icon: BookOpen, title: 'Choisissez',
-                desc: "Parcourez 184 formations certifiantes. Filtrez par domaine, niveau et budget. Lisez les avis d'autres professionnels africains.",
-                gradient: 'from-[#0B3D91] to-blue-600',
-                badge: 'Gratuit',
-                badgeColor: 'bg-blue-100 text-[#0B3D91]',
-                detail: '📍 Depuis Abidjan, Dakar, Douala, Bamako…',
-              },
-              {
-                step: '2', icon: Smartphone, title: 'Payez',
-                desc: 'Orange Money, MTN, Wave, carte bancaire. 12 devises africaines. Garantie satisfait ou remboursé 7 jours sans conditions.',
-                gradient: 'from-[#FFA500] to-orange-500',
-                badge: 'Sécurisé SSL',
-                badgeColor: 'bg-orange-100 text-orange-700',
-                detail: '💳 XOF, XAF, GNF, MAD, NGN et plus',
-              },
-              {
-                step: '3', icon: Award, title: 'Certifiez-vous',
-                desc: 'Apprenez à votre rythme sur mobile ou desktop. Réussissez l\'évaluation et téléchargez votre certificat PDF vérifiable.',
-                gradient: 'from-emerald-500 to-teal-600',
-                badge: 'Vérifiable QR',
-                badgeColor: 'bg-green-100 text-green-700',
-                detail: '🏆 Reconnu par les entreprises africaines',
-              },
-            ].map((item, i) => (
-              <div key={i} className="relative flex flex-col items-center text-center px-4 sm:px-8">
-                {/* Step circle */}
-                <div className={`relative z-10 w-14 h-14 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-6 shadow-lg shadow-current/30`}>
-                  <item.icon className="w-6 h-6 text-white" />
-                  <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white border-2 border-gray-100 flex items-center justify-center text-[10px] font-black text-gray-700">{item.step}</div>
-                </div>
-
-                <span className={`text-xs font-bold px-3 py-1 rounded-full mb-3 ${item.badgeColor}`}>{item.badge}</span>
-                <h3 className="text-2xl font-black text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4">{item.desc}</p>
-                <p className="text-xs text-gray-400 italic">{item.detail}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="text-center mt-16">
-            <Link href="/inscription"
-              className="group inline-flex items-center gap-3 font-black text-black px-10 py-5 rounded-2xl text-base shadow-2xl hover:scale-105 transition-all"
-              style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', boxShadow: '0 20px 40px rgba(255,165,0,0.3)' }}>
-              Commencer maintenant — C&apos;est gratuit
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          CHIFFRES DU SUCCÈS — IMPACT SECTION
-      ═══════════════════════════════════════════════ */}
-      <section className="py-24 relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #071e45 50%, #020b1a 100%)' }}>
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div className="hidden sm:block absolute top-0 right-0 w-[500px] h-[500px] opacity-10 blur-[100px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
-        <div className="hidden sm:block absolute bottom-0 left-0 w-[400px] h-[400px] opacity-10 blur-[80px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 text-[#FFA500] text-xs font-bold uppercase tracking-widest mb-4 border border-[#FFA500]/30 bg-[#FFA500]/10 px-4 py-1.5 rounded-full">
-              <TrendingUp className="w-3.5 h-3.5" /> Impact réel
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black mb-4 leading-tight">
-              Des résultats concrets<br />
-              <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                pour votre carrière
-              </span>
-            </h2>
-            <p className="text-blue-200/70 max-w-xl mx-auto">Chaque formation est conçue pour transformer votre expertise et générer un ROI immédiat</p>
-          </div>
-
-          {/* Big impact stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-            {[
-              { value: '94%', label: 'taux de satisfaction', sub: 'sur 1 200+ avis vérifiés', icon: Star, color: 'text-yellow-400', border: 'border-yellow-400/20' },
-              { value: '3×', label: 'gain de productivité', sub: 'reporté par nos apprenants', icon: TrendingUp, color: 'text-green-400', border: 'border-green-400/20' },
-              { value: '< 4h', label: 'pour voir un impact', sub: 'sur votre poste de travail', icon: Clock, color: 'text-blue-400', border: 'border-blue-400/20' },
-              { value: '12', label: 'pays couverts', sub: 'Afrique francophone', icon: Globe, color: 'text-purple-400', border: 'border-purple-400/20' },
-            ].map(s => (
-              <div key={s.label} className={`relative rounded-3xl p-6 text-center border ${s.border} overflow-hidden hover:scale-105 transition-transform`}
-                style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)' }}>
-                <s.icon className={`w-8 h-8 ${s.color} mx-auto mb-3`} />
-                <div className="text-4xl sm:text-5xl font-black text-white mb-1">{s.value}</div>
-                <p className="font-semibold text-white/90 text-sm">{s.label}</p>
-                <p className="text-blue-300/50 text-xs mt-1">{s.sub}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Features grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { icon: Award, title: 'Certifications vérifiables', desc: 'QR code unique, vérifiable par tout employeur ou partenaire en temps réel.', accent: 'text-yellow-400' },
-              { icon: Smartphone, title: 'Mobile-first & hors-ligne', desc: 'Apprenez sur 3G. Téléchargez les cours pour les zones à faible connectivité.', accent: 'text-green-400' },
-              { icon: Globe, title: '12 devises africaines', desc: 'XOF, XAF, GNF, MAD, NGN, KES… Payez dans votre monnaie locale.', accent: 'text-blue-400' },
-              { icon: Users, title: 'Formateurs praticiens', desc: 'Experts reconnus, ancrés dans la réalité des marchés et entreprises africains.', accent: 'text-purple-400' },
-              { icon: Shield, title: 'Garantie 7 jours', desc: 'Satisfait ou remboursé, sans condition. Votre investissement est protégé.', accent: 'text-red-400' },
-              { icon: Target, title: 'Accès à vie', desc: 'Payez une fois, accédez pour toujours. Toutes les mises à jour incluses.', accent: 'text-orange-400' },
-            ].map(item => (
-              <div key={item.title} className="flex gap-4 rounded-2xl p-5 border border-white/8 hover:border-white/15 transition-colors group cursor-default"
-                style={{ background: 'rgba(255,255,255,0.04)' }}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5`}
-                  style={{ background: 'rgba(255,255,255,0.07)' }}>
-                  <item.icon className={`w-5 h-5 ${item.accent}`} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white mb-1 text-sm">{item.title}</h3>
-                  <p className="text-blue-200/60 text-xs leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          TÉMOIGNAGES — SOCIAL PROOF MASSIF
-      ═══════════════════════════════════════════════ */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-50 px-4 py-1.5 rounded-full">
-              <Trophy className="w-3.5 h-3.5" /> Témoignages
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
-              Ils ont transformé<br />
-              <span style={{ background: 'linear-gradient(90deg, #0B3D91, #1a6cc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                leur carrière
-              </span>
-            </h2>
-            <div className="flex items-center justify-center gap-2 text-gray-500">
-              <div className="flex gap-0.5">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 text-[#FFA500] fill-[#FFA500]" />)}
-              </div>
-              <span className="font-black text-gray-900 text-lg">4.8/5</span>
-              <span>· Avis de nos apprenants</span>
-            </div>
-          </div>
-          <TestimonialsCarousel testimonials={allTestimonials} />
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          SARA — ASSISTANTE IA PÉDAGOGIQUE
-      ═══════════════════════════════════════════════ */}
-      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #f0f4ff 100%)' }}>
-        <div className="hidden sm:block absolute top-0 right-0 w-[400px] h-[400px] opacity-20 blur-[80px] rounded-full" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-            {/* Texte */}
-            <div>
-              <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-5 bg-blue-100 px-4 py-1.5 rounded-full">
-                <Brain className="w-3.5 h-3.5" /> Intelligence Artificielle
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-5 leading-tight">
-                SARA, votre assistante<br />
-                <span style={{ background: 'linear-gradient(90deg, #0B3D91, #1a6cc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  pédagogique 24h/24
-                </span>
-              </h2>
-              <p className="text-gray-500 text-lg leading-relaxed mb-8">
-                SARA est l&apos;IA intégrée à chaque cours. Elle répond à vos questions sur le contenu,
-                vous guide dans vos exercices et vous aide à progresser — sans faire le travail à votre place.
-              </p>
-
-              <div className="space-y-4 mb-8">
-                {[
-                  { icon: MessageCircle, title: 'Disponible dans chaque leçon', desc: 'Posez vos questions directement depuis la page de cours, à n\'importe quelle heure.' },
-                  { icon: Brain, title: 'Pédagogique, pas substitutive', desc: 'SARA guide et explique — elle ne fait pas les exercices à votre place pour maximiser votre apprentissage.' },
-                  { icon: Globe, title: 'Multilingue', desc: 'Répondez en français, en anglais ou dans votre langue régionale selon votre préférence.' },
-                ].map((f, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#0B3D91]/10 flex items-center justify-center flex-shrink-0">
-                      <f.icon className="w-5 h-5 text-[#0B3D91]" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-gray-900 text-sm">{f.title}</p>
-                      <p className="text-gray-500 text-sm mt-0.5">{f.desc}</p>
-                    </div>
-                  </div>
+            {userEnrollments.length > 0 ? (
+              <div className="flex flex-wrap gap-2 flex-1">
+                {userEnrollments.slice(0, 3).map((e: any) => (
+                  <Link key={(e.course as any)?.id} href={`/formation/${(e.course as any)?.slug}`}
+                    className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-3 py-1.5 transition-colors text-xs">
+                    <span className="truncate max-w-[110px]">{(e.course as any)?.title}</span>
+                    <span className="text-[#FFA500] font-bold flex-shrink-0">{e.progress_percent ?? 0}%</span>
+                  </Link>
                 ))}
               </div>
+            ) : (
+              <p className="text-blue-200 text-sm flex-1">{t.home.noFormationInProgress}</p>
+            )}
+            <Link href="/tableau-de-bord"
+              className="flex-shrink-0 flex items-center gap-1.5 bg-[#FFA500] hover:bg-orange-400 text-black font-bold px-4 py-2 rounded-lg transition-colors text-xs">
+              {t.home.mySpace} <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      )}
 
-              <Link href="/inscription"
-                className="inline-flex items-center gap-2 bg-[#0B3D91] text-white font-bold px-7 py-3.5 rounded-2xl hover:bg-blue-800 transition-colors">
-                Essayer SARA gratuitement <ArrowRight className="w-4 h-4" />
+      {/* ══ BANDE STATS ══ */}
+      <div className="bg-[#0B3D91] text-white">
+        <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { value: `${totalCourses ?? 10}+`, label: t.home.statsAvailable, icon: BookOpen, sub: t.home.statsIn8 },
+            { value: `${totalUsers ?? 200}+`, label: t.home.statsActive, icon: Users, sub: t.home.statsIn12 },
+            { value: totalCerts && totalCerts > 0 ? `${totalCerts}+` : 'QR certifié', label: t.home.statsCertsDelivered, icon: Award, sub: t.home.statsVerifiable },
+            { value: '12', label: t.home.statsCountriesCovered, icon: Globe2, sub: t.home.statsFrancophone },
+          ].map(s => (
+            <div key={s.label} className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <s.icon className="w-5 h-5 text-[#FFA500]" />
+              </div>
+              <div>
+                <p className="text-2xl font-black text-white">{s.value}</p>
+                <p className="text-sm font-semibold text-white/90">{s.label}</p>
+                <p className="text-xs text-blue-300">{s.sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ══ DOMAINES ══ */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">{t.home.categoriesTitle}</p>
+              <h2 className="text-2xl lg:text-3xl font-black text-gray-900">{t.home.domainsTitle}</h2>
+              <p className="text-gray-500 mt-1">{t.home.domainsSubtitle}</p>
+            </div>
+            <Link href="/catalogue" className="hidden sm:flex items-center gap-1.5 text-[#0B3D91] font-semibold text-sm hover:underline">
+              {t.home.seeAll} <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-4">
+            {(categories ?? []).slice(0, 11).map((cat: any) => (
+              <Link key={cat.id} href={`/catalogue?categorie=${cat.slug}`}
+                className="group flex flex-col items-center gap-2.5 bg-white border border-gray-200 rounded-2xl p-4 hover:border-[#0B3D91] hover:shadow-md transition-all duration-200">
+                <span className="text-3xl">{cat.icon}</span>
+                <p className="text-xs font-semibold text-gray-700 text-center leading-snug group-hover:text-[#0B3D91] transition-colors">{cat.name}</p>
+              </Link>
+            ))}
+            <Link href="/catalogue"
+              className="flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#0B3D91] to-blue-700 rounded-2xl p-4 hover:opacity-90 transition-opacity">
+              <ArrowRight className="w-7 h-7 text-white" />
+              <p className="text-xs font-bold text-white text-center">Voir tout</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ FORMATIONS POPULAIRES ══ */}
+      {featuredCourses && featuredCourses.length > 0 && (
+        <section className="py-16 bg-white">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">{t.home.whyTitle}</p>
+                <h2 className="text-2xl lg:text-3xl font-black text-gray-900">{t.home.popularTitle}</h2>
+                <p className="text-gray-500 mt-1">{t.home.popularSubtitle}</p>
+              </div>
+              <Link href="/catalogue" className="hidden sm:flex items-center gap-1.5 text-[#0B3D91] font-semibold text-sm hover:underline">
+                {t.home.seeCatalog} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
-            {/* Mockup chat SARA */}
-            <div className="relative">
-              <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-                {/* Header */}
-                <div className="bg-[#0B3D91] px-5 py-4 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
-                    <MessageCircle className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-sm">SARA</p>
-                    <p className="text-blue-200 text-xs flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" /> En ligne maintenant
-                    </p>
-                  </div>
+            {/* Badge tendance sur la 1re formation */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {featuredCourses.slice(0, 8).map((c: any, i) => (
+                <div key={c.id} className="relative">
+                  {i === 0 && (
+                    <div className="absolute -top-2.5 left-3 z-10">
+                      <span className="inline-flex items-center gap-1 bg-[#FFA500] text-black text-[10px] font-black px-2.5 py-1 rounded-full shadow-md">
+                        <Flame className="w-3 h-3" /> {t.home.trend}
+                      </span>
+                    </div>
+                  )}
+                  <CourseCard course={c} />
                 </div>
-
-                {/* Messages */}
-                <div className="p-5 space-y-4 bg-gray-50 min-h-[280px]">
-                  <div className="flex gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#0B3D91] flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">S</div>
-                    <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm max-w-[80%]">
-                      <p className="text-sm text-gray-700">Bonjour ! Je suis SARA. Comment puis-je vous aider avec ce cours ?</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 justify-end">
-                    <div className="bg-[#0B3D91] rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
-                      <p className="text-sm text-white">Je ne comprends pas la différence entre le résultat net et l'EBE</p>
-                    </div>
-                    <div className="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 text-gray-600 text-xs font-bold">K</div>
-                  </div>
-
-                  <div className="flex gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#0B3D91] flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">S</div>
-                    <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm max-w-[85%]">
-                      <p className="text-sm text-gray-700">Bonne question ! L&apos;EBE (Excédent Brut d&apos;Exploitation) mesure la performance opérationnelle <strong>avant</strong> impôts et amortissements. Le résultat net, lui, c&apos;est ce qui reste après tout. Exemple concret : une entreprise peut avoir un EBE positif mais un résultat net négatif si ses charges financières sont élevées.</p>
-                      <p className="text-[10px] text-gray-400 mt-2">SARA — IA pédagogique IBIG</p>
-                    </div>
-                  </div>
-
-                  {/* Typing indicator */}
-                  <div className="flex gap-3">
-                    <div className="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 text-gray-600 text-xs font-bold">K</div>
-                    <div className="bg-[#0B3D91]/10 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] animate-bounce" style={{ animationDelay: '300ms' }} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Input */}
-                <div className="px-4 py-3 border-t border-gray-100 flex items-center gap-3 bg-white">
-                  <div className="flex-1 bg-gray-100 rounded-xl px-4 py-2.5 text-sm text-gray-400">Posez votre question à SARA…</div>
-                  <button className="w-9 h-9 rounded-xl bg-[#0B3D91] flex items-center justify-center flex-shrink-0">
-                    <ArrowRight className="w-4 h-4 text-white" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Badge flottant */}
-              <div className="absolute -top-4 -right-4 bg-[#FFA500] text-black font-black text-xs px-3 py-1.5 rounded-full shadow-lg">
-                IA Incluse dans chaque cours
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          CERTIFICATIONS ANTI-TRICHE — CRÉDIBILITÉ
-      ═══════════════════════════════════════════════ */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-green-700 text-xs font-bold uppercase tracking-widest mb-4 bg-green-50 px-4 py-1.5 rounded-full">
-              <ShieldCheck className="w-3.5 h-3.5" /> Certifications de confiance
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
-              Des certificats qui ont <span style={{ background: 'linear-gradient(90deg, #10b981, #059669)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>de la valeur</span>
-            </h2>
-            <p className="text-gray-500 max-w-lg mx-auto">Notre système d&apos;évaluation garantit que chaque certifié a réellement acquis les compétences</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { icon: Lock, title: 'Examens surveillés', desc: 'Détection de changements d\'onglet et comportements suspects pendant l\'évaluation.', color: 'bg-blue-50 text-[#0B3D91]' },
-              { icon: Sparkles, title: 'Questions mélangées', desc: 'Chaque tentative présente un ordre de questions unique — impossible de mémoriser l\'ordre.', color: 'bg-purple-50 text-purple-700' },
-              { icon: ShieldCheck, title: 'Score calculé côté serveur', desc: 'Le score est calculé exclusivement sur nos serveurs, sans possibilité de manipulation.', color: 'bg-green-50 text-green-700' },
-              { icon: BadgeCheck, title: 'QR code vérifiable', desc: 'Chaque certificat porte un QR code unique que tout employeur peut scanner pour vérifier.', color: 'bg-orange-50 text-orange-700' },
-            ].map((f, i) => (
-              <div key={i} className="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:shadow-md transition-shadow">
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${f.color}`}>
-                  <f.icon className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2 text-sm">{f.title}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          PAYS — MARQUEE BAND
-      ═══════════════════════════════════════════════ */}
-      <section className="relative py-10 overflow-hidden" style={{ background: 'linear-gradient(90deg, #0B3D91, #1a4faa, #0B3D91)' }}>
-        <div className="absolute inset-0 opacity-[0.06]"
-          style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
-        <div className="max-w-7xl mx-auto px-4 mb-4">
-          <p className="text-center text-blue-200/80 text-sm font-bold uppercase tracking-widest">
-            🌍 Disponible dans 12 pays d&apos;Afrique francophone
-          </p>
-        </div>
-        <CountriesMarquee />
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          FORMATEURS
-      ═══════════════════════════════════════════════ */}
-      {instructors.length > 0 && (
-        <section className="py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <span className="inline-flex items-center gap-2 text-[#0B3D91] text-xs font-bold uppercase tracking-widest mb-4 bg-blue-50 px-4 py-1.5 rounded-full">
-                <Users className="w-3.5 h-3.5" /> Nos experts
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">Apprenez des meilleurs</h2>
-              <p className="text-gray-500 max-w-xl mx-auto">Des praticiens reconnus dans leurs domaines, ancrés dans les réalités africaines</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {instructors.map((f: any) => (
-                <Link key={f.id} href={`/formateur/${f.id}`}
-                  className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm p-8 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden">
-                  {/* Background accent */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
-                    style={{ background: 'linear-gradient(135deg, #f0f4ff, white)' }} />
-
-                  <div className="relative">
-                    <div className="relative inline-block mb-5">
-                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#0B3D91] to-[#1a6cc4] flex items-center justify-center text-white font-black text-2xl mx-auto overflow-hidden ring-4 ring-white shadow-lg group-hover:ring-[#0B3D91]/20 transition-all">
-                        {f.avatar_url
-                          ? <img src={f.avatar_url} alt={f.full_name} className="w-full h-full object-cover" />
-                          : f.full_name?.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-400 border-2 border-white flex items-center justify-center">
-                        <BadgeCheck className="w-3 h-3 text-white" />
-                      </div>
-                    </div>
-
-                    <p className="font-black text-gray-900 group-hover:text-[#0B3D91] transition-colors text-lg">{f.full_name}</p>
-                    {f.country && (
-                      <p className="text-xs text-gray-400 mt-1 flex items-center justify-center gap-1">
-                        <MapPin className="w-3 h-3" />{f.country}
-                      </p>
-                    )}
-                    {f.bio && <p className="text-xs text-gray-500 mt-3 line-clamp-2 leading-relaxed">{f.bio}</p>}
-                    <div className="mt-4 inline-flex items-center gap-1 text-xs text-[#0B3D91] font-bold opacity-0 group-hover:opacity-100 transition-opacity bg-blue-50 px-3 py-1.5 rounded-full">
-                      Voir le profil <ChevronRight className="w-3 h-3" />
-                    </div>
-                  </div>
-                </Link>
               ))}
+            </div>
+
+            <div className="text-center mt-10">
+              <Link href="/catalogue"
+                className="inline-flex items-center gap-2 bg-[#0B3D91] hover:bg-blue-800 text-white font-bold px-8 py-4 rounded-2xl transition-colors">
+                {t.home.allCourses} <ArrowRight className="w-5 h-5" />
+              </Link>
+              <p className="text-xs text-gray-400 mt-3">{t.home.noEngagement} · {t.home.immediateAccess} · {t.home.mobileMoney}</p>
             </div>
           </div>
         </section>
       )}
 
-      {/* ═══════════════════════════════════════════════
-          CTA FINAL — ULTRA IMPACTANT
-      ═══════════════════════════════════════════════ */}
-      <section className="relative py-28 overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #0d2d6e 40%, #020b1a 100%)' }}>
-        {/* Animated orbs */}
-        <div className="hidden sm:block absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] animate-float-slow"
-          style={{ background: 'radial-gradient(circle, #FFA500, transparent)' }} />
-        <div className="hidden sm:block absolute -bottom-40 -right-40 w-[400px] h-[400px] rounded-full opacity-10 blur-[80px] animate-float"
-          style={{ background: 'radial-gradient(circle, #4f8ef7, transparent)' }} />
-
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Live counter */}
-          <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold mb-10 border border-[#FFA500]/30"
-            style={{ background: 'rgba(255,165,0,0.12)' }}>
-            <span className="w-2 h-2 rounded-full bg-[#FFA500] animate-pulse" />
-            <span className="text-[#FFA500]">{stats.courses > 0 ? stats.courses : 184}+ formations · {stats.enrollments > 0 ? stats.enrollments.toLocaleString('fr-FR') : '2 400'}+ apprenants actifs</span>
+      {/* ══ COMMENT ÇA MARCHE ══ */}
+      <section className="py-10 md:py-20 bg-gradient-to-br from-[#0B1E4B] to-[#0B3D91] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="relative max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Simple & rapide</p>
+            <h2 className="text-2xl lg:text-3xl font-black mb-3">{t.home.howTitle}</h2>
+            <p className="text-blue-200 max-w-xl mx-auto">{t.home.howSubtitle}</p>
           </div>
-
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 leading-[1.05] tracking-tight">
-            Votre carrière<br />
-            ne peut pas attendre<br />
-            <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700, #FFA500)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              demain.
-            </span>
-          </h2>
-
-          <p className="text-blue-200/70 text-lg sm:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-            Des professionnels de toute l&apos;Afrique se forment <strong className="text-white">dès aujourd&apos;hui</strong>.
-            Inscription gratuite, paiement Mobile Money, certificat en quelques semaines.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {ETAPES.map((e, i) => (
+              <div key={e.num} className="relative">
+                {i < ETAPES.length - 1 && (
+                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-white/10 z-0" style={{ width: 'calc(100% - 2rem)', left: '50%' }} />
+                )}
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl font-black text-[#FFA500]/30">{e.num}</span>
+                    <div className="w-10 h-10 rounded-xl bg-[#FFA500]/15 border border-[#FFA500]/25 flex items-center justify-center">
+                      <e.icon className="w-5 h-5 text-[#FFA500]" />
+                    </div>
+                  </div>
+                  <h3 className="font-bold text-white mb-2">{e.title}</h3>
+                  <p className="text-sm text-blue-200 leading-relaxed">{e.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
             <Link href="/inscription"
-              className="group relative inline-flex items-center justify-center gap-3 font-black text-black px-10 py-5 rounded-2xl text-base transition-all hover:scale-105"
-              style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', boxShadow: '0 20px 50px rgba(255,165,0,0.4)' }}>
-              <span>Créer mon compte — C&apos;est gratuit</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link href="/catalogue"
-              className="inline-flex items-center justify-center gap-2 border border-white/20 hover:border-white/40 text-white font-bold px-10 py-5 rounded-2xl transition-all text-base hover:bg-white/5">
-              Explorer le catalogue
+              className="inline-flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-8 py-4 rounded-full transition-colors text-sm shadow-lg hover:shadow-xl">
+              <Sparkles className="w-4 h-4" />
+              {t.home.startNow}
             </Link>
           </div>
+        </div>
+      </section>
 
-          <div className="flex flex-wrap justify-center gap-6 text-blue-300/70 text-sm">
-            {[
-              { icon: CheckCircle, text: 'Inscription 100% gratuite' },
-              { icon: Shield, text: 'Garantie 7 jours' },
-              { icon: BadgeCheck, text: 'Certificat vérifiable' },
-              { icon: Zap, text: 'Accès immédiat' },
-            ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-2">
-                <Icon className="w-4 h-4 text-green-400" />
-                {text}
+      {/* ══ POURQUOI IBIG ══ */}
+      <section className="py-10 md:py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Notre différence</p>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.whyTitle}</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">{t.home.whySub}</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {AVANTAGES.map(a => (
+              <div key={a.title} className={`bg-white rounded-2xl border p-6 hover:shadow-md transition-shadow ${a.bg}`}>
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 bg-white/80`}>
+                  <a.icon className={`w-5 h-5 ${a.color}`} />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">{a.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{a.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Bande pays */}
+          <div className="mt-12 bg-white rounded-2xl border border-gray-200 p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Globe2 className="w-5 h-5 text-[#0B3D91]" />
+              <h3 className="font-bold text-gray-900">{t.home.countriesTitle}</h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {PAYS.map(p => (
+                <span key={p} className="text-sm text-gray-600 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1">{p}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ TÉMOIGNAGES ══ */}
+      <section className="py-10 md:py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Ils ont transformé leur carrière</p>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.testimonialsTitle}</h2>
+            <div className="flex items-center justify-center gap-2">
+              <div className="flex gap-0.5">
+                {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-[#FFA500] text-[#FFA500]" />)}
+              </div>
+              <span className="font-bold text-gray-900">4.8/5</span>
+              <span className="text-gray-400 text-sm">· Note moyenne sur toutes nos formations</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {TEMOIGNAGES.map(t => (
+              <div key={t.nom} className="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-[#FFA500] text-[#FFA500]" />)}
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed mb-4 flex-1">&ldquo;{t.text}&rdquo;</p>
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0B3D91] to-blue-500 flex items-center justify-center text-white font-black text-sm flex-shrink-0">
+                      {t.nom.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900 text-sm">{t.nom}</p>
+                      <p className="text-xs text-gray-400">{t.role}</p>
+                      <p className="text-xs text-gray-400">{t.pays}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <BookOpen className="w-3 h-3 text-[#0B3D91]" />
+                    <span className="text-[10px] text-[#0B3D91] font-semibold truncate">{t.formation}</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ══ CERTIFICAT SHOWCASE ══ */}
+      <section className="py-10 md:py-20 bg-gradient-to-br from-gray-900 to-[#0B1E4B]">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="text-white">
+            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Valorisez votre expertise</p>
+            <h2 className="text-2xl lg:text-3xl font-black mb-5">{t.home.certTitle}</h2>
+            <div className="space-y-4 mb-8">
+              {[
+                { icon: BadgeCheck, text: 'QR code unique — vérifiable instantanément par tout employeur', color: 'text-green-400' },
+                { icon: Globe2, text: 'Reconnu dans 12 pays d\'Afrique francophone', color: 'text-blue-400' },
+                { icon: Lock, text: 'Sécurisé et infalsifiable — chaque certificat a un identifiant unique', color: 'text-purple-400' },
+                { icon: Award, text: 'Téléchargeable en PDF haute définition, prêt à imprimer', color: 'text-yellow-400' },
+              ].map(item => (
+                <div key={item.text} className="flex items-start gap-3">
+                  <item.icon className={`w-5 h-5 ${item.color} flex-shrink-0 mt-0.5`} />
+                  <p className="text-white/80 text-sm">{item.text}</p>
+                </div>
+              ))}
+            </div>
+            <Link href="/certifications"
+              className="inline-flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-6 py-3 rounded-xl transition-colors text-sm">
+              {t.home.certCta} <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* Mockup certificat */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-sm">
+              <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-[#FFA500]/20 text-center relative">
+                <div className="absolute top-3 right-3">
+                  <BadgeCheck className="w-7 h-7 text-[#0B3D91]" />
+                </div>
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl overflow-hidden bg-[#0B3D91] flex items-center justify-center">
+                  <span className="text-white font-black text-xl">IBIG</span>
+                </div>
+                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Certificat de Réussite</p>
+                <p className="font-bold text-gray-900 text-lg mb-1">Aminata Koné</p>
+                <p className="text-xs text-gray-500 mb-4">a complété avec succès la formation</p>
+                <div className="bg-[#0B3D91]/5 border border-[#0B3D91]/15 rounded-xl py-3 px-4 mb-5">
+                  <p className="font-black text-[#0B3D91] text-sm">Gestion des Ressources Humaines</p>
+                  <p className="text-xs text-gray-400 mt-0.5">Score final : 91% · 40h de formation</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="text-left">
+                    <p className="text-[10px] text-gray-400">Délivré le</p>
+                    <p className="text-xs font-bold text-gray-700">15 Sept. 2026</p>
+                  </div>
+                  <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-0.5">
+                      {Array.from({ length: 16 }).map((_, i) => (
+                        <div key={i} className={`w-2 h-2 rounded-sm ${i % 3 === 0 ? 'bg-gray-900' : 'bg-gray-300'}`} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[9px] text-[#0B3D91] mt-3 font-mono">ID: IBIG-2026-GRH-0047 · ibig-elearning.com/verify</p>
+              </div>
+              {/* Floating badge */}
+              <div className="absolute -bottom-4 -left-4 bg-green-500 text-white rounded-2xl shadow-xl px-4 py-2.5 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
+                <span className="text-xs font-bold">Certificat vérifié ✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ ASSISTANT SARA ══ */}
+      <section className="py-10 md:py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Mockup chat SARA */}
+          <div className="order-2 lg:order-1">
+            <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden max-w-sm mx-auto lg:mx-0 shadow-lg">
+              <div className="bg-[#0B3D91] px-4 py-3 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#FFA500] flex items-center justify-center">
+                  <span className="text-black font-black text-sm">S</span>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm">SARA</p>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                    <p className="text-blue-200 text-xs">Assistante pédagogique IA · En ligne</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 space-y-3">
+                <div className="flex justify-end">
+                  <div className="bg-[#0B3D91] text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] text-sm">
+                    Je ne comprends pas la différence entre le bilan et le compte de résultat 😕
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="w-6 h-6 rounded-full bg-[#FFA500] flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-black font-black text-[10px]">S</span>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%] text-sm text-gray-700 shadow-sm">
+                    Excellente question ! 🎯 <br /><br />
+                    Le <strong>bilan</strong> est une photo de votre entreprise à un instant T — ce qu&apos;elle possède (actif) et ce qu&apos;elle doit (passif).<br /><br />
+                    Le <strong>compte de résultat</strong> est un film sur une période — vos recettes moins vos charges = votre bénéfice ou perte.
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <div className="bg-[#0B3D91] text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] text-sm">
+                    Merci, c&apos;est beaucoup plus clair ! 🙏
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="w-6 h-6 rounded-full bg-[#FFA500] flex items-center justify-center flex-shrink-0 mt-1">
+                    <span className="text-black font-black text-[10px]">S</span>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
+                    <div className="flex gap-1">
+                      {[1,2,3].map(i => (
+                        <span key={i} className="w-2 h-2 rounded-full bg-gray-300 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="px-4 pb-4">
+                <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2">
+                  <span className="text-xs text-gray-400 flex-1">Posez votre question...</span>
+                  <MessageSquare className="w-4 h-4 text-[#0B3D91]" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Votre tuteur personnel</p>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4">{t.home.saraTitle}</h2>
+            <p className="text-gray-600 mb-6 leading-relaxed">{t.home.saraSub}</p>
+            <div className="space-y-3 mb-8">
+              {[
+                'Explications claires en français à toute heure',
+                'Exemples issus du contexte économique africain',
+                'Aide pour les exercices et quiz sans donner les réponses',
+                'Recommandations de ressources complémentaires',
+              ].map(item => (
+                <div key={item} className="flex items-center gap-3">
+                  <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                  <span className="text-sm text-gray-700">{item}</span>
+                </div>
+              ))}
+            </div>
+            <Link href="/inscription"
+              className="inline-flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] hover:bg-[#0B3D91] hover:text-white font-bold px-6 py-3 rounded-xl transition-colors text-sm">
+              {t.home.saraCta} <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ CTA FINAL ══ */}
+      <section className="py-10 md:py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #0B3D91 60%, #1a56cc 100%)' }}>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-10" style={{ background: '#FFA500' }} />
+
+        <div className="relative max-w-3xl mx-auto px-4 text-center text-white">
+          <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-4">Rejoignez-nous maintenant</p>
+          <h2 className="text-3xl lg:text-4xl font-black mb-5 leading-tight">
+            {t.home.finalCtaTitle}<br />
+            <span style={{ background: 'linear-gradient(90deg, #FFA500, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              {t.home.finalCtaAccent}
+            </span>
+          </h2>
+          <p className="text-blue-100 mb-8 text-base max-w-xl mx-auto leading-relaxed">
+            {t.home.finalCtaSub}
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <Link href="/inscription"
+              className="flex items-center gap-2 bg-[#FFA500] hover:bg-orange-400 text-black font-black px-8 py-4 rounded-full transition-all hover:scale-105 shadow-lg text-base">
+              <Sparkles className="w-5 h-5" />
+              {t.home.ctaStart}
+            </Link>
+            <Link href="/catalogue"
+              className="flex items-center gap-2 border-2 border-white/30 hover:border-white text-white font-bold px-8 py-4 rounded-full transition-colors text-base">
+              {t.home.ctaExplore}
+            </Link>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-blue-200">
+            {[
+              { icon: CheckCircle, text: 'Sans engagement' },
+              { icon: Smartphone, text: 'Paiement Mobile Money' },
+              { icon: Award, text: 'Certificat inclus' },
+              { icon: Clock, text: 'Accès immédiat' },
+            ].map(f => (
+              <div key={f.text} className="flex items-center gap-1.5">
+                <f.icon className="w-4 h-4 text-green-400" />
+                {f.text}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 ﻿import Link from 'next/link'
 import { CheckCircle, Users, Globe, TrendingUp, Star, Mail } from 'lucide-react'
 
-export const metadata = { title: 'Devenir formateur — IBIG E-LEARNING', description: 'Partagez votre expertise et touchez des milliers d\'apprenants africains sur IBIG E-LEARNING.' }
+export const metadata = { alternates: { canonical: '/devenir-formateur' }, title: 'Devenir formateur', description: 'Partagez votre expertise et touchez des milliers d\'apprenants africains sur IBIG E-LEARNING.' }
 
 const avantages = [
   { icon: Users, title: 'Audience panafricaine', desc: 'Accédez à une audience de milliers de professionnels dans 12 pays.' },

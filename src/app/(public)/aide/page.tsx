@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 import { BookOpen, Users, Shield, ChevronRight, Play, Award, MessageCircle, Upload, BarChart2, Settings } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Centre d\'aide — IBIG E-LEARNING',
+  title: 'Centre d\'aide',
   description: 'Guides de prise en main de la plateforme IBIG E-LEARNING pour les apprenants, formateurs et administrateurs.',
-  alternates: { canonical: 'https://ibig-elearning.com/aide' },
+  alternates: { canonical: '/aide' },
 }
 
 const guides = [

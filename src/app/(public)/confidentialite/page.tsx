@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Politique de confidentialité — IBIG E-LEARNING',
+  title: 'Politique de confidentialité',
   description: 'Politique de confidentialité IBIG E-LEARNING. Données collectées, finalités, droits RGPD, cookies, sécurité des données personnelles.',
-  alternates: { canonical: 'https://ibig-elearning.com/confidentialite' },
+  alternates: { canonical: '/confidentialite' },
   robots: { index: true, follow: false },
 }
 

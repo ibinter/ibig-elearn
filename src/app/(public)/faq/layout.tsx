@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'FAQ — Questions fréquentes — IBIG E-LEARNING',
+  title: 'FAQ — Questions fréquentes',
   description: 'Trouvez les réponses à toutes vos questions sur les formations, paiements, certifications, accès aux cours et support IBIG E-LEARNING.',
   keywords: ['FAQ IBIG', 'questions fréquentes formation en ligne', 'aide IBIG E-LEARNING'],
-  alternates: { canonical: 'https://ibig-elearning.com/faq' },
+  alternates: { canonical: '/faq' },
   openGraph: {
     title: 'FAQ — Vos questions sur IBIG E-LEARNING',
     description: 'Toutes les réponses à vos questions sur la plateforme de formation en ligne IBIG.',
-    url: 'https://ibig-elearning.com/faq',
+    url: '/faq',
   },
 }
 

@@ -4,8 +4,8 @@ import { articles } from '@/lib/blog'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Blog — IBIG E-LEARNING',
+export const metadata: Metadata = { alternates: { canonical: '/blog' },
+  title: 'Blog',
   description: 'Conseils, actualités et ressources pour votre développement professionnel en Afrique francophone.',
   keywords: ['blog formation Afrique', 'conseils carrière Afrique', 'développement professionnel'],
 }

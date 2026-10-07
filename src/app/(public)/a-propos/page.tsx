@@ -1,7 +1,7 @@
 ﻿import Link from 'next/link'
 import { Users, Globe, Award, Target, Heart, BookOpen } from 'lucide-react'
 
-export const metadata = { title: 'À propos — IBIG E-LEARNING', description: 'Découvrez IBIG E-LEARNING, la plateforme panafricaine de formation professionnelle en ligne.' }
+export const metadata = { alternates: { canonical: '/a-propos' }, title: 'À propos', description: 'Découvrez IBIG E-LEARNING, la plateforme panafricaine de formation professionnelle en ligne.' }
 
 const team = [
   { name: 'Équipe IBIG EDUFORM', role: 'Pôle formation du groupe IBIG SARL', initial: 'I' },

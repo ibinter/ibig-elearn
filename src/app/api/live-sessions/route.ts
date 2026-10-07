@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { sendEmail } from '@/lib/email'
+import { SITE_URL } from '@/lib/site'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
     const dateStr = sessionDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
     const timeStr = sessionDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     const platformLabel: Record<string, string> = { zoom: 'Zoom', meet: 'Google Meet', other: 'Visioconférence' }
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+    const appUrl = SITE_URL
 
     await Promise.all(enrollments.map(async (e) => {
       const profile = e.profiles as any

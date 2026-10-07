@@ -9,6 +9,7 @@ import PriceDisplay from '@/components/ui/PriceDisplay'
 import ReviewsList from '@/components/reviews/ReviewsList'
 import ReviewForm from '@/components/reviews/ReviewForm'
 import StarRating from '@/components/reviews/StarRating'
+import { SITE_URL } from '@/lib/site'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -19,14 +20,17 @@ export async function generateMetadata({ params }: PageProps) {
   const supabase = await createClient()
   const { data } = await supabase
     .from('courses')
-    .select('title, short_description, thumbnail_url, instructor:profiles(full_name), category:categories(name)')
+    .select('title, short_description, duration_hours, thumbnail_url, instructor:profiles(full_name), category:categories(name)')
     .eq('slug', slug)
     .single()
   if (!data) return { title: 'Formation introuvable' }
 
-  const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+  const BASE_URL = SITE_URL
   const url = `${BASE_URL}/formation/${slug}`
-  const description = data.short_description ?? `Formation professionnelle certifiante en ${(data.category as any)?.name ?? 'développement professionnel'} — IBIG E-LEARNING`
+  const base = (data.short_description ?? `Formation professionnelle en ${(data.category as any)?.name ?? 'développement professionnel'}`).trim().replace(/[.s]+$/, '')
+  const extra = `Formation en ligne certifiante${data.duration_hours ? ` de ${data.duration_hours} h` : ''}, certificat vérifiable, paiement Mobile Money.`
+  const full = `${base}. ${extra}`
+  const description = full.length <= 160 ? full : base.slice(0, 157) + '…'
 
   return {
     title: data.title,
@@ -136,30 +140,59 @@ export default async function FormationPage({ params }: PageProps) {
     }
   }
 
-  const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibig-elearning.com'
+  const BASE_URL = SITE_URL
+  const courseUrl = `${BASE_URL}/formation/${c.slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Course',
-    name: c.title,
-    description: c.short_description ?? c.title,
-    url: `${BASE_URL}/formation/${c.slug}`,
-    image: c.thumbnail_url ?? `${BASE_URL}/og-default.png`,
-    provider: { '@type': 'Organization', name: 'IBIG E-LEARNING', sameAs: BASE_URL },
-    instructor: { '@type': 'Person', name: (c.instructor as any)?.full_name ?? 'IBIG Expert' },
-    courseMode: 'online',
-    educationalLevel: levelLabel[c.level] ?? c.level,
-    inLanguage: c.language ?? 'fr',
-    offers: c.price_xof > 0
-      ? { '@type': 'Offer', price: c.price_xof, priceCurrency: 'XOF', availability: 'https://schema.org/InStock', url: `${BASE_URL}/formation/${c.slug}` }
-      : { '@type': 'Offer', price: 0, priceCurrency: 'XOF', availability: 'https://schema.org/InStock' },
-    aggregateRating: c.rating_count > 0 ? {
-      '@type': 'AggregateRating',
-      ratingValue: c.rating_average,
-      reviewCount: c.rating_count,
-      bestRating: 5,
-      worstRating: 1,
-    } : undefined,
+    '@graph': [
+      {
+        '@type': 'Course',
+        '@id': `${courseUrl}#course`,
+        name: c.title,
+        description: c.short_description ?? c.description?.slice(0, 300) ?? c.title,
+        url: courseUrl,
+        image: c.thumbnail_url ?? `${BASE_URL}/logo-full.webp`,
+        inLanguage: c.language ?? 'fr',
+        educationalLevel: levelLabel[c.level] ?? c.level,
+        ...(Array.isArray(c.objectives) && c.objectives.length ? { teaches: c.objectives } : {}),
+        ...((c.category as any)?.name ? { about: (c.category as any).name } : {}),
+        provider: { '@type': 'Organization', name: 'IBIG E-LEARNING', url: BASE_URL },
+        hasCourseInstance: {
+          '@type': 'CourseInstance',
+          courseMode: 'Online',
+          ...(c.duration_hours ? { courseWorkload: `PT${c.duration_hours}H` } : {}),
+          instructor: { '@type': 'Person', name: (c.instructor as any)?.full_name ?? 'IBIG E-LEARNING' },
+        },
+        offers: {
+          '@type': 'Offer',
+          category: c.price_xof > 0 ? 'Paid' : 'Free',
+          price: c.price_xof > 0 ? c.price_xof : 0,
+          priceCurrency: 'XOF',
+          availability: 'https://schema.org/InStock',
+          url: courseUrl,
+        },
+        ...(c.rating_count > 0 ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: Number(c.rating_average).toFixed(1),
+            ratingCount: c.rating_count,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        } : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Accueil', item: BASE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Catalogue', item: `${BASE_URL}/catalogue` },
+          ...((c.category as any)?.name ? [{ '@type': 'ListItem', position: 3, name: (c.category as any).name, item: `${BASE_URL}/catalogue?categorie=${(c.category as any).slug}` }] : []),
+          { '@type': 'ListItem', position: (c.category as any)?.name ? 4 : 3, name: c.title, item: courseUrl },
+        ],
+      },
+    ],
   }
+
 
   return (
     <div className="min-h-screen bg-gray-50">
