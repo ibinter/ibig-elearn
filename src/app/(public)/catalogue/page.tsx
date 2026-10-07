@@ -98,9 +98,9 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   return (
     <div>
       {/* Bannière hero */}
-      <div className="hero-photo bg-students text-white py-10 px-4">
+      <div className="hero-photo bg-students text-white py-12 sm:py-20 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2">{t.catalog.heroBanner}</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2">{t.catalog.heroBanner}</h1>
           <p className="text-blue-200 text-sm">
             {count ?? 0} {t.catalog.heroSub}
           </p>
@@ -213,6 +213,13 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                     )}
                   </div>
                 )}
+
+                {/* Aide au choix */}
+                <Link href="/coaching" className="mt-10 block hero-photo bg-coaching rounded-3xl text-white p-6 sm:p-8 group">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Besoin d&apos;aide pour choisir ?</p>
+                  <p className="mt-1 text-xl sm:text-2xl font-bold max-w-md">Un coach IBIG vous oriente vers la formation adaptée à vos objectifs</p>
+                  <span className="mt-4 inline-flex items-center gap-2 bg-[#FFA500] text-black font-bold text-sm px-5 py-2.5 rounded-xl group-hover:opacity-90">Réserver une séance</span>
+                </Link>
               </>
             ) : (
               <div className="text-center py-20">
