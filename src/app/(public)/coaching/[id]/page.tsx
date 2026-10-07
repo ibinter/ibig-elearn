@@ -41,12 +41,14 @@ export default async function CoachingOfferPage({ params }: Props) {
           <ArrowLeft className="w-4 h-4" /> Coaching
         </Link>
 
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-7">
-          <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-full ibig-gradient flex items-center justify-center text-white text-xl font-bold overflow-hidden flex-shrink-0">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="hero-photo bg-coaching h-28 sm:h-40" aria-hidden="true" />
+          <div className="px-5 sm:px-7 pb-5 sm:pb-7">
+          <div className="flex items-end gap-3.5 -mt-8 sm:-mt-10">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 ring-4 ring-white shadow-lg rounded-full ibig-gradient flex items-center justify-center text-white text-xl font-bold overflow-hidden flex-shrink-0">
               {o.coach.avatar_url ? <img src={o.coach.avatar_url} alt="" className="w-full h-full object-cover" /> : o.coach.full_name.charAt(0)}
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 pb-1">
               <p className="font-bold text-gray-900" data-no-translate>{o.coach.full_name}</p>
               {o.coach.professional_title && <p className="text-sm text-gray-500">{o.coach.professional_title}</p>}
             </div>
@@ -64,6 +66,7 @@ export default async function CoachingOfferPage({ params }: Props) {
               <p className="px-4 pb-4 text-sm text-gray-600 leading-relaxed whitespace-pre-line">{o.coach.bio}</p>
             </details>
           )}
+          </div>
         </div>
 
         <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-7">
