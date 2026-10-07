@@ -135,8 +135,21 @@ export default function FAQPage() {
         )}
       </div>
 
+      {/* Guide apprenant */}
+      <Link href="/aide/apprenant" className="mt-10 group grid grid-cols-1 sm:grid-cols-5 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <picture className="sm:col-span-2">
+          <source media="(max-width: 767px)" srcSet="/images/bg/students-m.webp" />
+          <img src="/images/bg/students.webp" alt="" loading="lazy" className="w-full h-40 sm:h-full object-cover" />
+        </picture>
+        <div className="sm:col-span-3 p-5 sm:p-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Guide pas à pas</p>
+          <p className="mt-1 font-bold text-gray-900 text-lg group-hover:text-[#0B3D91]">Bien démarrer sur IBIG E-LEARNING</p>
+          <p className="mt-1 text-sm text-gray-500">Inscription, paiement Mobile Money, suivi des cours et certificats : tout expliqué en images.</p>
+        </div>
+      </Link>
+
       {/* CTA support */}
-      <div className="mt-10 hero-photo bg-team rounded-2xl p-6 text-white text-center">
+      <div className="mt-6 hero-photo bg-support rounded-2xl p-6 text-white text-center">
         <h3 className="font-bold text-lg mb-1">Vous n'avez pas trouvé votre réponse ?</h3>
         <p className="text-blue-200 text-sm mb-4">Notre équipe répond sous 24h ouvrées.</p>
         <div className="flex justify-center gap-3">
