@@ -4,7 +4,7 @@ const fr = {
   nav: {
     courses: 'Formations',
     catalog: 'Tout le catalogue',
-    catalogDesc: '184+ formations certifiantes',
+    catalogDesc: 'Toutes nos formations certifiantes',
     featured: 'Formations vedettes',
     featuredDesc: 'Les plus populaires',
     paths: 'Parcours métiers',

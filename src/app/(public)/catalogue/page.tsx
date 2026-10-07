@@ -8,10 +8,10 @@ import { getT } from '@/i18n'
 
 export const metadata = { alternates: { canonical: '/catalogue' },
   title: 'Catalogue des formations professionnelles',
-  description: 'Explorez 184+ formations certifiantes en ligne adaptées aux marchés africains. Filtrez par domaine, niveau, prix, langue. Payez en Mobile Money.',
+  description: 'Explorez nos formations certifiantes en ligne adaptées aux marchés africains. Filtrez par domaine, niveau, prix, langue. Payez en Mobile Money.',
   openGraph: {
     title: 'Catalogue',
-    description: '184+ formations certifiantes pour les professionnels d\'Afrique francophone.',
+    description: 'Formations certifiantes pour les professionnels d\'Afrique francophone.',
     type: 'website' as const,
   },
 }

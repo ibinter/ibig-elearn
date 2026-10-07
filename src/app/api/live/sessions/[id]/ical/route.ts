@@ -36,7 +36,7 @@ export async function GET(
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `UID:live-${id}@ibiglearn.com`,
+    `UID:live-${id}@ibig-elearning.com`,
     `DTSTAMP:${fmt(new Date())}`,
     `DTSTART:${fmt(start)}`,
     `DTEND:${fmt(end)}`,

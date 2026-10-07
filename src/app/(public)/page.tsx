@@ -9,12 +9,12 @@ import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: { absolute: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique' },
-  description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Plus de 179 formations certifiantes dans 12 pays.',
+  description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Des formations certifiantes, payables en Mobile Money, dans 12 pays.',
   keywords: ['formation en ligne Afrique', 'e-learning Afrique francophone', 'formation professionnelle Côte d\'Ivoire', 'certification en ligne', 'IBIG E-LEARNING'],
   alternates: { canonical: '/' },
   openGraph: {
     title: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique',
-    description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Plus de 179 formations certifiantes.',
+    description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Des formations certifiantes, payables en Mobile Money.',
     url: '/',
     images: [{ url: '/logo-full.webp', width: 1200, height: 630, alt: 'IBIG E-LEARNING' }],
   },

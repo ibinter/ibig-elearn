@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import ReferralDashboard from './ReferralDashboard'
+import { SITE_URL } from '@/lib/site'
 
 export default async function ParrainagePage() {
   const supabase = await createClient()
@@ -36,7 +37,7 @@ export default async function ParrainagePage() {
       profile={profile as any}
       referrals={(referrals as any) ?? []}
       stats={stats}
-      appUrl={process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibiglearn.com'}
+      appUrl={SITE_URL}
     />
   )
 }

@@ -112,7 +112,7 @@ export default function NotesPrintView({ courseTitle, instructorName, thumbnailU
 
         {/* Pied de page imprimé */}
         <div className="hidden print:block mt-12 pt-6 border-t border-gray-200 text-center text-xs text-gray-400">
-          IBIG E-LEARN — {courseTitle} — ibiglearn.com
+          IBIG E-LEARN — {courseTitle} — ibig-elearning.com
         </div>
       </div>
 

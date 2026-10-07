@@ -5,7 +5,7 @@ const en: Translations = {
   nav: {
     courses: 'Courses',
     catalog: 'Full catalog',
-    catalogDesc: '184+ certified courses',
+    catalogDesc: 'All our certified courses',
     featured: 'Featured courses',
     featuredDesc: 'Most popular',
     paths: 'Learning paths',

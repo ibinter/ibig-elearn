@@ -85,7 +85,7 @@ export default function Image() {
           marginBottom: '40px',
           maxWidth: '800px',
         }}>
-          184+ formations certifiantes · 12 pays · Mobile Money
+          Formations certifiantes · 12 pays · Mobile Money
         </p>
 
         {/* Badges */}

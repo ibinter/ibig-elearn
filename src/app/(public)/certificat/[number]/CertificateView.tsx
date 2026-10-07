@@ -2,6 +2,7 @@
 
 import { CheckCircle, XCircle, Award, Calendar, Clock, Star, Printer } from 'lucide-react'
 import Link from 'next/link'
+import { SITE_URL } from '@/lib/site'
 
 interface Cert {
   id: string
@@ -99,7 +100,7 @@ export default function CertificateView({ cert }: { cert: Cert }) {
             {/* QR code via API publique */}
             <img
               src={`https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${
-                encodeURIComponent(`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://ibiglearn.com'}/certificat/${cert.certificate_number}`)
+                encodeURIComponent(`${SITE_URL}/certificat/${cert.certificate_number}`)
               }`}
               alt="QR code de vérification"
               className="w-[90px] h-[90px] flex-shrink-0"
@@ -108,7 +109,7 @@ export default function CertificateView({ cert }: { cert: Cert }) {
               <p className="text-xs text-gray-400 mb-0.5">Numéro de certificat</p>
               <p className="font-mono font-bold text-gray-800 text-sm">{cert.certificate_number}</p>
               <p className="text-xs text-gray-400 mt-1">
-                Vérifiez l'authenticité sur <span className="text-[#0B3D91]">ibiglearn.com/certificat/{cert.certificate_number}</span>
+                Vérifiez l'authenticité sur <span className="text-[#0B3D91]">ibig-elearning.com/certificat/{cert.certificate_number}</span>
               </p>
             </div>
             {isValid
