@@ -65,7 +65,7 @@ export default async function VirementPage() {
         {!requests?.length ? (
           <div className="p-12 text-center text-gray-400">Aucune demande de virement pour l&apos;instant.</div>
         ) : (
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-100">
                 <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase">Date</th>
@@ -91,7 +91,7 @@ export default async function VirementPage() {
                 )
               })}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

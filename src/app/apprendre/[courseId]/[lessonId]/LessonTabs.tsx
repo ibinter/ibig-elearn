@@ -31,7 +31,7 @@ export default function LessonTabs({ lessonId, courseId, userId }: Props) {
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
-            className={`flex items-center gap-2 px-5 py-3.5 text-sm font-medium transition-all border-b-2 -mb-px ${
+            className={`flex flex-1 sm:flex-none justify-center items-center gap-2 px-3 sm:px-5 py-3.5 text-sm font-medium transition-all border-b-2 -mb-px ${
               active === tab.id
                 ? 'border-[#0B3D91] text-[#0B3D91] bg-white'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-white/60'
@@ -44,7 +44,7 @@ export default function LessonTabs({ lessonId, courseId, userId }: Props) {
       </div>
 
       {/* Tab content */}
-      <div className="bg-white p-6">
+      <div className="bg-white p-4 sm:p-6">
         {active === 'notes' && (
           <div>
             <LessonNotes lessonId={lessonId} courseId={courseId} />

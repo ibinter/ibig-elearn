@@ -18,9 +18,9 @@ export default async function FormateurLayout({ children }: { children: React.Re
         userName={profile.full_name ?? ''}
         userInitial={profile.full_name?.charAt(0) ?? 'F'}
       />
-      <div className="lg:ml-64 flex-1 flex flex-col">
+      <div className="lg:ml-64 flex-1 min-w-0 flex flex-col">
         <div className="h-14 lg:hidden" />
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   )

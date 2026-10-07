@@ -86,7 +86,7 @@ export default async function AdminSessionsLivePage() {
                 <Calendar className="w-4 h-4 text-[#0B3D91]" />
                 <h2 className="font-semibold text-gray-900">À venir ({upcoming.length})</h2>
               </div>
-              <table className="w-full">
+              <div className="overflow-x-auto"><table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 text-left">
                     <th className="px-5 py-3 text-xs font-semibold text-gray-500">Titre</th>
@@ -98,7 +98,7 @@ export default async function AdminSessionsLivePage() {
                   </tr>
                 </thead>
                 <tbody>{upcoming.map(s => <SessionRow key={s.id} s={s} />)}</tbody>
-              </table>
+              </table></div>
             </div>
           )}
           {past.length > 0 && (
@@ -107,7 +107,7 @@ export default async function AdminSessionsLivePage() {
                 <Clock className="w-4 h-4 text-gray-400" />
                 <h2 className="font-semibold text-gray-900 text-gray-500">Passées ({past.length})</h2>
               </div>
-              <table className="w-full opacity-70">
+              <div className="overflow-x-auto"><table className="w-full opacity-70">
                 <thead>
                   <tr className="bg-gray-50 text-left">
                     <th className="px-5 py-3 text-xs font-semibold text-gray-500">Titre</th>
@@ -119,7 +119,7 @@ export default async function AdminSessionsLivePage() {
                   </tr>
                 </thead>
                 <tbody>{past.slice(0, 20).map(s => <SessionRow key={s.id} s={s} />)}</tbody>
-              </table>
+              </table></div>
             </div>
           )}
         </>

@@ -25,9 +25,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         isFormateur={isFormateur}
       />
 
-      <div className="lg:ml-64 flex-1 flex flex-col min-h-screen">
+      <div className="lg:ml-64 flex-1 min-w-0 flex flex-col min-h-screen">
         <div className="h-14 lg:hidden" />
-        <main className="flex-1 p-6 pb-20 lg:pb-6">{children}</main>
+        <main className="flex-1 min-w-0 p-4 sm:p-6 pb-24 lg:pb-6">{children}</main>
       </div>
       <MobileNav />
       <OfflineBanner />

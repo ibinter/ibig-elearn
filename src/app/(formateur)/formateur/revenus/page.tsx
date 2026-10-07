@@ -133,7 +133,7 @@ export default async function FormateurRevenusPage() {
         {courseList.length === 0 ? (
           <div className="py-12 text-center text-gray-400">Aucun revenu enregistré</div>
         ) : (
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 text-xs text-gray-500 uppercase tracking-wide">
                 <th className="text-left px-6 py-3">Formation</th>
@@ -173,7 +173,7 @@ export default async function FormateurRevenusPage() {
                 <td className="px-6 py-3 text-right text-gray-500">100%</td>
               </tr>
             </tfoot>
-          </table>
+          </table></div>
         )}
       </div>
 

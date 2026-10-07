@@ -94,6 +94,24 @@
   }
   body {
     max-width: 100%;
+    overflow-wrap: break-word;
+  }
+  /* Filet de sécurité mobile : aucun média ni bloc de code ne doit élargir la page */
+  img, video, iframe, canvas, svg {
+    max-width: 100%;
+  }
+  img, video {
+    height: auto;
+  }
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  /* Évite le zoom automatique iOS sur les champs de formulaire (police < 16px) */
+  @media (max-width: 639px) {
+    input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+      font-size: 16px;
+    }
   }
   html.dark body {
     background-color: #0f172a;

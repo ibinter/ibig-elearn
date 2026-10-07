@@ -184,16 +184,18 @@ export default async function ApprendrePage({ params }: PageProps) {
     <div className="min-h-screen bg-[#1c1d1f] flex flex-col" style={{ fontFamily: "'Inter', sans-serif" }}>
 
       {/* ── Header fixe Udemy-style ── */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-14 bg-[#1c1d1f] border-b border-white/10 flex items-center px-4 gap-4">
+      <header className="fixed top-0 left-0 right-0 z-50 h-14 bg-[#1c1d1f] border-b border-white/10 flex items-center px-3 sm:px-4 gap-2 sm:gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <span className="text-white font-black text-lg tracking-tight">
             <span className="text-[#FFA500]">IBIG</span>
-            <span className="text-white text-sm font-medium ml-1">E-LEARNING</span>
+            <span className="hidden sm:inline text-white text-sm font-medium ml-1">E-LEARNING</span>
           </span>
         </Link>
 
-        <div className="w-px h-5 bg-white/15 flex-shrink-0" />
+        <div className="hidden sm:block w-px h-5 bg-white/15 flex-shrink-0" />
+
+        <div className="flex-1 md:hidden" />
 
         {/* Titre cours */}
         <p className="text-gray-300 text-sm font-medium truncate flex-1 min-w-0 hidden md:block">
@@ -219,7 +221,7 @@ export default async function ApprendrePage({ params }: PageProps) {
         )}
 
         {/* Navigation prev/next dans le header */}
-        <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
           {prevLesson ? (
             <Link
               href={`/apprendre/${courseId}/${prevLesson.id}`}
@@ -259,7 +261,7 @@ export default async function ApprendrePage({ params }: PageProps) {
         {/* Quitter */}
         <Link
           href={`/formation/${course.slug}`}
-          className="flex-shrink-0 flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors border border-white/10 rounded-md px-3 py-1.5"
+          className="flex-shrink-0 flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors border border-white/10 rounded-md px-2 sm:px-3 py-1.5"
         >
           <ArrowLeft className="w-4 h-4" />
           <span className="hidden sm:inline">Quitter</span>
@@ -324,7 +326,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
           {/* ── Contenu texte — fond blanc, max-width lisible ── */}
           <div className="bg-white flex-1">
-            <div className="max-w-3xl mx-auto px-6 lg:px-10 py-8">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8">
 
               {/* En-tête leçon */}
               <div className="mb-8 pb-6 border-b border-gray-100">
@@ -360,7 +362,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
                 {/* Titre + marque-page */}
                 <div className="flex items-start justify-between gap-4">
-                  <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 leading-tight">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl break-words font-bold text-gray-900 leading-tight">
                     {currentLesson.title}
                   </h1>
                   <BookmarkButton lessonId={currentLesson.id} courseId={courseId} />
@@ -388,7 +390,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
               {/* Sections spéciales */}
               {currentLesson.type === 'assignment' && assignmentData && (
-                <div className="mb-10 bg-amber-50 rounded-2xl border border-amber-200 p-8">
+                <div className="mb-10 bg-amber-50 rounded-2xl border border-amber-200 p-5 sm:p-8">
                   <AssignmentSection
                     assignment={assignmentData}
                     lessonId={currentLesson.id}
@@ -433,7 +435,7 @@ export default async function ApprendrePage({ params }: PageProps) {
 
               {/* Félicitations */}
               {(enrollment?.progress_percent ?? 0) >= 100 && (
-                <div className="mb-10 p-8 bg-gradient-to-br from-[#0B3D91] to-[#1a56cc] rounded-2xl shadow-lg text-center">
+                <div className="mb-10 p-5 sm:p-8 bg-gradient-to-br from-[#0B3D91] to-[#1a56cc] rounded-2xl shadow-lg text-center">
                   <div className="text-5xl mb-4">🎉</div>
                   <h3 className="text-white text-xl font-bold mb-2">Félicitations !</h3>
                   <p className="text-blue-100 mb-6">Vous avez terminé cette formation avec succès.</p>

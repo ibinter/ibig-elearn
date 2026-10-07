@@ -53,12 +53,13 @@ export default function MarkCompleteButton({ lessonId, courseId, courseTitle, is
         <button
           onClick={markComplete}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 disabled:opacity-60 text-white rounded-xl text-sm font-semibold transition-colors"
+          className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 bg-green-500 whitespace-nowrap hover:bg-green-600 disabled:opacity-60 text-white rounded-xl text-sm font-semibold transition-colors"
         >
           {loading
             ? <Loader2 className="w-4 h-4 animate-spin" />
             : <Circle className="w-4 h-4" />}
-          {loading ? 'Enregistrement…' : 'Marquer comme terminé'}
+          <span className="hidden sm:inline">{loading ? 'Enregistrement…' : 'Marquer comme terminé'}</span>
+          <span className="sm:hidden">Terminé ?</span>
         </button>
       )}
 

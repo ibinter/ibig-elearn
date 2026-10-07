@@ -126,7 +126,7 @@ export default function TenantManager({ initialTenants }: Props) {
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 {['Tenant', 'Sous-domaine', 'Couleurs', 'Branding', 'Statut', 'Actions'].map(h => (
@@ -201,7 +201,7 @@ export default function TenantManager({ initialTenants }: Props) {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
       )}
 

@@ -23,10 +23,10 @@ export default function AdminShell({ userName, userInitial, userRole, children }
         onCollapse={setCollapsed}
       />
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${collapsed ? 'lg:ml-[68px]' : 'lg:ml-60'}`}
+        className={`flex-1 min-w-0 flex flex-col transition-all duration-300 ease-in-out ${collapsed ? 'lg:ml-[68px]' : 'lg:ml-60'}`}
       >
         <div className="h-14 lg:hidden" />
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 min-w-0 p-4 sm:p-6">{children}</main>
       </div>
     </div>
   )
