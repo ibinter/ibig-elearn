@@ -5,6 +5,7 @@ import { Star, Users, BookOpen } from 'lucide-react'
 import PriceDisplay from './PriceDisplay'
 import WishlistButton from './WishlistButton'
 import type { Course } from '@/types'
+import CourseLanguageBadge from '@/components/ui/CourseLanguageBadge'
 
 const levelLabel: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
 const levelColor: Record<string, string> = {
@@ -31,6 +32,7 @@ export default function CourseCard({ course }: { course: Course }) {
         <span className={`absolute top-3 right-3 text-xs font-semibold px-2 py-1 rounded-full ${levelColor[course.level]}`}>
           {levelLabel[course.level]}
         </span>
+        <CourseLanguageBadge language={(course as { language?: string }).language} variant="overlay" className="absolute bottom-3 left-3" />
         <WishlistButton courseId={course.id} className="absolute bottom-3 right-3" />
       </div>
       <div className="p-5 flex flex-col flex-1">

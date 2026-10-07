@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { Menu, X, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
+import { Menu, X, PlusCircle, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, usePathname } from 'next/navigation'
 import type { Profile } from '@/types'
@@ -145,6 +145,13 @@ export default function Navbar({ user }: NavbarProps) {
 
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+            <Link href="/devenir-partenaire"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0B3D91] border border-[#0B3D91]/25 hover:bg-[#0B3D91]/5 px-3 py-2 rounded-xl transition-colors whitespace-nowrap"
+              title="Formateurs partenaires IBIG EDUFORM : publiez vos formations">
+              <PlusCircle className="w-4 h-4" />
+              <span className="hidden xl:inline">Ajouter une formation</span>
+              <span className="xl:hidden">Publier</span>
+            </Link>
             <LanguageSwitcher />
             <DarkModeToggle />
             <CurrencySelector />
@@ -250,6 +257,10 @@ export default function Navbar({ user }: NavbarProps) {
             <div className="mb-3">
               <GlobalSearch className="w-full" />
             </div>
+            <Link href="/devenir-partenaire" className="flex items-center gap-3 py-3.5 px-3 rounded-xl bg-[#0B3D91]/5 border border-[#0B3D91]/15 text-[15px] text-[#0B3D91] font-semibold mb-2" onClick={() => setMenuOpen(false)}>
+              <PlusCircle className="w-5 h-5" />
+              <span className="flex-1">Ajouter une formation<span className="block text-xs font-normal text-gray-500">Formateurs partenaires IBIG EDUFORM</span></span>
+            </Link>
             <Link href="/catalogue" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <Layers className="w-4 h-4 text-[#0B3D91]" /> Catalogue
             </Link>

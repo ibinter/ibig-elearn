@@ -11,9 +11,13 @@ export default async function FormateurLayout({ children }: { children: React.Re
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/connexion')
 
-  const { data: profile } = await supabase.from('profiles').select('role, full_name').eq('id', user.id).single()
+  const { data: profile } = await supabase.from('profiles').select('role, full_name, is_partner').eq('id', user.id).single()
   if (!profile || !['formateur', 'coordinateur', 'admin'].includes(profile.role)) {
     redirect('/tableau-de-bord')
+  }
+  // Formateur sans convention de partenariat signée : parcours partenaire d'abord
+  if (profile.role === 'formateur' && !(profile as { is_partner?: boolean }).is_partner) {
+    redirect('/devenir-partenaire')
   }
 
   return (

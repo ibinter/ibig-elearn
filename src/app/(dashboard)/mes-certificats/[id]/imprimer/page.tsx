@@ -2,6 +2,7 @@
 import { notFound } from 'next/navigation'
 import { formatDate } from '@/lib/utils'
 import PrintButton from './PrintButton'
+import CertificateSignatures from '@/components/ui/CertificateSignatures'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -14,7 +15,7 @@ export default async function ImprimerCertificatPage({ params }: PageProps) {
 
   const { data: cert } = await supabase
     .from('certificates')
-    .select('*, user:profiles(full_name, country), course:courses(title, duration_hours, instructor:profiles(full_name))')
+    .select('*, user:profiles(full_name, country), course:courses(title, duration_hours, instructor:profiles(full_name, signature_name, professional_title))')
     .eq('id', id)
     .eq('user_id', user!.id)
     .single()
@@ -113,14 +114,13 @@ export default async function ImprimerCertificatPage({ params }: PageProps) {
               {(cert.user as any)?.country && <> · {(cert.user as any).country}</>}
             </p>
 
-            {/* Signatures & QR */}
-            <div className="flex items-end justify-between w-full mt-4">
-              <div className="text-center">
-                <div className="w-32 h-px bg-gray-400 mb-2" />
-                <p className="text-xs text-gray-500">Direction pédagogique</p>
-                <p className="text-xs font-semibold text-gray-700">IBIG SARL</p>
-              </div>
-
+            {/* Signatures (cosignature formateur + IBIG EDUFORM) & QR */}
+            <div className="w-full mt-4 space-y-4">
+              <CertificateSignatures compact
+                instructorName={course?.instructor?.full_name}
+                instructorSignature={course?.instructor?.signature_name}
+                instructorTitle={course?.instructor?.professional_title} />
+              <div className="flex justify-center">
               {/* QR Code via API publique */}
               <div className="flex flex-col items-center gap-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -133,11 +133,6 @@ export default async function ImprimerCertificatPage({ params }: PageProps) {
                 />
                 <p className="text-[10px] text-gray-400">Vérifier l&apos;authenticité</p>
               </div>
-
-              <div className="text-center">
-                <div className="w-32 h-px bg-gray-400 mb-2" />
-                <p className="text-xs text-gray-500">Formateur</p>
-                <p className="text-xs font-semibold text-gray-700">{course?.instructor?.full_name}</p>
               </div>
             </div>
 

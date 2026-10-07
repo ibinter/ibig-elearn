@@ -11,6 +11,8 @@ import {
 import Link from 'next/link'
 import BunnyUpload from '@/components/formateur/BunnyUpload'
 import DocumentUpload from '@/components/formateur/DocumentUpload'
+import SubmitForApproval from '@/components/formateur/SubmitForApproval'
+import { COURSE_LANGUAGES, languageCode } from '@/lib/languages'
 
 const supabase = createClient()
 
@@ -34,7 +36,7 @@ const typeIcon = (t: string) => ({ video: Play, document: FileText, quiz: HelpCi
 
 interface Lesson { id: string; title: string; type: string; position: number; is_free_preview: boolean; video_duration_seconds: number | null; video_url: string | null; content: string | null; _showUpload?: boolean }
 interface Module { id: string; title: string; position: number; lessons: Lesson[]; open?: boolean }
-interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[] }
+interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[]; approval_status: string | null; approval_note: string | null }
 
 export default function ModifierFormationPage() {
   const { id } = useParams<{ id: string }>()
@@ -83,11 +85,10 @@ export default function ModifierFormationPage() {
       short_description: course.short_description,
       description: course.description,
       level: course.level,
-      language: course.language,
+      language: languageCode(course.language),
       price_xof: course.price_xof,
       duration_hours: course.duration_hours,
       thumbnail_url: course.thumbnail_url,
-      is_published: course.is_published,
       category_id: course.category_id,
       objectives: course.objectives,
     }).eq('id', id)
@@ -270,6 +271,13 @@ export default function ModifierFormationPage() {
                 </select>
               </div>
               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Langue d&apos;enseignement</label>
+                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/40"
+                  value={languageCode(course.language)} onChange={e => setCourse({ ...course, language: e.target.value })}>
+                  {COURSE_LANGUAGES.map(l => <option key={l.code} value={l.code}>{l.flag} {l.label}</option>)}
+                </select>
+              </div>
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Prix (XOF)</label>
                 <input type="number" min="0" step="1000" className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/40"
                   value={course.price_xof ?? 0} onChange={e => setCourse({ ...course, price_xof: parseInt(e.target.value) || 0 })} />
@@ -288,11 +296,16 @@ export default function ModifierFormationPage() {
                 placeholder="https://..." />
             </div>
 
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={course.is_published} onChange={e => setCourse({ ...course, is_published: e.target.checked })}
-                className="w-4 h-4 rounded border-gray-300 text-[#0B3D91] focus:ring-[#0B3D91]/40" />
-              <span className="text-sm text-gray-700">Formation publiée et visible dans le catalogue</span>
-            </label>
+            <div className="rounded-xl bg-gray-50 border border-gray-100 p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+              <div className="text-sm text-gray-600">
+                <p className="font-semibold text-gray-800">Publication</p>
+                <p>Enregistrez vos modifications, puis soumettez la formation : IBIG EDUFORM la vérifie et la met en ligne.</p>
+                {course.approval_status === 'rejected' && course.approval_note && (
+                  <p className="mt-2 text-red-700"><strong>Retour d&apos;IBIG EDUFORM :</strong> {course.approval_note}</p>
+                )}
+              </div>
+              <SubmitForApproval courseId={course.id} approvalStatus={course.approval_status} isPublished={course.is_published} />
+            </div>
           </div>
 
           {/* Objectifs */}

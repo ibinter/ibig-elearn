@@ -15063,5 +15063,720 @@
   "s": "#1 Plateforme eLearning en Afrique francophone",
   "f": "src/components/home/HeroSlider.tsx",
   "n": 1
+ },
+ {
+  "s": "À examiner",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune candidature dans cette catégorie.",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Candidatures, conventions de partenariat et partage des revenus",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention envoyée",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateurs partenaires",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Modifications demandées",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Partenaires",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Suspendus",
+  "f": "src/app/(admin)/admin/partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "· déposée le",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "% · IBIG EDUFORM :",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "% formateur",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "ans d'expérience",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Conditions particulières (optionnel) : exclusivité, bonus de lancement, engagement de volume…",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention envoyée le",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Demander des modifications",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Dernier motif de refus",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Dossier complet",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer la convention",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer la demande",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Exemple de contenu",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "FCFA · Solde :",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formations envisagées",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Gains cumulés :",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modifier la convention",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Motif de la suspension (visible par le formateur)…",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Motif et points à corriger (visible par le candidat)…",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom de signature",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "par «",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Part formateur",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Personne physique",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "Retenir et proposer la convention",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signée le",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Site web",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 2
+ },
+ {
+  "s": "Suspendre le partenariat",
+  "f": "src/app/(admin)/admin/partenaires/PartnerReviewCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Étape 1/4 du programme Formateurs Partenaires : créez votre compte, confirmez votre email, puis déposez votre candidature.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Enregistrez vos modifications, puis soumettez la formation : IBIG EDUFORM la vérifie et la met en ligne.",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Langue d'enseignement",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Retour d'IBIG EDUFORM :",
+  "f": "src/app/(formateur)/formateur/formations/[id]/modifier/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Après la création, ajoutez vos modules, leçons et quiz, puis cliquez sur « Soumettre pour validation ». IBIG EDUFORM vérifie la formation et la met en ligne. Vos revenus sont ensuite partagés selon votre convention de partenariat.",
+  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Publication par IBIG EDUFORM",
+  "f": "src/app/(formateur)/formateur/formations/nouvelle/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "). La part de revenus indiquée (",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "[Nom du formateur partenaire]",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "%) est la part standard : la part exacte et d'éventuelles conditions particulières figurent dans la convention personnelle qui vous est proposée après étude de votre candidature.",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention de partenariat",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention de partenariat formateurs",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Devenir formateur partenaire",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modèle de convention entre IBIG EDUFORM et les formateurs partenaires : validation des formations, partage des revenus, propriété intellectuelle, certificats cosignés.",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modèle en vigueur (version",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Programme Formateurs Partenaires",
+  "f": "src/app/(public)/conditions-partenaires/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Créez votre compte, déposez votre candidature en ligne : IBIG EDUFORM vous répond sous 5 jours ouvrés avec sa proposition de partenariat.",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Déposer ma candidature",
+  "f": "src/app/(public)/devenir-formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "\"Brush Script MT\", \"Segoe Script\", cursive",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 2
+ },
+ {
+  "s": "🎉 Votre candidature est retenue",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention de partenariat · version",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG EDUFORM vous propose la convention ci-dessous. Lisez-la attentivement, puis signez-la pour commencer à publier vos formations.",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "J'ai lu et j'accepte la convention de partenariat IBIG EDUFORM. Je reconnais que cette acceptation électronique vaut signature.",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Part IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signature — saisissez votre nom complet",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signer et devenir formateur partenaire",
+  "f": "src/app/(public)/devenir-partenaire/AgreementAcceptance.tsx",
+  "n": 1
+ },
+ {
+  "s": "! IBIG EDUFORM étudie votre profil, généralement sous 5 jours ouvrés. Vous serez notifié dès que les conditions de partenariat vous seront proposées.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Candidature",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Candidature en cours d'examen",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Certificats cosignés",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chaque formation est vérifiée par IBIG EDUFORM avant sa mise en ligne. Vos revenus sont calculés automatiquement à chaque paiement confirmé.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Chaque vente confirmée crédite automatiquement votre solde. Virement par Mobile Money ou banque.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Comment ça marche",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Confirmez votre adresse email",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Consultez le modèle de",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Contacter IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Contactez IBIG EDUFORM pour plus d'informations.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Convention",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "convention de partenariat",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Corrigez votre candidature ci-dessous puis renvoyez-la.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créer mon compte formateur",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créez et confirmez votre compte",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Créez et soumettez vos formations",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Déposée le",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Déposez votre candidature",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Devenir formateur partenaire IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Encaissez votre part",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Étapes du partenariat",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG EDUFORM valide chaque formation puis la met en ligne.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "IBIG EDUFORM vous propose ses conditions, dont votre part des revenus. Vous les acceptez en ligne.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Inscription gratuite, puis confirmation de votre adresse email.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "J'ai déjà un compte",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les certificats de vos apprenants portent votre signature et celle d'IBIG EDUFORM.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Merci",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modifications demandées par IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Modifier ma candidature",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Partagez votre expertise avec des milliers d'apprenants en Afrique francophone, encaissez votre part sur chaque vente et délivrez des certificats cosignés avec IBIG EDUFORM.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Partenariat suspendu",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Publiez vos formations avec IBIG EDUFORM",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Publiez vos formations sur IBIG E-LEARNING et partagez les revenus avec IBIG EDUFORM : candidature, convention de partenariat, validation et certificats cosignés.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signez la convention de partenariat",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Toutes les informations restent confidentielles et servent uniquement à l'étude de votre dossier et au versement de vos revenus.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Un lien de confirmation a été envoyé à",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre candidature de formateur partenaire",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre expertise, votre expérience et les formations que vous souhaitez créer.",
+  "f": "src/app/(public)/devenir-partenaire/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "(5 maximum)",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "✓ Longueur suffisante",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Années d'expérience professionnelle *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Biographie professionnelle *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "de la plateforme. J'ai pris connaissance du modèle de",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Domaines d'expertise *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Encore {0} caractères minimum",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer ma candidature",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Envoyer ma candidature mise à jour",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ex : Expert-comptable, Consultant RH",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Expertise",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formations que vous souhaitez créer *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Identité",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je certifie l'exactitude de ces informations et j'accepte les",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Langues d'enseignement *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "linkedin.com/in/…",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mode de versement *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Motivation",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "N° contribuable / RCCM",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom complet *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom figurant sur vos certificats cosignés *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Numéro Mobile Money *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Pays *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Pourquoi souhaitez-vous enseigner avec IBIG EDUFORM ?",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "que je signerai si ma candidature est retenue.",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Raison sociale *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Sélectionner…",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Si différent du téléphone",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Signature et engagement",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Statut et versement des revenus",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Téléphone *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titre professionnel *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titres, public visé, durée approximative de chaque formation.",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vidéo, support, chaîne…",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ville *",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre parcours, vos réalisations, vos certifications… Elle apparaîtra sur votre profil public de formateur.",
+  "f": "src/app/(public)/devenir-partenaire/PartnerApplicationForm.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formation dispensée en {0}",
+  "f": "src/app/(public)/formation/[slug]/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Soumission impossible",
+  "f": "src/components/formateur/SubmitForApproval.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ajouter une formation",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateurs partenaires IBIG EDUFORM",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateurs partenaires IBIG EDUFORM : publiez vos formations",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "\"Brush Script MT\", \"Segoe Script\", \"Lucida Handwriting\", cursive",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
+  "s": "Certificat cosigné par le formateur partenaire et IBIG EDUFORM",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
+  "s": "Direction pédagogique — IBIG SARL",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
+ },
+ {
+  "s": "Formateur partenaire",
+  "f": "src/components/ui/CertificateSignatures.tsx",
+  "n": 1
  }
 ]

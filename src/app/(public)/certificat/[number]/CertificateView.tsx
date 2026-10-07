@@ -3,6 +3,7 @@
 import { CheckCircle, XCircle, Award, Calendar, Clock, Star, Printer } from 'lucide-react'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/site'
+import CertificateSignatures from '@/components/ui/CertificateSignatures'
 
 interface Cert {
   id: string
@@ -12,11 +13,11 @@ interface Cert {
   learner_name: string
   course_title: string
   instructor_name: string | null
+  courses?: { slug?: string; cover_url?: string | null; instructor?: { full_name?: string | null; signature_name?: string | null; professional_title?: string | null } | null } | null
   final_score: number | null
   completion_time_h: number | null
   is_revoked: boolean
   revoked_at: string | null
-  courses?: { slug: string; cover_url: string | null }
 }
 
 export default function CertificateView({ cert }: { cert: Cert }) {
@@ -81,17 +82,11 @@ export default function CertificateView({ cert }: { cert: Cert }) {
             </div>
 
             {/* Signatures */}
-            <div className="flex justify-around items-end gap-8 mb-8">
-              <div className="text-center">
-                <div className="h-px w-40 bg-gray-300 mb-1" />
-                <p className="text-sm font-semibold text-gray-700">{cert.instructor_name ?? 'Formateur'}</p>
-                <p className="text-xs text-gray-400">Formateur</p>
-              </div>
-              <div className="text-center">
-                <div className="h-px w-40 bg-gray-300 mb-1" />
-                <p className="text-sm font-semibold text-gray-700">IBIG E-LEARN</p>
-                <p className="text-xs text-gray-400">Direction pédagogique</p>
-              </div>
+            <div className="mb-8">
+              <CertificateSignatures
+                instructorName={cert.courses?.instructor?.full_name ?? cert.instructor_name}
+                instructorSignature={cert.courses?.instructor?.signature_name}
+                instructorTitle={cert.courses?.instructor?.professional_title} />
             </div>
           </div>
 

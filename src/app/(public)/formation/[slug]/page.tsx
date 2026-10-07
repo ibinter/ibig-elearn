@@ -10,6 +10,8 @@ import ReviewsList from '@/components/reviews/ReviewsList'
 import ReviewForm from '@/components/reviews/ReviewForm'
 import StarRating from '@/components/reviews/StarRating'
 import { SITE_URL } from '@/lib/site'
+import CourseLanguageBadge from '@/components/ui/CourseLanguageBadge'
+import { languageInfo } from '@/lib/languages'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -228,6 +230,7 @@ export default async function FormationPage({ params }: PageProps) {
                 <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full border ${levelColor[c.level] ?? 'bg-white/10 text-white/70 border-white/20'}`}>
                   {levelLabel[c.level]}
                 </span>
+                <CourseLanguageBadge language={c.language} variant="dark" className="text-xs px-2.5" />
               </div>
 
               {/* Titre */}
@@ -296,7 +299,7 @@ export default async function FormationPage({ params }: PageProps) {
                   <span className="mx-2 text-blue-400">·</span>
                   Mis à jour le {formatDate(c.updated_at)}
                   <span className="mx-2 text-blue-400">·</span>
-                  <Globe className="w-3.5 h-3.5 inline mr-1" />Français
+                  <Globe className="w-3.5 h-3.5 inline mr-1" />{languageInfo(c.language).label}
                 </div>
               </div>
             </div>
@@ -525,6 +528,7 @@ export default async function FormationPage({ params }: PageProps) {
                     {[
                       { icon: Clock,     text: `${c.duration_hours} heures de contenu`, color: 'text-blue-500' },
                       { icon: BookOpen,  text: `${totalLessons} leçons`,                color: 'text-purple-500' },
+                      { icon: Globe,     text: `Formation dispensée en ${languageInfo(c.language).label.toLowerCase()}`, color: 'text-sky-500' },
                       { icon: Award,     text: 'Certificat de réussite vérifiable',      color: 'text-amber-500' },
                       { icon: Zap,       text: 'Accès à vie au contenu',                color: 'text-emerald-500' },
                       { icon: Globe,     text: 'Accessible depuis toute l\'Afrique',     color: 'text-teal-500' },

@@ -10,19 +10,25 @@ interface Props {
   isPublished: boolean
 }
 
-export default function SubmitForApproval({ courseId, approvalStatus, isPublished }: Props) {
+export default function SubmitForApproval({ courseId, approvalStatus: initialStatus, isPublished }: Props) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [approvalStatus, setApprovalStatus] = useState(initialStatus)
+  const [error, setError] = useState('')
 
   async function submit() {
     setLoading(true)
-    await fetch('/api/formateur/soumettre', {
+    setError('')
+    const res = await fetch('/api/formateur/soumettre', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ courseId }),
     })
-    router.refresh()
+    const data = await res.json().catch(() => ({}))
     setLoading(false)
+    if (!res.ok) { setError(data.error ?? 'Soumission impossible'); return }
+    setApprovalStatus('pending')
+    router.refresh()
   }
 
   if (isPublished) {
@@ -52,10 +58,13 @@ export default function SubmitForApproval({ courseId, approvalStatus, isPublishe
   }
 
   return (
+    <div className="flex flex-col items-start gap-1">
     <button onClick={submit} disabled={loading}
       className="flex items-center gap-1.5 text-sm font-semibold bg-[#FFA500] hover:bg-yellow-500 text-black px-3 py-1.5 rounded-lg transition-colors disabled:opacity-60">
       {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
       Soumettre pour validation
     </button>
+    {error && <span className="text-xs text-red-600">{error}</span>}
+    </div>
   )
 }

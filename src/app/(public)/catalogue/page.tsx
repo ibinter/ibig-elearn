@@ -5,6 +5,7 @@ import PriceDisplay from '@/components/ui/PriceDisplay'
 import type { Course, Category } from '@/types'
 import CatalogueFilters from './CatalogueFilters'
 import { getT } from '@/i18n'
+import CourseLanguageBadge from '@/components/ui/CourseLanguageBadge'
 
 export const metadata = { alternates: { canonical: '/catalogue' },
   title: 'Catalogue des formations professionnelles',
@@ -35,7 +36,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   // ── Requête principale ──────────────────────────────────────
   let query = supabase
     .from('courses')
-    .select('id, title, slug, short_description, thumbnail_url, level, price_xof, price_eur, price_usd, rating_average, enrollment_count, duration_hours, is_featured, instructor:profiles(full_name), category:categories(name, slug)', { count: 'exact' })
+    .select('id, title, slug, short_description, thumbnail_url, level, language, price_xof, price_eur, price_usd, rating_average, enrollment_count, duration_hours, is_featured, instructor:profiles(full_name), category:categories(name, slug)', { count: 'exact' })
     .eq('is_published', true)
 
   if (params.categorie) {
@@ -154,6 +155,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
                         <span className={`absolute top-2 right-2 text-xs font-semibold px-2 py-0.5 rounded-full ${levelColor[course.level] ?? 'bg-gray-100 text-gray-600'}`}>
                           {levelLabel[course.level] ?? course.level}
                         </span>
+                        <CourseLanguageBadge language={(course as { language?: string }).language} variant="overlay" className="absolute bottom-2 right-2" />
                         {course.price_xof === 0 && (
                           <span className="absolute top-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full bg-green-500 text-white">GRATUIT</span>
                         )}

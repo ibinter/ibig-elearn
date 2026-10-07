@@ -69,7 +69,7 @@ const steps = [
     color: 'bg-yellow-100 text-yellow-700',
     content: [
       { label: 'Tableau des revenus', desc: 'Consultez vos ventes en temps réel dans /formateur/revenus : CA mensuel, nombre d\'inscrits, taux de complétion.' },
-      { label: 'Commission IBIG', desc: 'IBIG retient 30% sur chaque vente. Vous percevez 70% du prix de vente net, hors taxes locales applicables.' },
+      { label: 'Commission IBIG', desc: 'Le revenu net de chaque vente est partagé à 50 % pour vous et 50 % pour IBIG EDUFORM (part standard, précisée dans votre convention de partenariat).' },
       { label: 'Seuil de virement', desc: 'Le seuil minimum pour demander un virement est 50 000 FCFA. Les virements sont effectués sous 5 jours ouvrables.' },
       { label: 'Modes de paiement', desc: 'Recevez vos revenus par Mobile Money (Orange, MTN, Wave) ou virement bancaire selon votre pays.' },
       { label: 'Factures et fiscalité', desc: 'Les factures mensuelles sont disponibles dans /formateur/virements. Vous êtes responsable de vos obligations fiscales locales.' },
@@ -168,12 +168,12 @@ export default function GuideFormateurPage() {
         <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 border border-orange-100 mb-10 flex flex-wrap gap-6 items-center">
           <div>
             <p className="text-sm text-gray-500 mb-1">Votre part sur chaque vente</p>
-            <p className="text-4xl font-black text-[#FFA500]">70%</p>
+            <p className="text-4xl font-black text-[#FFA500]">50%</p>
           </div>
           <div className="flex-1 min-w-48">
-            <p className="text-sm text-gray-700">Vendez une formation à <strong>25 000 FCFA</strong> → vous gagnez <strong>17 500 FCFA</strong> par inscription. Pas de plafond de revenus.</p>
+            <p className="text-sm text-gray-700">Vendez une formation à <strong>25 000 FCFA</strong> → vous gagnez <strong>12 500 FCFA</strong> par inscription. Pas de plafond de revenus.</p>
           </div>
-          <Link href="/devenir-formateur"
+          <Link href="/devenir-partenaire"
             className="bg-[#FFA500] text-white font-bold px-5 py-3 rounded-xl hover:bg-orange-500 transition-colors whitespace-nowrap">
             Devenir formateur →
           </Link>

@@ -40,6 +40,10 @@ function InscriptionForm() {
   const [refCode, setRefCode] = useState('')
   const router = useRouter()
   const searchParams = useSearchParams()
+  // Retour après inscription (ex. parcours formateur partenaire) — chemins internes uniquement
+  const rawNext = searchParams.get('next') ?? ''
+  const next = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/tableau-de-bord'
+  const isInstructor = searchParams.get('profil') === 'formateur'
 
   useEffect(() => {
     const ref = searchParams.get('ref')
@@ -52,7 +56,7 @@ function InscriptionForm() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/api/auth/callback?next=/tableau-de-bord`,
+        redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`,
       },
     })
   }
@@ -74,7 +78,7 @@ function InscriptionForm() {
       password: form.password,
       options: {
         data: { full_name: form.full_name, country: form.country, phone: form.phone, referral_code: refCode || undefined },
-        emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`,
       },
     })
 
@@ -97,7 +101,7 @@ function InscriptionForm() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.auth.accountCreated}</h2>
           <p className="text-gray-500 mb-6">{t.auth.confirmEmailMsg} <strong>{form.email}</strong>. {t.auth.confirmEmailAction}</p>
-          <Link href="/connexion" className="inline-block ibig-gradient text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity">
+          <Link href={`/connexion?redirectTo=${encodeURIComponent(next)}`} className="inline-block ibig-gradient text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity">
             {t.auth.goToLogin}
           </Link>
         </div>
@@ -111,6 +115,11 @@ function InscriptionForm() {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">{t.auth.registerTitle}</h1>
           <p className="text-gray-500 text-sm">{t.auth.registerSubtitle}</p>
+          {isInstructor && (
+            <p className="mt-3 text-sm text-[#0B3D91] bg-[#0B3D91]/5 border border-[#0B3D91]/15 rounded-xl px-3 py-2">
+              Étape 1/4 du programme Formateurs Partenaires : créez votre compte, confirmez votre email, puis déposez votre candidature.
+            </p>
+          )}
         </div>
 
         {/* Google OAuth */}
@@ -220,7 +229,7 @@ function InscriptionForm() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           {t.auth.hasAccount}{' '}
-          <Link href="/connexion" className="text-[#0B3D91] font-semibold hover:underline">{t.auth.loginLink}</Link>
+          <Link href={`/connexion?redirectTo=${encodeURIComponent(next)}`} className="text-[#0B3D91] font-semibold hover:underline">{t.auth.loginLink}</Link>
         </p>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Save, Loader2, AlertCircle } from 'lucide-react'
+import { COURSE_LANGUAGES } from '@/lib/languages'
 
 const LEVELS = [
   { value: 'debutant', label: 'Débutant' },
@@ -12,7 +13,6 @@ const LEVELS = [
   { value: 'tous_niveaux', label: 'Tous niveaux' },
 ]
 
-const LANGUAGES = ['Français', 'Anglais', 'Arabe', 'Portugais', 'Wolof', 'Dioula']
 
 export default function NouvelleFormationPage() {
   const router = useRouter()
@@ -25,7 +25,7 @@ export default function NouvelleFormationPage() {
     short_description: '',
     category_id: '',
     level: 'debutant',
-    language: 'Français',
+    language: 'fr',
     price_xof: '0',
     duration_hours: '0',
     thumbnail_url: '',
@@ -71,7 +71,6 @@ export default function NouvelleFormationPage() {
       duration_hours: parseInt(form.duration_hours) || 0,
       thumbnail_url: form.thumbnail_url || null,
       instructor_id: user.id,
-      is_published: form.is_published,
     }).select().single()
 
     setLoading(false)
@@ -161,7 +160,7 @@ export default function NouvelleFormationPage() {
                 onChange={e => set('language', e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
               >
-                {LANGUAGES.map(l => <option key={l} value={l}>{l}</option>)}
+                {COURSE_LANGUAGES.map(l => <option key={l.code} value={l.code}>{l.label}</option>)}
               </select>
             </div>
             <div>
@@ -209,15 +208,10 @@ export default function NouvelleFormationPage() {
             />
           </div>
 
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.is_published}
-              onChange={e => set('is_published', e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span className="text-sm text-gray-700">Publier immédiatement</span>
-          </label>
+          <div className="rounded-xl bg-[#0B3D91]/5 border border-[#0B3D91]/15 p-4 text-sm text-gray-700 leading-relaxed">
+            <p className="font-semibold text-[#0B3D91]">Publication par IBIG EDUFORM</p>
+            <p className="mt-1">Après la création, ajoutez vos modules, leçons et quiz, puis cliquez sur « Soumettre pour validation ». IBIG EDUFORM vérifie la formation et la met en ligne. Vos revenus sont ensuite partagés selon votre convention de partenariat.</p>
+          </div>
         </div>
 
         <button
