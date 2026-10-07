@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useLocale } from '@/i18n/client'
-import { Eye, EyeOff, Loader2, UserPlus } from 'lucide-react'
+import { Eye, EyeOff, Loader2, UserPlus, GraduationCap, Presentation, Building2 } from 'lucide-react'
 
 const COUNTRIES = [
   { code: 'CI', name: "Côte d'Ivoire" },
@@ -25,13 +25,24 @@ const COUNTRIES = [
   { code: 'OTHER', name: 'Autre' },
 ]
 
+type AccountType = 'apprenant' | 'formateur' | 'entreprise'
+
+const PROFILES: { key: AccountType; label: string; desc: string; icon: typeof GraduationCap; next: string; note: string }[] = [
+  { key: 'apprenant', label: 'Apprenant', desc: 'Je veux me former', icon: GraduationCap, next: '/tableau-de-bord',
+    note: 'Accédez au catalogue, suivez vos formations et obtenez des certificats vérifiables.' },
+  { key: 'formateur', label: 'Formateur', desc: 'Je veux enseigner', icon: Presentation, next: '/devenir-partenaire',
+    note: 'Programme Formateurs Partenaires IBIG EDUFORM : créez votre compte, confirmez votre email, puis déposez votre candidature pour publier vos formations.' },
+  { key: 'entreprise', label: 'Entreprise', desc: 'Former mes équipes', icon: Building2, next: '/entreprise#contact',
+    note: 'Entreprises, ONG et institutions : créez votre compte, puis décrivez votre besoin pour recevoir une offre sur mesure pour vos équipes.' },
+]
+
 export default function InscriptionPage() {
   return <Suspense><InscriptionForm /></Suspense>
 }
 
 function InscriptionForm() {
   const { t } = useLocale()
-  const [form, setForm] = useState({ full_name: '', email: '', password: '', country: 'CI', phone: '' })
+  const [form, setForm] = useState({ full_name: '', email: '', password: '', country: 'CI', phone: '', company_name: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
@@ -41,9 +52,13 @@ function InscriptionForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   // Retour après inscription (ex. parcours formateur partenaire) — chemins internes uniquement
+  const initialProfile = searchParams.get('profil')
+  const [accountType, setAccountType] = useState<AccountType>(
+    initialProfile === 'formateur' || initialProfile === 'entreprise' ? initialProfile : 'apprenant')
+  const profile = PROFILES.find(p => p.key === accountType)!
+  // Retour après inscription : chemin interne explicite, sinon selon le profil choisi
   const rawNext = searchParams.get('next') ?? ''
-  const next = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/tableau-de-bord'
-  const isInstructor = searchParams.get('profil') === 'formateur'
+  const next = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : profile.next
 
   useEffect(() => {
     const ref = searchParams.get('ref')
@@ -77,7 +92,7 @@ function InscriptionForm() {
       email: form.email,
       password: form.password,
       options: {
-        data: { full_name: form.full_name, country: form.country, phone: form.phone, referral_code: refCode || undefined },
+        data: { full_name: form.full_name, country: form.country, phone: form.phone, referral_code: refCode || undefined, account_type: accountType, company_name: accountType === 'entreprise' ? form.company_name || undefined : undefined },
         emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`,
       },
     })
@@ -115,12 +130,26 @@ function InscriptionForm() {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">{t.auth.registerTitle}</h1>
           <p className="text-gray-500 text-sm">{t.auth.registerSubtitle}</p>
-          {isInstructor && (
-            <p className="mt-3 text-sm text-[#0B3D91] bg-[#0B3D91]/5 border border-[#0B3D91]/15 rounded-xl px-3 py-2">
-              Étape 1/4 du programme Formateurs Partenaires : créez votre compte, confirmez votre email, puis déposez votre candidature.
-            </p>
-          )}
         </div>
+
+        {/* Type de compte */}
+        <fieldset className="mb-6">
+          <legend className="block text-sm font-semibold text-gray-800 mb-2">Je m&apos;inscris en tant que</legend>
+          <div className="grid grid-cols-3 gap-2" role="radiogroup">
+            {PROFILES.map(p => {
+              const on = accountType === p.key
+              return (
+                <button key={p.key} type="button" role="radio" aria-checked={on} onClick={() => setAccountType(p.key)}
+                  className={`flex flex-col items-center text-center gap-1 rounded-xl border-2 px-1.5 py-3 transition-colors ${on ? 'border-[#0B3D91] bg-[#0B3D91]/5' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
+                  <p.icon className={`w-6 h-6 ${on ? 'text-[#0B3D91]' : 'text-gray-400'}`} />
+                  <span className={`text-sm font-bold ${on ? 'text-[#0B3D91]' : 'text-gray-800'}`}>{p.label}</span>
+                  <span className="text-[11px] leading-tight text-gray-500">{p.desc}</span>
+                </button>
+              )
+            })}
+          </div>
+          <p className="mt-3 text-[13px] leading-relaxed text-gray-600 bg-gray-50 border border-gray-100 rounded-xl px-3 py-2.5">{profile.note}</p>
+        </fieldset>
 
         {/* Google OAuth */}
         <button
@@ -161,6 +190,20 @@ function InscriptionForm() {
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] text-sm"
             />
           </div>
+          {accountType === 'entreprise' && (
+            <div>
+              <label htmlFor="company_name" className="block text-sm font-medium text-gray-700 mb-1.5">Nom de l&apos;entreprise / organisation</label>
+              <input
+                id="company_name"
+                type="text"
+                value={form.company_name}
+                onChange={e => setForm(f => ({ ...f, company_name: e.target.value }))}
+                required
+                autoComplete="organization"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3D91] text-sm"
+              />
+            </div>
+          )}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.auth.email}</label>
             <input
