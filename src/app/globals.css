@@ -357,7 +357,7 @@ html.i18n-pending body {
     background:
       linear-gradient(100deg, rgba(6,20,47,.94) 0%, rgba(11,61,145,.86) 50%, rgba(11,61,145,.55) 100%),
       url(/images/bg/dots.svg),
-      url(/images/auth-bg.webp) center 35% / cover no-repeat;
+      var(--hero-img, url(/images/auth-bg.webp)) center 35% / cover no-repeat;
   }
   .hero-network::before {
     background: url(/images/bg/network.svg) center / cover no-repeat, url(/images/bg/dots.svg),
@@ -371,7 +371,16 @@ html.i18n-pending body {
     .hero-photo::before {
       background:
         linear-gradient(180deg, rgba(6,20,47,.9), rgba(11,61,145,.85)),
-        url(/images/auth-bg-mobile.webp) center / cover no-repeat;
+        var(--hero-img-m, url(/images/auth-bg-mobile.webp)) center / cover no-repeat;
     }
   }
+}
+
+@layer utilities {
+  .bg-students { --hero-img: url(/images/bg/students.webp); --hero-img-m: url(/images/bg/students-m.webp); }
+  .bg-team { --hero-img: url(/images/bg/team.webp); --hero-img-m: url(/images/bg/team-m.webp); }
+  .bg-coaching { --hero-img: url(/images/bg/coaching.webp); --hero-img-m: url(/images/bg/coaching-m.webp); }
+  .bg-about { --hero-img: url(/images/bg/about.webp); --hero-img-m: url(/images/bg/about-m.webp); }
+  .bg-partner { --hero-img: url(/images/bg/partner.webp); --hero-img-m: url(/images/bg/partner-m.webp); }
+  .bg-learner { --hero-img: url(/images/bg/learner.webp); --hero-img-m: url(/images/bg/learner-m.webp); }
 }
