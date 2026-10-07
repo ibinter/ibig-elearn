@@ -41,11 +41,11 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
       {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">{t.contact.title}</h1>
-        <p className="text-gray-500 max-w-xl mx-auto">{t.contact.subtitle}</p>
+      <div className="text-center mb-12 hero-photo bg-team rounded-3xl text-white px-6 py-12 sm:py-16">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3">{t.contact.title}</h1>
+        <p className="text-blue-100 max-w-xl mx-auto">{t.contact.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">

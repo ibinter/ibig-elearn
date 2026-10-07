@@ -34,17 +34,17 @@ export default async function ParcoursPage() {
   const others = (paths ?? []).filter(p => !p.is_featured)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
       {/* Hero */}
-      <div className="text-center mb-14">
-        <div className="inline-flex items-center gap-2 bg-blue-50 text-[#0B3D91] border border-blue-100 rounded-full px-4 py-1.5 text-sm font-semibold mb-5">
+      <div className="text-center mb-14 hero-photo bg-learner rounded-3xl text-white px-6 py-12 sm:py-20">
+        <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur text-white border border-white/20 rounded-full px-4 py-1.5 text-sm font-semibold mb-5">
           <Target className="w-4 h-4" /> Parcours guidés
         </div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-5">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-5">
           Progressez étape par étape<br />
-          <span className="text-[#0B3D91]">vers l'expertise</span>
+          <span className="text-[#FFA500]">vers l'expertise</span>
         </h1>
-        <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+        <p className="text-blue-100 text-lg max-w-2xl mx-auto">
           Nos experts ont conçu des parcours complets pour vous guider du niveau débutant à expert dans chaque domaine. Des formations organisées, dans le bon ordre.
         </p>
       </div>
