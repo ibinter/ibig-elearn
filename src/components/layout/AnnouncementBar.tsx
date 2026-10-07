@@ -19,7 +19,7 @@ export default function AnnouncementBar() {
   const combined = [...MESSAGES, ...MESSAGES, ...MESSAGES]
 
   return (
-    <div className="relative bg-gradient-to-r from-[#0B3D91] via-[#1a56cc] to-[#0B3D91] text-white overflow-hidden h-9 flex items-center">
+    <div className="relative bg-gradient-to-r from-[#0B3D91] via-[#1a56cc] to-[#0B3D91] text-white overflow-x-hidden h-9 flex items-center w-full max-w-full">
       {/* Scrolling text */}
       <div className="flex-1 overflow-hidden">
         <div className="flex animate-announcement whitespace-nowrap">

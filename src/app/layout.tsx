@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const tenant = await getTenant()
   return (
     <html lang="fr">
-      <body className={inter.className}>
+      <body className={`${inter.className} overflow-x-hidden`}>
         {tenant && <TenantTheme tenant={tenant} />}
         <CurrencyProvider>{children}</CurrencyProvider>
         <ServiceWorkerRegister />
