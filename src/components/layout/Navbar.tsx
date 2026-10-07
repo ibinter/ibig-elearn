@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { Menu, X, PlusCircle, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
+import { Menu, X, PlusCircle, Search, Globe, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, usePathname } from 'next/navigation'
 import type { Profile } from '@/types'
@@ -76,6 +76,48 @@ function CatalogueDropdown() {
   )
 }
 
+
+function PreferencesMenu() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const { t } = useLocale()
+
+  useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  return (
+    <div ref={ref} className="relative">
+      <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label="Préférences" title="Langue, devise et affichage"
+        className={`flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors ${open ? 'bg-gray-100 text-[#0B3D91]' : 'text-gray-600 hover:bg-gray-100'}`}>
+        <Globe className="w-5 h-5" />
+        <span className="uppercase">{t.locale}</span>
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 z-50 space-y-4">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">Langue</p>
+            <LanguageSwitcher />
+          </div>
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">Devise</p>
+            <CurrencySelector />
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400">Affichage</p>
+            <DarkModeToggle />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Navbar({ user }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -125,7 +167,7 @@ export default function Navbar({ user }: NavbarProps) {
           </Link>
 
           {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-5 flex-1">
+          <div className="hidden md:flex items-center gap-4 lg:gap-6 flex-1 min-w-0">
             <CatalogueDropdown />
             <Link href="/blog" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               {t.nav.blog}
@@ -137,10 +179,7 @@ export default function Navbar({ user }: NavbarProps) {
               {t.locale === 'en' ? 'About' : 'À propos'}
             </Link>
 
-            {/* Search — takes remaining space */}
-            <div className="flex-1 min-w-0 max-w-xs">
-              <GlobalSearch />
-            </div>
+
           </div>
 
           {/* Right actions */}
@@ -152,9 +191,11 @@ export default function Navbar({ user }: NavbarProps) {
               <span className="hidden xl:inline">Ajouter une formation</span>
               <span className="xl:hidden">Publier</span>
             </Link>
-            <LanguageSwitcher />
-            <DarkModeToggle />
-            <CurrencySelector />
+            <Link href="/recherche" aria-label="Rechercher" title="Rechercher"
+              className="p-2.5 rounded-xl text-gray-600 hover:bg-gray-100 hover:text-[#0B3D91] transition-colors">
+              <Search className="w-5 h-5" />
+            </Link>
+            <PreferencesMenu />
             {user && <NotificationBell />}
 
             {user ? (
@@ -226,7 +267,8 @@ export default function Navbar({ user }: NavbarProps) {
                 </Link>
                 <Link href="/inscription"
                   className="text-sm font-bold text-white ibig-gradient px-4 py-2.5 rounded-xl hover:opacity-90 transition-opacity shadow-sm whitespace-nowrap">
-                  {t.locale === 'en' ? 'Sign up free' : "S'inscrire gratuitement"}
+                  <span className="hidden 2xl:inline">{t.locale === 'en' ? 'Sign up free' : "S'inscrire gratuitement"}</span>
+                  <span className="2xl:hidden">{t.locale === 'en' ? 'Sign up' : "S'inscrire"}</span>
                 </Link>
               </div>
             )}
@@ -256,6 +298,11 @@ export default function Navbar({ user }: NavbarProps) {
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-1 bottom-nav-offset">
             <div className="mb-3">
               <GlobalSearch className="w-full" />
+            </div>
+            <div className="flex flex-wrap items-center gap-2 pb-3 mb-1 border-b border-gray-100">
+              <LanguageSwitcher />
+              <CurrencySelector />
+              <div className="ml-auto"><DarkModeToggle /></div>
             </div>
             <Link href="/devenir-partenaire" className="flex items-center gap-3 py-3.5 px-3 rounded-xl bg-[#0B3D91]/5 border border-[#0B3D91]/15 text-[15px] text-[#0B3D91] font-semibold mb-2" onClick={() => setMenuOpen(false)}>
               <PlusCircle className="w-5 h-5" />
