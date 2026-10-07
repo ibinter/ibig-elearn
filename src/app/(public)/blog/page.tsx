@@ -67,9 +67,10 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
-        <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Blog IBIG E-LEARNING</h1>
-          <p className="text-gray-500 max-w-xl">Conseils, actualités et ressources pour votre développement professionnel en Afrique.</p>
+        <div className="mb-8 hero-photo bg-about rounded-3xl text-white px-6 py-10 sm:px-10 sm:py-16">
+          <p className="text-[#FFA500] font-bold text-xs uppercase tracking-widest mb-2">Le blog</p>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3">Blog IBIG E-LEARNING</h1>
+          <p className="text-blue-100 max-w-xl">Conseils, actualités et ressources pour votre développement professionnel en Afrique.</p>
         </div>
 
         {/* Filtres catégories */}
@@ -180,12 +181,13 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
-      <div className="mb-10">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Blog IBIG E-LEARNING</h1>
-        <p className="text-gray-500 max-w-xl">Conseils, actualités et ressources pour votre développement professionnel en Afrique.</p>
+      <div className="mb-10 hero-photo bg-about rounded-3xl text-white px-6 py-10 sm:px-10 sm:py-16">
+        <p className="text-[#FFA500] font-bold text-xs uppercase tracking-widest mb-2">Le blog</p>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3">Blog IBIG E-LEARNING</h1>
+        <p className="text-blue-100 max-w-xl">Conseils, actualités et ressources pour votre développement professionnel en Afrique.</p>
       </div>
 
-      <Link href={`/blog/${featured.slug}`} className="block ibig-gradient rounded-3xl p-6 sm:p-8 text-white mb-10 relative overflow-hidden hover:opacity-95 transition-opacity">
+      <Link href={`/blog/${featured.slug}`} className="block hero-photo bg-students rounded-3xl p-6 sm:p-8 text-white mb-10 hover:opacity-95 transition-opacity">
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-1/3 translate-x-1/3" />
         <div className="relative max-w-2xl">
           <span className="inline-block bg-[#FFA500] text-black text-xs font-bold px-3 py-1 rounded-full mb-4">À la une</span>

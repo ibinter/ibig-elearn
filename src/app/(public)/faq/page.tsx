@@ -73,12 +73,12 @@ export default function FAQPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       {/* Header */}
-      <div className="text-center mb-10">
-        <div className="w-14 h-14 ibig-gradient rounded-2xl flex items-center justify-center mx-auto mb-4">
+      <div className="text-center mb-10 hero-photo bg-coaching rounded-3xl text-white px-6 py-10 sm:py-14">
+        <div className="w-14 h-14 bg-white/15 backdrop-blur border border-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <MessageCircle className="w-7 h-7 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Questions fréquentes</h1>
-        <p className="text-gray-500">{totalItems} questions répondues — Si vous ne trouvez pas votre réponse, <Link href="/contact" className="text-[#0B3D91] hover:underline">contactez-nous</Link>.</p>
+        <h1 className="text-3xl font-bold mb-2">Questions fréquentes</h1>
+        <p className="text-blue-100">{totalItems} questions répondues — Si vous ne trouvez pas votre réponse, <Link href="/contact" className="text-[#FFA500] font-semibold hover:underline">contactez-nous</Link>.</p>
       </div>
 
       {/* Recherche */}
@@ -136,7 +136,7 @@ export default function FAQPage() {
       </div>
 
       {/* CTA support */}
-      <div className="mt-10 hero-waves rounded-2xl p-6 text-white text-center">
+      <div className="mt-10 hero-photo bg-team rounded-2xl p-6 text-white text-center">
         <h3 className="font-bold text-lg mb-1">Vous n'avez pas trouvé votre réponse ?</h3>
         <p className="text-blue-200 text-sm mb-4">Notre équipe répond sous 24h ouvrées.</p>
         <div className="flex justify-center gap-3">
