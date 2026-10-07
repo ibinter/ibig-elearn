@@ -161,7 +161,7 @@ export default function QuizEditor({ lessonId, courseId, initialQuestions, initi
 
         {isFinalExam && (
           <>
-            <div className="border-t border-gray-100 pt-4 grid grid-cols-2 gap-4">
+            <div className="border-t border-gray-100 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Durée (minutes)</label>
                 <div className="flex items-center gap-3">

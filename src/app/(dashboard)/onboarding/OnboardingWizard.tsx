@@ -123,7 +123,7 @@ export default function OnboardingWizard({ userId, profile, categories }: Props)
               <p className="text-gray-500 mb-6">
                 Prenons 2 minutes pour personnaliser votre expérience d'apprentissage. Nous allons adapter nos recommandations à vos objectifs.
               </p>
-              <div className="grid grid-cols-3 gap-3 mb-8 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-center">
                 {[
                   { emoji: '🎯', label: 'Formations ciblées' },
                   { emoji: '⚡', label: 'Parcours adapté' },

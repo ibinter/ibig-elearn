@@ -49,7 +49,7 @@ export default async function FidelitePage() {
         <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
         <div className="relative z-10">
           <div className="flex items-end gap-3 mb-4">
-            <span className="text-5xl font-bold">{totalPoints.toLocaleString('fr-FR')}</span>
+            <span className="text-3xl sm:text-5xl font-bold">{totalPoints.toLocaleString('fr-FR')}</span>
             <span className="text-white/70 pb-1.5">points</span>
           </div>
           <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${level.bg} ${level.color} text-sm font-bold mb-4`}>

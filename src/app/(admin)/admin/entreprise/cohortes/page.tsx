@@ -64,7 +64,7 @@ export default async function CohorteListPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { label: 'Total cohortes', value: stats.total, color: 'text-gray-900' },
           { label: 'En cours', value: stats.active, color: 'text-green-600' },

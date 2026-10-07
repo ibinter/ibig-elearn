@@ -54,7 +54,7 @@ export default async function AdminSessionsLivePage() {
         <p className="text-gray-500 text-sm mt-1">Toutes les sessions live planifiées par les formateurs</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
           <div className="text-2xl font-bold text-[#0B3D91]">{upcoming.length}</div>
           <div className="text-xs text-gray-500 mt-1">Sessions à venir</div>

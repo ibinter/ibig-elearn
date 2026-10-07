@@ -37,6 +37,7 @@ export default async function MesFacturesPage() {
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
@@ -83,6 +84,7 @@ export default async function MesFacturesPage() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

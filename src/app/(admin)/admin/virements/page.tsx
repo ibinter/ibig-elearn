@@ -55,6 +55,7 @@ export default async function AdminVirementsPage() {
           <div className="px-6 py-4 border-b border-gray-100">
             <h2 className="font-bold text-gray-900">Historique</h2>
           </div>
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-100">
@@ -84,6 +85,7 @@ export default async function AdminVirementsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

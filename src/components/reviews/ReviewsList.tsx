@@ -34,7 +34,7 @@ export default async function ReviewsList({ courseId, ratingAvg, reviewCount }: 
       {/* Résumé global */}
       <div className="flex items-start gap-8 mb-8 p-6 bg-gray-50 rounded-2xl">
         <div className="text-center flex-shrink-0">
-          <div className="text-5xl font-black text-gray-900">{Number(ratingAvg).toFixed(1)}</div>
+          <div className="text-3xl sm:text-5xl font-black text-gray-900">{Number(ratingAvg).toFixed(1)}</div>
           <StarRating value={Math.round(ratingAvg)} readonly size="sm" />
           <p className="text-xs text-gray-400 mt-1">{reviewCount} avis</p>
         </div>

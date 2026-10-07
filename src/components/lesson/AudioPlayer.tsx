@@ -98,7 +98,7 @@ export default function AudioPlayer({ audioUrl, title, coverUrl, transcriptText,
           <img src={coverUrl} alt={title} className="w-full h-48 object-cover opacity-80" />
         ) : (
           <div className="w-full h-48 bg-gradient-to-br from-[#0B3D91] to-[#FFA500] flex items-center justify-center">
-            <span className="text-6xl">🎧</span>
+            <span className="text-4xl sm:text-6xl">🎧</span>
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />

@@ -23,7 +23,7 @@ export default async function BadgesPage() {
         <p className="text-gray-500 text-sm mt-1">Créez et attribuez des badges pour récompenser les apprenants</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
           <div className="text-2xl font-bold text-[#0B3D91]">{badges?.length ?? 0}</div>
           <div className="text-xs text-gray-500 mt-1">Badges créés</div>

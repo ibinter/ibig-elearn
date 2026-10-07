@@ -118,6 +118,7 @@ export default async function FormateurApprenantsPage({ searchParams }: PageProp
 
       {/* Table apprenants */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-100">
@@ -168,6 +169,7 @@ export default async function FormateurApprenantsPage({ searchParams }: PageProp
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

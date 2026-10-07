@@ -10,7 +10,7 @@ export default function NotFound() {
           <div className="w-24 h-24 rounded-3xl ibig-gradient flex items-center justify-center mx-auto mb-4 shadow-lg">
             <BookOpen className="w-12 h-12 text-white" />
           </div>
-          <div className="text-8xl font-extrabold text-gray-100 select-none leading-none mb-2">404</div>
+          <div className="text-5xl sm:text-8xl font-extrabold text-gray-100 select-none leading-none mb-2">404</div>
         </div>
 
         <h1 className="text-2xl font-bold text-gray-900 mb-3">Page introuvable</h1>

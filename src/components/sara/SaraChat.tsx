@@ -99,7 +99,7 @@ export default function SaraChat({ courseTitle, lessonTitle, lessonContent }: Pr
 
       {/* Panel chat */}
       {open && (
-        <div className={`fixed bottom-6 right-6 z-50 w-[360px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col transition-all ${minimized ? 'h-14' : 'h-[520px]'}`}>
+        <div className={`fixed bottom-6 right-6 z-50 w-[calc(100vw-2rem)] sm:w-[360px] max-w-[360px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col transition-all ${minimized ? 'h-14' : 'h-[520px]'}`}>
           {/* Header */}
           <div className="ibig-gradient rounded-t-2xl px-4 py-3 flex items-center gap-3 flex-shrink-0">
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">

@@ -104,7 +104,7 @@ export default function TenantManager({ initialTenants }: Props) {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { label: 'Tenants total', value: tenants.length, color: 'bg-blue-50 text-[#0B3D91]' },
           { label: 'Actifs', value: tenants.filter(t => t.is_active).length, color: 'bg-green-50 text-green-700' },

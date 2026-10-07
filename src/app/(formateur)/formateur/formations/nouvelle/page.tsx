@@ -132,7 +132,7 @@ export default function NouvelleFormationPage() {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Catégorie *</label>
               <select
@@ -180,7 +180,7 @@ export default function NouvelleFormationPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
           <h2 className="font-semibold text-gray-900">Prix et publication</h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Prix en FCFA (0 = gratuit)</label>
               <input

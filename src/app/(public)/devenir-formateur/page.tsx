@@ -21,7 +21,7 @@ export default function DevenirFormateurPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="ibig-gradient text-white py-20">
+      <section className="ibig-gradient text-white py-10 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-5">
             Partagez votre expertise,<br />

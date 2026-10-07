@@ -61,7 +61,7 @@ export default function LiveSessionForm({ courses, instructorId }: Props) {
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <h3 className="font-bold text-gray-900">Nouvelle session live</h3>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="text-xs font-semibold text-gray-500 uppercase mb-1.5 block">Formation</label>
               <select

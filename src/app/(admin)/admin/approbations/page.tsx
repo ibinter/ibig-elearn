@@ -73,6 +73,7 @@ export default async function ApprobationsPage() {
           <div className="px-6 py-4 border-b border-gray-100">
             <h2 className="font-bold text-gray-900">Historique récent</h2>
           </div>
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-100">
@@ -98,6 +99,7 @@ export default async function ApprobationsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

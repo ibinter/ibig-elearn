@@ -27,7 +27,7 @@ export default async function RelancesPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
           <div className="text-2xl font-bold text-[#0B3D91]">{campaigns?.length ?? 0}</div>
           <div className="text-xs text-gray-500 mt-1">Campagnes envoyées</div>

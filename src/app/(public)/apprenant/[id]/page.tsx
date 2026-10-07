@@ -92,7 +92,7 @@ export default async function ProfilPublicPage({ params }: PageProps) {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { icon: <BookOpen className="w-5 h-5 text-[#0B3D91]" />, value: completedCount, label: 'Formations\nterminées' },
             { icon: <Award className="w-5 h-5 text-[#FFA500]" />, value: certs?.length ?? 0, label: 'Certifi-\ncats' },

@@ -264,7 +264,7 @@ export default async function AccueilPage() {
       )}
 
       {/* ══ COMMENT ÇA MARCHE ══ */}
-      <section className="py-20 bg-gradient-to-br from-[#0B1E4B] to-[#0B3D91] text-white relative overflow-hidden">
+      <section className="py-10 md:py-20 bg-gradient-to-br from-[#0B1E4B] to-[#0B3D91] text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -302,7 +302,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ POURQUOI IBIG ══ */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-10 md:py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Notre différence</p>
@@ -337,7 +337,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ TÉMOIGNAGES ══ */}
-      <section className="py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Ils ont transformé leur carrière</p>
@@ -380,7 +380,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ CERTIFICAT SHOWCASE ══ */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 to-[#0B1E4B]">
+      <section className="py-10 md:py-20 bg-gradient-to-br from-gray-900 to-[#0B1E4B]">
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Valorisez votre expertise</p>
@@ -427,7 +427,7 @@ export default async function AccueilPage() {
                     <p className="text-xs font-bold text-gray-700">15 Sept. 2026</p>
                   </div>
                   <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <div className="grid grid-cols-4 gap-0.5">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-0.5">
                       {Array.from({ length: 16 }).map((_, i) => (
                         <div key={i} className={`w-2 h-2 rounded-sm ${i % 3 === 0 ? 'bg-gray-900' : 'bg-gray-300'}`} />
                       ))}
@@ -447,7 +447,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ ASSISTANT SARA ══ */}
-      <section className="py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           {/* Mockup chat SARA */}
           <div className="order-2 lg:order-1">
@@ -533,7 +533,7 @@ export default async function AccueilPage() {
       </section>
 
       {/* ══ CTA FINAL ══ */}
-      <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #0B3D91 60%, #1a56cc 100%)' }}>
+      <section className="py-10 md:py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #020b1a 0%, #0B3D91 60%, #1a56cc 100%)' }}>
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
         <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-10" style={{ background: '#FFA500' }} />
 

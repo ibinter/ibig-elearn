@@ -131,7 +131,7 @@ export default function SSOManager({ initialProviders }: Props) {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {[
           { label: 'Providers total', value: providers.length, color: 'bg-blue-50 text-[#0B3D91]' },
           { label: 'Actifs', value: providers.filter(p => p.is_active).length, color: 'bg-green-50 text-green-700' },
