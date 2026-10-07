@@ -51,6 +51,17 @@ export default function AProposPage() {
                 À terme, nous visons <strong>60 000 apprenants actifs</strong> dans <strong>14 pays africains</strong>, avec plus de <strong>150 formations certifiantes</strong> couvrant les secteurs porteurs du continent.
               </p>
             </div>
+            <div className="space-y-4">
+            <div className="relative rounded-3xl overflow-hidden aspect-[16/10] shadow-xl">
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/images/bg/students-m.webp" />
+                <img src="/images/bg/students.webp" alt="De jeunes professionnels africains se forment sur leurs ordinateurs" loading="lazy" className="w-full h-full object-cover" />
+              </picture>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5 text-white">
+                <p className="font-bold">Apprendre partout, à son rythme</p>
+                <p className="text-sm text-white/80">Sur téléphone ou ordinateur, payable en Mobile Money.</p>
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { value: '14', label: 'Pays couverts', icon: Globe },
@@ -64,6 +75,7 @@ export default function AProposPage() {
                   <div className="text-sm text-gray-500">{s.label}</div>
                 </div>
               ))}
+            </div>
             </div>
           </div>
         </div>
@@ -110,15 +122,15 @@ export default function AProposPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 sm:py-24 hero-photo bg-graduates text-white">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Rejoignez l'aventure</h2>
-          <p className="text-gray-500 mb-6">Que vous soyez apprenant, formateur ou entreprise, nous avons une solution pour vous.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Rejoignez l'aventure</h2>
+          <p className="text-blue-100 mb-6">Que vous soyez apprenant, formateur ou entreprise, nous avons une solution pour vous.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/inscription" className="ibig-gradient text-white font-semibold px-8 py-3 rounded-xl hover:opacity-90 transition-opacity">
+            <Link href="/inscription" className="bg-[#FFA500] text-black font-bold px-8 py-3 rounded-xl hover:opacity-90 transition-opacity">
               Commencer gratuitement
             </Link>
-            <Link href="/contact" className="border border-[#0B3D91] text-[#0B3D91] font-semibold px-8 py-3 rounded-xl hover:bg-[#0B3D91]/5 transition-colors">
+            <Link href="/contact" className="border border-white/60 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors">
               Nous contacter
             </Link>
           </div>
