@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useLocale } from '@/i18n/client'
-import { Eye, EyeOff, Loader2, UserPlus, GraduationCap, Presentation, Building2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2, UserPlus, GraduationCap, Presentation, Building2, HeartHandshake } from 'lucide-react'
 
 const COUNTRIES = [
   { code: 'CI', name: "Côte d'Ivoire" },
@@ -25,13 +25,15 @@ const COUNTRIES = [
   { code: 'OTHER', name: 'Autre' },
 ]
 
-type AccountType = 'apprenant' | 'formateur' | 'entreprise'
+type AccountType = 'apprenant' | 'formateur' | 'coach' | 'entreprise'
 
 const PROFILES: { key: AccountType; label: string; desc: string; icon: typeof GraduationCap; next: string; note: string }[] = [
   { key: 'apprenant', label: 'Apprenant', desc: 'Je veux me former', icon: GraduationCap, next: '/tableau-de-bord',
     note: 'Accédez au catalogue, suivez vos formations et obtenez des certificats vérifiables.' },
   { key: 'formateur', label: 'Formateur', desc: 'Je veux enseigner', icon: Presentation, next: '/devenir-partenaire',
     note: 'Programme Formateurs Partenaires IBIG EDUFORM : créez votre compte, confirmez votre email, puis déposez votre candidature pour publier vos formations.' },
+  { key: 'coach', label: 'Coach', desc: "J'accompagne", icon: HeartHandshake, next: '/devenir-partenaire',
+    note: "Coachs professionnels : rejoignez le programme partenaire IBIG EDUFORM pour proposer vos programmes d'accompagnement et vos sessions live, avec partage des revenus." },
   { key: 'entreprise', label: 'Entreprise', desc: 'Former mes équipes', icon: Building2, next: '/entreprise#contact',
     note: 'Entreprises, ONG et institutions : créez votre compte, puis décrivez votre besoin pour recevoir une offre sur mesure pour vos équipes.' },
 ]
@@ -54,7 +56,7 @@ function InscriptionForm() {
   // Retour après inscription (ex. parcours formateur partenaire) — chemins internes uniquement
   const initialProfile = searchParams.get('profil')
   const [accountType, setAccountType] = useState<AccountType>(
-    initialProfile === 'formateur' || initialProfile === 'entreprise' ? initialProfile : 'apprenant')
+    initialProfile === 'formateur' || initialProfile === 'coach' || initialProfile === 'entreprise' ? initialProfile : 'apprenant')
   const profile = PROFILES.find(p => p.key === accountType)!
   // Retour après inscription : chemin interne explicite, sinon selon le profil choisi
   const rawNext = searchParams.get('next') ?? ''
@@ -135,7 +137,7 @@ function InscriptionForm() {
         {/* Type de compte */}
         <fieldset className="mb-6">
           <legend className="block text-sm font-semibold text-gray-800 mb-2">Je m&apos;inscris en tant que</legend>
-          <div className="grid grid-cols-3 gap-2" role="radiogroup">
+          <div className="grid grid-cols-2 gap-2" role="radiogroup">
             {PROFILES.map(p => {
               const on = accountType === p.key
               return (
