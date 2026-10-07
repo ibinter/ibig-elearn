@@ -121,6 +121,17 @@ export default function EntreprisePage() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3">Tout ce dont votre entreprise a besoin</h2>
           <p className="text-gray-500 text-center mb-10 max-w-xl mx-auto">Une solution complète, clé en main, adaptée aux réalités africaines.</p>
+          <div className="relative rounded-3xl overflow-hidden aspect-[16/9] sm:aspect-[21/8] mb-10 shadow-xl">
+            <picture>
+              <source media="(max-width: 767px)" srcSet="/images/bg/partner-m.webp" />
+              <img src="/images/bg/partner.webp" alt="Une équipe de collaborateurs en formation" loading="lazy" className="w-full h-full object-cover object-[center_30%]" />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#06142f]/85 via-[#06142f]/40 to-transparent" />
+            <div className="absolute inset-y-0 left-0 flex flex-col justify-center p-6 sm:p-10 max-w-md text-white">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Vos équipes</p>
+              <p className="mt-1 text-xl sm:text-2xl font-bold leading-snug">Des collaborateurs formés, des résultats mesurables</p>
+            </div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {ADVANTAGES.map((a, i) => (
               <div key={i} className="bg-white rounded-2xl border border-gray-200 p-6">
@@ -173,12 +184,12 @@ export default function EntreprisePage() {
       </section>
 
       {/* Secteurs */}
-      <section className="py-12 px-4 bg-gray-50">
+      <section className="py-14 sm:py-20 px-4 hero-photo bg-about text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Secteurs qui nous font confiance</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">Secteurs qui nous font confiance</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {CLIENTS_SECTORS.map(s => (
-              <span key={s} className="bg-white border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-full">
+              <span key={s} className="bg-white/15 backdrop-blur border border-white/20 text-white text-sm font-medium px-4 py-2 rounded-full">
                 {s}
               </span>
             ))}
@@ -187,13 +198,13 @@ export default function EntreprisePage() {
       </section>
 
       {/* Formulaire contact */}
-      <section id="contact" className="py-16 px-4 bg-white">
+      <section id="contact" className="py-16 sm:py-24 px-4 hero-photo bg-team">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Demandez votre devis gratuit</h2>
-            <p className="text-gray-500">Notre équipe vous répond sous 24h avec une proposition personnalisée.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Demandez votre devis gratuit</h2>
+            <p className="text-blue-100">Notre équipe vous répond sous 24h avec une proposition personnalisée.</p>
           </div>
-          <B2BContactForm />
+          <div className="bg-white rounded-3xl shadow-2xl p-5 sm:p-8"><B2BContactForm /></div>
         </div>
       </section>
     </div>
