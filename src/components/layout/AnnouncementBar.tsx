@@ -6,7 +6,7 @@ import { X, Zap } from 'lucide-react'
 
 const MESSAGES = [
   { text: '🎓 Nouvelle formation disponible : IA & Automatisation des PME africaines', link: '/catalogue' },
-  { text: '🌍 IBIG E-LEARNING — 12 pays d\'Afrique francophone', link: '/a-propos' },
+  { text: '🌍 IBIG E-LEARNING — 14 pays d\'Afrique francophone', link: '/a-propos' },
   { text: '🏆 Rejoignez la communauté des professionnels certifiés IBIG !', link: '/inscription' },
   { text: '📱 Orange Money · MTN · Wave · Moov acceptés', link: '/catalogue' },
 ]

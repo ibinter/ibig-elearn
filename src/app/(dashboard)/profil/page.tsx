@@ -6,7 +6,7 @@ import { User, Mail, Phone, MapPin, Globe, Camera, Save, AlertCircle, CheckCircl
 
 const COUNTRIES = [
   'Côte d\'Ivoire', 'Sénégal', 'Mali', 'Burkina Faso', 'Niger', 'Guinée',
-  'Cameroun', 'Congo', 'RDC', 'Gabon', 'Togo', 'Bénin', 'Mauritanie',
+  'Cameroun', 'Congo-Brazzaville', 'RDC', 'Tchad', 'Gabon', 'Togo', 'Bénin', 'Mauritanie',
   'Madagascar', 'Maroc', 'Tunisie', 'Algérie', 'France', 'Belgique', 'Canada'
 ]
 

@@ -7,12 +7,14 @@ const COUNTRIES = [
   { name: 'Mali', flag: '🇲🇱' },
   { name: 'Burkina Faso', flag: '🇧🇫' },
   { name: 'Guinée', flag: '🇬🇳' },
-  { name: 'Congo', flag: '🇨🇬' },
+  { name: 'Congo-Brazzaville', flag: '🇨🇬' },
   { name: 'Bénin', flag: '🇧🇯' },
   { name: 'Togo', flag: '🇹🇬' },
   { name: 'Niger', flag: '🇳🇪' },
   { name: 'Gabon', flag: '🇬🇦' },
   { name: 'RD Congo', flag: '🇨🇩' },
+  { name: 'Tchad', flag: '🇹🇩' },
+  { name: 'Maroc', flag: '🇲🇦' },
 ]
 
 export default function CountriesMarquee() {

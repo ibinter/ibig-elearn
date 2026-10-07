@@ -11,7 +11,7 @@ const team = [
 
 const values = [
   { icon: Target, title: 'Excellence africaine', desc: 'Des formations ancrées dans la réalité économique africaine, pensées pour vos marchés locaux.' },
-  { icon: Globe, title: 'Accessibilité', desc: 'Accessibles depuis 12 pays, payables en Mobile Money, pour que personne ne soit laissé de côté.' },
+  { icon: Globe, title: 'Accessibilité', desc: 'Accessibles depuis 14 pays, payables en Mobile Money, pour que personne ne soit laissé de côté.' },
   { icon: Award, title: 'Certification reconnue', desc: 'Des certificats vérifiables en ligne, avec un code unique, reconnus par les employeurs partenaires.' },
   { icon: Heart, title: 'Impact humain', desc: 'Notre mission : transformer des milliers de carrières africaines grâce à la formation continue.' },
 ]
@@ -48,12 +48,12 @@ export default function AProposPage() {
                 Avec IBIG E-LEARNING, nous mettons à la disposition des apprenants des contenus créés par des experts praticiens, disponibles 24h/24 depuis n'importe quel appareil, payables en Mobile Money.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                À terme, nous visons <strong>60 000 apprenants actifs</strong> dans <strong>12 pays africains</strong>, avec plus de <strong>150 formations certifiantes</strong> couvrant les secteurs porteurs du continent.
+                À terme, nous visons <strong>60 000 apprenants actifs</strong> dans <strong>14 pays africains</strong>, avec plus de <strong>150 formations certifiantes</strong> couvrant les secteurs porteurs du continent.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { value: '12', label: 'Pays couverts', icon: Globe },
+                { value: '14', label: 'Pays couverts', icon: Globe },
                 { value: '150+', label: 'Formations cibles', icon: BookOpen },
                 { value: '60 000', label: 'Apprenants visés', icon: Users },
                 { value: '100%', label: 'Certifiants', icon: Award },

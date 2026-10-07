@@ -4,7 +4,7 @@ import { CheckCircle, Users, Globe, TrendingUp, Star, Mail } from 'lucide-react'
 export const metadata = { alternates: { canonical: '/devenir-formateur' }, title: 'Devenir formateur', description: 'Partagez votre expertise et touchez des milliers d\'apprenants africains sur IBIG E-LEARNING.' }
 
 const avantages = [
-  { icon: Users, title: 'Audience panafricaine', desc: 'Accédez à une audience de milliers de professionnels dans 12 pays.' },
+  { icon: Users, title: 'Audience panafricaine', desc: 'Accédez à une audience de milliers de professionnels dans 14 pays.' },
   { icon: TrendingUp, title: 'Revenus récurrents', desc: 'Gagnez à chaque inscription à votre formation, sans limite.' },
   { icon: Globe, title: 'Paiements Mobile Money', desc: 'Recevez vos revenus en XOF, XAF ou EUR, par Mobile Money ou virement.' },
   { icon: Star, title: 'Notoriété et crédibilité', desc: 'Renforcez votre positionnement d\'expert reconnu sur le continent.' },

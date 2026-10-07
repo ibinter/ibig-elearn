@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Award, Smartphone, Users } from 'lucide-react'
 
 const POINTS = [
-  { icon: Award, title: 'Certificats vérifiables', text: 'Reconnus par les employeurs dans 12 pays' },
+  { icon: Award, title: 'Certificats vérifiables', text: 'Reconnus par les employeurs dans 14 pays' },
   { icon: Smartphone, title: 'Paiement Mobile Money', text: 'Orange Money, MTN, Wave, Moov ou carte' },
   { icon: Users, title: 'Experts africains', text: 'Formateurs et coachs partenaires IBIG EDUFORM' },
 ]

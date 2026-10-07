@@ -9,7 +9,7 @@ import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: { absolute: 'IBIG E-LEARNING — Formation professionnelle en ligne en Afrique' },
-  description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Des formations certifiantes, payables en Mobile Money, dans 12 pays.',
+  description: 'La plateforme de référence pour la formation professionnelle en ligne en Afrique francophone. Des formations certifiantes, payables en Mobile Money, dans 14 pays.',
   keywords: ['formation en ligne Afrique', 'e-learning Afrique francophone', 'formation professionnelle Côte d\'Ivoire', 'certification en ligne', 'IBIG E-LEARNING'],
   alternates: { canonical: '/' },
   openGraph: {
@@ -24,11 +24,11 @@ const ETAPES = [
   { num: '01', icon: BookOpen, title: 'Choisissez votre formation', desc: 'Parcourez notre catalogue de formations certifiantes adaptées au marché africain et trouvez celle qui correspond à votre objectif.' },
   { num: '02', icon: Smartphone, title: 'Payez en Mobile Money', desc: 'Orange Money, MTN, Wave, Moov ou carte bancaire — réglez en toute sécurité dans votre monnaie locale, sans frais cachés.' },
   { num: '03', icon: Play, title: 'Apprenez à votre rythme', desc: 'Accédez à vie à vos cours en vidéo, quiz interactifs et ressources PDF depuis votre téléphone ou ordinateur.' },
-  { num: '04', icon: Award, title: 'Obtenez votre certificat', desc: 'Téléchargez votre certificat vérifiable avec QR code, reconnu par les entreprises partenaires dans 12 pays africains.' },
+  { num: '04', icon: Award, title: 'Obtenez votre certificat', desc: 'Téléchargez votre certificat vérifiable avec QR code, reconnu par les entreprises partenaires dans 14 pays africains.' },
 ]
 
 const AVANTAGES = [
-  { icon: BadgeCheck, title: 'Certifications reconnues', desc: 'Chaque certificat porte un QR code unique vérifiable en ligne par les employeurs et partenaires IBIG dans 12 pays.', color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
+  { icon: BadgeCheck, title: 'Certifications reconnues', desc: 'Chaque certificat porte un QR code unique vérifiable en ligne par les employeurs et partenaires IBIG dans 14 pays.', color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
   { icon: Smartphone, title: 'Mobile Money accepté', desc: 'Orange Money, MTN Mobile Money, Wave, Moov Money et carte bancaire. Payez comme vous voulez, en FCFA.', color: 'text-orange-500', bg: 'bg-orange-50 border-orange-100' },
   { icon: Zap, title: 'Accès immédiat', desc: 'Votre formation s\'ouvre dès la confirmation de paiement. Commencez dans les 2 minutes qui suivent.', color: 'text-yellow-500', bg: 'bg-yellow-50 border-yellow-100' },
   { icon: Headphones, title: 'Assistante SARA 24/7', desc: 'Notre IA pédagogique répond à toutes vos questions de cours à n\'importe quelle heure, en français.', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
@@ -68,7 +68,7 @@ const DOMAINES_PHARES = [
   { emoji: '🛒', nom: 'E-Commerce', nb: 1, slug: 'ecommerce' },
 ]
 
-const PAYS = ['🇨🇮 Côte d\'Ivoire', '🇸🇳 Sénégal', '🇨🇲 Cameroun', '🇲🇱 Mali', '🇧🇫 Burkina Faso', '🇬🇳 Guinée', '🇹🇬 Togo', '🇧🇯 Bénin', '🇨🇩 RD Congo', '🇲🇦 Maroc', '🇬🇦 Gabon', '🇳🇪 Niger']
+const PAYS = ['🇨🇮 Côte d\'Ivoire', '🇸🇳 Sénégal', '🇨🇲 Cameroun', '🇲🇱 Mali', '🇧🇫 Burkina Faso', '🇬🇳 Guinée', '🇹🇬 Togo', '🇧🇯 Bénin', '🇨🇩 RD Congo', '🇨🇬 Congo-Brazzaville', '🇲🇦 Maroc', '🇬🇦 Gabon', '🇳🇪 Niger', '🇹🇩 Tchad']
 
 export default async function AccueilPage() {
   const t = await getT()
@@ -189,7 +189,7 @@ export default async function AccueilPage() {
             { value: `${totalCourses ?? 10}+`, label: t.home.statsAvailable, icon: BookOpen, sub: t.home.statsIn8 },
             { value: `${totalUsers ?? 200}+`, label: t.home.statsActive, icon: Users, sub: t.home.statsIn12 },
             { value: totalCerts && totalCerts > 0 ? `${totalCerts}+` : 'QR certifié', label: t.home.statsCertsDelivered, icon: Award, sub: t.home.statsVerifiable },
-            { value: '12', label: t.home.statsCountriesCovered, icon: Globe2, sub: t.home.statsFrancophone },
+            { value: '14', label: t.home.statsCountriesCovered, icon: Globe2, sub: t.home.statsFrancophone },
           ].map(s => (
             <div key={s.label} className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -402,7 +402,7 @@ export default async function AccueilPage() {
             <div className="space-y-4 mb-8">
               {[
                 { icon: BadgeCheck, text: 'QR code unique — vérifiable instantanément par tout employeur', color: 'text-green-400' },
-                { icon: Globe2, text: 'Reconnu dans 12 pays d\'Afrique francophone', color: 'text-blue-400' },
+                { icon: Globe2, text: 'Reconnu dans 14 pays d\'Afrique francophone', color: 'text-blue-400' },
                 { icon: Lock, text: 'Sécurisé et infalsifiable — chaque certificat a un identifiant unique', color: 'text-purple-400' },
                 { icon: Award, text: 'Téléchargeable en PDF haute définition, prêt à imprimer', color: 'text-yellow-400' },
               ].map(item => (

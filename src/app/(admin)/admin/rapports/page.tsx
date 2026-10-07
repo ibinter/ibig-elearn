@@ -6,7 +6,7 @@ import PeriodFilter from './PeriodFilter'
 const COUNTRY_NAMES: Record<string, string> = {
   CI: "Côte d'Ivoire", SN: 'Sénégal', CM: 'Cameroun', BF: 'Burkina Faso',
   ML: 'Mali', GN: 'Guinée', TG: 'Togo', BJ: 'Bénin', MA: 'Maroc',
-  FR: 'France', CA: 'Canada', BE: 'Belgique', NG: 'Nigéria', GH: 'Ghana', CD: 'RD Congo',
+  FR: 'France', CA: 'Canada', BE: 'Belgique', NG: 'Nigéria', GH: 'Ghana', CD: 'RD Congo', CG: 'Congo-Brazzaville', TD: 'Tchad',
 }
 
 function formatPrice(n: number, currency = 'XOF') {

@@ -1,7 +1,7 @@
 ﻿import Link from 'next/link'
 import { Award, CheckCircle, Shield, QrCode, Globe, BookOpen } from 'lucide-react'
 
-export const metadata = { alternates: { canonical: '/certifications' }, title: 'Certifications', description: 'Découvrez nos certifications professionnelles vérifiables, reconnues dans 12 pays africains.' }
+export const metadata = { alternates: { canonical: '/certifications' }, title: 'Certifications', description: 'Découvrez nos certifications professionnelles vérifiables, reconnues dans 14 pays africains.' }
 
 export default function CertificationsPage() {
   return (
@@ -57,7 +57,7 @@ export default function CertificationsPage() {
                 {[
                   { icon: Shield, title: 'Anti-fraude', desc: 'Chaque code est unique et cryptographiquement sécurisé. Impossible à falsifier.' },
                   { icon: Globe, title: 'Vérification publique', desc: 'N\'importe qui peut vérifier l\'authenticité de votre certificat sur ibig-elearning.com/verify.' },
-                  { icon: Award, title: 'Reconnu par les employeurs', desc: 'Nos certificats sont reconnus par nos partenaires entreprises dans 12 pays africains.' },
+                  { icon: Award, title: 'Reconnu par les employeurs', desc: 'Nos certificats sont reconnus par nos partenaires entreprises dans 14 pays africains.' },
                   { icon: CheckCircle, title: 'Valable à vie', desc: 'Votre certificat ne expire jamais et reste vérifiable indéfiniment sur notre plateforme.' },
                 ].map(item => (
                   <div key={item.title} className="flex items-start gap-4">

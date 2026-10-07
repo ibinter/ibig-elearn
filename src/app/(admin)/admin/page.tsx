@@ -78,7 +78,7 @@ export default async function AdminPage() {
   const countryNames: Record<string, string> = {
     CI: 'Côte d\'Ivoire', SN: 'Sénégal', CM: 'Cameroun', BF: 'Burkina Faso',
     ML: 'Mali', GN: 'Guinée', TG: 'Togo', BJ: 'Bénin', MA: 'Maroc',
-    FR: 'France', BE: 'Belgique', NG: 'Nigéria', GH: 'Ghana', CD: 'RD Congo',
+    FR: 'France', BE: 'Belgique', NG: 'Nigéria', GH: 'Ghana', CD: 'RD Congo', CG: 'Congo-Brazzaville', TD: 'Tchad',
   }
 
   return (

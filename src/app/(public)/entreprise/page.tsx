@@ -33,7 +33,7 @@ const ADVANTAGES = [
   {
     icon: <Globe className="w-6 h-6 text-[#FFA500]" />,
     title: 'Multi-pays',
-    desc: 'Formez des équipes dispersées dans 12 pays africains. Paiement centralisé en XOF, EUR ou USD.',
+    desc: 'Formez des équipes dispersées dans 14 pays africains. Paiement centralisé en XOF, EUR ou USD.',
   },
   {
     icon: <Phone className="w-6 h-6 text-[#0B3D91]" />,
@@ -103,7 +103,7 @@ export default function EntreprisePage() {
       <section className="bg-white border-b border-gray-100 py-8 px-4">
         <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           {[
-            { value: '12', label: 'pays couverts' },
+            { value: '14', label: 'pays couverts' },
             { value: '500+', label: 'formations disponibles' },
             { value: '50 000+', label: 'apprenants formés' },
             { value: '98%', label: 'de satisfaction' },

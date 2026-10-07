@@ -42,7 +42,7 @@ const STATIC_SLIDES: SlideData[] = [
     title: 'Bienvenue sur',
     titleHighlight: 'IBIG E-LEARNING',
     subtitle: '',
-    description: 'Formations certifiantes adaptées au marché africain — payez en Mobile Money, apprenez à votre rythme, obtenez un certificat reconnu dans 12 pays.',
+    description: 'Formations certifiantes adaptées au marché africain — payez en Mobile Money, apprenez à votre rythme, obtenez un certificat reconnu dans 14 pays.',
     cta1Label: 'Explorer les formations',
     cta1Href: '/catalogue',
     cta2Label: 'Commencer gratuitement',
@@ -225,7 +225,7 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
                 {[
                   { icon: BadgeCheck, text: 'Certificats vérifiables', color: '#4ade80' },
                   { icon: Smartphone, text: 'Mobile Money', color: '#fbbf24' },
-                  { icon: Globe, text: '12 pays', color: '#60a5fa' },
+                  { icon: Globe, text: '14 pays', color: '#60a5fa' },
                   { icon: Zap, text: 'Accès immédiat', color: '#fb923c' },
                 ].map(({ icon: Icon, text, color }) => (
                   <div key={text} className="flex items-center gap-1.5 text-sm text-white/60">

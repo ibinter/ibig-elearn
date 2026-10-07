@@ -85,12 +85,12 @@ export default function Image() {
           marginBottom: '40px',
           maxWidth: '800px',
         }}>
-          Formations certifiantes · 12 pays · Mobile Money
+          Formations certifiantes · 14 pays · Mobile Money
         </p>
 
         {/* Badges */}
         <div style={{ display: 'flex', gap: '16px' }}>
-          {['✅ Certificats vérifiables', '📱 Mobile Money', '🌍 12 pays'].map(badge => (
+          {['✅ Certificats vérifiables', '📱 Mobile Money', '🌍 14 pays'].map(badge => (
             <div key={badge} style={{
               background: 'rgba(255,255,255,0.08)',
               border: '1px solid rgba(255,255,255,0.15)',

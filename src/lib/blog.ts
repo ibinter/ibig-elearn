@@ -91,7 +91,7 @@ IBIG E-LEARNING a été conçue pour cette réalité :
 1. **Une plateforme pensée d'abord pour le téléphone**, utilisable comme une application.
 2. **Le paiement par Mobile Money** (Orange Money, MTN Mobile Money, Wave) ainsi que par carte bancaire.
 3. **Des contenus ancrés dans le contexte africain** : droit OHADA, fiscalité locale, cas d'entreprises de la sous-région.
-4. **Des certificats vérifiables** dans les 12 pays couverts par la plateforme.
+4. **Des certificats vérifiables** dans les 14 pays couverts par la plateforme.
 5. **SARA, une assistante pédagogique** disponible pour répondre aux questions pendant l'apprentissage.
 
 ## Questions fréquentes

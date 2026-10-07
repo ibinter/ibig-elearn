@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Loader2, Send } from 'lucide-react'
 import { EXPERTISE_DOMAINS, PAYOUT_METHODS, type InstructorApplication, type PartnerState } from '@/lib/partner'
 
-const COUNTRIES = ["Côte d'Ivoire", 'Sénégal', 'Mali', 'Burkina Faso', 'Bénin', 'Togo', 'Guinée', 'Niger', 'Cameroun', 'Gabon', 'Congo', 'RD Congo', 'Maroc', 'Tunisie', 'Algérie', 'France', 'Canada', 'Autre']
+const COUNTRIES = ["Côte d'Ivoire", 'Sénégal', 'Mali', 'Burkina Faso', 'Bénin', 'Togo', 'Guinée', 'Niger', 'Cameroun', 'Gabon', 'Congo-Brazzaville', 'RD Congo', 'Tchad', 'Maroc', 'Tunisie', 'Algérie', 'France', 'Canada', 'Autre']
 const LANGS = [{ v: 'fr', l: 'Français' }, { v: 'en', l: 'Anglais' }, { v: 'ar', l: 'Arabe' }, { v: 'pt', l: 'Portugais' }]
 
 type Props = { initial: InstructorApplication | null; profile: PartnerState['profile'] }

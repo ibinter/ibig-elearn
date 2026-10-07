@@ -106,7 +106,7 @@ const sections = [
       { label: 'Rapports financiers', desc: '/admin/rapports — CA mensuel, revenus par formateur, marge IBIG, comparaison mensuelle.' },
       { label: 'Rapports pédagogiques', desc: 'Taux de complétion, formations les plus suivies, résultats quiz, temps moyen de formation.' },
       { label: 'Export comptable', desc: '/admin/exports — exportez tous les paiements en CSV (colonne TVA incluse).' },
-      { label: 'Rapport par pays', desc: 'Filtrez tous les rapports par pays pour suivre la performance dans chacun des 12 pays couverts.' },
+      { label: 'Rapport par pays', desc: 'Filtrez tous les rapports par pays pour suivre la performance dans chacun des 14 pays couverts.' },
     ],
   },
   {
