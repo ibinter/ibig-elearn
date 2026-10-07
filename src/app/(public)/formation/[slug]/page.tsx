@@ -204,6 +204,10 @@ export default async function FormationPage({ params }: PageProps) {
           HERO — gradient profond avec thumbnail
       ═══════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0B1E4B 0%, #0B3D91 50%, #1565C0 100%)' }}>
+        {/* Photo de fond : visuel de la formation, sinon photo e-learning */}
+        <img src={c.thumbnail_url ?? '/images/bg/learner.webp'} alt="" aria-hidden="true" fetchPriority="high"
+          className={`absolute inset-0 w-full h-full object-cover pointer-events-none ${c.thumbnail_url ? 'blur-md scale-110 opacity-35' : 'opacity-30 mix-blend-luminosity'}`} />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#06142f]/90 via-[#0B1E4B]/75 to-[#0B3D91]/60 pointer-events-none" />
         {/* Motif décoratif */}
         <div className="absolute inset-0 opacity-[0.04]" style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
