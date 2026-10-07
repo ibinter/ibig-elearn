@@ -54,7 +54,7 @@ export default async function DevenirPartenairePage() {
     <div className="bg-gray-50 min-h-screen">
       {/* En-tête */}
       <section className="hero-photo bg-partner text-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-14 sm:pt-16 sm:pb-24">
           <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Programme Formateurs Partenaires</p>
           <h1 className="mt-2 text-[26px] sm:text-4xl font-extrabold leading-tight">Publiez vos formations avec IBIG EDUFORM</h1>
           <p className="mt-3 text-blue-100 text-[15px] sm:text-lg leading-relaxed">
@@ -72,6 +72,23 @@ export default async function DevenirPartenairePage() {
         <div className="mt-5 space-y-5">
           {state.stage === 'account' && (
             <>
+              <div className="relative rounded-2xl overflow-hidden aspect-[16/9] sm:aspect-[21/9] shadow-sm">
+                <picture>
+                  <source media="(max-width: 767px)" srcSet="/images/bg/team-m.webp" />
+                  <img src="/images/bg/team.webp" alt="Des formateurs partenaires en séance de travail" loading="lazy" className="w-full h-full object-cover" />
+                </picture>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#06142f]/90 via-[#06142f]/30 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 flex items-end justify-between gap-4 text-white">
+                  <div>
+                    <p className="text-lg sm:text-xl font-bold">Un partenariat gagnant-gagnant</p>
+                    <p className="text-sm text-white/80">Vous apportez l&apos;expertise, IBIG EDUFORM la plateforme et les apprenants.</p>
+                  </div>
+                  <div className="flex-shrink-0 text-center bg-[#FFA500] text-black rounded-2xl px-4 py-2.5">
+                    <p className="text-2xl sm:text-3xl font-black leading-none">50 %</p>
+                    <p className="text-[11px] font-semibold">pour vous</p>
+                  </div>
+                </div>
+              </div>
               <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-7">
                 <h2 className="text-xl font-bold text-gray-900">Comment ça marche</h2>
                 <ol className="mt-4 space-y-4">
