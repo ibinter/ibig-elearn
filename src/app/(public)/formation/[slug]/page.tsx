@@ -445,8 +445,8 @@ export default async function FormationPage({ params }: PageProps) {
           </div>
 
           {/* ── SIDEBAR STICKY ── */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24">
+          <div className="lg:col-span-1 order-first lg:order-last">
+            <div className="lg:sticky lg:top-24">
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
 
                 {/* Thumbnail */}
