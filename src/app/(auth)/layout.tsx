@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import AuthBackground from '@/components/auth/AuthBackground'
 import { Award, Smartphone, Users } from 'lucide-react'
 
 const POINTS = [
@@ -13,10 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     <div className="relative min-h-screen flex flex-col text-white overflow-x-clip">
       {/* ── Fond photo plein écran ── */}
       <div className="fixed inset-0 -z-10" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 767px)" srcSet="/images/auth-bg-mobile.webp" />
-          <img src="/images/auth-bg.webp" alt="" className="w-full h-full object-cover object-center scale-105" fetchPriority="high" />
-        </picture>
+        <AuthBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-[#06142f]/80 via-[#0B3D91]/70 to-[#06142f]/90 lg:bg-gradient-to-r lg:from-[#06142f]/95 lg:via-[#0B3D91]/80 lg:to-[#0B3D91]/35" />
         <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#FFA500]/20 blur-3xl" />
       </div>
