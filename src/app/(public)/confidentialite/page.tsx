@@ -25,7 +25,7 @@ export default function ConfidentialitePage() {
         {/* Table des matières */}
         <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5">
           <p className="text-xs font-bold text-[#0B3D91] uppercase tracking-widest mb-3">Sommaire</p>
-          <div className="grid sm:grid-cols-2 gap-1 text-sm text-[#0B3D91]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-[#0B3D91]">
             {[
               ['1', 'Responsable du traitement'],
               ['2', 'Données collectées'],

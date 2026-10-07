@@ -186,7 +186,7 @@ export default function GuideAdminPage() {
         <h3 className="font-bold text-[#0B3D91] mb-3 flex items-center gap-2">
           <Lock className="w-4 h-4" /> Hiérarchie des rôles
         </h3>
-        <div className="grid sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           {[
             { role: 'Admin', color: 'bg-red-100 text-red-700 border-red-200', rights: 'Tous les droits — gestion admins, paramètres, tout.' },
             { role: 'Coordinateur', color: 'bg-orange-100 text-orange-700 border-orange-200', rights: 'Console complète sauf gestion admins et paramètres critiques.' },
@@ -211,7 +211,7 @@ export default function GuideAdminPage() {
               </div>
               <h2 className="text-base font-bold text-gray-900">{section.title}</h2>
             </div>
-            <div className="p-5 grid sm:grid-cols-2 gap-4">
+            <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {section.items.map((item, i) => (
                 <div key={i} className="flex gap-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-600 mt-2 flex-shrink-0" />

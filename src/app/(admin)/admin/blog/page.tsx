@@ -122,7 +122,7 @@ export default function AdminBlogPage() {
             <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Titre *</label>
               <input
@@ -143,7 +143,7 @@ export default function AdminBlogPage() {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">Catégorie</label>
               <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}

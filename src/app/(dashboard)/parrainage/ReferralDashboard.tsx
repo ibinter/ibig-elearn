@@ -52,7 +52,7 @@ export default function ReferralDashboard({ profile, referrals, stats, appUrl }:
       </div>
 
       {/* Comment ça marche */}
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { icon: Share2, step: '1', title: 'Partagez votre lien', desc: 'Envoyez votre lien unique à vos amis et collègues' },
           { icon: Users, step: '2', title: 'Ils s\'inscrivent', desc: 'Votre filleul reçoit +50 XP en s\'inscrivant avec votre code' },
@@ -92,7 +92,7 @@ export default function ReferralDashboard({ profile, referrals, stats, appUrl }:
       </div>
 
       {/* Stats */}
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { label: 'Filleuls invités', value: stats.total, icon: Users, color: 'text-blue-600 bg-blue-50' },
           { label: 'Achats validés', value: stats.converted, icon: TrendingUp, color: 'text-green-600 bg-green-50' },

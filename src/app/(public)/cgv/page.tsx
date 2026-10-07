@@ -98,7 +98,7 @@ export default function CGVPage() {
         {/* Table des matières */}
         <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5">
           <p className="text-xs font-bold text-[#0B3D91] uppercase tracking-widest mb-3">Table des matières</p>
-          <div className="grid sm:grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             {articles.map(a => (
               <a key={a.num} href={`#art-${a.num}`} className="text-sm text-[#0B3D91] hover:underline">
                 Art. {a.num} — {a.title}

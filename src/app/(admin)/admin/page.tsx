@@ -195,7 +195,7 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Distribution pays */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
           <div className="flex items-center gap-2 mb-5">
@@ -231,7 +231,7 @@ export default async function AdminPage() {
               <div key={c.id} className="flex items-center gap-3 px-5 py-3">
                 <span className={`text-xs font-bold w-5 flex-shrink-0 ${i === 0 ? 'text-[#FFA500]' : 'text-gray-400'}`}>#{i + 1}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">{c.title}</p>
+                  <p className="text-sm font-medium text-gray-900 leading-snug line-clamp-2">{c.title}</p>
                   <p className="text-xs text-gray-400">{c.enrollment_count} inscrits</p>
                 </div>
                 {c.is_featured && <span className="text-[10px] text-[#FFA500]">⭐</span>}
@@ -279,7 +279,7 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Paiements récents */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">

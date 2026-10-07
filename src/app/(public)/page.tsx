@@ -222,7 +222,7 @@ export default async function HomePage() {
             </div>
 
             {/* Grille avec carte mise en avant */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredCourses.map((course, i) => (
                 <div key={course.id} className={i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}>
                   <CourseCard course={course} />
@@ -267,7 +267,7 @@ export default async function HomePage() {
             <p className="text-gray-500 max-w-xl mx-auto">Depuis votre smartphone, en francs CFA, en quelques semaines</p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-0 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 relative">
             {/* Connecting line */}
             <div className="hidden sm:block absolute top-16 left-[16.66%] right-[16.66%] h-0.5"
               style={{ background: 'linear-gradient(90deg, #0B3D91, #FFA500, #10b981)' }} />
@@ -369,7 +369,7 @@ export default async function HomePage() {
           </div>
 
           {/* Features grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { icon: Award, title: 'Certifications vérifiables', desc: 'QR code unique, vérifiable par tout employeur ou partenaire en temps réel.', accent: 'text-yellow-400' },
               { icon: Smartphone, title: 'Mobile-first & hors-ligne', desc: 'Apprenez sur 3G. Téléchargez les cours pour les zones à faible connectivité.', accent: 'text-green-400' },
@@ -428,7 +428,7 @@ export default async function HomePage() {
         <div className="hidden sm:block absolute top-0 right-0 w-[400px] h-[400px] opacity-20 blur-[80px] rounded-full" style={{ background: 'radial-gradient(circle, #0B3D91, transparent)' }} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             {/* Texte */}
             <div>
@@ -554,7 +554,7 @@ export default async function HomePage() {
             <p className="text-gray-500 max-w-lg mx-auto">Notre système d&apos;évaluation garantit que chaque certifié a réellement acquis les compétences</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { icon: Lock, title: 'Examens surveillés', desc: 'Détection de changements d\'onglet et comportements suspects pendant l\'évaluation.', color: 'bg-blue-50 text-[#0B3D91]' },
               { icon: Sparkles, title: 'Questions mélangées', desc: 'Chaque tentative présente un ordre de questions unique — impossible de mémoriser l\'ordre.', color: 'bg-purple-50 text-purple-700' },
@@ -600,7 +600,7 @@ export default async function HomePage() {
               <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">Apprenez des meilleurs</h2>
               <p className="text-gray-500 max-w-xl mx-auto">Des praticiens reconnus dans leurs domaines, ancrés dans les réalités africaines</p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {instructors.map((f: any) => (
                 <Link key={f.id} href={`/formateur/${f.id}`}
                   className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm p-8 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden">

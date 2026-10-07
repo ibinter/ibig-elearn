@@ -433,7 +433,7 @@ export default function CourseEditor({
               placeholder="Décrivez le contenu, le public cible, les prérequis..." />
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">Catégorie</label>
               <select value={form.category_id} onChange={e => set('category_id', e.target.value)}

@@ -83,7 +83,7 @@ export default async function ClassementPage() {
         </div>
       )}
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Classement général */}
         <div className="md:col-span-2 bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <div className="p-4 border-b border-gray-100 flex items-center gap-2">

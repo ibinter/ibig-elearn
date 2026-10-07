@@ -76,7 +76,7 @@ export default async function FormateurRevenusPage() {
       </div>
 
       {/* KPIs */}
-      <div className="grid sm:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { label: 'Revenus totaux', value: formatPrice(totalXof, 'XOF'), icon: DollarSign, color: 'text-green-600 bg-green-50' },
           { label: 'Transactions', value: totalTransactions.toString(), icon: TrendingUp, color: 'text-blue-600 bg-blue-50' },

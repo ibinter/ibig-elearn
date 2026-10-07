@@ -48,7 +48,7 @@ export default function ContactPage() {
         <p className="text-gray-500 max-w-xl mx-auto">{t.contact.subtitle}</p>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Infos contact */}
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
@@ -139,7 +139,7 @@ export default function ContactPage() {
               <>
                 <h2 className="font-bold text-gray-900 text-lg mb-6">{t.contact.sendMessage}</h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.contact.name} *</label>
                       <input

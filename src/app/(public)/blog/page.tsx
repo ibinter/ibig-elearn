@@ -115,7 +115,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
         )}
 
         {/* Grille articles */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {rest.map(post => (
             <Link key={post.id} href={`/blog/${post.slug}`}
               className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
@@ -197,7 +197,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
         </div>
       </Link>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {rest.map(article => (
           <Link key={article.slug} href={`/blog/${article.slug}`}
             className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">

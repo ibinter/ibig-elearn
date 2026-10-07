@@ -47,7 +47,7 @@ export default async function CohortDetailPage({ params }: { params: Promise<{ i
       </div>
 
       {/* Info card */}
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-3">
           <h2 className="font-semibold text-gray-900 text-sm uppercase text-xs text-gray-400">Détails</h2>
           <div className="space-y-2 text-sm">

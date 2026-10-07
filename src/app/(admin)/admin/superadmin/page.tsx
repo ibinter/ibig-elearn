@@ -59,7 +59,7 @@ export default async function SuperadminAccessPage() {
           <UserCheck className="w-4 h-4" />
           Niveaux d'accès
         </h2>
-        <div className="grid md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[
             { role: 'Admin', color: 'bg-red-100 text-red-700', desc: 'Accès complet : gestion des rôles, paramètres, exports, tout.' },
             { role: 'Coordinateur', color: 'bg-purple-100 text-purple-700', desc: 'Console admin complète sauf gestion des admins et rôles admin.' },

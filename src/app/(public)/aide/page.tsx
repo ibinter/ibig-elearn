@@ -71,7 +71,7 @@ export default function AidePage() {
       {/* Guides par rôle */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-12">Choisissez votre guide</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {guides.map(g => (
             <div key={g.role} className={`bg-white rounded-2xl border ${g.color.split(' ')[2]} p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow`}>
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${g.color.split(' ')[0]}`}>

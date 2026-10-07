@@ -75,7 +75,7 @@ export default function RelancesPanel({ courses }: { courses: Course[] }) {
       {/* Configuration */}
       <div className="bg-white rounded-2xl border border-gray-200 p-5">
         <h2 className="font-semibold text-gray-900 mb-4">Configuration de la campagne</h2>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Inactifs depuis (jours)</label>
             <div className="flex items-center gap-2">

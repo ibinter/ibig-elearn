@@ -21,7 +21,7 @@ export default async function MesCertificatsPage() {
       </div>
 
       {certificates && certificates.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {(certificates as any[]).map(cert => (
             <div key={cert.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
               {/* Header doré */}

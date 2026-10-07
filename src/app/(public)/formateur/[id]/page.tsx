@@ -103,7 +103,7 @@ export default async function FormateurPublicPage({ params }: PageProps) {
               Aucune formation publiée pour l'instant.
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {courses!.map(course => (
                 <Link key={course.id} href={`/formation/${course.slug}`}
                   className="bg-white rounded-2xl border border-gray-200 hover:shadow-md hover:border-[#0B3D91]/20 transition-all overflow-hidden flex flex-col group">

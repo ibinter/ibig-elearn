@@ -100,7 +100,7 @@ export default async function FormateurDashboardPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Graphe revenus */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-200 p-6">
           <h2 className="font-bold text-gray-900 mb-5 flex items-center gap-2"><BarChart2 className="w-5 h-5 text-[#0B3D91]" /> Revenus (6 derniers mois)</h2>

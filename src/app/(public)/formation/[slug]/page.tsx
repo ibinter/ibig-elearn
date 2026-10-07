@@ -177,18 +177,20 @@ export default async function FormationPage({ params }: PageProps) {
         <div className="hidden sm:block absolute top-0 right-0 w-96 h-96 bg-blue-400/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
         <div className="hidden sm:block absolute bottom-0 left-0 w-64 h-64 bg-indigo-600/20 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <div className="grid lg:grid-cols-3 gap-10 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
             {/* Texte gauche */}
             <div className="lg:col-span-2">
               {/* Breadcrumbs */}
               <div className="flex flex-wrap items-center gap-2 mb-5">
                 <Link href="/catalogue" className="text-blue-300 hover:text-white text-xs transition-colors">Catalogue</Link>
+                {(c.category as any)?.name && (<>
                 <span className="text-blue-400/60">›</span>
                 <Link href={`/catalogue?categorie=${(c.category as any)?.slug}`}
                   className="text-blue-300 hover:text-white text-xs transition-colors">
                   {(c.category as any)?.name}
                 </Link>
+                </>)}
                 <span className="text-blue-400/60">›</span>
                 <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full border ${levelColor[c.level] ?? 'bg-white/10 text-white/70 border-white/20'}`}>
                   {levelLabel[c.level]}
@@ -196,7 +198,7 @@ export default async function FormationPage({ params }: PageProps) {
               </div>
 
               {/* Titre */}
-              <h1 className="text-3xl lg:text-4xl font-extrabold text-white leading-tight mb-4 tracking-tight">
+              <h1 className="text-[26px] sm:text-3xl lg:text-4xl break-words font-extrabold text-white leading-tight mb-4 tracking-tight">
                 {c.title}
               </h1>
 
@@ -282,8 +284,8 @@ export default async function FormationPage({ params }: PageProps) {
       {/* ═══════════════════════════════════════════
           BODY — grille 2/3 + 1/3
       ═══════════════════════════════════════════ */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid lg:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
           {/* ── COLONNE PRINCIPALE ── */}
           <div className="lg:col-span-2 space-y-7">
@@ -317,10 +319,10 @@ export default async function FormationPage({ params }: PageProps) {
             {/* Description */}
             {c.description && (
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/70">
+                <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50/70">
                   <h2 className="font-bold text-gray-900 text-lg">Description de la formation</h2>
                 </div>
-                <div className="px-6 py-5">
+                <div className="px-4 sm:px-6 py-5">
                   <div className="prose prose-sm prose-gray max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
                     {c.description}
                   </div>
@@ -331,8 +333,8 @@ export default async function FormationPage({ params }: PageProps) {
             {/* Programme */}
             {modules && modules.length > 0 && (
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/70">
-                  <div className="flex items-center justify-between">
+                <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50/70">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <h2 className="font-bold text-gray-900 text-lg">Programme de la formation</h2>
                     <div className="flex gap-2">
                       <span className="text-xs bg-blue-50 text-blue-700 font-semibold px-2.5 py-1 rounded-full border border-blue-100">{modules.length} modules</span>
@@ -343,12 +345,12 @@ export default async function FormationPage({ params }: PageProps) {
                 <div className="divide-y divide-gray-50">
                   {(modules as any[]).map((mod, modIndex) => (
                     <details key={mod.id} className="group">
-                      <summary className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-gray-50/80 transition-colors list-none select-none">
-                        <div className="flex items-center gap-3 min-w-0">
+                      <summary className="flex items-center justify-between gap-2 px-4 sm:px-6 py-4 cursor-pointer hover:bg-gray-50/80 transition-colors list-none select-none">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
                           <div className="w-7 h-7 rounded-lg bg-[#0B3D91]/10 text-[#0B3D91] flex items-center justify-center text-xs font-bold flex-shrink-0">
                             {modIndex + 1}
                           </div>
-                          <span className="font-semibold text-gray-900 text-sm truncate">{mod.title}</span>
+                          <span className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">{mod.title}</span>
                         </div>
                         <div className="flex items-center gap-3 flex-shrink-0 ml-3">
                           <span className="text-xs text-gray-400 hidden sm:block">{mod.lessons?.length ?? 0} leçon{(mod.lessons?.length ?? 0) > 1 ? 's' : ''}</span>
@@ -364,15 +366,15 @@ export default async function FormationPage({ params }: PageProps) {
                             : isFreePreview ? `/apprendre/${course.id}/${lesson.id}` : null
                           const Wrapper = href ? Link : 'div' as any
                           return (
-                            <Wrapper key={lesson.id} href={href ?? undefined} className={`flex items-center gap-3 px-6 py-3 border-b border-gray-100/70 last:border-0 ${isLocked ? 'opacity-60 cursor-default' : 'hover:bg-white/60 cursor-pointer'} transition-colors`}>
+                            <Wrapper key={lesson.id} href={href ?? undefined} className={`flex items-center gap-3 px-4 sm:px-6 py-3 border-b border-gray-100/70 last:border-0 ${isLocked ? 'opacity-60 cursor-default' : 'hover:bg-white/60 cursor-pointer'} transition-colors`}>
                               <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${isLocked ? 'bg-gray-100 text-gray-400' : lessonIconColor(lesson.type)}`}>
                                 {isLocked ? <Lock className="w-3.5 h-3.5" /> : lessonIcon(lesson.type)}
                               </div>
-                              <span className={`text-sm flex-1 ${isLocked ? 'text-gray-400' : 'text-gray-700'}`}>{lesson.title}</span>
+                              <span className={`text-sm flex-1 min-w-0 leading-snug ${isLocked ? 'text-gray-400' : 'text-gray-700'}`}>{lesson.title}</span>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 {isFreePreview && (
                                   <span className="text-xs text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 flex items-center gap-1">
-                                    <Play className="w-2.5 h-2.5" /> Aperçu gratuit
+                                    <Play className="w-2.5 h-2.5" /> <span className="hidden sm:inline">Aperçu gratuit</span><span className="sm:hidden">Aperçu</span>
                                   </span>
                                 )}
                                 {lesson.video_duration_seconds && !isLocked && (
@@ -391,11 +393,11 @@ export default async function FormationPage({ params }: PageProps) {
 
             {/* Formateur */}
             <div id="formateur" className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/70">
+              <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50/70">
                 <h2 className="font-bold text-gray-900 text-lg">Votre formateur</h2>
               </div>
-              <div className="px-6 py-5">
-                <div className="flex items-start gap-5">
+              <div className="px-4 sm:px-6 py-5">
+                <div className="flex items-start gap-4 sm:gap-5">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0B3D91] to-[#1565C0] flex items-center justify-center text-white text-2xl font-bold flex-shrink-0 overflow-hidden shadow-lg">
                     {(c.instructor as any)?.avatar_url
                       ? <img src={(c.instructor as any).avatar_url} alt="" className="w-full h-full object-cover" />
@@ -418,7 +420,7 @@ export default async function FormationPage({ params }: PageProps) {
 
             {/* Avis apprenants */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/70">
+              <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50/70">
                 <div className="flex items-center justify-between">
                   <h2 className="font-bold text-gray-900 text-lg">Avis des apprenants</h2>
                   {c.rating_average > 0 && (
@@ -430,7 +432,7 @@ export default async function FormationPage({ params }: PageProps) {
                   )}
                 </div>
               </div>
-              <div className="px-6 py-5">
+              <div className="px-4 sm:px-6 py-5">
                 {isEnrolled && (
                   <div className="mb-6 p-5 bg-blue-50 rounded-xl border border-blue-100">
                     <h3 className="font-semibold text-gray-900 mb-4">

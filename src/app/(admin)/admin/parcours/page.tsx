@@ -176,7 +176,7 @@ export default function AdminParcoursPage() {
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-5">
           <h2 className="font-bold text-gray-900 text-lg">{editing ? 'Modifier le parcours' : 'Nouveau parcours'}</h2>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Titre *</label>
               <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value, slug: slugify(e.target.value) }))}

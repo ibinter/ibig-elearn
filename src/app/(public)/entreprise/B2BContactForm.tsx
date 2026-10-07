@@ -52,7 +52,7 @@ export default function B2BContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 space-y-5">
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nom de l'entreprise *</label>
           <input required value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))}

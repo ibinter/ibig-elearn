@@ -40,7 +40,7 @@ export default function CouponForm() {
         </button>
       </div>
       {open && (
-        <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4 mt-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           <div>
             <label className="text-xs font-medium text-gray-700">Code *</label>
             <input name="code" required placeholder="EX: IBIG20" className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-[#0B3D91]" />

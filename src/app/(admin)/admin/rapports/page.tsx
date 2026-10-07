@@ -144,7 +144,7 @@ export default async function RapportsPage({ searchParams }: { searchParams: Pro
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenus par formation */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
           <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">

@@ -197,7 +197,7 @@ export default async function CoursLessonPage({ params }: Props) {
           </div>
 
           {/* Contenu leçon + SARA */}
-          <div className="max-w-4xl mx-auto px-6 py-8 grid lg:grid-cols-3 gap-8">
+          <div className="max-w-4xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Texte / transcript */}
             <div className="lg:col-span-2 space-y-6">
               <h1 className="text-xl font-bold">{lesson.title}</h1>

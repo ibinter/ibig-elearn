@@ -152,7 +152,7 @@ export default function GuideApprenantPage() {
                   <h2 className="text-lg font-bold text-gray-900">{step.title}</h2>
                 </div>
               </div>
-              <div className="p-6 grid sm:grid-cols-2 gap-4">
+              <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {step.content.map((c, i) => (
                   <div key={i} className="flex gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#0B3D91] mt-2 flex-shrink-0" />
@@ -170,7 +170,7 @@ export default function GuideApprenantPage() {
         {/* Astuces */}
         <div className="mt-10 bg-blue-50 rounded-2xl p-6 border border-blue-100">
           <h3 className="font-bold text-[#0B3D91] mb-4">💡 Astuces pour progresser rapidement</h3>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {tips.map((t, i) => (
               <div key={i} className="flex items-start gap-3">
                 <t.icon className="w-4 h-4 text-[#0B3D91] mt-0.5 flex-shrink-0" />

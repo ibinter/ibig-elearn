@@ -85,7 +85,7 @@ export default function BadgesManager({ badges: initial, users, userBadges: init
           {showForm && (
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <h3 className="font-semibold text-gray-900 mb-4">Créer un badge</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nom *</label>
                   <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
@@ -135,7 +135,7 @@ export default function BadgesManager({ badges: initial, users, userBadges: init
             </div>
           )}
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {badges.map(b => {
               const count = userBadges.filter(ub => ub.badge_id === b.id).length
               return (

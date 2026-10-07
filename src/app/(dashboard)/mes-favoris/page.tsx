@@ -43,7 +43,7 @@ export default async function MesFavorisPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {courses.map((course: any) => (
             <div key={course.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
               <div className="relative aspect-video overflow-hidden bg-gray-100">

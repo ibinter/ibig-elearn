@@ -121,7 +121,7 @@ export default function EntreprisePage() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3">Tout ce dont votre entreprise a besoin</h2>
           <p className="text-gray-500 text-center mb-10 max-w-xl mx-auto">Une solution complète, clé en main, adaptée aux réalités africaines.</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {ADVANTAGES.map((a, i) => (
               <div key={i} className="bg-white rounded-2xl border border-gray-200 p-6">
                 <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">{a.icon}</div>
@@ -138,7 +138,7 @@ export default function EntreprisePage() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3">Nos offres entreprise</h2>
           <p className="text-gray-500 text-center mb-10">Choisissez le plan adapté à la taille de vos équipes</p>
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {PLANS.map((plan, i) => (
               <div key={i} className={`rounded-2xl border-2 p-6 flex flex-col ${plan.highlight ? 'border-[#0B3D91] bg-[#0B3D91]/2 relative' : 'border-gray-200'}`}>
                 {plan.highlight && (

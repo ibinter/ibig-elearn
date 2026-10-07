@@ -110,7 +110,7 @@ export default async function ArticlePage({ params }: Props) {
         {(relatedPosts ?? []).length > 0 && (
           <div className="mt-14">
             <h2 className="text-xl font-bold text-gray-900 mb-6">Articles connexes</h2>
-            <div className="grid sm:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               {(relatedPosts as any[]).map(a => (
                 <Link key={a.slug} href={`/blog/${a.slug}`}
                   className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 group">
@@ -180,7 +180,7 @@ export default async function ArticlePage({ params }: Props) {
       {related.length > 0 && (
         <div className="mt-14">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Articles connexes</h2>
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {related.map(a => (
               <Link key={a.slug} href={`/blog/${a.slug}`}
                 className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 group">

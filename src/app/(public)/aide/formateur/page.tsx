@@ -184,7 +184,7 @@ export default function GuideFormateurPage() {
           <h3 className="font-bold text-green-800 mb-4 flex items-center gap-2">
             <CheckCircle className="w-5 h-5" /> Checklist avant de soumettre votre formation
           </h3>
-          <div className="grid sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {[
               'Au moins 3 modules structurés',
               'Minimum 1h de contenu vidéo total',
@@ -215,7 +215,7 @@ export default function GuideFormateurPage() {
                   <h2 className="text-lg font-bold text-gray-900">{step.title}</h2>
                 </div>
               </div>
-              <div className="p-6 grid sm:grid-cols-2 gap-4">
+              <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {step.content.map((c, i) => (
                   <div key={i} className="flex gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#FFA500] mt-2 flex-shrink-0" />

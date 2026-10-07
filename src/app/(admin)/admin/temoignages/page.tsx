@@ -96,7 +96,7 @@ export default function TemoignagesPage() {
             <h2 className="font-bold text-gray-900">{editing.id ? 'Modifier' : 'Nouveau témoignage'}</h2>
             <button onClick={() => setEditing(null)}><X className="w-4 h-4 text-gray-400 hover:text-gray-700" /></button>
           </div>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input value={editing.author_name ?? ''} onChange={e => setEditing({ ...editing, author_name: e.target.value })}
               placeholder="Nom *" className="px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30" />
             <input value={editing.author_role ?? ''} onChange={e => setEditing({ ...editing, author_role: e.target.value })}

@@ -50,7 +50,7 @@ export default async function ParcoursPage() {
       </div>
 
       {/* Avantages */}
-      <div className="grid sm:grid-cols-3 gap-5 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-16">
         {[
           { icon: Target, title: 'Objectif clair', desc: 'Chaque parcours a un objectif précis : un métier, une compétence, une certification.' },
           { icon: BookOpen, title: 'Formations organisées', desc: 'Les formations sont dans l\'ordre optimal pour une progression logique et efficace.' },
@@ -74,7 +74,7 @@ export default async function ParcoursPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <Star className="w-5 h-5 text-[#FFA500] fill-[#FFA500]" /> Parcours recommandés
               </h2>
-              <div className="grid lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {featured.map(path => (
                   <PathCard key={path.id} path={path} featured />
                 ))}
@@ -86,7 +86,7 @@ export default async function ParcoursPage() {
           {others.length > 0 && (
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Tous les parcours</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {others.map(path => (
                   <PathCard key={path.id} path={path} />
                 ))}

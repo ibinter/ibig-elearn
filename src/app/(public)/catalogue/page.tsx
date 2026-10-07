@@ -143,7 +143,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
 
             {courses && courses.length > 0 ? (
               <>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                   {(courses as unknown as Course[]).map(course => (
                     <Link key={course.id} href={`/formation/${course.slug}`}
                       className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col">

@@ -22,7 +22,7 @@ export default function PageSkeleton({ variant = 'dashboard' }: { variant?: Vari
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6" aria-busy="true" aria-label="Chargement">
         <div className="skeleton h-44 sm:h-64 w-full rounded-2xl" />
         <div className="skeleton h-6 w-2/3" />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="space-y-3">
               <div className="skeleton aspect-video w-full" />

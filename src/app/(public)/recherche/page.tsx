@@ -68,7 +68,7 @@ export default async function RecherchePage({ searchParams }: PageProps) {
           <h2 className="font-bold text-gray-900 flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-[#0B3D91]" /> Formations ({courses.length})
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {courses.map(course => (
               <Link key={course.id} href={`/formation/${course.slug}`}
                 className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
@@ -105,7 +105,7 @@ export default async function RecherchePage({ searchParams }: PageProps) {
           <h2 className="font-bold text-gray-900 flex items-center gap-2">
             <User className="w-4 h-4 text-[#0B3D91]" /> Formateurs ({instructors.length})
           </h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {instructors.map(ins => (
               <Link key={ins.id} href={`/formateur/${ins.id}`}
                 className="flex items-center gap-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4 group">

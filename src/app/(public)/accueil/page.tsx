@@ -237,7 +237,7 @@ export default async function AccueilPage() {
             </div>
 
             {/* Badge tendance sur la 1re formation */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {featuredCourses.slice(0, 8).map((c: any, i) => (
                 <div key={c.id} className="relative">
                   {i === 0 && (
@@ -272,7 +272,7 @@ export default async function AccueilPage() {
             <h2 className="text-2xl lg:text-3xl font-black mb-3">{t.home.howTitle}</h2>
             <p className="text-blue-200 max-w-xl mx-auto">{t.home.howSubtitle}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {ETAPES.map((e, i) => (
               <div key={e.num} className="relative">
                 {i < ETAPES.length - 1 && (
@@ -309,7 +309,7 @@ export default async function AccueilPage() {
             <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.whyTitle}</h2>
             <p className="text-gray-500 max-w-xl mx-auto">{t.home.whySub}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {AVANTAGES.map(a => (
               <div key={a.title} className={`bg-white rounded-2xl border p-6 hover:shadow-md transition-shadow ${a.bg}`}>
                 <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 bg-white/80`}>
@@ -350,7 +350,7 @@ export default async function AccueilPage() {
               <span className="text-gray-400 text-sm">· Note moyenne sur toutes nos formations</span>
             </div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {TEMOIGNAGES.map(t => (
               <div key={t.nom} className="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col">
                 <div className="flex gap-0.5 mb-3">
@@ -381,7 +381,7 @@ export default async function AccueilPage() {
 
       {/* ══ CERTIFICAT SHOWCASE ══ */}
       <section className="py-10 md:py-20 bg-gradient-to-br from-gray-900 to-[#0B1E4B]">
-        <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Valorisez votre expertise</p>
             <h2 className="text-2xl lg:text-3xl font-black mb-5">{t.home.certTitle}</h2>
@@ -448,7 +448,7 @@ export default async function AccueilPage() {
 
       {/* ══ ASSISTANT SARA ══ */}
       <section className="py-10 md:py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Mockup chat SARA */}
           <div className="order-2 lg:order-1">
             <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden max-w-sm mx-auto lg:mx-0 shadow-lg">

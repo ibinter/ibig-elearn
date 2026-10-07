@@ -64,7 +64,7 @@ export default function AdminParametresPage() {
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Informations générales */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-5">
@@ -236,7 +236,7 @@ export default function AdminParametresPage() {
             <Server className="w-5 h-5 text-[#0B3D91]" />
             <h2 className="font-bold text-gray-900">Infrastructure</h2>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               { name: 'Frontend', tech: 'Next.js 16 (Turbopack)', host: 'Vercel Edge Network', status: 'Opérationnel' },
               { name: 'Base de données', tech: 'PostgreSQL 17 (Supabase)', host: 'Supabase Cloud EU', status: 'Opérationnel' },

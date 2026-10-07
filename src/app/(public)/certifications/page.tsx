@@ -25,7 +25,7 @@ export default function CertificationsPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Comment fonctionne la certification ?</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { step: '01', icon: BookOpen, title: 'Suivez la formation', desc: 'Complétez 100% des modules, vidéos, quiz et devoirs.' },
               { step: '02', icon: CheckCircle, title: 'Réussissez l\'évaluation', desc: 'Validez l\'évaluation finale avec la note minimale requise.' },
@@ -50,7 +50,7 @@ export default function CertificationsPage() {
       {/* Avantages */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Un certificat qui a de la valeur</h2>
               <div className="space-y-4">

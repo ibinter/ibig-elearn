@@ -38,7 +38,7 @@ export default function AProposPage() {
       {/* Notre mission */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Notre mission</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
@@ -76,7 +76,7 @@ export default function AProposPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Nos valeurs</h2>
             <p className="text-gray-500 max-w-xl mx-auto">Les principes qui guident chaque décision de la plateforme</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map(v => (
               <div key={v.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <v.icon className="w-9 h-9 text-[#0B3D91] mb-4" />
@@ -95,7 +95,7 @@ export default function AProposPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Notre équipe</h2>
             <p className="text-gray-500">Des professionnels engagés pour votre réussite</p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {team.map(m => (
               <div key={m.name} className="bg-gray-50 rounded-2xl p-6 text-center">
                 <div className="w-16 h-16 rounded-full ibig-gradient flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">

@@ -94,7 +94,7 @@ export default async function AdminEntreprisePage() {
                   </div>
                 </div>
 
-                <div className="grid sm:grid-cols-2 gap-3 mb-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-sm">
                   <a href={`mailto:${req.email}`} className="flex items-center gap-2 text-[#0B3D91] hover:underline">
                     <Mail className="w-4 h-4" /> {req.email}
                   </a>

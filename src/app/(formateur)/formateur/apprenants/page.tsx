@@ -98,7 +98,7 @@ export default async function FormateurApprenantsPage({ searchParams }: PageProp
       </form>
 
       {/* Stats */}
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { label: 'Apprenants uniques', value: uniqueStudents, icon: Users, color: 'text-blue-600 bg-blue-50' },
           { label: 'Formations terminées', value: completed, icon: BookOpen, color: 'text-green-600 bg-green-50' },
