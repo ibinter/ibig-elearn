@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { Menu, X, PlusCircle, Search, Globe, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp } from 'lucide-react'
+import { Menu, X, PlusCircle, Search, Globe, BookOpen, ChevronDown, User, LogOut, LayoutDashboard, BookMarked, Users, BarChart2, Trophy, Heart, FileText, Star, Layers, TrendingUp, HeartHandshake } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, usePathname } from 'next/navigation'
 import type { Profile } from '@/types'
@@ -169,6 +169,9 @@ export default function Navbar({ user }: NavbarProps) {
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-4 lg:gap-6 flex-1 min-w-0">
             <CatalogueDropdown />
+            <Link href="/coaching" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
+              Coaching
+            </Link>
             <Link href="/blog" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               {t.nav.blog}
             </Link>
@@ -316,6 +319,9 @@ export default function Navbar({ user }: NavbarProps) {
             </Link>
             <Link href="/parcours" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <TrendingUp className="w-4 h-4 text-green-600" /> Parcours métiers
+            </Link>
+            <Link href="/coaching" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
+              <HeartHandshake className="w-4 h-4 text-rose-500" /> Coaching individuel
             </Link>
             <Link href="/blog" className="flex items-center gap-2 py-3.5 px-3 rounded-xl text-[15px] text-gray-800 hover:bg-gray-50 active:bg-gray-100 font-medium transition-colors" onClick={() => setMenuOpen(false)}>
               <FileText className="w-4 h-4 text-gray-400" /> Blog

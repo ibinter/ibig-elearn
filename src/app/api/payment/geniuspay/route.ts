@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
+import { createGeniusPayCheckout } from '@/lib/payment/geniuspay'
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
@@ -44,14 +45,9 @@ export async function POST(request: NextRequest) {
     .eq('id', user.id)
     .single()
 
-  // GeniusPay ne supporte que XOF nativement (les autres devises via conversion)
-  const amounts: Record<string, number> = {
-    XOF: course.price_xof,
-    XAF: course.price_xof,
-    EUR: course.price_eur ?? Math.round(course.price_xof / 655),
-    USD: course.price_usd ?? Math.round(course.price_xof / 600),
-  }
-  const totalAmount = amounts[currency] ?? course.price_xof
+  // GeniusPay encaisse en XOF : montant toujours calculé en FCFA (paiement unique ou 1re échéance sur 3)
+  void currency
+  const totalAmount = course.price_xof
   const amount = installments === 3 ? Math.ceil(totalAmount / 3) : totalAmount
 
   const cookieStore = await cookies()
@@ -95,56 +91,27 @@ export async function POST(request: NextRequest) {
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
-  // Appel GeniusPay — mode checkout (page GeniusPay avec tous les moyens de paiement)
-  const gpResponse = await fetch('https://geniuspay.ci/api/v1/merchant/payments', {
-    method: 'POST',
-    headers: {
-      'X-API-Key': process.env.GENIUSPAY_API_KEY!,
-      'X-API-Secret': process.env.GENIUSPAY_API_SECRET!,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      amount: course.price_xof,
-      currency: 'XOF',
-      description: `Formation IBIG : ${course.title}`,
-      customer: {
-        name: profile?.full_name ?? undefined,
-        email: profile?.email ?? undefined,
-        phone: profile?.phone ?? undefined,
-        country: profile?.country ?? 'CI',
-      },
-      success_url: `${appUrl}/paiement/confirmation?transaction_id=${transactionId}&course_id=${courseId}`,
-      error_url: `${appUrl}/paiement/confirmation?transaction_id=${transactionId}&course_id=${courseId}&status=failed`,
-      metadata: {
-        ibig_transaction_id: transactionId,
-        payment_id: payment?.id ?? '',
-        user_id: user.id,
-        course_id: courseId,
-      },
-    }),
+  const gp = await createGeniusPayCheckout({
+    amountXof: amount,
+    description: `Formation IBIG : ${course.title}`,
+    customer: { name: profile?.full_name, email: profile?.email, phone: profile?.phone, country: profile?.country },
+    successUrl: `${appUrl}/paiement/confirmation?transaction_id=${transactionId}&course_id=${courseId}`,
+    errorUrl: `${appUrl}/paiement/confirmation?transaction_id=${transactionId}&course_id=${courseId}&status=failed`,
+    metadata: { ibig_transaction_id: transactionId, payment_id: payment?.id ?? '', user_id: user.id, course_id: courseId },
   })
 
-  const gpData = await gpResponse.json()
-
-  if (!gpData.success || !gpData.data?.checkout_url) {
+  if (!gp.ok) {
     await supabase.from('payments').update({ status: 'failed' }).eq('id', payment?.id)
-    return NextResponse.json(
-      { error: 'Erreur GeniusPay', detail: gpData.error?.message ?? 'Réponse invalide' },
-      { status: 502 }
-    )
+    return NextResponse.json({ error: 'Erreur GeniusPay', detail: gp.error }, { status: 502 })
   }
 
   // Stocker la référence GeniusPay dans les metadata
   await supabase.from('payments').update({
     metadata: {
       ...(payment?.metadata as object ?? {}),
-      geniuspay_reference: gpData.data.reference,
+      geniuspay_reference: gp.reference,
     },
   }).eq('id', payment?.id)
 
-  return NextResponse.json({
-    paymentUrl: gpData.data.checkout_url,
-    transactionId,
-    reference: gpData.data.reference,
-  })
+  return NextResponse.json({ paymentUrl: gp.checkoutUrl, transactionId, reference: gp.reference })
 }

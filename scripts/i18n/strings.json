@@ -15778,5 +15778,485 @@
   "s": "Formateur partenaire",
   "f": "src/components/ui/CertificateSignatures.tsx",
   "n": 1
+ },
+ {
+  "s": "À rembourser",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune séance pour l'instant.",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Coach",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Coaching",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 6
+ },
+ {
+  "s": "Coaching individuel",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 4
+ },
+ {
+  "s": "Offre",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Offres en ligne",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "remboursement(s) à traiter",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séances confirmées",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séances payées puis annulées. Remboursez via CinetPay, puis passez le paiement en « Remboursé » dans Paiements : la part du coach est alors retirée automatiquement.",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séances réservées, revenus et remboursements",
+  "f": "src/app/(admin)/admin/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Accédez au catalogue, suivez vos formations et obtenez des certificats vérifiables.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Coachs professionnels : rejoignez le programme partenaire IBIG EDUFORM pour proposer vos programmes d'accompagnement et vos sessions live, avec partage des revenus.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Entreprises, ONG et institutions : créez votre compte, puis décrivez votre besoin pour recevoir une offre sur mesure pour vos équipes.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Former mes équipes",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "J'accompagne",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je m'inscris en tant que",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je veux enseigner",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Je veux me former",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nom de l'entreprise / organisation",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Programme Formateurs Partenaires IBIG EDUFORM : créez votre compte, confirmez votre email, puis déposez votre candidature pour publier vos formations.",
+  "f": "src/app/(auth)/inscription/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Annuler cette séance ?",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "avec",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Lien de la visio",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Marquer comme réalisée",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Objectif :",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Paiement en cours de confirmation. Le créneau est réservé pendant 20 minutes.",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Rejoindre maintenant",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Séance de coaching",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vos notes de séance",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre séance",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vous coachez",
+  "f": "src/app/(dashboard)/mes-seances/BookingCard.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune séance à venir.",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Découvrir les coachs →",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes séances",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes séances de coaching",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 2
+ },
+ {
+  "s": "Paiement reçu : votre séance sera confirmée dans quelques instants (actualisez la page si besoin).",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réserver",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 3
+ },
+ {
+  "s": "Séance réservée ! Vous avez reçu une confirmation.",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vos séances de coaching individuel",
+  "f": "src/app/(dashboard)/mes-seances/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ajoutez au moins une plage : sans disponibilité, vos offres n'affichent aucun créneau.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucune offre. Créez votre première offre de coaching.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ce que la séance apporte, pour qui, comment elle se déroule…",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "De",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "En ligne",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Format",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Fuseau horaire enregistré",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Jour",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "L'heure de fin doit être après l'heure de début.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les apprenants réservent dans ces plages (au moins 12 h à l'avance, jusqu'à 3 semaines). Les créneaux déjà réservés sont retirés automatiquement.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Masquée",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes disponibilités hebdomadaires",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Mes offres de coaching",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Nouvelle offre",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Offre enregistrée",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Prix (FCFA)",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Thème (optionnel) — ex : Carrière, Entrepreneuriat, Leadership",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titre — ex : Préparer un entretien d'embauche",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Titre (5 caractères min.) et description (30 caractères min.) requis.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Visio",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Voir la page publique",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre fuseau horaire",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre part : selon votre convention de partenariat (50 % par défaut), créditée à chaque séance payée.",
+  "f": "src/app/(formateur)/formateur/coaching/CoachingManager.tsx",
+  "n": 1
+ },
+ {
+  "s": "à venir ·",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "réalisées)",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Voir mes séances (",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vos offres, vos disponibilités et vos séances réservées",
+  "f": "src/app/(formateur)/formateur/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "12 500 FCFA",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Le revenu net de chaque vente est partagé à 50 % pour vous et 50 % pour IBIG EDUFORM (part standard, précisée dans votre convention de partenariat).",
+  "f": "src/app/(public)/aide/formateur/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "{0} — coaching avec {1}",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "À propos du coach",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Choisissez votre créneau",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Coaching introuvable",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "En visio",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Paiement sécurisé Mobile Money ou carte. Annulation gratuite jusqu'à 24 h avant la séance. Lien de visio envoyé après confirmation.",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Par téléphone",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "un coach",
+  "f": "src/app/(public)/coaching/[id]/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Aucun créneau disponible pour le moment. Revenez bientôt.",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "C'est votre propre offre : gérez-la depuis votre espace formateur.",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Choisissez un créneau",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Ex : préparer un entretien, structurer mon business plan…",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Horaires affichés dans votre fuseau (",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Jours disponibles",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réservation impossible.",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réserver et payer",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Se connecter pour réserver",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Votre objectif pour cette séance",
+  "f": "src/app/(public)/coaching/[id]/SlotPicker.tsx",
+  "n": 1
+ },
+ {
+  "s": "Des séances en visio avec des coachs et experts partenaires d'IBIG EDUFORM. Choisissez votre créneau, payez en Mobile Money, recevez votre lien de visio.",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Devenir coach partenaire",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Les premiers coachs arrivent bientôt",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Progressez plus vite avec un coach",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Réservez une séance de coaching individuel en visio avec un coach partenaire IBIG EDUFORM : carrière, entrepreneuriat, leadership, prise de parole. Paiement Mobile Money.",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Vous êtes coach ? Rejoignez le programme partenaire IBIG EDUFORM pour proposer vos séances.",
+  "f": "src/app/(public)/coaching/page.tsx",
+  "n": 1
+ },
+ {
+  "s": "Affichage",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Langue, devise et affichage",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
+ },
+ {
+  "s": "Préférences",
+  "f": "src/components/layout/Navbar.tsx",
+  "n": 1
  }
 ]
