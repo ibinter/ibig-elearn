@@ -75,7 +75,7 @@ export default function EntreprisePage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="ibig-gradient text-white py-10 md:py-20 px-4">
+      <section className="hero-photo text-white py-10 md:py-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm font-medium mb-6">
             <Building2 className="w-4 h-4" /> Solution B2B Entreprise

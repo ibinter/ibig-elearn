@@ -136,7 +136,7 @@ export default function FAQPage() {
       </div>
 
       {/* CTA support */}
-      <div className="mt-10 ibig-gradient rounded-2xl p-6 text-white text-center">
+      <div className="mt-10 hero-waves rounded-2xl p-6 text-white text-center">
         <h3 className="font-bold text-lg mb-1">Vous n'avez pas trouvé votre réponse ?</h3>
         <p className="text-blue-200 text-sm mb-4">Notre équipe répond sous 24h ouvrées.</p>
         <div className="flex justify-center gap-3">

@@ -91,7 +91,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
         {/* Article vedette */}
         {featured && (
           <Link href={`/blog/${featured.slug}`}
-            className="block ibig-gradient rounded-3xl p-6 sm:p-8 text-white mb-10 relative overflow-hidden hover:opacity-95 transition-opacity group">
+            className="block hero-waves rounded-3xl p-6 sm:p-8 text-white mb-10 relative overflow-hidden hover:opacity-95 transition-opacity group">
             <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-1/3 translate-x-1/3" />
             {featured.cover_image && (
               <div className="absolute inset-0 opacity-20">

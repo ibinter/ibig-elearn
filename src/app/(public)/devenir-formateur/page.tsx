@@ -21,7 +21,7 @@ export default function DevenirFormateurPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="ibig-gradient text-white py-10 md:py-20">
+      <section className="hero-network text-white py-10 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-5">
             Partagez votre expertise,<br />
@@ -98,7 +98,7 @@ export default function DevenirFormateurPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 ibig-gradient text-white">
+      <section className="py-16 hero-waves text-white">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Prêt à transmettre votre savoir ?</h2>
           <p className="text-blue-100 mb-6">Créez votre compte, déposez votre candidature en ligne : IBIG EDUFORM vous répond sous 5 jours ouvrés avec sa proposition de partenariat.</p>

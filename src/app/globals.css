@@ -341,3 +341,37 @@ html.i18n-pending body {
   animation: i18n-reveal 0s linear 3s forwards; /* filet de sécurité si le script ne s'exécute pas */
 }
 @keyframes i18n-reveal { to { visibility: visible; } }
+
+/* ── Fonds illustrés des bandeaux (hero) ── */
+@layer utilities {
+  .hero-photo, .hero-network, .hero-waves { position: relative; isolation: isolate; overflow: hidden; }
+  .hero-photo::before, .hero-network::before, .hero-waves::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  }
+  .hero-photo::after, .hero-network::after, .hero-waves::after {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    width: 34rem; height: 34rem; right: -10rem; top: -14rem; border-radius: 9999px;
+    background: radial-gradient(closest-side, rgba(255,165,0,.28), transparent);
+  }
+  .hero-photo::before {
+    background:
+      linear-gradient(100deg, rgba(6,20,47,.94) 0%, rgba(11,61,145,.86) 50%, rgba(11,61,145,.55) 100%),
+      url(/images/bg/dots.svg),
+      url(/images/auth-bg.webp) center 35% / cover no-repeat;
+  }
+  .hero-network::before {
+    background: url(/images/bg/network.svg) center / cover no-repeat, url(/images/bg/dots.svg),
+      linear-gradient(120deg, #06142f 0%, #0B3D91 55%, #1a6cc4 100%);
+  }
+  .hero-waves::before {
+    background: url(/images/bg/waves.svg) center / cover no-repeat,
+      linear-gradient(135deg, #0B1E4B 0%, #0B3D91 60%, #1a6cc4 100%);
+  }
+  @media (max-width: 767px) {
+    .hero-photo::before {
+      background:
+        linear-gradient(180deg, rgba(6,20,47,.9), rgba(11,61,145,.85)),
+        url(/images/auth-bg-mobile.webp) center / cover no-repeat;
+    }
+  }
+}

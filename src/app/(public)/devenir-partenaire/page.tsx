@@ -53,7 +53,7 @@ export default async function DevenirPartenairePage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* En-tête */}
-      <section className="ibig-gradient text-white">
+      <section className="hero-network text-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Programme Formateurs Partenaires</p>
           <h1 className="mt-2 text-[26px] sm:text-4xl font-extrabold leading-tight">Publiez vos formations avec IBIG EDUFORM</h1>

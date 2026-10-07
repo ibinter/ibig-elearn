@@ -98,7 +98,7 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   return (
     <div>
       {/* Bannière hero */}
-      <div className="ibig-gradient text-white py-10 px-4">
+      <div className="hero-network text-white py-10 px-4">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold mb-2">{t.catalog.heroBanner}</h1>
           <p className="text-blue-200 text-sm">

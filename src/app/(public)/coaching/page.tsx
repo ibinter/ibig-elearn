@@ -25,7 +25,7 @@ export default async function CoachingPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <section className="ibig-gradient text-white">
+      <section className="hero-photo text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Coaching individuel</p>
           <h1 className="mt-2 text-[26px] sm:text-4xl font-extrabold leading-tight">Progressez plus vite avec un coach</h1>
