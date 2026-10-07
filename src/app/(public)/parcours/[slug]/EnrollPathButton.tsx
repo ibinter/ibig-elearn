@@ -27,7 +27,7 @@ export default function EnrollPathButton({ pathId, pathSlug }: { pathId: string;
 
   if (done) {
     return (
-      <div className="flex items-center gap-2 text-green-600 font-semibold text-sm">
+      <div className="flex items-center gap-2 text-emerald-300 font-semibold text-sm">
         <CheckCircle className="w-5 h-5" /> Parcours suivi ! Commencez dès maintenant.
       </div>
     )
@@ -37,7 +37,7 @@ export default function EnrollPathButton({ pathId, pathSlug }: { pathId: string;
     <button
       onClick={handleEnroll}
       disabled={loading}
-      className="flex items-center gap-2 border-2 border-[#0B3D91] text-[#0B3D91] font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors disabled:opacity-50 text-sm"
+      className="flex items-center gap-2 border-2 border-white/70 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors disabled:opacity-50 text-sm"
     >
       {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Target className="w-4 h-4" />}
       {loading ? 'Inscription...' : 'Suivre ce parcours'}

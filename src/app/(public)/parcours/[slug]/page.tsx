@@ -25,6 +25,8 @@ const levelLabel: Record<string, string> = {
   debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé', tous_niveaux: 'Tous niveaux'
 }
 
+const PHOTO_CLASSES = ['bg-students', 'bg-learner', 'bg-about', 'bg-team', 'bg-partner', 'bg-coaching']
+
 export default async function ParcoursDetailPage({ params }: Props) {
   const { slug } = await params
   const supabase = await createClient()
@@ -77,7 +79,7 @@ export default async function ParcoursDetailPage({ params }: Props) {
       </Link>
 
       {/* Header */}
-      <div className="flex flex-col lg:flex-row gap-8 mb-12">
+      <div className={`hero-photo ${PHOTO_CLASSES[[...path.slug].reduce((n, ch) => n + ch.charCodeAt(0), 0) % PHOTO_CLASSES.length]} rounded-3xl text-white p-5 sm:p-8 flex flex-col lg:flex-row gap-8 mb-12`}>
         {/* Thumbnail */}
         {path.thumbnail_url && (
           <div className="lg:w-80 flex-shrink-0 rounded-2xl overflow-hidden aspect-video lg:aspect-auto">
@@ -91,41 +93,41 @@ export default async function ParcoursDetailPage({ params }: Props) {
               Recommandé par IBIG
             </span>
           )}
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 leading-tight">{path.title}</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{path.title}</h1>
           {path.short_description && (
-            <p className="text-lg text-gray-600 mb-5 leading-relaxed">{path.short_description}</p>
+            <p className="text-lg text-blue-100 mb-5 leading-relaxed">{path.short_description}</p>
           )}
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-4 mb-6 text-sm text-gray-600">
-            <span className="flex items-center gap-1.5 bg-gray-100 px-3 py-1.5 rounded-full">
-              <BookOpen className="w-4 h-4 text-[#0B3D91]" /> {totalCourses} formation{totalCourses > 1 ? 's' : ''}
+          <div className="flex flex-wrap gap-4 mb-6 text-sm text-white">
+            <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur border border-white/15 px-3 py-1.5 rounded-full">
+              <BookOpen className="w-4 h-4 text-[#FFA500]" /> {totalCourses} formation{totalCourses > 1 ? 's' : ''}
             </span>
             {path.estimated_hours > 0 && (
-              <span className="flex items-center gap-1.5 bg-gray-100 px-3 py-1.5 rounded-full">
-                <Clock className="w-4 h-4 text-[#0B3D91]" /> {path.estimated_hours}h de contenu
+              <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur border border-white/15 px-3 py-1.5 rounded-full">
+                <Clock className="w-4 h-4 text-[#FFA500]" /> {path.estimated_hours}h de contenu
               </span>
             )}
-            <span className="flex items-center gap-1.5 bg-gray-100 px-3 py-1.5 rounded-full">
-              <Target className="w-4 h-4 text-[#0B3D91]" /> {levelLabel[path.level ?? 'tous_niveaux']}
+            <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur border border-white/15 px-3 py-1.5 rounded-full">
+              <Target className="w-4 h-4 text-[#FFA500]" /> {levelLabel[path.level ?? 'tous_niveaux']}
             </span>
-            <span className="flex items-center gap-1.5 bg-gray-100 px-3 py-1.5 rounded-full">
-              <Award className="w-4 h-4 text-[#0B3D91]" /> Certificat de parcours
+            <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur border border-white/15 px-3 py-1.5 rounded-full">
+              <Award className="w-4 h-4 text-[#FFA500]" /> Certificat de parcours
             </span>
           </div>
 
           {/* Progress if enrolled */}
           {pathEnrolled && totalCourses > 0 && (
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 mb-5">
+            <div className="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4 mb-5">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold text-[#0B3D91]">Votre progression</span>
-                <span className="text-sm font-bold text-[#0B3D91]">{completedCourses}/{totalCourses} formations</span>
+                <span className="text-sm font-semibold text-white">Votre progression</span>
+                <span className="text-sm font-bold text-white">{completedCourses}/{totalCourses} formations</span>
               </div>
-              <div className="w-full h-2.5 bg-blue-100 rounded-full overflow-hidden">
-                <div className="h-full ibig-gradient rounded-full transition-all"
+              <div className="w-full h-2.5 bg-white/20 rounded-full overflow-hidden">
+                <div className="h-full bg-[#FFA500] rounded-full transition-all"
                   style={{ width: `${Math.round((completedCourses / totalCourses) * 100)}%` }} />
               </div>
-              <p className="text-xs text-blue-600 mt-1.5">{Math.round((completedCourses / totalCourses) * 100)}% complété</p>
+              <p className="text-xs text-blue-100 mt-1.5">{Math.round((completedCourses / totalCourses) * 100)}% complété</p>
             </div>
           )}
 
@@ -133,17 +135,17 @@ export default async function ParcoursDetailPage({ params }: Props) {
           {!pathEnrolled ? (
             <div className="flex flex-col sm:flex-row gap-3 items-start flex-wrap">
               <Link href={courses[0] ? `/formation/${(courses[0] as any).slug}` : '/catalogue'}
-                className="ibig-gradient text-white font-bold px-8 py-3.5 rounded-xl hover:opacity-90 transition-opacity flex items-center gap-2">
+                className="bg-[#FFA500] text-black font-bold px-8 py-3.5 rounded-xl hover:opacity-90 transition-opacity flex items-center gap-2">
                 <Play className="w-5 h-5" /> Commencer le parcours
               </Link>
               <EnrollPathButton pathId={path.id} pathSlug={path.slug} />
-              <div className="text-sm text-gray-500 flex items-center gap-1 w-full sm:w-auto">
+              <div className="text-sm text-blue-100 flex items-center gap-1 w-full sm:w-auto">
                 {freeCount === totalCourses ? (
-                  <span className="text-green-600 font-semibold">Entièrement gratuit</span>
+                  <span className="text-emerald-300 font-semibold">Entièrement gratuit</span>
                 ) : (
                   <>
                     Prix total :{' '}
-                    <span className="font-bold text-gray-900">{totalPrice.toLocaleString('fr')} XOF</span>
+                    <span className="font-bold text-white">{totalPrice.toLocaleString('fr')} XOF</span>
                   </>
                 )}
               </div>
@@ -152,7 +154,7 @@ export default async function ParcoursDetailPage({ params }: Props) {
             <Link href={courses.find(c => c && !enrolledCourseIds.has((c as any).id))
               ? `/formation/${(courses.find(c => c && !enrolledCourseIds.has((c as any).id)) as any).slug}`
               : '/tableau-de-bord'}
-              className="ibig-gradient text-white font-bold px-8 py-3.5 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+              className="bg-[#FFA500] text-black font-bold px-8 py-3.5 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
               <Play className="w-5 h-5" /> Continuer le parcours
             </Link>
           )}
