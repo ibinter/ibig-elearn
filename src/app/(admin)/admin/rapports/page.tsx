@@ -118,6 +118,8 @@ export default async function RapportsPage({ searchParams }: { searchParams: Pro
             <BarChart3 className="w-6 h-6 text-[#0B3D91]" /> Rapports avancés
           </h1>
           <p className="text-gray-500 text-sm mt-1">Analyse de la performance commerciale et pédagogique</p>
+        
+          <Link href="/admin/rapports/generateur" className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#0B3D91]">Générateur de rapports et envois programmés →</Link>
         </div>
         <div className="flex items-center gap-3">
           <Link href="/admin/exports" className="text-sm text-[#0B3D91] hover:underline">← Exports CSV</Link>

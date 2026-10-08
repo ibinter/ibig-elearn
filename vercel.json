@@ -3,12 +3,17 @@
   "buildCommand": "next build",
   "devCommand": "next dev",
   "installCommand": "npm install",
-  "regions": ["cdg1"],
+  "regions": [
+    "cdg1"
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, max-age=0" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
       ]
     }
   ],
@@ -28,6 +33,10 @@
     {
       "path": "/api/leagues/process-week",
       "schedule": "0 2 * * 1"
+    },
+    {
+      "path": "/api/cron/rapports",
+      "schedule": "30 6 * * *"
     }
   ]
 }

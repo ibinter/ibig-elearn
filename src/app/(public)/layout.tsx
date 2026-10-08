@@ -24,7 +24,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <Suspense><RefCapture /></Suspense>
       <AnnouncementBar />
       <Navbar user={profile} />
-      <main className="flex-1 overflow-x-clip animate-page-in">{children}</main>
+      <main id="contenu" tabIndex={-1} className="flex-1 overflow-x-clip animate-page-in outline-none">{children}</main>
       <Footer />
       <PublicTabBar isLoggedIn={!!user} dashboardHref={dashboardHref} />
     </div>

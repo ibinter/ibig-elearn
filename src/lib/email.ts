@@ -1,10 +1,12 @@
 ﻿interface EmailPayload {
-  to: string
+  to: string | string[]
   subject: string
   html: string
+  /** Pièces jointes (contenu encodé en base64) */
+  attachments?: { filename: string; content: string }[]
 }
 
-export async function sendEmail({ to, subject, html }: EmailPayload) {
+export async function sendEmail({ to, subject, html, attachments }: EmailPayload) {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey || apiKey === 'VOTRE_RESEND_KEY') {
     console.warn('[email] RESEND_API_KEY non configuré — email ignoré')
@@ -13,7 +15,7 @@ export async function sendEmail({ to, subject, html }: EmailPayload) {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: process.env.EMAIL_FROM ?? 'noreply@ibig-elearning.com', to, subject, html }),
+    body: JSON.stringify({ from: process.env.EMAIL_FROM ?? 'noreply@ibig-elearning.com', to, subject, html, ...(attachments?.length ? { attachments } : {}) }),
   })
   const data = await res.json()
   if (!res.ok) { console.error('[email] Resend error:', data); return { ok: false, error: data } }

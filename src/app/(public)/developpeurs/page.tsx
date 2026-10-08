@@ -26,7 +26,7 @@ export default function DeveloppeursPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-14 space-y-10">
       <header>
-        <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Développeurs</p>
+        <p className="text-xs font-bold uppercase tracking-widest text-ibig-gold-text">Développeurs</p>
         <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">API & webhooks IBIG E-LEARNING</h1>
         <p className="mt-3 text-gray-600 text-lg">Synchronisez votre SIRH avec la formation de vos équipes : inscriptions automatiques, suivi de la progression et récupération des certificats.</p>
       </header>

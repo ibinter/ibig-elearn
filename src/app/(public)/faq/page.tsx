@@ -142,7 +142,7 @@ export default function FAQPage() {
           <img src="/images/bg/students.webp" alt="" loading="lazy" className="w-full h-40 sm:h-full object-cover" />
         </picture>
         <div className="sm:col-span-3 p-5 sm:p-6">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#FFA500]">Guide pas à pas</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-ibig-gold-text">Guide pas à pas</p>
           <p className="mt-1 font-bold text-gray-900 text-lg group-hover:text-[#0B3D91]">Bien démarrer sur IBIG E-LEARNING</p>
           <p className="mt-1 text-sm text-gray-500">Inscription, paiement Mobile Money, suivi des cours et certificats : tout expliqué en images.</p>
         </div>

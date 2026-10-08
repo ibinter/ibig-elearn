@@ -85,7 +85,7 @@ export default async function Footer() {
         <div className="border-t border-blue-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="text-center sm:text-left">
             <p className="text-blue-300 text-sm">© {new Date().getFullYear()} IBIG SARL — IBIG EDUFORM. {t.footer.rights}</p>
-            <p className="text-blue-400 text-xs mt-1">
+            <p className="text-blue-200 text-xs mt-1">
               Conçu et développé par{' '}
               <a href="https://ibig-digital.com" target="_blank" rel="noopener" className="font-semibold text-[#FFA500] hover:text-white" data-no-translate>IBIG Digital</a>
             </p>

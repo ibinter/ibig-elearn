@@ -517,9 +517,9 @@ export default async function FormationPage({ params }: PageProps) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     <div className="absolute bottom-3 left-3">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                        c.level === 'debutant' ? 'bg-emerald-500 text-white' :
-                        c.level === 'intermediaire' ? 'bg-amber-500 text-white' :
-                        'bg-rose-500 text-white'
+                        c.level === 'debutant' ? 'bg-emerald-700 text-white' :
+                        c.level === 'intermediaire' ? 'bg-amber-700 text-white' :
+                        'bg-rose-700 text-white'
                       }`}>{levelLabel[c.level]}</span>
                     </div>
                   </div>

@@ -79,7 +79,7 @@ export default function B2BContactForm() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Secteur d'activité</label>
-          <select value={form.sector} onChange={e => setForm(f => ({ ...f, sector: e.target.value }))}
+          <select aria-label="Secteur d'activité" value={form.sector} onChange={e => setForm(f => ({ ...f, sector: e.target.value }))}
             className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30 bg-white">
             <option value="">Sélectionner</option>
             {SECTORS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -87,7 +87,7 @@ export default function B2BContactForm() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Taille de l'entreprise</label>
-          <select value={form.company_size} onChange={e => setForm(f => ({ ...f, company_size: e.target.value }))}
+          <select aria-label="Taille de l'entreprise" value={form.company_size} onChange={e => setForm(f => ({ ...f, company_size: e.target.value }))}
             className="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/30 bg-white">
             <option value="">Sélectionner</option>
             {SIZES.map(s => <option key={s} value={s}>{s}</option>)}

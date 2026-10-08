@@ -447,32 +447,32 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
         {/* Dots + arrows */}
         <div className="flex items-center justify-between px-6 lg:px-12 py-5" style={{ background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(10px)' }}>
           {/* Prev */}
-          <button onClick={prev} className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200">
+          <button onClick={prev} aria-label="Diapositive précédente" className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200">
             <ChevronLeft className="w-4 h-4" />
           </button>
 
           {/* Dots */}
           <div className="flex items-center gap-2">
             {allSlides.map((s, i) => (
-              <button key={s.id} onClick={() => goTo(i)}
+              <button key={s.id} onClick={() => goTo(i)} aria-label={`Diapositive ${i + 1} sur ${allSlides.length}`} aria-current={i === current ? 'true' : undefined}
                 className={`rounded-full transition-all duration-300 ${i === current ? 'w-6 h-2' : 'w-2 h-2 hover:opacity-70'}`}
                 style={{ background: i === current ? slide.accentColor : 'rgba(255,255,255,0.3)' }} />
             ))}
           </div>
 
           {/* Next */}
-          <button onClick={next} className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200">
+          <button onClick={next} aria-label="Diapositive suivante" className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200">
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       {/* Arrows latéraux (desktop) */}
-      <button onClick={prev}
+      <button onClick={prev} aria-label="Diapositive précédente"
         className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full items-center justify-center text-white/70 hover:text-white hover:bg-white/10 border border-white/15 hover:border-white/40 transition-all duration-200 backdrop-blur-sm">
         <ChevronLeft className="w-5 h-5" />
       </button>
-      <button onClick={next}
+      <button onClick={next} aria-label="Diapositive suivante"
         className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full items-center justify-center text-white/70 hover:text-white hover:bg-white/10 border border-white/15 hover:border-white/40 transition-all duration-200 backdrop-blur-sm">
         <ChevronRight className="w-5 h-5" />
       </button>

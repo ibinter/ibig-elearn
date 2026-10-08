@@ -7,6 +7,10 @@
   --color-ibig-blue: #0B3D91;
   --color-ibig-gold: #FFA500;
   --color-ibig-green: #2ECC71;
+  /* Accessibilité (WCAG AA) : le gris des textes secondaires doit offrir un contraste ≥ 4,5:1 sur fond clair */
+  --color-gray-400: oklch(55.1% 0.027 264.364);
+  /* Orange IBIG lisible sur fond clair (petits titres) : 5:1 sur blanc */
+  --color-ibig-gold-text: #B45309;
 }
 
 @keyframes float {
@@ -385,4 +389,17 @@ html.i18n-pending body {
   .bg-graduates { --hero-img: url(/images/bg/graduates.webp); --hero-img-m: url(/images/bg/graduates-m.webp); }
   .bg-support { --hero-img: url(/images/bg/support.webp); --hero-img-m: url(/images/bg/support-m.webp); }
   .bg-learner { --hero-img: url(/images/bg/learner.webp); --hero-img-m: url(/images/bg/learner-m.webp); }
+}
+
+/* ── Accessibilité (WCAG 2.1 AA) ── */
+.skip-link {
+  position: absolute; left: 1rem; top: -100px; z-index: 1000;
+  background: #0B3D91; color: #fff; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem;
+}
+.skip-link:focus { top: calc(1rem + env(safe-area-inset-top)); }
+/* Contour de focus visible au clavier (jamais au clic souris) */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #FFA500;
+  outline-offset: 2px;
+  border-radius: 6px;
 }

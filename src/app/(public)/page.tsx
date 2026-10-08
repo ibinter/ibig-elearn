@@ -220,7 +220,7 @@ export default async function AccueilPage() {
       <section className="py-10 md:py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8 md:mb-10">
-            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Une plateforme, quatre façons de progresser</p>
+            <p className="text-ibig-gold-text font-bold text-sm uppercase tracking-widest mb-2">Une plateforme, quatre façons de progresser</p>
             <h2 className="text-2xl lg:text-3xl font-black text-gray-900">Apprenant, coach, formateur ou entreprise : votre espace vous attend</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -251,7 +251,7 @@ export default async function AccueilPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">{t.home.categoriesTitle}</p>
+              <p className="text-ibig-gold-text font-bold text-sm uppercase tracking-widest mb-1">{t.home.categoriesTitle}</p>
               <h2 className="text-2xl lg:text-3xl font-black text-gray-900">{t.home.domainsTitle}</h2>
               <p className="text-gray-500 mt-1">{t.home.domainsSubtitle}</p>
             </div>
@@ -282,7 +282,7 @@ export default async function AccueilPage() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex items-end justify-between mb-8">
               <div>
-                <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-1">{t.home.whyTitle}</p>
+                <p className="text-ibig-gold-text font-bold text-sm uppercase tracking-widest mb-1">{t.home.whyTitle}</p>
                 <h2 className="text-2xl lg:text-3xl font-black text-gray-900">{t.home.popularTitle}</h2>
                 <p className="text-gray-500 mt-1">{t.home.popularSubtitle}</p>
               </div>
@@ -360,7 +360,7 @@ export default async function AccueilPage() {
       <section className="py-10 md:py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Notre différence</p>
+            <p className="text-ibig-gold-text font-bold text-sm uppercase tracking-widest mb-2">Notre différence</p>
             <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.whyTitle}</h2>
             <p className="text-gray-500 max-w-xl mx-auto">{t.home.whySub}</p>
           </div>
@@ -395,7 +395,7 @@ export default async function AccueilPage() {
       <section className="py-10 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Ils ont transformé leur carrière</p>
+            <p className="text-ibig-gold-text font-bold text-sm uppercase tracking-widest mb-2">Ils ont transformé leur carrière</p>
             <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-3">{t.home.testimonialsTitle}</h2>
             <div className="flex items-center justify-center gap-2">
               <div className="flex gap-0.5">
@@ -563,7 +563,7 @@ export default async function AccueilPage() {
           </div>
 
           <div className="order-1 lg:order-2">
-            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-3">Votre tuteur personnel</p>
+            <p className="text-ibig-gold-text font-bold text-sm uppercase tracking-widest mb-3">Votre tuteur personnel</p>
             <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4">{t.home.saraTitle}</h2>
             <p className="text-gray-600 mb-6 leading-relaxed">{t.home.saraSub}</p>
             <div className="space-y-3 mb-8">

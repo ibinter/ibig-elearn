@@ -176,7 +176,7 @@ export default function ContactPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.contact.subject} *</label>
-                    <select
+                    <select aria-label={t.contact.subject}
                       value={form.subject}
                       onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
                       required

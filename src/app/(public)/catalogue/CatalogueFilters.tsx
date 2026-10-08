@@ -45,7 +45,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
           <input name="q" type="text" defaultValue={params.q ?? ''}
             placeholder="Mot-clé…"
             className="flex-1 min-w-0 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]" />
-          <button type="submit" className="flex-shrink-0 bg-[#0B3D91] text-white rounded-xl px-3 py-2 hover:bg-[#0B3D91]/90 transition-colors">
+          <button type="submit" aria-label="Rechercher" className="flex-shrink-0 bg-[#0B3D91] text-white rounded-xl px-3 py-2 hover:bg-[#0B3D91]/90 transition-colors">
             <Search className="w-4 h-4" />
           </button>
         </form>

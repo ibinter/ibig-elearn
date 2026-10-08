@@ -268,7 +268,10 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
       <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="px-4 sm:px-5 py-3.5 border-b border-gray-100 flex items-center justify-between gap-3">
           <h2 className="font-bold text-gray-900 flex items-center gap-2"><Users className="w-5 h-5 text-[#0B3D91]" /> Équipe ({members.length})</h2>
+          <div className="flex items-center gap-4">
+            <Link href={`/organisation/${org.slug}/rapports`} className="text-sm font-semibold text-[#0B3D91]">Rapports</Link>
           <ExportTeam orgName={org.name} rows={rows.map(r => ({ ...r, role: ORG_ROLE_LABEL[r.role] ?? r.role }))} />
+          </div>
         </div>
         {rows.length === 0 ? (
           <p className="p-6 text-center text-sm text-gray-400">Aucun collaborateur pour l&apos;instant.</p>

@@ -65,6 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} className={locale === 'en' ? 'i18n-pending' : undefined}>
       <body className={`${inter.className} overflow-x-clip w-full`}>
         {tenant && <TenantTheme tenant={tenant} />}
+        <a href="#contenu" className="skip-link">Aller au contenu</a>
         <CurrencyProvider>{children}</CurrencyProvider>
         <ServiceWorkerRegister />
         <DomTranslator locale={locale} />
