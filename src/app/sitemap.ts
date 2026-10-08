@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient()
   const { data: courses } = await supabase
     .from('courses')
-    .select('slug, updated_at')
+    .select('slug, updated_at, instructor_id')
     .eq('is_published', true)
 
   const courseUrls: MetadataRoute.Sitemap = (courses ?? []).map(c => ({
@@ -46,6 +46,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   const blogUrls = [...blogMap.values()]
 
+  // Offres de coaching, profils formateurs publics et parcours
+  const [{ data: offers }, { data: paths }] = await Promise.all([
+    supabase.from('coaching_offers').select('id, coach_id, updated_at').eq('is_active', true),
+    supabase.from('learning_paths').select('slug, updated_at').eq('is_published', true),
+  ])
+  const instructorIds = new Set([...(courses ?? []).map(c => (c as { instructor_id?: string }).instructor_id), ...(offers ?? []).map(o => o.coach_id)].filter(Boolean) as string[])
+  const extraUrls: MetadataRoute.Sitemap = [
+    ...(offers ?? []).map(o => ({ url: `${BASE_URL}/coaching/${o.id}`, lastModified: o.updated_at ? new Date(o.updated_at) : undefined, changeFrequency: 'weekly' as const, priority: 0.6 })),
+    ...(paths ?? []).map(p => ({ url: `${BASE_URL}/parcours/${p.slug}`, lastModified: p.updated_at ? new Date(p.updated_at) : undefined, changeFrequency: 'weekly' as const, priority: 0.7 })),
+    ...[...instructorIds].map(id => ({ url: `${BASE_URL}/formateur/${id}`, changeFrequency: 'monthly' as const, priority: 0.5 })),
+  ]
+
   return [
     { url: BASE_URL, changeFrequency: 'daily', priority: 1 },
     { url: `${BASE_URL}/catalogue`, changeFrequency: 'daily', priority: 0.9 },
@@ -55,6 +67,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/blog`, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/entreprise`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/devenir-formateur`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/devenir-partenaire`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/conditions-partenaires`, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE_URL}/a-propos`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/contact`, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/faq`, changeFrequency: 'monthly', priority: 0.5 },
@@ -66,5 +80,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/mentions-legales`, changeFrequency: 'yearly', priority: 0.2 },
     ...courseUrls,
     ...blogUrls,
+    ...extraUrls,
   ]
 }

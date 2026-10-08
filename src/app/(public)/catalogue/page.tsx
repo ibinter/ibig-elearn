@@ -6,6 +6,7 @@ import type { Course, Category } from '@/types'
 import CatalogueFilters from './CatalogueFilters'
 import { getT } from '@/i18n'
 import CourseLanguageBadge from '@/components/ui/CourseLanguageBadge'
+import { SITE_URL } from '@/lib/site'
 
 export const metadata = { alternates: { canonical: '/catalogue' },
   title: 'Catalogue des formations professionnelles',
@@ -95,8 +96,20 @@ export default async function CataloguePage({ searchParams }: PageProps) {
   if (params.duree) activeChips.push({ label: { '0-5': '< 5h', '5-20': '5–20h', '20+': '> 20h' }[params.duree] ?? params.duree, key: 'duree' })
   if (params.langue) activeChips.push({ label: { fr: 'Français', en: 'Anglais', ar: 'Arabe' }[params.langue] ?? params.langue, key: 'langue' })
 
+  // Données structurées : liste des formations affichées (résultats enrichis Google)
+  const itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Catalogue des formations IBIG E-LEARNING',
+    numberOfItems: count ?? 0,
+    itemListElement: ((courses ?? []) as unknown as Course[]).map((c, i) => ({
+      '@type': 'ListItem', position: offset + i + 1, url: `${SITE_URL}/formation/${c.slug}`, name: c.title,
+    })),
+  }
+
   return (
     <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
       {/* Bannière hero */}
       <div className="hero-photo bg-students text-white py-12 sm:py-20 px-4">
         <div className="max-w-7xl mx-auto">
