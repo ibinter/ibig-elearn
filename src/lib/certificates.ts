@@ -17,11 +17,16 @@ export async function issueCertificate(admin: SupabaseClient, userId: string, co
   const progress = total ? Math.min(100, Math.round(((done ?? 0) / total) * 100)) : 0
   if (progress < 100) return { issued: false as const, reason: 'incomplete', progress }
 
-  const { data: existing } = await admin.from('certificates').select('id, certificate_number').eq('user_id', userId).eq('course_id', courseId).maybeSingle()
-  if (existing) return { issued: true as const, certificateId: existing.id, certNumber: existing.certificate_number, alreadyExisted: true }
+  // Certificat « courant » : on le renvoie s'il est encore valide ; expiré, il passe dans l'historique (recertification)
+  const { data: existing } = await admin.from('certificates').select('id, certificate_number, expires_at')
+    .eq('user_id', userId).eq('course_id', courseId).is('superseded_at', null).maybeSingle()
+  if (existing && (!existing.expires_at || new Date(existing.expires_at) > new Date())) {
+    return { issued: true as const, certificateId: existing.id, certNumber: existing.certificate_number, alreadyExisted: true }
+  }
+  if (existing) await admin.from('certificates').update({ superseded_at: new Date().toISOString() }).eq('id', existing.id)
 
   const [{ data: course }, { data: profile }] = await Promise.all([
-    admin.from('courses').select('title, duration_hours, instructor:profiles!courses_instructor_id_fkey(full_name)').eq('id', courseId).single(),
+    admin.from('courses').select('title, duration_hours, certificate_validity_months, instructor:profiles!courses_instructor_id_fkey(full_name)').eq('id', courseId).single(),
     admin.from('profiles').select('full_name, email').eq('id', userId).single(),
   ])
   const instructor = (course?.instructor as unknown as { full_name: string | null } | null)?.full_name ?? null
@@ -37,6 +42,9 @@ export async function issueCertificate(admin: SupabaseClient, userId: string, co
       user_id: userId, course_id: courseId, enrollment_id: enrollment.id, certificate_number: certNumber,
       issued_at: now.toISOString(), learner_name: profile?.full_name ?? null, course_title: course?.title ?? null,
       instructor_name: instructor, completion_time_h: course?.duration_hours ?? null,
+      expires_at: course?.certificate_validity_months
+        ? new Date(new Date(now).setMonth(now.getMonth() + course.certificate_validity_months)).toISOString()
+        : null,
     }).select('id').single()
     certificate = data
   }

@@ -34,7 +34,7 @@ export async function seatsUsed(admin: SupabaseClient, orgId: string) {
 /** Ajoute des collaborateurs à un parcours d'équipe et les inscrit à ses formations (financées par l'organisation). */
 export async function addToCohort(admin: SupabaseClient, orgId: string, cohortId: string, userIds: string[]) {
   if (!userIds.length) return
-  const { data: cohort } = await admin.from('cohorts').select('course_ids').eq('id', cohortId).eq('org_id', orgId).single()
+  const { data: cohort } = await admin.from('cohorts').select('course_ids, is_mandatory, end_date').eq('id', cohortId).eq('org_id', orgId).single()
   if (!cohort) return
   await admin.from('cohort_members').upsert(
     userIds.map(user_id => ({ cohort_id: cohortId, user_id })),
@@ -46,6 +46,12 @@ export async function addToCohort(admin: SupabaseClient, orgId: string, cohortId
       user_id, course_id, status: 'active', mode: 'autonome', paid_amount: 0, sponsor_org_id: orgId,
     }))),
     { onConflict: 'user_id,course_id', ignoreDuplicates: true })
+  // Parcours obligatoire : l'échéance s'applique aux inscriptions (sans écraser une échéance plus proche)
+  if (cohort.is_mandatory && cohort.end_date) {
+    await admin.from('enrollments').update({ due_date: cohort.end_date })
+      .in('user_id', userIds).in('course_id', courseIds).is('completed_at', null)
+      .or(`due_date.is.null,due_date.gt.${cohort.end_date}`)
+  }
 }
 
 /** Rattache un utilisateur à une organisation (réactive un ancien membre). */

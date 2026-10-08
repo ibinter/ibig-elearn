@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { isCronAuthorized } from '@/lib/cron'
 import { sendEmail } from '@/lib/email'
 import { SITE_URL } from '@/lib/site'
 
@@ -102,12 +103,9 @@ function digestHtml(opts: {
 
 export async function POST(req: NextRequest) {
   // Protéger avec un secret cron
-  const auth = req.headers.get('authorization')
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  }
+  if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
   // Récupérer les utilisateurs actifs (au moins 1 leçon cette semaine OU streak > 0)
@@ -186,3 +184,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ sent, total: activeUsers.length, errors: errors.length ? errors : undefined })
 }
+
+// Vercel Cron appelle les tâches en GET
+export const GET = POST

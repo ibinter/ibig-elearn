@@ -32,7 +32,8 @@ export default async function ProgressionPage({ params }: PageProps) {
     .select('progress_percent, status, enrolled_at, completed_at')
     .eq('user_id', user.id)
     .eq('course_id', course.id)
-    .single()
+    .is('superseded_at', null)
+    .maybeSingle()
   if (!enrollment) redirect(`/formation/${slug}`)
 
   const { data: modules } = await supabase

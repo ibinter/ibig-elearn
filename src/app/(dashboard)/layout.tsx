@@ -35,9 +35,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         orgHref={orgHref}
       />
 
-      <div className="lg:ml-64 flex-1 min-w-0 flex flex-col min-h-screen">
-        <div className="h-[calc(3.5rem+env(safe-area-inset-top))] lg:hidden" />
-        <main className="flex-1 min-w-0 p-4 sm:p-6 bottom-nav-offset lg:pb-6 animate-page-in">{children}</main>
+      <div className="lg:ml-64 print:!ml-0 flex-1 min-w-0 flex flex-col min-h-screen">
+        <div className="h-[calc(3.5rem+env(safe-area-inset-top))] lg:hidden print:hidden" />
+        <main className="flex-1 min-w-0 p-4 sm:p-6 print:p-0 bottom-nav-offset lg:pb-6 animate-page-in">{children}</main>
       </div>
       <MobileNav />
       <OfflineBanner />

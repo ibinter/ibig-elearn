@@ -21,7 +21,7 @@ const LEVELS = [
 const LEVEL_LABEL: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
 
 type CourseLite = { id: string; title: string; slug: string; thumbnail_url: string | null; duration_hours: number | null }
-type Enrollment = { id: string; course_id: string; progress_percent: number | null; enrolled_at: string; status: string; course: CourseLite | null }
+type Enrollment = { id: string; course_id: string; progress_percent: number | null; enrolled_at: string; status: string; due_date: string | null; course: CourseLite | null }
 type AgendaItem = { id: string; kind: 'coaching' | 'live'; title: string; startsAt: string; href: string; with?: string | null }
 
 export default async function TableauDeBordPage() {
@@ -41,7 +41,7 @@ export default async function TableauDeBordPage() {
   const nowIso = new Date().toISOString()
   const [{ data: enrollmentsRaw }, { data: certificates, count: certCount }, { data: activity }, { data: coaching }, { data: recommended }] = await Promise.all([
     supabase.from('enrollments')
-      .select('id, course_id, progress_percent, enrolled_at, status, course:courses(id, title, slug, thumbnail_url, duration_hours)')
+      .select('id, course_id, progress_percent, enrolled_at, status, due_date, course:courses(id, title, slug, thumbnail_url, duration_hours)')
       .eq('user_id', user.id)
       .order('enrolled_at', { ascending: false }),
     supabase.from('certificates')
@@ -123,6 +123,15 @@ export default async function TableauDeBordPage() {
   const nextLvl = LEVELS[lvlIdx + 1]
   const progressToNext = nextLvl ? Math.min(100, Math.round(((xp - level.min) / (nextLvl.min - level.min)) * 100)) : 100
 
+  // Formations obligatoires à terminer avant une échéance + certificats à renouveler
+  const todayIso = new Date().toISOString().slice(0, 10)
+  const dueSoon = enrollments
+    .filter(e => e.due_date && pct(e) < 100)
+    .sort((a, b) => a.due_date!.localeCompare(b.due_date!))
+  const { data: expiringCerts } = await supabase.from('certificates').select('id, course_title, expires_at')
+    .eq('user_id', user.id).is('superseded_at', null).not('expires_at', 'is', null)
+    .lte('expires_at', new Date(Date.now() + 30 * 86400_000).toISOString())
+
   const firstName = profile?.full_name?.split(' ')[0] ?? ''
   const isNew = enrollments.length === 0
 
@@ -152,6 +161,33 @@ export default async function TableauDeBordPage() {
           </span>
           <ChevronRight className="w-5 h-5 text-gray-300" />
         </Link>
+      )}
+
+      {(dueSoon.length > 0 || (expiringCerts ?? []).length > 0) && (
+        <section className="rounded-2xl border border-amber-200 bg-amber-50 p-4 space-y-2">
+          <h2 className="font-bold text-amber-900 text-sm flex items-center gap-2"><CalendarClock className="w-4 h-4" /> À faire en priorité</h2>
+          {dueSoon.slice(0, 4).map(e => {
+            const late = e.due_date! < todayIso
+            return (
+              <Link key={e.id} href={`/apprendre/${e.course_id}`} className="flex items-center justify-between gap-3 rounded-xl bg-white px-3.5 py-2.5 text-sm hover:shadow-sm">
+                <span className="min-w-0">
+                  <span className="block font-semibold text-gray-900 truncate">{e.course?.title}</span>
+                  <span className={`block text-xs ${late ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>Obligatoire · {late ? 'en retard depuis le' : 'à terminer avant le'} {formatDate(e.due_date!)} · {pct(e)} %</span>
+                </span>
+                <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+              </Link>
+            )
+          })}
+          {(expiringCerts ?? []).map(c => (
+            <Link key={c.id} href="/mes-certificats" className="flex items-center justify-between gap-3 rounded-xl bg-white px-3.5 py-2.5 text-sm hover:shadow-sm">
+              <span className="min-w-0">
+                <span className="block font-semibold text-gray-900 truncate">Certificat : {c.course_title}</span>
+                <span className="block text-xs text-red-600">{new Date(c.expires_at!) < new Date() ? 'Expiré' : 'Expire'} le {formatDate(c.expires_at!)} · recertification disponible</span>
+              </span>
+              <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+            </Link>
+          ))}
+        </section>
       )}
 
       {/* ── Action principale ── */}

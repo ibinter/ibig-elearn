@@ -39,9 +39,11 @@ export async function POST(request: NextRequest) {
       : { data: [] }
     if (!courses?.length) return NextResponse.json({ error: 'Choisissez au moins une formation.' }, { status: 400 })
     const endDate = body.endDate && /^\d{4}-\d{2}-\d{2}$/.test(body.endDate) ? body.endDate : null
+    const isMandatory = !!body.isMandatory
+    if (isMandatory && !endDate) return NextResponse.json({ error: 'Une formation obligatoire nécessite une échéance.' }, { status: 400 })
     const { data: created, error } = await admin.from('cohorts').insert({
       org_id: orgId, name, description: body.description ? String(body.description).slice(0, 500) : null,
-      course_ids: courses.map(c => c.id), start_date: new Date().toISOString().slice(0, 10), end_date: endDate, manager_id: user.id,
+      course_ids: courses.map(c => c.id), start_date: new Date().toISOString().slice(0, 10), end_date: endDate, manager_id: user.id, is_mandatory: isMandatory,
     }).select('id').single()
     if (error || !created) return NextResponse.json({ error: 'Création impossible' }, { status: 500 })
     cohortId = created.id

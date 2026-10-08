@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { isCronAuthorized } from '@/lib/cron'
 import { sendEmail } from '@/lib/email'
 import { rappelInactifEmail } from '@/lib/email-templates'
 
 // Cron job — appelé par Vercel Cron ou manuellement par admin
 export async function GET(req: NextRequest) {
-  const secret = req.headers.get('x-cron-secret')
-  if (secret !== process.env.CRON_SECRET && process.env.NODE_ENV === 'production') {
-    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  }
+  if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
   // Apprenants inactifs depuis 7+ jours avec une formation en cours

@@ -107,6 +107,7 @@ export function CohortPanel({ orgId, courses, members }: { orgId: string; course
   const router = useRouter()
   const [name, setName] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [mandatory, setMandatory] = useState(false)
   const [courseIds, toggleCourse, resetCourses] = useSet()
   const [memberIds, toggleMember, resetMembers] = useSet()
   const [busy, setBusy] = useState(false)
@@ -116,9 +117,9 @@ export function CohortPanel({ orgId, courses, members }: { orgId: string; course
     e.preventDefault()
     setBusy(true); setMsg(null)
     try {
-      await post('/api/org/cohortes', { orgId, name, endDate: endDate || null, courseIds: [...courseIds], memberIds: [...memberIds] })
+      await post('/api/org/cohortes', { orgId, name, endDate: endDate || null, isMandatory: mandatory, courseIds: [...courseIds], memberIds: [...memberIds] })
       setMsg({ ok: true, text: 'Parcours créé : les collaborateurs choisis ont accès aux formations.' })
-      setName(''); setEndDate(''); resetCourses(); resetMembers()
+      setName(''); setEndDate(''); setMandatory(false); resetCourses(); resetMembers()
       router.refresh()
     } catch (err) {
       setMsg({ ok: false, text: (err as Error).message })
@@ -132,6 +133,10 @@ export function CohortPanel({ orgId, courses, members }: { orgId: string; course
         <input value={name} onChange={e => setName(e.target.value)} required placeholder="Ex. : Équipe commerciale 2026" className={`${input} sm:col-span-2`} />
         <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className={input} aria-label="Échéance" title="Échéance (facultatif)" />
       </div>
+      <label className="mt-2 flex items-start gap-2.5 rounded-xl bg-amber-50 border border-amber-100 px-3 py-2.5 text-sm text-amber-900 cursor-pointer">
+        <input type="checkbox" checked={mandatory} onChange={e => setMandatory(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[#0B3D91]" />
+        <span><strong>Formation obligatoire</strong> — relances automatiques à J-7, J-1 et en cas de retard ; les responsables sont alertés. L&apos;échéance est requise.</span>
+      </label>
       <p className="mt-3 mb-1.5 text-xs font-semibold text-gray-600">Formations ({courseIds.size})</p>
       <Picker items={courses.map(c => ({ id: c.id, label: c.title }))} selected={courseIds} onToggle={toggleCourse} placeholder="Rechercher une formation" />
       <p className="mt-3 mb-1.5 text-xs font-semibold text-gray-600">Collaborateurs ({memberIds.size})</p>

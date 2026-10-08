@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { isCronAuthorized } from '@/lib/cron'
 
 export async function POST(req: NextRequest) {
-  const auth = req.headers.get('authorization')
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   // Semaine précédente (lundi dernier)
   const prevMonday = new Date()
@@ -23,3 +21,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ ok: true, week_start: weekStart })
 }
+
+// Vercel Cron appelle les tâches en GET
+export const GET = POST

@@ -36,7 +36,7 @@ const typeIcon = (t: string) => ({ video: Play, document: FileText, quiz: HelpCi
 
 interface Lesson { id: string; title: string; type: string; position: number; is_free_preview: boolean; video_duration_seconds: number | null; video_url: string | null; content: string | null; _showUpload?: boolean }
 interface Module { id: string; title: string; position: number; lessons: Lesson[]; open?: boolean }
-interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[]; approval_status: string | null; approval_note: string | null }
+interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; certificate_validity_months: number | null; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[]; approval_status: string | null; approval_note: string | null }
 
 export default function ModifierFormationPage() {
   const { id } = useParams<{ id: string }>()
@@ -88,6 +88,7 @@ export default function ModifierFormationPage() {
       language: languageCode(course.language),
       price_xof: course.price_xof,
       duration_hours: course.duration_hours,
+      certificate_validity_months: course.certificate_validity_months || null,
       thumbnail_url: course.thumbnail_url,
       category_id: course.category_id,
       objectives: course.objectives,
@@ -287,6 +288,20 @@ export default function ModifierFormationPage() {
                 <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/40"
                   value={course.duration_hours ?? 0} onChange={e => setCourse({ ...course, duration_hours: parseInt(e.target.value) || 0 })} />
               </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Validité du certificat</label>
+              <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B3D91]/40"
+                value={course.certificate_validity_months ?? ''} onChange={e => setCourse({ ...course, certificate_validity_months: e.target.value ? parseInt(e.target.value) : null })}>
+                <option value="">Permanente (pas d&apos;expiration)</option>
+                <option value="6">6 mois</option>
+                <option value="12">1 an</option>
+                <option value="24">2 ans</option>
+                <option value="36">3 ans</option>
+                <option value="60">5 ans</option>
+              </select>
+              <p className="mt-1 text-xs text-gray-500">Pour les formations réglementaires (sécurité, hygiène, conformité…) : l&apos;apprenant est prévenu 30 jours avant l&apos;expiration et peut se recertifier.</p>
             </div>
 
             <div>

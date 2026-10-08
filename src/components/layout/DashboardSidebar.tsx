@@ -23,7 +23,7 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
     { href: '/tableau-de-bord', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
     { href: '/mes-formations', label: 'Mes formations', icon: GraduationCap },
     { href: '/mes-parcours', label: 'Mes parcours', icon: Target },
-    { href: '/certificats', label: 'Mes certificats', icon: Award },
+    { href: '/mes-certificats', label: 'Mes certificats', icon: Award },
     { href: '/mes-factures', label: 'Mes factures', icon: FileText },
     { href: '/profil', label: 'Mon profil', icon: User },
     { href: `/apprenant/${userId}`, label: 'Profil public', icon: Share2 },
@@ -122,11 +122,11 @@ export default function DashboardSidebar({ userName, userInitial, userRole, user
 
   return (
     <>
-      <aside className="hidden lg:flex w-64 flex-col bg-white border-r border-gray-200 fixed inset-y-0 z-30">
+      <aside className="hidden lg:flex print:!hidden w-64 flex-col bg-white border-r border-gray-200 fixed inset-y-0 z-30">
         <SidebarContent />
       </aside>
 
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white border-b border-gray-200 px-4 pb-2 pt-[calc(0.5rem+env(safe-area-inset-top))] h-[calc(3.5rem+env(safe-area-inset-top))] flex items-center justify-between">
+      <header className="lg:hidden print:hidden fixed top-0 left-0 right-0 z-30 bg-white border-b border-gray-200 px-4 pb-2 pt-[calc(0.5rem+env(safe-area-inset-top))] h-[calc(3.5rem+env(safe-area-inset-top))] flex items-center justify-between">
         <button onClick={() => setOpen(true)} className="p-2 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors" aria-label="Menu">
           <Menu className="w-5 h-5" />
         </button>

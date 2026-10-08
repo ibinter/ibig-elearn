@@ -17,7 +17,7 @@ export default function MobileNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-gray-100 safe-bottom shadow-[0_-1px_12px_rgba(0,0,0,0.06)]">
+    <nav className="lg:hidden print:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-gray-100 safe-bottom shadow-[0_-1px_12px_rgba(0,0,0,0.06)]">
       <div className="flex items-stretch h-16">
         {NAV_ITEMS.map(item => {
           const active = pathname === item.href || pathname.startsWith(item.href + '/')

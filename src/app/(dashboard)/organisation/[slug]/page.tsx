@@ -12,7 +12,7 @@ import { InvitePanel, CohortPanel, AddToCohort, RemoveMember, CancelInvite, Expo
 export const metadata = { title: 'Espace entreprise' }
 
 type Member = { user_id: string; role: string; joined_at: string; profile: { full_name: string | null; email: string | null; last_activity_date: string | null } | null }
-type Enr = { user_id: string; course_id: string; progress_percent: number | null; completed_at: string | null }
+type Enr = { user_id: string; course_id: string; progress_percent: number | null; completed_at: string | null; due_date: string | null }
 
 export default async function OrganisationPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -33,7 +33,7 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
     admin.from('organization_members')
       .select('user_id, role, joined_at, profile:profiles!organization_members_user_id_fkey(full_name, email, last_activity_date)')
       .eq('org_id', org.id).eq('is_active', true).order('joined_at', { ascending: false }),
-    admin.from('cohorts').select('id, name, course_ids, end_date, is_active, created_at, cohort_members(user_id)')
+    admin.from('cohorts').select('id, name, course_ids, end_date, is_active, is_mandatory, created_at, cohort_members(user_id)')
       .eq('org_id', org.id).order('created_at', { ascending: false }),
     admin.from('org_invitations').select('id, email, role, created_at, expires_at')
       .eq('org_id', org.id).is('accepted_at', null).gt('expires_at', new Date().toISOString()).order('created_at', { ascending: false }),
@@ -41,13 +41,13 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
   ])
 
   const members = (membersRaw ?? []) as unknown as Member[]
-  const cohorts = (cohortsRaw ?? []) as unknown as { id: string; name: string; course_ids: string[]; end_date: string | null; is_active: boolean; cohort_members: { user_id: string }[] }[]
+  const cohorts = (cohortsRaw ?? []) as unknown as { id: string; name: string; course_ids: string[]; end_date: string | null; is_active: boolean; is_mandatory: boolean; cohort_members: { user_id: string }[] }[]
   const memberIds = members.map(m => m.user_id)
 
   // Progression sur les formations financées par l'entreprise uniquement
   const [{ data: enrRaw }, { data: certs }] = memberIds.length
     ? await Promise.all([
-        admin.from('enrollments').select('user_id, course_id, progress_percent, completed_at').eq('sponsor_org_id', org.id).in('user_id', memberIds),
+        admin.from('enrollments').select('user_id, course_id, progress_percent, completed_at, due_date').eq('sponsor_org_id', org.id).in('user_id', memberIds),
         admin.from('certificates').select('user_id, course_id').in('user_id', memberIds),
       ])
     : [{ data: [] }, { data: [] }]
@@ -67,6 +67,13 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
     completed: enrollments.filter(e => (e.progress_percent ?? 0) >= 100 || e.completed_at).length,
     certs: orgCerts.length,
   }
+  // Conformité : formations obligatoires (avec échéance)
+  const isDone = (e: Enr) => (e.progress_percent ?? 0) >= 100 || !!e.completed_at
+  const today = new Date().toISOString().slice(0, 10)
+  const mandatory = enrollments.filter(e => e.due_date)
+  const overdue = mandatory.filter(e => !isDone(e) && e.due_date! < today)
+  const compliance = mandatory.length ? Math.round((mandatory.filter(isDone).length / mandatory.length) * 100) : null
+
   const seatPct = Math.min(100, Math.round((stats.seatsUsed / Math.max(1, org.max_seats)) * 100))
 
   const rows = members.map(m => {
@@ -81,6 +88,7 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
       done: mine.filter(e => (e.progress_percent ?? 0) >= 100 || e.completed_at).length,
       avg: pct(mine),
       certs: orgCerts.filter(c => c.user_id === m.user_id).length,
+      late: mine.filter(e => e.due_date && e.due_date < new Date().toISOString().slice(0, 10) && (e.progress_percent ?? 0) < 100 && !e.completed_at).length,
     }
   }).sort((a, b) => b.avg - a.avg)
 
@@ -115,13 +123,21 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
       </div>
 
       {/* ── Indicateurs ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-4">
+      {overdue.length > 0 && (
+        <div className="flex items-center gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-800">
+          <Clock className="w-5 h-5 flex-shrink-0" />
+          <span><strong>{overdue.length} formation{overdue.length > 1 ? 's' : ''} obligatoire{overdue.length > 1 ? 's' : ''} en retard</strong> — les collaborateurs concernés sont relancés automatiquement chaque jour.</span>
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-2.5 sm:gap-4">
         {[
           { label: 'Collaborateurs', value: members.length, icon: Users, cls: 'bg-blue-50 text-[#0B3D91]' },
           { label: 'Actifs (7 jours)', value: stats.active7, icon: Activity, cls: 'bg-emerald-50 text-emerald-600' },
           { label: 'Progression moyenne', value: `${stats.avg} %`, icon: TrendingUp, cls: 'bg-orange-50 text-orange-600' },
           { label: 'Formations terminées', value: stats.completed, icon: CheckCircle2, cls: 'bg-purple-50 text-purple-600' },
           { label: 'Certificats obtenus', value: stats.certs, icon: Award, cls: 'bg-yellow-50 text-yellow-600' },
+          { label: 'Conformité (obligatoire)', value: compliance == null ? '—' : `${compliance} %`, icon: CheckCircle2, cls: overdue.length ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600' },
         ].map(s => (
           <div key={s.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
             <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${s.cls}`}><s.icon className="w-5 h-5" /></span>
@@ -167,7 +183,7 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
               <div key={c.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-bold text-gray-900 truncate">{c.name}</p>
+                    <p className="font-bold text-gray-900 truncate flex items-center gap-2">{c.name}{c.is_mandatory && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Obligatoire</span>}</p>
                     <p className="text-xs text-gray-500">{c.size} collaborateur{c.size > 1 ? 's' : ''} · {c.course_ids.length} formation{c.course_ids.length > 1 ? 's' : ''}{c.end_date ? ` · échéance ${formatDate(c.end_date)}` : ''}</p>
                   </div>
                   <span className="text-lg font-extrabold text-[#0B3D91]">{c.avg}%</span>
@@ -207,6 +223,7 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
                     {ORG_ROLE_LABEL[r.role] ?? r.role} · {r.courses} formation{r.courses > 1 ? 's' : ''}{r.certs ? ` · ${r.certs} certificat${r.certs > 1 ? 's' : ''}` : ''}
                     {r.lastActive ? ` · actif le ${formatDate(r.lastActive)}` : ' · jamais connecté'}
                   </p>
+                  {r.late > 0 && <p className="text-[11px] font-semibold text-red-600">{r.late} formation{r.late > 1 ? 's' : ''} obligatoire{r.late > 1 ? 's' : ''} en retard</p>}
                 </div>
                 {r.courses > 0 && (
                   <div className="hidden sm:flex items-center gap-2 w-36">
