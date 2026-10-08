@@ -16,13 +16,13 @@ export async function GET(req: NextRequest) {
   if (type === 'users') {
     const { data } = await supabase
       .from('profiles')
-      .select('id, full_name, email, role, country, phone, level, points, streak_days, created_at')
+      .select('id, full_name, email, role, country, phone, level, xp_points, streak_days, created_at')
       .order('created_at', { ascending: false })
 
     const headers = ['ID', 'Nom', 'Email', 'Rôle', 'Pays', 'Téléphone', 'Niveau', 'Points', 'Streak', 'Inscrit le']
     const rows = (data ?? []).map(u => [
       u.id, u.full_name ?? '', u.email ?? '', u.role ?? '', u.country ?? '',
-      u.phone ?? '', u.level ?? '', u.points ?? 0, u.streak_days ?? 0,
+      u.phone ?? '', u.level ?? '', u.xp_points ?? 0, u.streak_days ?? 0,
       u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '',
     ])
     return csvResponse(headers, rows, 'apprenants')
@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
   if (type === 'payments') {
     let query = supabase
       .from('payments')
-      .select('id, amount, currency, payment_method, status, created_at, user:profiles(full_name, email), course:courses(title)')
+      .select('id, amount, currency, method, status, created_at, user:profiles(full_name, email), course:courses(title)')
       .eq('status', 'completed')
       .order('created_at', { ascending: false })
     if (dateFrom) query = query.gte('created_at', dateFrom)
@@ -95,7 +95,7 @@ export async function GET(req: NextRequest) {
   if (type === 'payouts') {
     let query = supabase
       .from('payout_requests')
-      .select('id, amount, currency, status, created_at, processed_at, instructor:profiles!payout_requests_instructor_id_fkey(full_name, email)')
+      .select('id, amount, method, status, created_at, processed_at, instructor:profiles!payout_requests_instructor_id_fkey(full_name, email)')
       .order('created_at', { ascending: false })
     if (dateFrom) query = query.gte('created_at', dateFrom)
     if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59')
@@ -107,7 +107,7 @@ export async function GET(req: NextRequest) {
       (p.instructor as any)?.full_name ?? '',
       (p.instructor as any)?.email ?? '',
       p.amount,
-      p.currency,
+      'XOF',
       p.status,
       p.created_at ? new Date(p.created_at).toLocaleDateString('fr-FR') : '',
       p.processed_at ? new Date(p.processed_at).toLocaleDateString('fr-FR') : '',

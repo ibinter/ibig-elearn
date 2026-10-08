@@ -30,11 +30,11 @@ export async function POST(req: NextRequest) {
   // Charger les paramètres du quiz
   const { data: lesson } = await supabase
     .from('lessons')
-    .select('quiz_passing_score, time_limit_seconds')
+    .select('quiz_passing_score')
     .eq('id', lessonId).single()
 
   const passingScore = (lesson as any)?.quiz_passing_score ?? 70
-  const timeLimitSeconds = (lesson as any)?.time_limit_seconds ?? (questions.length * 90)
+  const timeLimitSeconds = questions.length * 90
 
   // Calculer le score côté serveur
   // answers est un tableau ordonné (index = position question)

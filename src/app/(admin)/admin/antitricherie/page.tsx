@@ -13,7 +13,7 @@ export default async function AdminAntiTricheriePage() {
   ] = await Promise.all([
     supabase
       .from('final_exam_attempts')
-      .select('id, score, passed, submitted_at, tab_switch_count, flag_reason, attempt_number, user:profiles(full_name, email), lesson:lessons(title)')
+      .select('id, score, passed, submitted_at, tab_switch_count, flag_reason, attempt_number, user_id, lesson:lessons(title)')
       .eq('is_flagged', true)
       .order('submitted_at', { ascending: false })
       .limit(50),
@@ -26,6 +26,14 @@ export default async function AdminAntiTricheriePage() {
     supabase.from('final_exam_attempts').select('*', { count: 'exact', head: true }).eq('is_flagged', true),
     supabase.from('quiz_attempts').select('*', { count: 'exact', head: true }).eq('is_flagged', true),
   ])
+
+  // Les tentatives d'examen référencent auth.users : noms récupérés à part
+  const examUserIds = [...new Set((flaggedExams ?? []).map((a: { user_id: string }) => a.user_id))]
+  const { data: examUsers } = examUserIds.length
+    ? await supabase.from('profiles').select('id, full_name, email').in('id', examUserIds)
+    : { data: [] }
+  const examUserMap = new Map((examUsers ?? []).map(u => [u.id, u]))
+  for (const a of (flaggedExams ?? []) as { user_id: string; user?: unknown }[]) a.user = examUserMap.get(a.user_id) ?? null
 
   return (
     <div className="space-y-8">

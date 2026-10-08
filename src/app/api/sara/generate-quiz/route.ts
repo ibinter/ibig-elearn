@@ -15,13 +15,13 @@ export async function POST(req: NextRequest) {
   // Récupérer la leçon
   const { data: lesson } = await supabase
     .from('lessons')
-    .select('title, description, content, type')
+    .select('title, content, type, transcript')
     .eq('id', lessonId)
     .single()
 
   if (!lesson) return NextResponse.json({ error: 'Leçon introuvable' }, { status: 404 })
 
-  const content = [lesson.title, lesson.description, lesson.content]
+  const content = [lesson.title, lesson.content, lesson.transcript]
     .filter(Boolean)
     .join('\n\n')
     .slice(0, 4000)

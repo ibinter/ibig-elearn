@@ -10,7 +10,7 @@ export default async function CertificatesPage() {
 
   const { data: certs } = await supabase
     .from('certificates')
-    .select('id, certificate_number, issued_at, course_title, instructor_name, final_score, completion_time_h, is_revoked, courses:course_id(slug, cover_url)')
+    .select('id, certificate_number, issued_at, course_title, instructor_name, final_score, completion_time_h, is_revoked, courses:course_id(slug, thumbnail_url)')
     .eq('user_id', user.id)
     .order('issued_at', { ascending: false })
 
@@ -46,9 +46,9 @@ export default async function CertificatesPage() {
                 <div className="w-1.5 bg-gradient-to-b from-[#0B3D91] to-[#FFA500] flex-shrink-0" />
 
                 {/* Cover miniature */}
-                {course?.cover_url && (
+                {course?.thumbnail_url && (
                   <div className="w-24 flex-shrink-0 bg-gray-100 hidden sm:block">
-                    <img src={course.cover_url} alt="" className="w-full h-full object-cover" />
+                    <img src={course.thumbnail_url} alt="" className="w-full h-full object-cover" />
                   </div>
                 )}
 

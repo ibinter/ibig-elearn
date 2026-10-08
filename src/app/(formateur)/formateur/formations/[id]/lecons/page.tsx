@@ -28,7 +28,7 @@ export default async function FormationLeconsPage({ params }: Props) {
 
   const { data: modules } = await supabase
     .from('modules')
-    .select('*, lessons(id, title, type, video_url, content, duration_minutes, position, is_free_preview, is_published)')
+    .select('*, lessons(id, title, type, video_url, content, position, is_free_preview, scorm_package_id)')
     .eq('course_id', id)
     .order('position')
 

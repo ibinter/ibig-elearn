@@ -12,7 +12,7 @@ export default async function CertificatePage({ params }: { params: Promise<{ nu
       id, certificate_number, issued_at, expires_at,
       learner_name, course_title, instructor_name,
       final_score, completion_time_h, is_revoked, revoked_at,
-      courses:course_id(slug, cover_url, instructor:profiles(full_name, signature_name, professional_title))
+      courses:course_id(slug, thumbnail_url, instructor:profiles(full_name, signature_name, professional_title))
     `)
     .eq('certificate_number', number.toUpperCase())
     .single()

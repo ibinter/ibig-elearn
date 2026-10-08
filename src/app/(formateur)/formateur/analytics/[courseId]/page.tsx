@@ -54,7 +54,7 @@ export default async function CourseAnalyticsPage({ params }: PageProps) {
   // Monthly enrollments (6 months)
   const { data: enrollments } = await supabase
     .from('enrollments')
-    .select('created_at, progress_percent')
+    .select('enrolled_at, progress_percent')
     .eq('course_id', courseId)
 
   const months6 = Array.from({ length: 6 }, (_, i) => {
@@ -63,7 +63,7 @@ export default async function CourseAnalyticsPage({ params }: PageProps) {
   })
   const enrollByMonth = months6.map(m => ({
     ...m,
-    count: enrollments?.filter(e => e.created_at.slice(0, 7) === m.key).length ?? 0,
+    count: enrollments?.filter(e => (e.enrolled_at ?? '').slice(0, 7) === m.key).length ?? 0,
   }))
   const maxEnroll = Math.max(...enrollByMonth.map(e => e.count), 1)
 

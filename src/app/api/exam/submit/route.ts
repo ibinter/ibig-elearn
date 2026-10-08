@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { issueCertificate } from '@/lib/certificates'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -111,11 +113,7 @@ export async function POST(req: NextRequest) {
     })
 
     // Déclencher émission du certificat
-    await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/certificates/auto-issue`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user.id, courseId }),
-    }).catch(() => {})
+    await issueCertificate(createAdminClient(), user.id, courseId).catch(() => {})
   }
 
   const attemptsRemaining = Math.max(0, (lesson?.exam_max_attempts ?? 3) - attemptNumber)

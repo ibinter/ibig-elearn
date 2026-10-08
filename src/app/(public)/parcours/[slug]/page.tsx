@@ -42,7 +42,7 @@ export default async function ParcoursDetailPage({ params }: Props) {
 
   const { data: pathCourses } = await supabase
     .from('learning_path_courses')
-    .select('*, course:courses(id, title, slug, short_description, thumbnail_url, price_xof, level, duration_hours, total_lessons, rating_avg, enrollment_count, instructor:profiles(full_name))')
+    .select('*, course:courses(id, title, slug, short_description, thumbnail_url, price_xof, level, duration_hours, rating_avg, enrollment_count, instructor:profiles(full_name))')
     .eq('path_id', path.id)
     .order('position')
 
@@ -221,7 +221,7 @@ export default async function ParcoursDetailPage({ params }: Props) {
                       <span className="flex items-center gap-0.5"><Star className="w-3 h-3 text-yellow-400 fill-yellow-400" /> {Number(course.rating_avg).toFixed(1)}</span>
                     )}
                     <span>{course.duration_hours}h</span>
-                    <span>{course.total_lessons} leçons</span>
+                    <span>{course.duration_hours ?? 0} h de contenu</span>
                     {isEnrolled && <span className="text-green-600 font-semibold flex items-center gap-1"><CheckCircle className="w-3 h-3" /> Complété</span>}
                     {isNext && <span className="text-[#0B3D91] font-semibold">Recommandé maintenant</span>}
                   </div>

@@ -49,7 +49,7 @@ export default async function CoursLessonPage({ params }: Props) {
   // Récupérer toutes les leçons du cours
   const { data: lessons } = await supabase
     .from('lessons')
-    .select('id, title, position, video_url, duration_seconds, is_preview, type, quiz_passing_score')
+    .select('id, title, position, video_url, video_duration_seconds, is_free_preview, type, quiz_passing_score')
     .eq('course_id', course.id)
     .order('position')
 
@@ -160,7 +160,7 @@ export default async function CoursLessonPage({ params }: Props) {
               userId={user.id}
               lastPosition={progress?.last_position_seconds ?? 0}
               isCompleted={progress?.is_completed ?? false}
-              videoDurationSeconds={lesson.duration_seconds}
+              videoDurationSeconds={lesson.video_duration_seconds}
             />
           ) : (
             <div className="aspect-video bg-gray-900 flex items-center justify-center">

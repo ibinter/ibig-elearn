@@ -18,7 +18,7 @@ export default async function AdminInscriptionsPage({
   let query = supabase
     .from('enrollments')
     .select(
-      'id, progress_percent, enrolled_at, is_completed, user:profiles(full_name, email), course:courses(title, slug)',
+      'id, progress_percent, enrolled_at, completed_at, user:profiles(full_name, email), course:courses(title, slug)',
       { count: 'exact' }
     )
     .order('enrolled_at', { ascending: false })
@@ -75,7 +75,7 @@ export default async function AdminInscriptionsPage({
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    {e.is_completed ? (
+                    {(e.completed_at || (e.progress_percent ?? 0) >= 100) ? (
                       <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Terminée</span>
                     ) : (e.progress_percent ?? 0) > 0 ? (
                       <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">En cours</span>

@@ -53,7 +53,7 @@ export default async function CourseOverviewPage({ params }: PageProps) {
 
   const { data: modules } = await supabase
     .from('modules')
-    .select('id, title, description, position, lessons(id, title, type, position, is_free_preview, video_duration_seconds, audio_duration_s)')
+    .select('id, title, position, lessons(id, title, type, position, is_free_preview, video_duration_seconds, audio_duration_s)')
     .eq('course_id', courseId)
     .order('position')
 
@@ -161,9 +161,6 @@ export default async function CourseOverviewPage({ params }: PageProps) {
                 <div className="px-5 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                   <div>
                     <h4 className="font-semibold text-gray-900">{module.title}</h4>
-                    {module.description && (
-                      <p className="text-xs text-gray-500 mt-0.5">{module.description}</p>
-                    )}
                   </div>
                   <span className="text-xs text-gray-400 font-medium flex-shrink-0 ml-4">
                     {moduleCompleted}/{lessons.length}

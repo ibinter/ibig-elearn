@@ -11,9 +11,9 @@ export async function GET(req: NextRequest) {
   const [{ data: courses }, { data: instructors }] = await Promise.all([
     supabase
       .from('courses')
-      .select('id, title, slug, category, instructor:profiles(full_name)')
+      .select('id, title, slug, category:categories(name), instructor:profiles(full_name)')
       .eq('is_published', true)
-      .or(`title.ilike.${search},description.ilike.${search},category.ilike.${search}`)
+      .or(`title.ilike.${search},description.ilike.${search},short_description.ilike.${search}`)
       .limit(5),
     supabase
       .from('profiles')
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
       id: c.id,
       type: 'course' as const,
       title: c.title,
-      subtitle: c.instructor?.full_name ? `Par ${c.instructor.full_name}` : c.category,
+      subtitle: c.instructor?.full_name ? `Par ${c.instructor.full_name}` : c.category?.name,
       href: `/formation/${c.slug}`,
     })),
     ...(instructors ?? []).map((p: any) => ({

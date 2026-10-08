@@ -17,7 +17,7 @@ export default async function AdminApprenantsPage({
 
   let query = supabase
     .from('profiles')
-    .select('id, full_name, email, role, country, created_at, points, level, streak_days', { count: 'exact' })
+    .select('id, full_name, email, role, country, created_at, xp_points, level, streak_days', { count: 'exact' })
     .order('created_at', { ascending: false })
     .range(from, to)
 
@@ -102,7 +102,7 @@ export default async function AdminApprenantsPage({
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-500">{u.country ?? '—'}</td>
-                  <td className="px-4 py-3 text-sm font-semibold text-[#0B3D91]">{(u.points ?? 0).toLocaleString('fr')}</td>
+                  <td className="px-4 py-3 text-sm font-semibold text-[#0B3D91]">{(u.xp_points ?? 0).toLocaleString('fr')}</td>
                   <td className="px-4 py-3 text-sm text-gray-400">
                     {u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '—'}
                   </td>

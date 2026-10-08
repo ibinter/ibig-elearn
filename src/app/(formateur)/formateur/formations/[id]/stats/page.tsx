@@ -14,7 +14,7 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
 
   const { data: course } = await supabase
     .from('courses')
-    .select('id, title, slug, total_lessons, price_xof, is_published')
+    .select('id, title, slug, price_xof, is_published')
     .eq('id', id)
     .single()
 
@@ -26,7 +26,7 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
     { data: certs },
     { data: recentEnrolls },
   ] = await Promise.all([
-    supabase.from('enrollments').select('id, progress_percent, is_completed, enrolled_at').eq('course_id', id),
+    supabase.from('enrollments').select('id, progress_percent, completed_at, enrolled_at').eq('course_id', id),
     supabase.from('lesson_progress').select('watch_time_seconds, is_completed, updated_at').eq('course_id', id),
     supabase.from('certificates').select('id, issued_at').eq('course_id', id),
     supabase.from('enrollments')
@@ -37,7 +37,7 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
   ])
 
   const totalEnrolls = enrollments?.length ?? 0
-  const completed = (enrollments ?? []).filter(e => e.is_completed).length
+  const completed = (enrollments ?? []).filter(e => e.completed_at || (e.progress_percent ?? 0) >= 100).length
   const completionRate = totalEnrolls > 0 ? Math.round((completed / totalEnrolls) * 100) : 0
   const totalWatchSec = (progress ?? []).reduce((s, r) => s + (r.watch_time_seconds ?? 0), 0)
   const totalHours = Math.floor(totalWatchSec / 3600)

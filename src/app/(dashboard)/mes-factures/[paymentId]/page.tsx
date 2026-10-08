@@ -14,7 +14,7 @@ export default async function FacturePage({ params }: Props) {
 
   const { data: payment } = await supabase
     .from('payments')
-    .select('*, courses(title, slug), profiles:user_id(full_name, email, phone, country, city)')
+    .select('*, courses(title, slug), profiles:user_id(full_name, email, phone, country)')
     .eq('id', paymentId)
     .eq('user_id', user.id)
     .eq('status', 'completed')
@@ -110,8 +110,8 @@ export default async function FacturePage({ params }: Props) {
                   <p className="font-semibold text-gray-900">{profile?.full_name ?? '—'}</p>
                   <p>{profile?.email ?? user.email}</p>
                   {profile?.phone && <p>{profile.phone}</p>}
-                  {(profile?.city || profile?.country) && (
-                    <p>{[profile.city, profile.country].filter(Boolean).join(', ')}</p>
+                  {profile?.country && (
+                    <p>{profile.country}</p>
                   )}
                 </div>
               </div>

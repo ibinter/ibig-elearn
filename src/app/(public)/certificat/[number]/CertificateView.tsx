@@ -1,6 +1,8 @@
 'use client'
 
-import { CheckCircle, XCircle, Award, Calendar, Clock, Star, Printer } from 'lucide-react'
+import { linkedInAddUrl } from '@/lib/openbadges'
+
+import { CheckCircle, XCircle, Award, Calendar, Clock, Star, Printer, BadgeCheck } from 'lucide-react'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/site'
 import CertificateSignatures from '@/components/ui/CertificateSignatures'
@@ -13,7 +15,7 @@ interface Cert {
   learner_name: string
   course_title: string
   instructor_name: string | null
-  courses?: { slug?: string; cover_url?: string | null; instructor?: { full_name?: string | null; signature_name?: string | null; professional_title?: string | null } | null } | null
+  courses?: { slug?: string; thumbnail_url?: string | null; instructor?: { full_name?: string | null; signature_name?: string | null; professional_title?: string | null } | null } | null
   final_score: number | null
   completion_time_h: number | null
   is_revoked: boolean
@@ -115,7 +117,7 @@ export default function CertificateView({ cert }: { cert: Cert }) {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3 mt-6 print:hidden">
+        <div className="flex flex-wrap gap-3 mt-6 print:hidden">
           <button
             onClick={() => window.print()}
             className="flex items-center gap-2 bg-[#0B3D91] text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-[#0a3480] transition-colors"
@@ -123,6 +125,20 @@ export default function CertificateView({ cert }: { cert: Cert }) {
             <Printer className="w-4 h-4" />
             Télécharger / Imprimer
           </button>
+          {isValid && (
+            <a href={linkedInAddUrl({ courseTitle: cert.course_title ?? 'Formation IBIG E-LEARNING', issuedAt: cert.issued_at, certNumber: cert.certificate_number })}
+              target="_blank" rel="noopener"
+              className="flex items-center gap-2 bg-[#0A66C2] text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-[#004182] transition-colors">
+              <span className="w-4 h-4 rounded-sm bg-white text-[#0A66C2] text-[11px] font-black leading-4 text-center" aria-hidden="true">in</span> Ajouter à LinkedIn
+            </a>
+          )}
+          {isValid && (
+            <a href={`/api/openbadges/assertion/${cert.certificate_number}`} target="_blank" rel="noopener"
+              title="Badge numérique au standard Open Badges 2.0, vérifiable par toute plateforme compatible"
+              className="flex items-center gap-2 border border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+              <BadgeCheck className="w-4 h-4 text-[#FFA500]" /> Open Badge
+            </a>
+          )}
           {cert.courses?.slug && (
             <Link href={`/formation/${cert.courses.slug}`}
               className="flex items-center gap-2 border border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-semibold hover:bg-gray-50 transition-colors">

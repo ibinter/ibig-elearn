@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Plus, ChevronDown, ChevronRight, Grip, Video, FileText, HelpCircle, Eye, EyeOff, Trash2, Edit2, Check, X, Loader2, BookOpen } from 'lucide-react'
+import ScormImport from '@/components/formateur/ScormImport'
+import { Plus, ChevronDown, ChevronRight, Grip, Video, FileText, HelpCircle, Eye, EyeOff, Trash2, Edit2, Check, X, Loader2, BookOpen, PackageOpen } from 'lucide-react'
 
 type Lesson = {
   id: string
   title: string
-  type: 'video' | 'text' | 'quiz' | 'assignment' | 'final_exam' | 'audio' | 'code'
+  type: 'video' | 'text' | 'quiz' | 'assignment' | 'final_exam' | 'audio' | 'code' | 'scorm'
   video_url: string | null
   content: string | null
   duration_minutes: number | null
@@ -23,8 +24,8 @@ type Module = {
   lessons: Lesson[]
 }
 
-const lessonTypeIcon = { video: Video, text: FileText, quiz: HelpCircle, assignment: FileText, final_exam: HelpCircle, audio: FileText, code: FileText }
-const lessonTypeLabel = { video: 'Vidéo', text: 'Texte', quiz: 'Quiz', assignment: 'Devoir', final_exam: 'Examen final 🏆', audio: 'Audio 🎧', code: 'Code 💻' }
+const lessonTypeIcon = { video: Video, text: FileText, quiz: HelpCircle, assignment: FileText, final_exam: HelpCircle, audio: FileText, code: FileText, scorm: PackageOpen }
+const lessonTypeLabel = { video: 'Vidéo', text: 'Texte', quiz: 'Quiz', assignment: 'Devoir', final_exam: 'Examen final 🏆', audio: 'Audio 🎧', code: 'Code 💻', scorm: 'Module SCORM / xAPI' }
 
 function LessonRow({ lesson, onUpdate, onDelete }: {
   lesson: Lesson
@@ -248,6 +249,7 @@ export default function LessonsEditor({ courseId, initialModules }: { courseId: 
                   <Plus className="w-4 h-4" /> Ajouter une leçon
                 </button>
               )}
+              <ScormImport courseId={courseId} moduleId={module.id} onImported={() => window.location.reload()} />
             </div>
           )}
         </div>

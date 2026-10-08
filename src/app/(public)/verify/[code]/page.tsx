@@ -19,8 +19,8 @@ export default async function VerifyCertificatePage({ params }: Props) {
 
   const { data: cert } = await supabase
     .from('certificates')
-    .select('id, issued_at, credential_id, course:courses(title, slug, thumbnail_url, duration_hours), user:profiles(full_name, country)')
-    .eq('credential_id', code.toUpperCase())
+    .select('id, issued_at, certificate_number, is_revoked, learner_name, course:courses(title, slug, thumbnail_url, duration_hours), user:profiles(full_name, country)')
+    .eq('certificate_number', code.toUpperCase())
     .single()
 
   const valid = !!cert

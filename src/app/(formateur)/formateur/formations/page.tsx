@@ -10,7 +10,7 @@ export default async function FormateurFormationsPage() {
 
   const { data: courses } = await supabase
     .from('courses')
-    .select(`id, title, slug, thumbnail_url, is_published, price, currency, level, created_at, enrollments(count)`)
+    .select(`id, title, slug, thumbnail_url, is_published, price_xof, level, created_at, enrollments(count)`)
     .eq('instructor_id', user.id)
     .order('created_at', { ascending: false })
 

@@ -35,7 +35,7 @@ export default function DiscussionPanel({ lessonId, courseId, currentUserId }: P
       setLoading(true)
       const { data } = await supabase
         .from('discussions')
-        .select('*, user:profiles(full_name, avatar_url)')
+        .select('*, user:profiles!discussions_user_id_fkey(full_name, avatar_url)')
         .eq('lesson_id', lessonId)
         .is('parent_id', null)
         .order('is_pinned', { ascending: false })
@@ -47,7 +47,7 @@ export default function DiscussionPanel({ lessonId, courseId, currentUserId }: P
       if (roots.length > 0) {
         const { data: replies } = await supabase
           .from('discussions')
-          .select('*, user:profiles(full_name, avatar_url)')
+          .select('*, user:profiles!discussions_user_id_fkey(full_name, avatar_url)')
           .eq('lesson_id', lessonId)
           .not('parent_id', 'is', null)
           .order('created_at', { ascending: true })

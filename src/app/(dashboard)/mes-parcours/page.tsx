@@ -17,10 +17,10 @@ export default async function MesParcoursPage() {
   // Get enrolled courses for progress calculation
   const { data: courseEnrollments } = await supabase
     .from('enrollments')
-    .select('course_id, progress_percent, is_completed')
+    .select('course_id, progress_percent, completed_at')
     .eq('user_id', user.id)
 
-  const enrolledSet = new Set((courseEnrollments ?? []).filter(e => e.is_completed).map(e => e.course_id))
+  const enrolledSet = new Set((courseEnrollments ?? []).filter(e => e.completed_at || (e.progress_percent ?? 0) >= 100).map(e => e.course_id))
 
   // For each path, get course count
   const pathIds = (enrollments ?? []).map(e => (e.path as any)?.id).filter(Boolean)

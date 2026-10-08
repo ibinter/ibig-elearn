@@ -20,6 +20,11 @@ import AudioPlayer from '@/components/lesson/AudioPlayer'
 import CodeSandbox from '@/components/lesson/CodeSandbox'
 import LessonTabs from './LessonTabs'
 import LessonPaywall from './LessonPaywall'
+import ScormPlayer from '@/components/apprendre/ScormPlayer'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { xapiToken } from '@/lib/scorm'
+import { headers } from 'next/headers'
+import { randomUUID } from 'crypto'
 
 interface PageProps {
   params: Promise<{ courseId: string; lessonId: string }>
@@ -161,9 +166,36 @@ export default async function ApprendrePage({ params }: PageProps) {
   }
 
   const progressPct = enrollment?.progress_percent ?? 0
+
+  // Module SCORM / xAPI : paquet, reprise de la tentative et URL de lancement
+  let scorm: { packageId: string; standard: 'scorm12' | 'scorm2004' | 'xapi'; launchUrl: string; cmi: Record<string, string>; completed: boolean; learnerName: string } | null = null
+  if (currentLesson.type === 'scorm' && currentLesson.scorm_package_id) {
+    const admin = createAdminClient()
+    const [{ data: pkg }, { data: attempt }, { data: me }, { data: lp }] = await Promise.all([
+      admin.from('scorm_packages').select('id, standard, launch_path, activity_id').eq('id', currentLesson.scorm_package_id).single(),
+      admin.from('scorm_attempts').select('cmi').eq('user_id', user.id).eq('package_id', currentLesson.scorm_package_id).maybeSingle(),
+      admin.from('profiles').select('full_name, email').eq('id', user.id).single(),
+      admin.from('lesson_progress').select('is_completed').eq('user_id', user.id).eq('lesson_id', currentLesson.id).maybeSingle(),
+    ])
+    if (pkg) {
+      const [file, query] = pkg.launch_path.split('?')
+      let launchUrl = `/scorm-content/${pkg.id}/${file.split('/').map(encodeURIComponent).join('/')}${query ? '?' + query : ''}`
+      if (pkg.standard === 'xapi') {
+        const h = await headers()
+        const origin = `${h.get('x-forwarded-proto') ?? 'https'}://${h.get('host')}`
+        const actor = { objectType: 'Agent', name: me?.full_name ?? 'Apprenant', mbox: `mailto:${me?.email ?? user.email}` }
+        const qs = new URLSearchParams({
+          endpoint: `${origin}/api/xapi/`, auth: `Basic ${xapiToken(user.id, currentLesson.id)}`,
+          actor: JSON.stringify(actor), activity_id: pkg.activity_id ?? `${origin}/apprendre/${courseId}/${currentLesson.id}`, registration: randomUUID(),
+        })
+        launchUrl += (launchUrl.includes('?') ? '&' : '?') + qs.toString()
+      }
+      scorm = { packageId: pkg.id, standard: pkg.standard, launchUrl, cmi: (attempt?.cmi ?? {}) as Record<string, string>, completed: !!lp?.is_completed, learnerName: me?.full_name ?? '' }
+    }
+  }
   const lessonTypeLabel: Record<string, string> = {
     video: 'Vidéo', audio: 'Audio', code: 'Code', quiz: 'Quiz',
-    final_exam: 'Examen final', assignment: 'Devoir', lesson: 'Cours',
+    final_exam: 'Examen final', assignment: 'Devoir', lesson: 'Cours', scorm: 'Module interactif',
   }
 
   // Breadcrumb : trouver module de la leçon courante + position
@@ -247,7 +279,7 @@ export default async function ApprendrePage({ params }: PageProps) {
         </div>
 
         {/* Marquer complet */}
-        {currentLesson.type !== 'video' && currentLesson.type !== 'audio' && currentLesson.type !== 'quiz' && currentLesson.type !== 'code' && (
+        {currentLesson.type !== 'video' && currentLesson.type !== 'audio' && currentLesson.type !== 'quiz' && currentLesson.type !== 'code' && currentLesson.type !== 'scorm' && (
           <div className="flex-shrink-0">
             <MarkCompleteButton
               lessonId={currentLesson.id}
@@ -321,6 +353,19 @@ export default async function ApprendrePage({ params }: PageProps) {
               solutionCode={currentLesson.code_solution}
               tests={currentLesson.code_tests as any ?? []}
               instructions={currentLesson.code_instructions}
+            />
+          )}
+
+          {scorm && (
+            <ScormPlayer
+              packageId={scorm.packageId}
+              lessonId={currentLesson.id}
+              standard={scorm.standard}
+              launchUrl={scorm.launchUrl}
+              initialCmi={scorm.cmi}
+              learnerId={user.id}
+              learnerName={scorm.learnerName}
+              alreadyCompleted={scorm.completed}
             />
           )}
 

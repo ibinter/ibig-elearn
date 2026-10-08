@@ -1,5 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { completeLesson } from '@/lib/progress'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -11,77 +13,13 @@ export async function POST(req: NextRequest) {
 
   // Vérifier l'inscription
   const { data: enrollment } = await supabase
-    .from('enrollments')
-    .select('id')
-    .eq('user_id', user.id)
-    .eq('course_id', courseId)
-    .single()
+    .from('enrollments').select('id').eq('user_id', user.id).eq('course_id', courseId).single()
   if (!enrollment) return NextResponse.json({ error: 'Non inscrit' }, { status: 403 })
 
-  // Upsert progression
-  const { error } = await supabase
-    .from('lesson_progress')
-    .upsert({
-      user_id: user.id,
-      lesson_id: lessonId,
-      course_id: courseId,
-      is_completed: true,
-      completed_at: new Date().toISOString(),
-      watch_time_seconds: 0,
-    }, { onConflict: 'user_id,lesson_id' })
-
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-
-  // Recalculer progression globale du cours
-  const [{ count: totalLessons }, { count: completedLessons }] = await Promise.all([
-    supabase.from('lessons')
-      .select('id', { count: 'exact', head: true })
-      .eq('course_id', courseId),
-    supabase.from('lesson_progress')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-      .eq('course_id', courseId)
-      .eq('is_completed', true),
-  ])
-
-  const progressPercent = totalLessons ? Math.round(((completedLessons ?? 0) / totalLessons) * 100) : 0
-
-  await supabase
-    .from('enrollments')
-    .update({
-      progress_percent: progressPercent,
-      last_accessed_at: new Date().toISOString(),
-    })
-    .eq('user_id', user.id)
-    .eq('course_id', courseId)
-
-  // XP pour la leçon complétée
-  const { data: lesson } = await supabase
-    .from('lessons').select('title').eq('id', lessonId).single()
-  void supabase.rpc('award_xp', {
-    p_user_id:    user.id,
-    p_event_type: 'lesson_completed',
-    p_xp:         10,
-    p_ref_id:     lessonId,
-    p_ref_label:  lesson?.title ?? null,
-  })
-
-  // Émettre certificat automatiquement si 100%
-  if (progressPercent >= 100) {
-    void supabase.rpc('award_xp', {
-      p_user_id:    user.id,
-      p_event_type: 'course_completed',
-      p_xp:         100,
-      p_ref_id:     courseId,
-      p_ref_label:  null,
-    })
-
-    await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/certificates/auto-issue`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user.id, courseId }),
-    }).catch(() => {})
+  try {
+    const progressPercent = await completeLesson(createAdminClient(), user.id, courseId, lessonId)
+    return NextResponse.json({ ok: true, progressPercent })
+  } catch (e) {
+    return NextResponse.json({ error: (e as Error).message }, { status: 500 })
   }
-
-  return NextResponse.json({ ok: true, progressPercent })
 }

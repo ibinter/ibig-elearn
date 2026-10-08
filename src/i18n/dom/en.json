@@ -3176,5 +3176,16 @@
   "Formez vos équipes, suivez leurs résultats": "Train your teams, track their results",
   "Invitez vos collaborateurs, créez des parcours d’équipe et suivez progression, formations terminées et certificats depuis votre espace dédié.": "Invite your employees, create team learning paths and track progress, completed courses and certificates from your dedicated space.",
   "Découvrir l’offre": "Discover the offer",
-  "Conçu et développé par": "Designed and developed by"
+  "Conçu et développé par": "Designed and developed by",
+  "Module terminé": "Module completed",
+  "Enregistrement…": "Saving…",
+  "Votre progression est enregistrée automatiquement": "Your progress is saved automatically",
+  "Plein écran": "Full screen",
+  "Quitter le plein écran": "Exit full screen",
+  "Module interactif": "Interactive module",
+  "Importer un module SCORM / xAPI (.zip)": "Import a SCORM / xAPI module (.zip)",
+  "Décompression et vérification…": "Unpacking and checking…",
+  "Ajouter à LinkedIn": "Add to LinkedIn",
+  "Open Badge": "Open Badge",
+  "Module SCORM / xAPI": "SCORM / xAPI module"
 }
