@@ -1,3 +1,4 @@
+import EvaluationSummary from '@/components/reports/EvaluationSummary'
 import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -14,11 +15,13 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
 
   const { data: course } = await supabase
     .from('courses')
-    .select('id, title, slug, price_xof, is_published')
+    .select('id, title, slug, price_xof, is_published, instructor_id')
     .eq('id', id)
     .single()
 
   if (!course) notFound()
+  // Un formateur ne consulte que les statistiques de ses propres formations
+  if (profile?.role === 'formateur' && course.instructor_id !== user.id) redirect('/formateur')
 
   const [
     { data: enrollments },
@@ -156,6 +159,7 @@ export default async function FormationStatsPage({ params }: { params: Promise<{
           ))}
         </div>
       </div>
+      <EvaluationSummary courseIds={[id]} />
     </div>
   )
 }

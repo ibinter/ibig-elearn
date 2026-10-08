@@ -9,6 +9,7 @@ import { formatDate } from '@/lib/utils'
 import { getT } from '@/i18n'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getManagedOrgs } from '@/lib/org'
+import { SKILL_LEVELS } from '@/lib/skills'
 
 // Niveaux IBIG (calculés à partir des XP)
 const LEVELS = [
@@ -132,6 +133,19 @@ export default async function TableauDeBordPage() {
     .eq('user_id', user.id).is('superseded_at', null).not('expires_at', 'is', null)
     .lte('expires_at', new Date(Date.now() + 30 * 86400_000).toISOString())
 
+  // Formations à évaluer (≥ 80 % suivies, pas encore évaluées)
+  const { data: myEvals } = await supabase.from('course_evaluations').select('course_id').eq('user_id', user.id)
+  const evaluated = new Set((myEvals ?? []).map(e => e.course_id))
+  const toEvaluate = enrollments.filter(e => pct(e) >= 80 && !evaluated.has(e.course_id)).slice(0, 2)
+
+  // Compétences acquises (formations terminées)
+  const { data: mySkillRows } = await supabase.from('user_skills').select('skill_id, level').eq('user_id', user.id)
+  const { data: skillNames } = (mySkillRows ?? []).length
+    ? await supabase.from('skills').select('id, name').in('id', (mySkillRows ?? []).map(s => s.skill_id))
+    : { data: [] }
+  const mySkills = (mySkillRows ?? []).map(s => ({ name: (skillNames ?? []).find(n => n.id === s.skill_id)?.name ?? '', level: s.level as number }))
+    .filter(s => s.name).sort((a, b) => b.level - a.level)
+
   const firstName = profile?.full_name?.split(' ')[0] ?? ''
   const isNew = enrollments.length === 0
 
@@ -254,6 +268,18 @@ export default async function TableauDeBordPage() {
           <Link href="/catalogue" className="flex items-center justify-center gap-2 bg-white text-emerald-700 font-bold px-5 py-3 rounded-2xl">Nouvelle formation <ArrowRight className="w-4 h-4" /></Link>
         </div>
       )}
+
+      {toEvaluate.map(e => (
+        <Link key={e.id} href={`/evaluer/${e.course_id}`}
+          className="flex items-center gap-3 rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-3.5 hover:shadow-md transition-shadow">
+          <span className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-xl flex-shrink-0">⭐</span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-semibold text-gray-900 text-sm">Votre avis compte : évaluez « {e.course?.title} »</span>
+            <span className="block text-xs text-gray-500">1 minute · +15 XP</span>
+          </span>
+          <ChevronRight className="w-5 h-5 text-gray-300" />
+        </Link>
+      ))}
 
       {/* ── Compteurs ── */}
       {!isNew && (
@@ -405,6 +431,20 @@ export default async function TableauDeBordPage() {
           </section>
         </div>
       </div>
+
+      {mySkills.length > 0 && (
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5">
+          <h2 className="font-bold text-gray-900 mb-3">Mes compétences</h2>
+          <div className="flex flex-wrap gap-2">
+            {mySkills.map(s => (
+              <span key={s.name} className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 pl-3 pr-1 py-1 text-sm text-gray-800">
+                {s.name}
+                <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${SKILL_LEVELS[s.level]?.cls ?? ''}`}>{SKILL_LEVELS[s.level]?.label}</span>
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Recommandations ── */}
       {(recommended?.length ?? 0) > 0 && (

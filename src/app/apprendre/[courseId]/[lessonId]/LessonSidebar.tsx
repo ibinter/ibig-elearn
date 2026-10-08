@@ -12,6 +12,7 @@ interface Props {
   currentLessonId: string
   userId: string
   enrollmentMode?: 'autonome' | 'guide' | 'certifiant'
+  moduleOpensAt?: Record<string, string | null>
 }
 
 const TYPE_ICON: Record<string, React.ReactNode> = {
@@ -24,7 +25,7 @@ const TYPE_ICON: Record<string, React.ReactNode> = {
   lesson:     <BookOpen className="w-3.5 h-3.5" />,
 }
 
-export default function LessonSidebar({ modules, courseId, currentLessonId, userId, enrollmentMode = 'autonome' }: Props) {
+export default function LessonSidebar({ modules, courseId, currentLessonId, userId, enrollmentMode = 'autonome', moduleOpensAt = {} }: Props) {
   const [open, setOpen] = useState(true)
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set())
   const [passedQuizLessons, setPassedQuizLessons] = useState<Set<string>>(new Set())
@@ -55,6 +56,7 @@ export default function LessonSidebar({ modules, courseId, currentLessonId, user
     const sorted = [...modules].sort((a, b) => a.position - b.position)
     const map = new Map<string, boolean>()
     sorted.forEach((mod, idx) => {
+      if (moduleOpensAt[mod.id]) { map.set(mod.id, false); return }
       if (enrollmentMode === 'autonome' || idx === 0) { map.set(mod.id, true); return }
       const prevMod = sorted[idx - 1]
       const prevLessons: any[] = prevMod.lessons ?? []
@@ -66,7 +68,7 @@ export default function LessonSidebar({ modules, courseId, currentLessonId, user
       }
     })
     return map
-  }, [modules, enrollmentMode, passedQuizLessons, completedLessons])
+  }, [modules, enrollmentMode, passedQuizLessons, completedLessons, moduleOpensAt])
 
   const toggleModule = (id: string) => {
     setExpandedModules(prev => {

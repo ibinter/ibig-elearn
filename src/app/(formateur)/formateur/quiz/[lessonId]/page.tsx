@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, BookOpen } from 'lucide-react'
@@ -19,7 +20,7 @@ export default async function QuizEditorPage({ params }: PageProps) {
 
   const { data: lesson } = await supabase
     .from('lessons')
-    .select('id, title, type, quiz_passing_score, exam_passing_score, exam_duration_minutes, exam_max_attempts, modules(course_id, courses(id, title, instructor_id))')
+    .select('id, title, type, quiz_passing_score, quiz_time_limit_min, quiz_max_attempts, quiz_draw_count, quiz_show_corrections, exam_passing_score, exam_duration_minutes, exam_max_attempts, modules(course_id, courses(id, title, instructor_id))')
     .eq('id', lessonId)
     .single()
 
@@ -30,7 +31,8 @@ export default async function QuizEditorPage({ params }: PageProps) {
 
   if (profile?.role === 'formateur' && course.instructor_id !== user.id) redirect('/formateur')
 
-  const { data: questions } = await supabase
+  // Bonnes réponses : lues côté serveur uniquement, après contrôle du propriétaire
+  const { data: questions } = await createAdminClient()
     .from('quiz_questions')
     .select('*')
     .eq('lesson_id', lessonId)
@@ -64,6 +66,12 @@ export default async function QuizEditorPage({ params }: PageProps) {
             ? ((lesson as any).exam_passing_score ?? 80)
             : (lesson.quiz_passing_score ?? 70)
         }
+        initialSettings={{
+          timeLimitMin: (lesson as any).quiz_time_limit_min ?? null,
+          maxAttempts: (lesson as any).quiz_max_attempts ?? null,
+          drawCount: (lesson as any).quiz_draw_count ?? null,
+          showCorrections: (lesson as any).quiz_show_corrections !== false,
+        }}
         isFinalExam={(lesson as any).type === 'final_exam'}
         examDurationMinutes={(lesson as any).exam_duration_minutes ?? 60}
         examMaxAttempts={(lesson as any).exam_max_attempts ?? 3}

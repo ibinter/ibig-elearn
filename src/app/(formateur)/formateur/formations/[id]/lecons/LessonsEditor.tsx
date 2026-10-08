@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import ScormImport from '@/components/formateur/ScormImport'
+import ModuleSchedule from '@/components/formateur/ModuleSchedule'
 import { Plus, ChevronDown, ChevronRight, Grip, Video, FileText, HelpCircle, Eye, EyeOff, Trash2, Edit2, Check, X, Loader2, BookOpen, PackageOpen } from 'lucide-react'
 
 type Lesson = {
@@ -21,6 +22,8 @@ type Module = {
   id: string
   title: string
   position: number
+  unlock_after_days?: number | null
+  available_from?: string | null
   lessons: Lesson[]
 }
 
@@ -195,6 +198,7 @@ export default function LessonsEditor({ courseId, initialModules }: { courseId: 
             <div className="flex-1">
               <ModuleTitle title={module.title} onSave={t => updateModuleTitle(module.id, t)} />
             </div>
+            <ModuleSchedule moduleId={module.id} days={module.unlock_after_days ?? null} from={module.available_from ?? null} />
             <span className="text-xs text-gray-400">{module.lessons.length} leçon{module.lessons.length > 1 ? 's' : ''}</span>
             <button onClick={() => deleteModule(module.id)} className="text-gray-300 hover:text-red-400 transition-colors">
               <Trash2 className="w-4 h-4" />

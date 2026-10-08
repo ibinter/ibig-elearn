@@ -9,6 +9,7 @@ import {
   Eye, EyeOff, CheckCircle, ArrowLeft, Upload
 } from 'lucide-react'
 import Link from 'next/link'
+import CourseSkillsEditor from '@/components/formateur/CourseSkillsEditor'
 import BunnyUpload from '@/components/formateur/BunnyUpload'
 import DocumentUpload from '@/components/formateur/DocumentUpload'
 import SubmitForApproval from '@/components/formateur/SubmitForApproval'
@@ -36,7 +37,7 @@ const typeIcon = (t: string) => ({ video: Play, document: FileText, quiz: HelpCi
 
 interface Lesson { id: string; title: string; type: string; position: number; is_free_preview: boolean; video_duration_seconds: number | null; video_url: string | null; content: string | null; _showUpload?: boolean }
 interface Module { id: string; title: string; position: number; lessons: Lesson[]; open?: boolean }
-interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; certificate_validity_months: number | null; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[]; approval_status: string | null; approval_note: string | null }
+interface CourseInfo { id: string; title: string; slug: string; short_description: string; description: string; level: string; language: string; price_xof: number; duration_hours: number; certificate_validity_months: number | null; is_sequential: boolean; thumbnail_url: string | null; is_published: boolean; category_id: string | null; objectives: string[]; approval_status: string | null; approval_note: string | null }
 
 export default function ModifierFormationPage() {
   const { id } = useParams<{ id: string }>()
@@ -89,6 +90,7 @@ export default function ModifierFormationPage() {
       price_xof: course.price_xof,
       duration_hours: course.duration_hours,
       certificate_validity_months: course.certificate_validity_months || null,
+      is_sequential: !!course.is_sequential,
       thumbnail_url: course.thumbnail_url,
       category_id: course.category_id,
       objectives: course.objectives,
@@ -303,6 +305,17 @@ export default function ModifierFormationPage() {
               </select>
               <p className="mt-1 text-xs text-gray-500">Pour les formations réglementaires (sécurité, hygiène, conformité…) : l&apos;apprenant est prévenu 30 jours avant l&apos;expiration et peut se recertifier.</p>
             </div>
+
+            <CourseSkillsEditor courseId={course.id} />
+
+            <label className="flex items-start gap-3 rounded-xl border border-gray-200 px-4 py-3 cursor-pointer">
+              <input type="checkbox" className="mt-0.5 w-4 h-4 accent-[#0B3D91]" checked={!!course.is_sequential}
+                onChange={e => setCourse({ ...course, is_sequential: e.target.checked })} />
+              <span className="text-sm">
+                <span className="block font-medium text-gray-800">Progression imposée</span>
+                <span className="block text-xs text-gray-500">Chaque module s&apos;ouvre une fois le précédent terminé (ou son quiz réussi), pour tous les apprenants.</span>
+              </span>
+            </label>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">URL Miniature (thumbnail)</label>

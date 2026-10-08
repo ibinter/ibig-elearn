@@ -1,3 +1,4 @@
+import EvaluationSummary from '@/components/reports/EvaluationSummary'
 import { createClient } from '@/lib/supabase/server'
 import { BarChart3, TrendingUp, Globe, BookOpen, Users, Award } from 'lucide-react'
 import Link from 'next/link'
@@ -260,6 +261,7 @@ export default async function RapportsPage({ searchParams }: { searchParams: Pro
           )}
         </div>
       </div>
+      <EvaluationSummary showCourse />
     </div>
   )
 }

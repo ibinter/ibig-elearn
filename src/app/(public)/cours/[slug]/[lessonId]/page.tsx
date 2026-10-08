@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound, redirect } from 'next/navigation'
 import BunnyPlayer from '@/components/player/BunnyPlayer'
-import QuizPlayer from '@/components/player/QuizPlayer'
 import SaraChat from '@/components/sara/SaraChat'
 import { CheckCircle, Lock, PlayCircle, ChevronLeft, ChevronRight, BookOpen, List } from 'lucide-react'
 import Link from 'next/link'
@@ -144,13 +143,11 @@ export default async function CoursLessonPage({ params }: Props) {
         <main className="flex-1 overflow-y-auto">
           {/* Contenu : quiz ou vidéo */}
           {(lesson as any).type === 'quiz' ? (
-            <QuizPlayer
-              lessonId={lessonId}
-              courseId={course.id}
-              userId={user.id}
-              passingScore={(lesson as any).quiz_passing_score ?? 70}
-              isCompleted={progress?.is_completed ?? false}
-            />
+            <div className="max-w-xl mx-auto my-12 rounded-2xl bg-gray-800 p-8 text-center text-white">
+              <p className="text-lg font-bold">Quiz de validation</p>
+              <p className="mt-1 text-sm text-gray-400">Les quiz se passent dans le lecteur de formation : questions tirées au hasard, chronomètre et correction détaillée.</p>
+              <Link href={`/apprendre/${course.id}/${lessonId}`} className="mt-5 inline-block bg-[#FFA500] text-black font-bold px-6 py-3 rounded-xl">Passer le quiz</Link>
+            </div>
           ) : videoGuid && videoLibraryId ? (
             <BunnyPlayer
               videoGuid={videoGuid}

@@ -21,7 +21,7 @@ export default async function AdminAntiTricheriePage() {
       .from('quiz_attempts')
       .select('id, score, passed, tab_switch_count, flag_reason, user:profiles(full_name, email), lesson:lessons(title)')
       .eq('is_flagged', true)
-      .order('created_at', { ascending: false })
+      .order('attempted_at', { ascending: false })
       .limit(50),
     supabase.from('final_exam_attempts').select('*', { count: 'exact', head: true }).eq('is_flagged', true),
     supabase.from('quiz_attempts').select('*', { count: 'exact', head: true }).eq('is_flagged', true),

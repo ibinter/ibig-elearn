@@ -1,88 +1,64 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { BANK_COLUMNS, correction, grade, type Answer, type BankQuestion } from '@/lib/quiz'
+import { completeLesson } from '@/lib/progress'
 
+const GRACE_MS = 30_000
+
+/** Corrige une tentative côté serveur (questions tirées au démarrage, réponses indexées par identifiant). */
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
-  const { lessonId, courseId, answers, tabSwitchCount, timeUsedSeconds } = await req.json()
-  if (!lessonId || !courseId || !answers) {
-    return NextResponse.json({ error: 'Paramètres manquants' }, { status: 400 })
-  }
+  const body = await req.json().catch(() => ({}))
+  const attemptId = String(body.attemptId ?? '')
+  const answers: Record<string, Answer> = body.answers && typeof body.answers === 'object' && !Array.isArray(body.answers) ? body.answers : {}
+  const tabSwitchCount = Number(body.tabSwitchCount) || 0
 
-  // Vérifier l'inscription
-  const { data: enrollment } = await supabase
-    .from('enrollments').select('id').eq('user_id', user.id).eq('course_id', courseId).single()
-  if (!enrollment) return NextResponse.json({ error: 'Non inscrit' }, { status: 403 })
+  const admin = createAdminClient()
+  const { data: attempt } = await admin.from('quiz_attempts')
+    .select('id, user_id, lesson_id, course_id, status, question_ids, started_at, deadline_at')
+    .eq('id', attemptId).maybeSingle()
+  if (!attempt || attempt.user_id !== user.id) return NextResponse.json({ error: 'Tentative introuvable' }, { status: 404 })
+  if (attempt.status !== 'in_progress') return NextResponse.json({ error: 'Cette tentative est déjà terminée.' }, { status: 409 })
 
-  // Charger les questions avec les bonnes réponses (serveur seulement)
-  const { data: questions } = await supabase
-    .from('quiz_questions')
-    .select('id, correct_option, position')
-    .eq('lesson_id', lessonId)
-    .order('position')
+  const [{ data: bank }, { data: lesson }] = await Promise.all([
+    admin.from('quiz_questions').select(BANK_COLUMNS).in('id', attempt.question_ids ?? []),
+    admin.from('lessons').select('quiz_passing_score, quiz_show_corrections').eq('id', attempt.lesson_id).single(),
+  ])
+  const byId = new Map(((bank ?? []) as BankQuestion[]).map(q => [q.id, q]))
+  const questions = (attempt.question_ids ?? []).map((id: string) => byId.get(id)).filter(Boolean) as BankQuestion[]
 
-  if (!questions || questions.length === 0) {
-    return NextResponse.json({ error: 'Aucune question trouvée' }, { status: 404 })
-  }
+  const now = Date.now()
+  const late = attempt.deadline_at && now > new Date(attempt.deadline_at).getTime() + GRACE_MS
+  const timeUsed = attempt.started_at ? Math.round((now - new Date(attempt.started_at).getTime()) / 1000) : null
+  const result = grade(questions, answers)
+  const passingScore = lesson?.quiz_passing_score ?? 70
+  const passed = !late && result.score >= passingScore
 
-  // Charger les paramètres du quiz
-  const { data: lesson } = await supabase
-    .from('lessons')
-    .select('quiz_passing_score')
-    .eq('id', lessonId).single()
-
-  const passingScore = (lesson as any)?.quiz_passing_score ?? 70
-  const timeLimitSeconds = questions.length * 90
-
-  // Calculer le score côté serveur
-  // answers est un tableau ordonné (index = position question)
-  const answersArray: number[] = Array.isArray(answers) ? answers : []
-  const sortedQuestions = [...questions].sort((a, b) => a.position - b.position)
-  const correct = sortedQuestions.filter((q, i) => answersArray[i] === q.correct_option).length
-  const score = questions.length > 0 ? Math.round((correct / questions.length) * 100) : 0
-  const passed = score >= passingScore
-
-  // Détection de triche
   const flags: string[] = []
-  if ((tabSwitchCount ?? 0) >= 3) flags.push(`${tabSwitchCount} changements d'onglet`)
-  if (timeUsedSeconds != null && timeUsedSeconds < questions.length * 5) {
-    flags.push(`Temps trop rapide : ${timeUsedSeconds}s pour ${questions.length} questions`)
-  }
-  const isFlagged = flags.length > 0
+  if (tabSwitchCount >= 3) flags.push(`${tabSwitchCount} changements d'onglet`)
+  if (timeUsed != null && timeUsed < questions.length * 5) flags.push(`Temps trop rapide : ${timeUsed}s pour ${questions.length} questions`)
+  if (late) flags.push('Soumis après la fin du temps imparti')
 
-  await supabase.from('quiz_attempts').insert({
-    user_id: user.id,
-    lesson_id: lessonId,
-    answers: answersArray,
-    score,
-    passed,
-    tab_switch_count: tabSwitchCount ?? 0,
-    is_flagged: isFlagged,
-    flag_reason: flags.join(' | ') || null,
+  await admin.from('quiz_attempts').update({
+    status: 'submitted', submitted_at: new Date(now).toISOString(), answers,
+    score: result.score, passed, points: result.points, max_points: result.max,
+    tab_switch_count: tabSwitchCount, is_flagged: flags.length > 0, flag_reason: flags.join(' | ') || null,
+  }).eq('id', attempt.id)
+
+  let progressPercent: number | null = null
+  if (passed && attempt.course_id) {
+    progressPercent = await completeLesson(admin, user.id, attempt.course_id, attempt.lesson_id).catch(() => null)
+    void admin.rpc('award_xp', { p_user_id: user.id, p_event_type: 'quiz_passed', p_xp: 20, p_ref_id: attempt.lesson_id, p_ref_label: `Quiz — ${result.score}%` })
+  }
+
+  return NextResponse.json({
+    score: result.score, passed, passingScore, points: result.points, maxPoints: result.max, late: !!late,
+    results: result.detail,
+    corrections: lesson?.quiz_show_corrections === false ? null : questions.map(correction),
+    progressPercent,
   })
-
-  if (passed) {
-    await supabase.from('lesson_progress').upsert({
-      user_id: user.id,
-      lesson_id: lessonId,
-      course_id: courseId,
-      is_completed: true,
-      completed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }, { onConflict: 'user_id,lesson_id' })
-
-    void fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/xp/award`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_type: 'quiz_passed',
-        ref_id: lessonId,
-        ref_label: `Quiz — ${score}%`,
-      }),
-    }).catch(() => {})
-  }
-
-  return NextResponse.json({ score, passed, passingScore, correct, total: questions.length, isFlagged })
 }

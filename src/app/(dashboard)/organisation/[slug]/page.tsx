@@ -6,6 +6,7 @@ import {
   Building2, Users, TrendingUp, Award, Activity, BookOpen, Clock, CheckCircle2, UserPlus, Target, Mail,
 } from 'lucide-react'
 import { ORG_ROLE_LABEL, PLAN_LABEL } from '@/lib/org'
+import { SKILL_LEVELS } from '@/lib/skills'
 import { formatDate } from '@/lib/utils'
 import { InvitePanel, CohortPanel, AddToCohort, RemoveMember, CancelInvite, ExportTeam } from './OrgActions'
 
@@ -97,6 +98,24 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
     const list = enrollments.filter(e => ids.has(e.user_id) && c.course_ids.includes(e.course_id))
     return { ...c, size: ids.size, avg: pct(list), done: list.filter(e => (e.progress_percent ?? 0) >= 100).length, total: list.length }
   })
+
+  // Matrice de compétences : acquises via les formations financées et terminées
+  const doneCourseIds = [...new Set(enrollments.filter(isDone).map(e => e.course_id))]
+  const { data: cskills } = doneCourseIds.length
+    ? await admin.from('course_skills').select('course_id, level, skill:skills(id, name)').in('course_id', doneCourseIds)
+    : { data: [] }
+  const skillCols = new Map<string, string>()
+  const matrix = new Map<string, Map<string, number>>()
+  for (const cs of (cskills ?? []) as unknown as { course_id: string; level: number; skill: { id: string; name: string } | null }[]) {
+    if (!cs.skill) continue
+    skillCols.set(cs.skill.id, cs.skill.name)
+    for (const e of enrollments.filter(x => isDone(x) && x.course_id === cs.course_id)) {
+      const row = matrix.get(e.user_id) ?? new Map<string, number>()
+      row.set(cs.skill.id, Math.max(row.get(cs.skill.id) ?? 0, cs.level))
+      matrix.set(e.user_id, row)
+    }
+  }
+  const skillList = [...skillCols.entries()].sort((a, b) => a[1].localeCompare(b[1])).slice(0, 12)
 
   const canManageAdmins = isStaff || ['owner', 'admin'].includes(me?.role ?? '')
   const memberOptions = members.map(m => ({ id: m.user_id, name: m.profile?.full_name ?? m.profile?.email ?? '—' }))
@@ -200,6 +219,36 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+      )}
+
+      {skillList.length > 0 && matrix.size > 0 && (
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="px-4 sm:px-5 py-3.5 border-b border-gray-100">
+            <h2 className="font-bold text-gray-900">Matrice de compétences</h2>
+            <p className="text-xs text-gray-500">Compétences acquises grâce aux formations terminées · N notions · O opérationnel · E expert</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="text-sm min-w-full">
+              <thead>
+                <tr className="text-left text-[11px] text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-2 font-semibold">Collaborateur</th>
+                  {skillList.map(([id, name]) => <th key={id} className="px-2 py-2 font-semibold text-center align-bottom"><span className="block w-24 leading-tight">{name}</span></th>)}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {rows.filter(r => matrix.has(r.id)).map(r => (
+                  <tr key={r.id}>
+                    <td className="sticky left-0 bg-white px-4 py-2 font-medium text-gray-900 whitespace-nowrap" data-no-translate>{r.name}</td>
+                    {skillList.map(([id]) => {
+                      const lvl = matrix.get(r.id)?.get(id)
+                      return <td key={id} className="px-2 py-2 text-center">{lvl ? <span className={`inline-flex w-7 h-7 items-center justify-center rounded-lg text-xs font-bold ${SKILL_LEVELS[lvl].cls}`} title={SKILL_LEVELS[lvl].label}>{SKILL_LEVELS[lvl].short}</span> : <span className="text-gray-200">·</span>}</td>
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
       )}

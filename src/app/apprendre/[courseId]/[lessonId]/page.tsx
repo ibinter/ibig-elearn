@@ -43,10 +43,12 @@ export default async function ApprendrePage({ params }: PageProps) {
     .eq('course_id', courseId)
     .single()
 
-  const enrollmentMode = (enrollment?.mode ?? 'autonome') as 'autonome' | 'guide' | 'certifiant'
-
-  const { data: course } = await supabase.from('courses').select('id, title, slug, price_xof').eq('id', courseId).single()
+  const { data: course } = await supabase.from('courses').select('id, title, slug, price_xof, is_sequential').eq('id', courseId).single()
   if (!course) notFound()
+
+  // Progression imposée : choisie par l'apprenant (mode guidé / certifiant) ou par le formateur pour tous
+  const learnerMode = (enrollment?.mode ?? 'autonome') as 'autonome' | 'guide' | 'certifiant'
+  const enrollmentMode = course.is_sequential && learnerMode === 'autonome' ? 'guide' : learnerMode
 
   const { data: modules } = await supabase
     .from('modules')
@@ -66,6 +68,29 @@ export default async function ApprendrePage({ params }: PageProps) {
   if (!currentLesson) notFound()
 
   const isLocked = !enrollment && !currentLesson.is_free_preview
+
+  // Diffusion progressive : un module s'ouvre à une date fixe et/ou N jours après l'inscription
+  const moduleOpensAt: Record<string, string | null> = {}
+  for (const m of modules ?? []) {
+    const dates: number[] = []
+    if (m.available_from) dates.push(new Date(m.available_from + 'T00:00:00').getTime())
+    if (m.unlock_after_days && enrollment?.enrolled_at) dates.push(new Date(enrollment.enrolled_at).getTime() + m.unlock_after_days * 86400_000)
+    const opens = dates.length ? Math.max(...dates) : null
+    moduleOpensAt[m.id] = opens && opens > Date.now() ? new Date(opens).toISOString() : null
+  }
+  const opensAt = enrollment ? moduleOpensAt[currentLesson.module_id] : null
+  if (opensAt) {
+    return (
+      <div className="min-h-screen bg-[#1c1d1f] flex items-center justify-center p-6 text-center text-white">
+        <div className="max-w-md">
+          <p className="text-5xl">🔒</p>
+          <h1 className="mt-4 text-xl font-bold">Ce module s&apos;ouvre bientôt</h1>
+          <p className="mt-2 text-gray-400">« {currentLesson.title} » sera disponible le {new Date(opensAt).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}. Votre formateur a prévu une progression étape par étape.</p>
+          <Link href={`/apprendre/${courseId}`} className="mt-6 inline-block bg-[#FFA500] text-black font-bold px-6 py-3 rounded-xl">Retour au programme</Link>
+        </div>
+      </div>
+    )
+  }
 
   if (enrollmentMode !== 'autonome') {
     const currentModuleId = currentLesson.module_id
@@ -147,13 +172,15 @@ export default async function ApprendrePage({ params }: PageProps) {
     existingSubmission = submission
   }
 
-  let quizQuestions = null
+  let quizQuestionCount = 0
+  let quizAttemptsUsed = 0
   let bestPreviousScore: number | null = null
   let isLastModuleQuiz = false
   if (currentLesson.type === 'quiz') {
-    const [{ data: questions }, { data: attempts }] = await Promise.all([
-      supabase.from('quiz_questions').select('*').eq('lesson_id', currentLesson.id).order('position'),
-      supabase.from('quiz_attempts').select('score').eq('lesson_id', currentLesson.id).eq('user_id', user.id).order('score', { ascending: false }).limit(1),
+    // Les questions et réponses restent sur le serveur : le quiz est servi par /api/quiz/start
+    const [{ count: bankSize }, { data: attempts }] = await Promise.all([
+      supabase.from('quiz_questions').select('id', { count: 'exact', head: true }).eq('lesson_id', currentLesson.id),
+      supabase.from('quiz_attempts').select('score, status').eq('lesson_id', currentLesson.id).eq('user_id', user.id).order('score', { ascending: false }),
     ])
     const currentModule = (modules ?? []).find(m => m.id === currentLesson.module_id)
     if (currentModule) {
@@ -161,8 +188,10 @@ export default async function ApprendrePage({ params }: PageProps) {
       const lastQuiz = moduleLessons.find((l: any) => l.type === 'quiz')
       isLastModuleQuiz = lastQuiz?.id === currentLesson.id
     }
-    quizQuestions = questions
-    bestPreviousScore = attempts?.[0]?.score ?? null
+    const done = (attempts ?? []).filter(a => a.status !== 'in_progress' && a.status !== 'expired')
+    quizQuestionCount = currentLesson.quiz_draw_count ? Math.min(currentLesson.quiz_draw_count, bankSize ?? 0) : (bankSize ?? 0)
+    quizAttemptsUsed = done.length
+    bestPreviousScore = done[0]?.score ?? null
   }
 
   const progressPct = enrollment?.progress_percent ?? 0
@@ -310,6 +339,7 @@ export default async function ApprendrePage({ params }: PageProps) {
           currentLessonId={currentLesson.id}
           userId={user.id}
           enrollmentMode={enrollmentMode}
+          moduleOpensAt={moduleOpensAt}
         />
 
         {/* ── Zone de contenu ── */}
@@ -463,14 +493,16 @@ export default async function ApprendrePage({ params }: PageProps) {
                 </div>
               )}
 
-              {currentLesson.type === 'quiz' && quizQuestions && (
+              {currentLesson.type === 'quiz' && quizQuestionCount > 0 && (
                 <div className="mb-10">
                   <QuizSection
-                    questions={quizQuestions}
+                    questionCount={quizQuestionCount}
                     lessonId={currentLesson.id}
                     courseId={courseId}
-                    userId={user.id}
                     passingScore={currentLesson.quiz_passing_score ?? 70}
+                    timeLimitMin={currentLesson.quiz_time_limit_min}
+                    maxAttempts={currentLesson.quiz_max_attempts}
+                    attemptsUsed={quizAttemptsUsed}
                     bestPreviousScore={bestPreviousScore}
                     nextLesson={nextLesson ? { id: nextLesson.id, title: nextLesson.title } : null}
                     isLastModuleQuiz={isLastModuleQuiz}

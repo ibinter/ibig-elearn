@@ -12,6 +12,7 @@ import StarRating from '@/components/reviews/StarRating'
 import { SITE_URL } from '@/lib/site'
 import CourseLanguageBadge from '@/components/ui/CourseLanguageBadge'
 import { languageInfo } from '@/lib/languages'
+import { SKILL_LEVELS } from '@/lib/skills'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -93,6 +94,9 @@ export default async function FormationPage({ params }: PageProps) {
   }
 
   const c = course as Course
+  const { data: skillRows } = await supabase.from('course_skills').select('level, skill:skills(name)').eq('course_id', c.id)
+  const courseSkills = ((skillRows ?? []) as unknown as { level: number; skill: { name: string } | null }[])
+    .filter(r => r.skill).map(r => ({ name: r.skill!.name, level: r.level })).sort((a, b) => b.level - a.level)
   const levelLabel: Record<string, string> = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' }
   const levelColor: Record<string, string> = {
     debutant: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
@@ -352,6 +356,21 @@ export default async function FormationPage({ params }: PageProps) {
                       </div>
                     ))}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Compétences développées */}
+            {courseSkills.length > 0 && (
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 sm:px-6 py-5">
+                <h2 className="font-bold text-gray-900 text-lg mb-3">Compétences développées</h2>
+                <div className="flex flex-wrap gap-2">
+                  {courseSkills.map(s => (
+                    <span key={s.name} className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 pl-3 pr-1 py-1 text-sm text-gray-800">
+                      {s.name}
+                      <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${SKILL_LEVELS[s.level]?.cls ?? ''}`}>{SKILL_LEVELS[s.level]?.label}</span>
+                    </span>
+                  ))}
                 </div>
               </div>
             )}

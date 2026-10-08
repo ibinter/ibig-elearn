@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Charger les questions avec les bonnes réponses
-  const { data: questions } = await supabase
+  const { data: questions } = await createAdminClient()
     .from('quiz_questions')
     .select('id, correct_option, position')
     .eq('lesson_id', lessonId)

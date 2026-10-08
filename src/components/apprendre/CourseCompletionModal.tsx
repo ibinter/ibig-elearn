@@ -137,13 +137,17 @@ export default function CourseCompletionModal({ courseTitle, courseId, onClose }
               <Share2 className="w-4 h-4" /> Partager
             </button>
             <Link
-              href="/certificats"
+              href="/mes-certificats"
               className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#0B3D91] to-[#FFA500] text-white px-4 py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-all"
               onClick={onClose}
             >
               Voir mon certificat <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+          <Link href={`/evaluer/${courseId}`} onClick={onClose}
+            className="mt-3 block text-center text-sm font-semibold text-[#0B3D91] hover:underline">
+            ⭐ Donnez votre avis sur la formation (1 minute)
+          </Link>
 
           <button onClick={onClose} className="w-full text-center text-xs text-gray-400 hover:text-gray-600 transition-colors py-1">
             Continuer à apprendre
