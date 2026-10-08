@@ -83,8 +83,14 @@ export default async function Footer() {
         </div>
 
         <div className="border-t border-blue-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-blue-300 text-sm">© {new Date().getFullYear()} IBIG SARL — IBIG EDUFORM. {t.footer.rights}</p>
-          <div className="flex gap-4">
+          <div className="text-center sm:text-left">
+            <p className="text-blue-300 text-sm">© {new Date().getFullYear()} IBIG SARL — IBIG EDUFORM. {t.footer.rights}</p>
+            <p className="text-blue-400 text-xs mt-1">
+              Conçu et développé par{' '}
+              <a href="https://ibig-digital.com" target="_blank" rel="noopener" className="font-semibold text-[#FFA500] hover:text-white" data-no-translate>IBIG Digital</a>
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
             <Link href="/cgu" className="text-blue-300 hover:text-white text-sm">{t.footer.cgu}</Link>
             <Link href="/cgv" className="text-blue-300 hover:text-white text-sm">{t.footer.cgv}</Link>
             <Link href="/confidentialite" className="text-blue-300 hover:text-white text-sm">{t.footer.privacy}</Link>
