@@ -9,7 +9,20 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
-  const { course_id, title, description, scheduled_at, duration_minutes, meeting_url, platform } = body
+  const { course_id, title, description, scheduled_at, duration_minutes, meeting_url } = body
+
+  // Seul le formateur de la formation (ou l'équipe IBIG) peut programmer une session et notifier ses apprenants
+  const [{ data: owned }, { data: me }] = await Promise.all([
+    supabase.from('courses').select('instructor_id').eq('id', course_id).maybeSingle(),
+    supabase.from('profiles').select('role').eq('id', user.id).single(),
+  ])
+  if (!owned || (owned.instructor_id !== user.id && !['admin', 'coordinateur'].includes(me?.role ?? ''))) {
+    return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
+  }
+
+  // Libellés du formulaire → valeurs acceptées par la base
+  const PLATFORM: Record<string, string> = { zoom: 'zoom', meet: 'google_meet', google_meet: 'google_meet', jitsi: 'jitsi', other: 'custom', custom: 'custom' }
+  const platform = PLATFORM[String(body.platform ?? '')] ?? (meeting_url ? 'custom' : 'jitsi')
 
   const { data: session, error } = await supabase.from('live_sessions').insert({
     course_id,
@@ -18,7 +31,7 @@ export async function POST(req: NextRequest) {
     description: description || null,
     scheduled_at,
     duration_minutes,
-    meeting_url,
+    join_url: meeting_url || null,
     platform,
   }).select().single()
 

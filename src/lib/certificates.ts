@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { sendEmail, certificatEmail } from '@/lib/email'
 import { notifyUsers } from '@/lib/notify'
 import { SITE_URL } from '@/lib/site'
+import { emitOrgEvent } from '@/lib/integrations'
 
 /**
  * Délivre le certificat d'une formation terminée (idempotent).
@@ -9,7 +10,7 @@ import { SITE_URL } from '@/lib/site'
  */
 export async function issueCertificate(admin: SupabaseClient, userId: string, courseId: string) {
   const [{ data: enrollment }, { count: total }, { count: done }] = await Promise.all([
-    admin.from('enrollments').select('id').eq('user_id', userId).eq('course_id', courseId).maybeSingle(),
+    admin.from('enrollments').select('id, sponsor_org_id').eq('user_id', userId).eq('course_id', courseId).maybeSingle(),
     admin.from('lessons').select('id', { count: 'exact', head: true }).eq('course_id', courseId),
     admin.from('lesson_progress').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('course_id', courseId).eq('is_completed', true),
   ])
@@ -49,6 +50,17 @@ export async function issueCertificate(admin: SupabaseClient, userId: string, co
     certificate = data
   }
   if (!certificate) return { issued: false as const, reason: 'insert_failed' }
+
+  // Intégrations SIRH : formation terminée + certificat délivré (formations financées par une organisation)
+  if (enrollment.sponsor_org_id) {
+    const base = { user_id: userId, email: profile?.email ?? null, name: profile?.full_name ?? null, course_id: courseId, course_title: course?.title ?? null }
+    await emitOrgEvent(enrollment.sponsor_org_id, 'course.completed', { ...base, completed_at: now.toISOString() })
+    await emitOrgEvent(enrollment.sponsor_org_id, 'certificate.issued', {
+      ...base, certificate_number: certNumber, issued_at: now.toISOString(),
+      verify_url: `${SITE_URL}/certificat/${certNumber}`,
+      expires_at: course?.certificate_validity_months ? new Date(new Date(now).setMonth(now.getMonth() + course.certificate_validity_months)).toISOString() : null,
+    })
+  }
 
   await notifyUsers([userId], {
     title: '🎓 Certificat obtenu !',

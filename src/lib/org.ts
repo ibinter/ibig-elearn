@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { emitOrgEvent } from '@/lib/integrations'
 
 export const MANAGER_ROLES = ['owner', 'admin', 'manager'] as const
 export const ORG_ROLE_LABEL: Record<string, string> = {
@@ -41,11 +42,15 @@ export async function addToCohort(admin: SupabaseClient, orgId: string, cohortId
     { onConflict: 'cohort_id,user_id', ignoreDuplicates: true })
   const courseIds = (cohort.course_ids ?? []) as string[]
   if (!courseIds.length) return
-  await admin.from('enrollments').upsert(
+  const { data: created } = await admin.from('enrollments').upsert(
     userIds.flatMap(user_id => courseIds.map(course_id => ({
       user_id, course_id, status: 'active', mode: 'autonome', paid_amount: 0, sponsor_org_id: orgId,
     }))),
     { onConflict: 'user_id,course_id', ignoreDuplicates: true })
+    .select('user_id, course_id, enrolled_at')
+  for (const e of created ?? []) {
+    await emitOrgEvent(orgId, 'enrollment.created', { user_id: e.user_id, course_id: e.course_id, enrolled_at: e.enrolled_at, due_date: cohort.is_mandatory ? cohort.end_date : null, cohort_id: cohortId })
+  }
   // Parcours obligatoire : l'échéance s'applique aux inscriptions (sans écraser une échéance plus proche)
   if (cohort.is_mandatory && cohort.end_date) {
     await admin.from('enrollments').update({ due_date: cohort.end_date })

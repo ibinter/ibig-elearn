@@ -5,6 +5,8 @@ import {
   CalendarClock, CheckCircle2, Circle, Wallet, HeartHandshake, Users, AlertTriangle, ExternalLink, Clock,
 } from 'lucide-react'
 import CoachingManager from './CoachingManager'
+import CalendarSync from '@/components/ui/CalendarSync'
+import { calendarFeedUrl } from '@/lib/calendar'
 import BookingCard, { type BookingView } from '@/app/(dashboard)/mes-seances/BookingCard'
 
 export const metadata = { title: 'Tableau de bord coach' }
@@ -152,6 +154,8 @@ export default async function FormateurCoachingPage() {
           {toClose.map(b => <BookingCard key={b.id} b={b} />)}
         </section>
       )}
+
+      <CalendarSync feedUrl={calendarFeedUrl(user.id)} />
 
       {/* ── Agenda ── */}
       <section className="space-y-3">

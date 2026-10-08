@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { UserPlus, Target, Loader2, X, Download, Plus, Search, Check } from 'lucide-react'
+import { UserPlus, Target, Loader2, X, Download, Plus, Search, Check, Upload } from 'lucide-react'
 
 async function post(url: string, body: unknown) {
   const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
@@ -28,8 +28,12 @@ export function InvitePanel({ orgId, cohorts, free, canInviteManagers }: { orgId
     e.preventDefault()
     setBusy(true); setMsg(null)
     try {
-      const { results } = await post('/api/org/invite', { orgId, emails: list, role, cohortId: cohortId || null })
-      const r = results as { status: string }[]
+      // Envoi par lots de 100 (gros imports CSV)
+      const r: { status: string }[] = []
+      for (let i = 0; i < list.length; i += 100) {
+        const { results } = await post('/api/org/invite', { orgId, emails: list.slice(i, i + 100), role, cohortId: cohortId || null })
+        r.push(...(results as { status: string }[]))
+      }
       const added = r.filter(x => x.status === 'added').length
       const invited = r.filter(x => x.status === 'invited').length
       const already = r.filter(x => x.status === 'already_member').length
@@ -49,6 +53,19 @@ export function InvitePanel({ orgId, cohorts, free, canInviteManagers }: { orgId
       </div>
       <textarea value={emails} onChange={e => setEmails(e.target.value)} rows={3} required
         placeholder="adresse1@entreprise.com, adresse2@entreprise.com…" className={`${input} mt-3 resize-none`} />
+      <label className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B3D91] cursor-pointer">
+        <Upload className="w-3.5 h-3.5" /> Importer un fichier CSV / Excel (.csv)
+        <input type="file" accept=".csv,.txt,text/csv" className="hidden" onChange={async e => {
+          const file = e.target.files?.[0]
+          if (!file) return
+          // Toute cellule contenant une adresse email est reprise, quel que soit le séparateur (, ; tabulation)
+          const found = (await file.text()).match(/[^\s,;"'<>]+@[^\s,;"'<>]+\.[a-z]{2,}/gi) ?? []
+          const unique = [...new Set(found.map(x => x.toLowerCase()))]
+          setEmails(prev => [...new Set([...prev.split(/[\s,;]+/).filter(Boolean), ...unique])].join('\n'))
+          setMsg({ ok: true, text: `${unique.length} adresse(s) trouvée(s) dans ${file.name}` })
+          e.target.value = ''
+        }} />
+      </label>
       <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
         <select value={role} onChange={e => setRole(e.target.value)} className={input} aria-label="Rôle">
           <option value="learner">Collaborateur (se forme)</option>

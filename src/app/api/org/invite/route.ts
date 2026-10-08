@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   const cohortId = body.cohortId ? String(body.cohortId) : null
   const emails = [...new Set(((body.emails ?? []) as unknown[]).map(e => String(e).trim().toLowerCase()).filter(e => EMAIL_RE.test(e)))]
   if (!orgId || emails.length === 0) return NextResponse.json({ error: 'Indiquez au moins une adresse email valide.' }, { status: 400 })
-  if (emails.length > 100) return NextResponse.json({ error: '100 invitations maximum à la fois.' }, { status: 400 })
+  if (emails.length > 100) return NextResponse.json({ error: '100 invitations maximum par envoi.' }, { status: 400 })
 
   const admin = createAdminClient()
   const { data: me } = await admin.from('organization_members').select('role')

@@ -66,6 +66,11 @@ export async function POST(request: NextRequest) {
   if (!title || !scheduledAt) {
     return NextResponse.json({ error: 'title et scheduledAt requis' }, { status: 400 })
   }
+  // Un formateur ne programme une session que sur ses propres formations
+  if (courseId && profile.role === 'formateur') {
+    const { data: course } = await supabase.from('courses').select('instructor_id').eq('id', courseId).maybeSingle()
+    if (course?.instructor_id !== user.id) return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
+  }
 
   const roomName = generateRoomName(title)
 

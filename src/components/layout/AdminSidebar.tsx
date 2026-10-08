@@ -26,6 +26,7 @@ const NAV = [
   { href: '/admin/entreprise', label: 'Entreprise B2B', icon: Building2 },
   { href: '/admin/organisations', label: 'Espaces entreprise', icon: Briefcase },
   { href: '/admin/competences', label: 'Compétences', icon: Target },
+  { href: '/admin/lti', label: 'Intégration LTI', icon: Zap },
   { href: '/admin/parcours', label: 'Parcours', icon: Target },
   { href: '/admin/coupons', label: 'Coupons & Promos', icon: Tag },
   { href: '/admin/partenaires', label: 'Formateurs partenaires', icon: Handshake },

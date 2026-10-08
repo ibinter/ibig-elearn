@@ -69,6 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/devenir-formateur`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/devenir-partenaire`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/conditions-partenaires`, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE_URL}/developpeurs`, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${BASE_URL}/a-propos`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/contact`, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/faq`, changeFrequency: 'monthly', priority: 0.5 },

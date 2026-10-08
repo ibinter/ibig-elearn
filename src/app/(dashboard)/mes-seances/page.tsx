@@ -4,6 +4,8 @@ import { CalendarClock, HeartHandshake } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { expireStaleHolds } from '@/lib/coaching-server'
 import BookingCard, { type BookingView } from './BookingCard'
+import CalendarSync from '@/components/ui/CalendarSync'
+import { calendarFeedUrl } from '@/lib/calendar'
 
 export const metadata = { title: 'Mes séances de coaching' }
 
@@ -44,6 +46,8 @@ export default async function MesSeancesPage({ searchParams }: { searchParams: P
 
       {sp.reservee && <div className="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm px-4 py-3">Séance réservée ! Vous avez reçu une confirmation.</div>}
       {sp.paiement && <div className="rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-sm px-4 py-3">Paiement reçu : votre séance sera confirmée dans quelques instants (actualisez la page si besoin).</div>}
+
+      <CalendarSync feedUrl={calendarFeedUrl(user.id)} />
 
       <section className="space-y-3">
         <h2 className="text-sm font-bold uppercase tracking-wider text-gray-400">À venir</h2>

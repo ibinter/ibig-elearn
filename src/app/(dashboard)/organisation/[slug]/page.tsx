@@ -8,6 +8,7 @@ import {
 import { ORG_ROLE_LABEL, PLAN_LABEL } from '@/lib/org'
 import { SKILL_LEVELS } from '@/lib/skills'
 import { formatDate } from '@/lib/utils'
+import Integrations from './Integrations'
 import { InvitePanel, CohortPanel, AddToCohort, RemoveMember, CancelInvite, ExportTeam } from './OrgActions'
 
 export const metadata = { title: 'Espace entreprise' }
@@ -118,6 +119,16 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
   const skillList = [...skillCols.entries()].sort((a, b) => a[1].localeCompare(b[1])).slice(0, 12)
 
   const canManageAdmins = isStaff || ['owner', 'admin'].includes(me?.role ?? '')
+  // Intégrations (propriétaire / administrateur de l'espace)
+  const [{ data: apiKeys }, { data: hooksRaw }] = canManageAdmins
+    ? await Promise.all([
+        admin.from('api_keys').select('id, name, key_prefix, last_used_at, revoked_at, created_at').eq('org_id', org.id).order('created_at', { ascending: false }),
+        admin.from('webhook_endpoints').select('id, url, events, webhook_deliveries(ok, status_code, attempted_at)').eq('org_id', org.id).order('created_at'),
+      ])
+    : [{ data: [] }, { data: [] }]
+  const hooks = ((hooksRaw ?? []) as unknown as { id: string; url: string; events: string[]; webhook_deliveries: { ok: boolean; status_code: number | null; attempted_at: string }[] }[])
+    .map(h => ({ id: h.id, url: h.url, events: h.events, last: [...(h.webhook_deliveries ?? [])].sort((x, y) => y.attempted_at.localeCompare(x.attempted_at))[0] ?? null }))
+
   const memberOptions = members.map(m => ({ id: m.user_id, name: m.profile?.full_name ?? m.profile?.email ?? '—' }))
 
   return (
@@ -308,6 +319,8 @@ export default async function OrganisationPage({ params }: { params: Promise<{ s
           </ul>
         </section>
       )}
+      {canManageAdmins && <Integrations orgId={org.id} keys={apiKeys ?? []} hooks={hooks} />}
+
       <Link href="/tableau-de-bord" className="block text-center text-sm text-gray-500 hover:text-[#0B3D91] py-2">← Mon espace apprenant</Link>
     </div>
   )

@@ -8,14 +8,14 @@ interface Session {
   title: string
   scheduled_at: string
   duration_minutes: number
-  platform: 'zoom' | 'meet' | 'other'
-  meeting_url: string
+  platform: string
+  join_url: string | null
   description?: string
   course: { title: string }
 }
 
-const platformLabels = { zoom: '📹 Zoom', meet: '📞 Google Meet', other: '🔗 Autre' }
-const platformColors = { zoom: 'bg-blue-50 text-blue-700', meet: 'bg-green-50 text-green-700', other: 'bg-gray-50 text-gray-700' }
+const platformLabels: Record<string, string> = { zoom: '📹 Zoom', google_meet: '📞 Google Meet', jitsi: '🎥 Visio IBIG', custom: '🔗 Autre' }
+const platformColors: Record<string, string> = { zoom: 'bg-blue-50 text-blue-700', google_meet: 'bg-green-50 text-green-700', jitsi: 'bg-orange-50 text-orange-700', custom: 'bg-gray-50 text-gray-700' }
 
 export default function LiveSessionList({ sessions }: { sessions: Session[] }) {
   const router = useRouter()
@@ -70,13 +70,17 @@ export default function LiveSessionList({ sessions }: { sessions: Session[] }) {
                     <Clock className="w-3.5 h-3.5" />
                     {date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })} · {s.duration_minutes} min
                   </span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${platformColors[s.platform]}`}>
-                    {platformLabels[s.platform]}
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${platformColors[s.platform] ?? platformColors.custom}`}>
+                    {platformLabels[s.platform] ?? platformLabels.custom}
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <a href={s.meeting_url} target="_blank" rel="noopener noreferrer"
+                <a href={`/formateur/sessions-live/${s.id}/presence`}
+                  className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 text-gray-700 text-xs font-semibold rounded-lg hover:bg-gray-50">
+                  <Users className="w-3 h-3" /> Présence
+                </a>
+                <a href={s.join_url || `/sessions-live/${s.id}`} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0B3D91] text-white text-xs font-semibold rounded-lg hover:bg-[#0a3480] transition-colors">
                   Rejoindre <ExternalLink className="w-3 h-3" />
                 </a>
