@@ -172,13 +172,13 @@ export default function Navbar({ user }: NavbarProps) {
             <Link href="/coaching" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               Coaching
             </Link>
-            <Link href="/blog" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
+            <Link href="/blog" className="hidden xl:inline text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               {t.nav.blog}
             </Link>
             <Link href="/entreprise" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               {t.nav.enterprise}
             </Link>
-            <Link href="/a-propos" className="text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
+            <Link href="/a-propos" className="hidden xl:inline text-gray-600 hover:text-[#0B3D91] font-medium text-sm transition-colors whitespace-nowrap">
               {t.locale === 'en' ? 'About' : 'À propos'}
             </Link>
 

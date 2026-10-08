@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle, ChevronRight, Flame, Clock, BadgeCheck, Smartphone, Lock, BarChart3, MessageSquare, Sparkles } from 'lucide-react'
+import { BookOpen, Users, Award, Globe2, ArrowRight, Star, Play, Zap, Shield, Headphones, TrendingUp, CheckCircle, ChevronRight, Flame, Clock, BadgeCheck, Smartphone, Lock, BarChart3, MessageSquare, Sparkles, HeartHandshake, Building2, GraduationCap, Presentation } from 'lucide-react'
 import CourseCard from '@/components/ui/CourseCard'
 import HeroSlider from '@/components/home/HeroSlider'
 import { getT } from '@/i18n'
@@ -28,12 +28,12 @@ const ETAPES = [
 ]
 
 const AVANTAGES = [
-  { icon: BadgeCheck, title: 'Certifications reconnues', desc: 'Chaque certificat porte un QR code unique vérifiable en ligne par les employeurs et partenaires IBIG dans 14 pays.', color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
-  { icon: Smartphone, title: 'Mobile Money accepté', desc: 'Orange Money, MTN Mobile Money, Wave, Moov Money et carte bancaire. Payez comme vous voulez, en FCFA.', color: 'text-orange-500', bg: 'bg-orange-50 border-orange-100' },
-  { icon: Zap, title: 'Accès immédiat', desc: 'Votre formation s\'ouvre dès la confirmation de paiement. Commencez dans les 2 minutes qui suivent.', color: 'text-yellow-500', bg: 'bg-yellow-50 border-yellow-100' },
+  { icon: BadgeCheck, title: 'Certificats cosignés', desc: 'Chaque certificat est cosigné par votre formateur et IBIG EDUFORM, avec un QR code vérifiable en ligne par les employeurs dans 14 pays.', color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
+  { icon: Smartphone, title: 'Mobile Money accepté', desc: 'Orange Money, MTN, Wave, Moov ou carte bancaire via GeniusPay. Payez en FCFA, en une fois ou en 3 fois.', color: 'text-orange-500', bg: 'bg-orange-50 border-orange-100' },
+  { icon: HeartHandshake, title: 'Coaching individuel', desc: 'Réservez une séance en visio avec un expert IBIG EDUFORM pour avancer plus vite sur vos objectifs.', color: 'text-rose-500', bg: 'bg-rose-50 border-rose-100' },
   { icon: Headphones, title: 'Assistante SARA 24/7', desc: 'Notre IA pédagogique répond à toutes vos questions de cours à n\'importe quelle heure, en français.', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
-  { icon: Globe2, title: 'Contenu 100% africain', desc: 'Des exemples, des cas pratiques et des formateurs issus du contexte africain — pour des compétences directement applicables.', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
-  { icon: BarChart3, title: 'Suivi de progression', desc: 'Tableau de bord personnel, streaks quotidiens, points de fidélité et badges — restez motivé jusqu\'au certificat.', color: 'text-teal-600', bg: 'bg-teal-50 border-teal-100' },
+  { icon: Globe2, title: 'Contenu africain, en FR et EN', desc: 'Des cas pratiques et des formateurs issus du contexte africain, avec des formations et une plateforme disponibles en français et en anglais.', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
+  { icon: BarChart3, title: 'Suivi de progression', desc: 'Reprenez là où vous en étiez en un clic : prochaine leçon, niveaux XP, séries quotidiennes et badges jusqu\'au certificat.', color: 'text-teal-600', bg: 'bg-teal-50 border-teal-100' },
 ]
 
 const TEMOIGNAGES = [
@@ -66,6 +66,17 @@ const DOMAINES_PHARES = [
   { emoji: '👥', nom: 'Management & RH', nb: 2, slug: 'management' },
   { emoji: '💼', nom: 'Entrepreneuriat', nb: 1, slug: 'entrepreneuriat' },
   { emoji: '🛒', nom: 'E-Commerce', nb: 1, slug: 'ecommerce' },
+]
+
+const PROFILS = [
+  { icon: GraduationCap, photo: 'learner', href: '/catalogue', tag: '', title: 'Je me forme', cta: 'Explorer le catalogue',
+    desc: 'Formations certifiantes en français ou en anglais, à suivre sur téléphone, avec certificat vérifiable.' },
+  { icon: HeartHandshake, photo: 'coaching', href: '/coaching', tag: 'Nouveau', title: 'Je me fais coacher', cta: 'Trouver mon coach',
+    desc: 'Séances individuelles en visio avec un expert : réservez un créneau et payez en Mobile Money.' },
+  { icon: Building2, photo: 'team', href: '/entreprise', tag: 'Nouveau', title: 'Je forme mes équipes', cta: 'Découvrir l’espace entreprise',
+    desc: 'Invitez vos collaborateurs, créez des parcours d’équipe et suivez leur progression et leurs certificats.' },
+  { icon: Presentation, photo: 'partner', href: '/devenir-partenaire', tag: '', title: 'J’enseigne ou je coache', cta: 'Devenir partenaire',
+    desc: 'Publiez vos formations ou vos offres de coaching avec IBIG EDUFORM et percevez 50 % de chaque vente.' },
 ]
 
 const PAYS = ['🇨🇮 Côte d\'Ivoire', '🇸🇳 Sénégal', '🇨🇲 Cameroun', '🇲🇱 Mali', '🇧🇫 Burkina Faso', '🇬🇳 Guinée', '🇹🇬 Togo', '🇧🇯 Bénin', '🇨🇩 RD Congo', '🇨🇬 Congo-Brazzaville', '🇲🇦 Maroc', '🇬🇦 Gabon', '🇳🇪 Niger', '🇹🇩 Tchad']
@@ -204,6 +215,36 @@ export default async function AccueilPage() {
           ))}
         </div>
       </div>
+
+      {/* ══ 4 FAÇONS DE PROGRESSER ══ */}
+      <section className="py-10 md:py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-8 md:mb-10">
+            <p className="text-[#FFA500] font-bold text-sm uppercase tracking-widest mb-2">Une plateforme, quatre façons de progresser</p>
+            <h2 className="text-2xl lg:text-3xl font-black text-gray-900">Apprenant, coach, formateur ou entreprise : votre espace vous attend</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {PROFILS.map(p => (
+              <Link key={p.href} href={p.href} className="group relative overflow-hidden rounded-3xl min-h-[300px] flex flex-col justify-end text-white shadow-sm hover:shadow-xl transition-shadow">
+                <picture>
+                  <source media="(max-width: 767px)" srcSet={`/images/bg/${p.photo}-m.webp`} />
+                  <img src={`/images/bg/${p.photo}.webp`} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </picture>
+                <span className="absolute inset-0 bg-gradient-to-t from-[#06142f] via-[#06142f]/70 to-transparent" />
+                <span className="relative p-5">
+                  <span className="flex items-center gap-2">
+                    <span className="w-10 h-10 rounded-xl bg-[#FFA500] text-black flex items-center justify-center"><p.icon className="w-5 h-5" /></span>
+                    {p.tag && <span className="text-[10px] font-bold uppercase tracking-wider bg-white/15 backdrop-blur border border-white/20 rounded-full px-2 py-0.5">{p.tag}</span>}
+                  </span>
+                  <span className="mt-3 block text-lg font-bold leading-snug">{p.title}</span>
+                  <span className="mt-1.5 block text-sm text-white/80 leading-relaxed">{p.desc}</span>
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-[#FFA500]">{p.cta} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ══ DOMAINES ══ */}
       <section className="py-16 bg-gray-50">
@@ -578,7 +619,7 @@ export default async function AccueilPage() {
               { icon: CheckCircle, text: 'Sans engagement' },
               { icon: Smartphone, text: 'Paiement Mobile Money' },
               { icon: Award, text: 'Certificat inclus' },
-              { icon: Clock, text: 'Accès immédiat' },
+              { icon: HeartHandshake, text: 'Coaching disponible' },
             ].map(f => (
               <div key={f.text} className="flex items-center gap-1.5">
                 <f.icon className="w-4 h-4 text-green-400" />

@@ -44,7 +44,7 @@ const STATIC_SLIDES: SlideData[] = [
     title: 'Bienvenue sur',
     titleHighlight: 'IBIG E-LEARNING',
     subtitle: '',
-    description: 'Formations certifiantes adaptées au marché africain — payez en Mobile Money, apprenez à votre rythme, obtenez un certificat reconnu dans 14 pays.',
+    description: 'Formations certifiantes en français et en anglais, coaching individuel avec des experts et espaces entreprise — payez en Mobile Money, obtenez un certificat vérifiable reconnu dans 14 pays.',
     cta1Label: 'Explorer les formations',
     cta1Href: '/catalogue',
     cta2Label: 'Commencer gratuitement',
@@ -52,6 +52,40 @@ const STATIC_SLIDES: SlideData[] = [
     gradient: 'linear-gradient(135deg, #020b1a 0%, #051530 35%, #0B3D91 70%, #020b1a 100%)',
     accentColor: '#FFA500',
     accentBg: 'rgba(255,165,0,0.15)',
+  },
+  {
+    id: 'coaching',
+    tag: 'Nouveau',
+    badge: '🤝 Coaching individuel',
+    title: 'Progressez plus vite avec un coach',
+    subtitle: '',
+    description: 'Réservez une séance en visio avec un expert IBIG EDUFORM : choisissez votre créneau, payez en Mobile Money et recevez votre lien de visio.',
+    cta1Label: 'Trouver mon coach',
+    cta1Href: '/coaching',
+    cta2Label: 'Devenir coach',
+    cta2Href: '/devenir-partenaire',
+    gradient: 'linear-gradient(135deg, #1a0a14 0%, #37102a 40%, #9D174D 100%)',
+    accentColor: '#F9A8D4',
+    accentBg: 'rgba(249,168,212,0.15)',
+    thumbnail: '/images/bg/coaching.webp',
+    thumbnailAlt: 'Séance de coaching individuel',
+  },
+  {
+    id: 'entreprise',
+    tag: 'Entreprises',
+    badge: '🏢 Espace entreprise',
+    title: 'Formez vos équipes, suivez leurs résultats',
+    subtitle: '',
+    description: 'Invitez vos collaborateurs, créez des parcours d’équipe et suivez progression, formations terminées et certificats depuis votre espace dédié.',
+    cta1Label: 'Demander un devis',
+    cta1Href: '/entreprise#contact',
+    cta2Label: 'Découvrir l’offre',
+    cta2Href: '/entreprise',
+    gradient: 'linear-gradient(135deg, #0a1a0f 0%, #0d3020 40%, #1B5E20 100%)',
+    accentColor: '#34D399',
+    accentBg: 'rgba(52,211,153,0.15)',
+    thumbnail: '/images/bg/team.webp',
+    thumbnailAlt: 'Équipe en formation',
   },
 ]
 
@@ -89,7 +123,7 @@ export default function HeroSlider({ featuredCourses, totalEnrollments }: HeroSl
     }
   })
 
-  const allSlides = [STATIC_SLIDES[0], ...courseSlides]
+  const allSlides = [...STATIC_SLIDES, ...courseSlides.slice(0, 3)]
 
   const [current, setCurrent] = useState(0)
   const [progress, setProgress] = useState(0)
