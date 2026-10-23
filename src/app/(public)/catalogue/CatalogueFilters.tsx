@@ -54,12 +54,12 @@ export default function CatalogueFilters({ categories, params }: Props) {
       {/* Catégories */}
       <FilterSection title="Domaine">
         <div className="space-y-1">
-          <Link href={url({ categorie: undefined })}
+          <Link rel="nofollow"href={url({ categorie: undefined })}
             className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${!params.categorie ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
             Tous les domaines
           </Link>
           {categories?.map(cat => (
-            <Link key={cat.id} href={url({ categorie: cat.slug })}
+            <Link rel="nofollow"key={cat.id} href={url({ categorie: cat.slug })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.categorie === cat.slug ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {cat.name}
             </Link>
@@ -76,7 +76,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
             { value: 'intermediaire', label: 'Intermédiaire' },
             { value: 'avance', label: 'Avancé' },
           ].map(item => (
-            <Link key={item.label} href={url({ niveau: item.value })}
+            <Link rel="nofollow"key={item.label} href={url({ niveau: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.niveau === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -94,7 +94,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
             { value: '20000-50000', label: '20 000 – 50 000 FCFA' },
             { value: '50000+', label: 'Plus de 50 000 FCFA' },
           ].map(item => (
-            <Link key={item.label} href={url({ prix: item.value })}
+            <Link rel="nofollow"key={item.label} href={url({ prix: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.prix === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -111,7 +111,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
             { value: '5-20', label: '5 à 20 heures' },
             { value: '20+', label: 'Plus de 20 heures' },
           ].map(item => (
-            <Link key={item.label} href={url({ duree: item.value })}
+            <Link rel="nofollow"key={item.label} href={url({ duree: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.duree === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -128,7 +128,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
             { value: 'en', label: 'Anglais' },
             { value: 'ar', label: 'Arabe' },
           ].map(item => (
-            <Link key={item.label} href={url({ langue: item.value })}
+            <Link rel="nofollow"key={item.label} href={url({ langue: item.value })}
               className={`block text-sm px-2 py-1.5 rounded-lg transition-colors ${params.langue === item.value ? 'bg-[#0B3D91] text-white font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
               {item.label}
             </Link>
@@ -138,7 +138,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
 
       {/* À la une */}
       <div className="mt-2">
-        <Link href={url({ featured: params.featured === 'true' ? undefined : 'true' })}
+        <Link rel="nofollow"href={url({ featured: params.featured === 'true' ? undefined : 'true' })}
           className={`w-full flex items-center justify-center gap-2 text-sm font-medium px-4 py-2.5 rounded-xl border transition-colors ${params.featured === 'true' ? 'bg-[#FFA500] text-black border-[#FFA500]' : 'border-gray-200 text-gray-600 hover:border-[#FFA500] hover:text-[#FFA500]'}`}>
           ⭐ Formations à la une
         </Link>
@@ -190,7 +190,7 @@ export default function CatalogueFilters({ categories, params }: Props) {
               Filtres
             </h2>
             {Object.entries(params).some(([k, v]) => k !== 'tri' && k !== 'page' && v) && (
-              <Link href="/catalogue" className="text-xs text-red-400 hover:text-red-600 font-medium transition-colors">
+              <Link rel="nofollow"href="/catalogue" className="text-xs text-red-400 hover:text-red-600 font-medium transition-colors">
                 Tout effacer
               </Link>
             )}
