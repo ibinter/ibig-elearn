@@ -1,4 +1,6 @@
-﻿interface EmailPayload {
+﻿import nodemailer from 'nodemailer'
+
+interface EmailPayload {
   to: string | string[]
   subject: string
   html: string
@@ -6,7 +8,38 @@
   attachments?: { filename: string; content: string }[]
 }
 
+// Messagerie LWS (SMTP) si SMTP_HOST est défini, sinon Resend.
+const SMTP_PORT = Number(process.env.SMTP_PORT ?? 465)
+const smtp = process.env.SMTP_HOST
+  ? nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_PORT === 465,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      // Hébergement mutualisé : on limite le débit pour ne pas être bloqué par LWS.
+      pool: true,
+      maxConnections: 2,
+      rateDelta: 1000,
+      rateLimit: 5,
+    })
+  : null
+
 export async function sendEmail({ to, subject, html, attachments }: EmailPayload) {
+  if (smtp) {
+    try {
+      const info = await smtp.sendMail({
+        from: process.env.EMAIL_FROM ?? 'noreply@ibig-elearning.com',
+        to,
+        subject,
+        html,
+        attachments: attachments?.map((a) => ({ filename: a.filename, content: Buffer.from(a.content, 'base64') })),
+      })
+      return { ok: true, id: info.messageId }
+    } catch (error) {
+      console.error('[email] SMTP error:', error instanceof Error ? error.message : error)
+      return { ok: false, error }
+    }
+  }
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey || apiKey === 'VOTRE_RESEND_KEY') {
     console.warn('[email] RESEND_API_KEY non configuré — email ignoré')

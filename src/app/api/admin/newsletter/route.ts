@@ -1,8 +1,6 @@
 ﻿import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { sendEmail } from '@/lib/email'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -27,18 +25,11 @@ export async function POST(req: NextRequest) {
   const emails = (recipients ?? []).map((r: any) => r.email).filter(Boolean)
   if (!emails.length) return NextResponse.json({ error: 'Aucun destinataire trouvé' }, { status: 400 })
 
-  // Resend bulk (max 100 per batch)
-  const BATCH = 50
+  // Un envoi par destinataire : les adresses ne sont jamais visibles des autres abonnés
   let sent = 0
-  for (let i = 0; i < emails.length; i += BATCH) {
-    const batch = emails.slice(i, i + BATCH)
-    await resend.emails.send({
-      from: 'IBIG E-LEARNING <no-reply@ibig-elearn.com>',
-      to: batch,
-      subject,
-      html,
-    })
-    sent += batch.length
+  for (const email of emails) {
+    const { ok } = await sendEmail({ to: email, subject, html })
+    if (ok) sent++
   }
 
   return NextResponse.json({ sent })
