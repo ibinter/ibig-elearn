@@ -33,6 +33,9 @@ export default function robots(): MetadataRoute.Robots {
           '/rejoindre/',
           '/connexion',
           '/mot-de-passe-oublie',
+          // Combinaisons de filtres du catalogue : les robots les parcouraient
+          // toutes (1 requête/s, jamais en cache) et ont épuisé le quota Vercel.
+          '/catalogue?',
         ],
       },
     ],
